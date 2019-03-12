@@ -12,7 +12,7 @@ function login()
 {
            var data = {
                "store_id" : mId,
-			   "stor_password" : mPassword
+			   "store_password" : mPassword
            };
 
            var json = JSON.stringify(data);
@@ -30,10 +30,18 @@ function login()
                    if (http.status == 200) 
 				   {
                        var result = JSON.parse(http.responseText);
-					   if(result.confirm==1)
-					   		alert("success");
+					   
+				       if(result.confirm==1)
+					   {
+						   location.href = "Main.html";
+					   		//alert("success");
+						    
+					   }
 					   else if (result.confirm==0)
 						   	alert("아이디/비밀번호가 틀렸습니다");
+					   
+					   
+
                    }
                    else {
                        alert("Connect fail..");
