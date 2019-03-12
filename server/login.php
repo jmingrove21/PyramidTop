@@ -1,7 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET,POST,PUT');
-header('Access-Control-Allow-Headers: X-Requested-With,Content-Type');
 require_once 'db.php';
 try{
 	
@@ -16,9 +13,9 @@ try{
 	$result = mysqli_fetch_assoc($stmt);	
 		
 	if($result['num']==='0'){
-		$confirm=0; //login fail
+		$confirm=0;
 	}else{
-		$confirm=1; //login success
+		$confirm=1;
 	}
 	 
 	$send_data=array(
