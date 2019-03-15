@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="loginForm">
+    <ion-item>
+        <ion-input formControlName="email" type="text" placeholder="Email"></ion-input>
+    </ion-item>
+
+    <div class="error-messages">
+        <ng-container *ngFor="let error of error_messages.email">
+          <div class="error-message" *ngIf="loginForm.get('email').hasError(error.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+            {{error.message}}
+          </div>
+        </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+    </ion-item>
+
+    <div class="error-messages">
+        <ng-container *ngFor="let error of error_messages.password">
+          <div class="error-message" *ngIf="loginForm.get('password').hasError(error.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+            {{error.message}}
+          </div>
+        </ng-container>
+    </div>
+
+    <ion-button (click)="login()" [disabled]="!loginForm.valid" shape="round" size="default" color="primary" expand="block">Login</ion-button>
+    <ion-button shape="round" size="default" color="light" expand="block">Register</ion-button>
+  </form>
+</ion-content>
