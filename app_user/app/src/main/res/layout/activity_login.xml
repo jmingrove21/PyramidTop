@@ -7,6 +7,7 @@
     android:layout_gravity="center"
     android:orientation="vertical"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,14 +19,16 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:text="ID"
-            android:textSize="28dp"/>
+            android:textSize="28dp" />
+
         <EditText
             android:id="@+id/eid"
             android:layout_width="213dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="ID"/>
+            android:hint="ID" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +40,8 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:text="Password"
-            android:textSize="28dp"/>
+            android:textSize="28dp" />
+
         <EditText
             android:id="@+id/epw"
             android:layout_width="213dp"
@@ -45,13 +49,14 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="password"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
     </LinearLayout>
+
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:onClick="login"
-        android:text="로그인"/>
+        android:text="로그인" />
 </LinearLayout>
