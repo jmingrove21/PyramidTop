@@ -19,8 +19,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
-    String userid="root";
-    String userpw="1234";
 
     @Override
     protected void onCreate(Bundle saveInstanceState){
@@ -32,8 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101) {
             if (resultCode == 200) {
-                String menu = data.getExtras().getString("menu");
-                Toast.makeText(getApplicationContext(), "하잇!", Toast.LENGTH_LONG).show();
 
             }
         }
@@ -46,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     final EditText id=(EditText)findViewById(R.id.eid);
                     final EditText pw=(EditText)findViewById(R.id.epw);
-                    URL url = new URL("http://54.180.102.7:80/get/JSON/user_login.php");
+                    URL url = new URL("http://54.180.102.7:80/get/delivery_manage.php");
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -56,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("delivery_info", "login");
                     jsonParam.put("user_id", id.getText().toString());
                     jsonParam.put("user_password", pw.getText().toString());
 
@@ -86,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
         thread.start();
     }
 
