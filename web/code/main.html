@@ -9,7 +9,7 @@
   <title>
     배달ONE
   </title>
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport" />
+  <meta content= "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport" />
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
@@ -41,13 +41,13 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li>
+          <li class="active ">
             <a href="./main.html">
               <i class="nc-icon nc-delivery-fast"></i>
               <p>주문현황</p>
             </a>
           </li>
-	      <li>
+		  <li>
             <a href="./list.html">
               <i class="nc-icon nc-bullet-list-67"></i>
               <p>주문내역조회</p>
@@ -80,7 +80,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Paper Dashboard 2</a>
+            <a class="navbar-brand" href="#pablo">미쳐버린 파닭</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -88,16 +88,7 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form>
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="nc-icon nc-zoom-split"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
+            
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link btn-magnify" href="#pablo">
@@ -133,269 +124,188 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <!-- <div class="panel-header panel-header-sm">
+      <!-- <div class="panel-header panel-header-lg">
+  
+  <canvas id="bigDashboardChart"></canvas>
   
   
 </div> -->
       <div class="content">
         <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title"> Simple Table</h4>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-shop text-warning"></i>
+                    </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">음식준비</p>
+                      <p class="card-title">3건
+                        </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="card-body">
-                <div class="table-responsive">
+              <div class="card-footer ">
+				  <div class="table-responsive">
                   <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        메뉴
-                      </th>
-                      <th>
-                        Country
-                      </th>
-                      <th>
-                        주소
-                      </th>
-                      <th class="text-right">
-                        가격
-                      </th>
+                    <thead class=" text-primary">	
+                      <th width="150px"> 주문시간</th>
+                      <th width="300px"> 메뉴</th>
+                      <th class="text-right" width="100px"> 배송출발</th>
                     </thead>
                     <tbody>
                       <tr>
                         <td>
-                          짜장면1
+                          날짜 : 19.03.10
+						  <br> 시간 : 19시 30분
                         </td>
                         <td>
-                          짬뽕1
+                          #짜장면1
+						  <br> #짬뽕1
+						  <br> #탕수육1
                         </td>
-                        <td>
-                          경기도 용인시 수지구 수지로 398 107동 301호
-                        </td>
-                        <td class="text-right">
-                          6000원
+<td class="text-right">
+                        <div class="icon-big text-middle icon-warning">
+                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
+                   		  </div>
                         </td>
                       </tr>
-                      <tr>
+						<tr>
                         <td>
-                          Minerva Hooper
+                          날짜 : 19.03.10
+						  <br> 시간 : 19시 30분
                         </td>
                         <td>
-                          Curaçao
+                          #짜장면1
+						  <br> #짬뽕1
+						  <br> #탕수육1
                         </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
+<td class="text-right">
+                        <div class="icon-big text-middle icon-warning">
+                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
+                   		  </div>
                         </td>
                       </tr>
-                      <tr>
+						<tr>
                         <td>
-                          Sage Rodriguez
+                          날짜 : 19.03.10
+						  <br> 시간 : 19시 30분
                         </td>
                         <td>
-                          Netherlands
+                          #짜장면1
+						  <br> #짬뽕1
+						  <br> #탕수육1
                         </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-right">
-                          $56,142
+<td class="text-right">
+                        <div class="icon-big text-middle icon-warning">
+                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
+                   		  </div>
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          Philip Chaney
-                        </td>
-                        <td>
-                          Korea, South
-                        </td>
-                        <td>
-                          Overland Park
-                        </td>
-                        <td class="text-right">
-                          $38,735
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-right">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $78,615
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Jon Porter
-                        </td>
-                        <td>
-                          Portugal
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $98,615
-                        </td>
-                      </tr>
+                      
                     </tbody>
                   </table>
+                </div>
+                <hr>
+                <div class="stats">
+                  <i class="fa fa-refresh"></i> Update Now
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-12">
-            <div class="card card-plain">
-              <div class="card-header">
-                <h4 class="card-title"> Table on Plain Background</h4>
-                <p class="card-category"> Here is a subtitle for this table</p>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-user-run text-success"></i>
+                    </div>
+                  </div>
+                  <div class="col-7 col-md-8">
+                    <div class="numbers">
+                      <p class="card-category">음배달</p>
+                      <p class="card-title">4건
+                        </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="card-body">
-                <div class="table-responsive">
+              <div class="card-footer ">
+				  <div class="table-responsive">
                   <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Country
-                      </th>
-                      <th>
-                        City
-                      </th>
-                      <th class="text-right">
-                        Salary
-                      </th>
+                    <thead class=" text-primary">	
+                      <th width="150px"> 출발시간</th>
+                      <th width="300px"> 메뉴</th>
+                      <th class="text-right" width="100px"> 배송완료</th>
                     </thead>
                     <tbody>
                       <tr>
                         <td>
-                          Dakota Rice
+                          날짜 : 19.03.10
+						  <br> 시간 : 19시 30분
                         </td>
                         <td>
-                          Niger
+                          #짜장면1
+						  <br> #짬뽕1
+						  <br> #탕수육1
                         </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-right">
-                          $36,738
+<td class="text-right">
+                        <div class="icon-big text-middle icon-warning">
+                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
+                   		  </div>
                         </td>
                       </tr>
-                      <tr>
+						<tr>
                         <td>
-                          Minerva Hooper
+                          날짜 : 19.03.10
+						  <br> 시간 : 19시 30분
                         </td>
                         <td>
-                          Curaçao
+                          #짜장면1
+						  <br> #짬뽕1
+						  <br> #탕수육1
                         </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
+<td class="text-right">
+                        <div class="icon-big text-middle icon-warning">
+                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
+                   		  </div>
                         </td>
                       </tr>
-                      <tr>
+						<tr>
                         <td>
-                          Sage Rodriguez
+                          날짜 : 19.03.10
+						  <br> 시간 : 19시 30분
                         </td>
                         <td>
-                          Netherlands
+                          #짜장면1
+						  <br> #짬뽕1
+						  <br> #탕수육1
                         </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-right">
-                          $56,142
+<td class="text-right">
+                        <div class="icon-big text-middle icon-warning">
+                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
+                   		  </div>
                         </td>
                       </tr>
-                      <tr>
-                        <td>
-                          Philip Chaney
-                        </td>
-                        <td>
-                          Korea, South
-                        </td>
-                        <td>
-                          Overland Park
-                        </td>
-                        <td class="text-right">
-                          $38,735
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-right">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $78,615
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Jon Porter
-                        </td>
-                        <td>
-                          Portugal
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $98,615
-                        </td>
-                      </tr>
+                      
                     </tbody>
                   </table>
+                </div>
+                <hr>
+                <div class="stats">
+                  <i class="fa fa-calendar-o"></i> Last day
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+</div>
+</div>
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
           <div class="row">
@@ -440,6 +350,12 @@
   <script src="../assets/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
+      demo.initChartsPages();
+    });
+  </script>
 </body>
 
 </html>

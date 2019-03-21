@@ -2,8 +2,8 @@ var mId = '';
 var mPassword='';
 
 $(document).on("click", "#btn_login", function (e) {
-    mId=$("#id").val();
-    mPassword=$("#pw").val();
+    mId=$("#store_id").val();
+    mPassword=$("#store_password").val();
     login();
 });
 
@@ -11,13 +11,14 @@ $(document).on("click", "#btn_login", function (e) {
 function login() 
 {
            var data = {
+			   "store_info" : "login",
                "store_id" : mId,
 			   "store_password" : mPassword
            };
 
            var json = JSON.stringify(data);
            var http = new XMLHttpRequest();
-           var url = "http://54.180.102.7:80/get/JSON/login.php";
+           var url = "http://54.180.102.7:80/get/store_manage.php";
 
            http.open('POST', url, true);
            http.setRequestHeader('Content-type', 'application/json');
@@ -33,9 +34,9 @@ function login()
 					   
 				       if(result.confirm==1)
 					   {
-						   location.href = "Main.html";
-					   		//alert("success");
-						    
+						   
+						   location.href = "information.html";
+						   
 					   }
 					   else if (result.confirm==0)
 						   	alert("아이디/비밀번호가 틀렸습니다");
@@ -51,5 +52,6 @@ function login()
                    alert("Connect fail...");
                }
 		   }
+		   //http.send(json);
 		   
 }
