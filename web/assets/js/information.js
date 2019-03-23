@@ -113,6 +113,7 @@ function getData3()
 					alert(error);
 			}
 		});
+	event.preventDefault();
 
 }
 
