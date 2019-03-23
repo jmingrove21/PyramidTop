@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/eid"
+            android:id="@+id/idText"
             android:layout_width="213dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -26,7 +26,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/epw"
+            android:id="@+id/pwdText"
             android:layout_width="213dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -36,7 +36,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
@@ -44,4 +44,9 @@
         android:onClick="login"
         android:text="@string/delivery_login"
         android:textAlignment="center" />
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그인 정보 기억"
+        android:id="@+id/login_checkbox"/>
 </LinearLayout>

@@ -130,7 +130,6 @@ function getData3()
 			
 		});
 	event.preventDefault();
-	
 }
 
 
