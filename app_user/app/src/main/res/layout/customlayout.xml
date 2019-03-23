@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="90dp"
@@ -24,14 +26,31 @@
         android:layout_alignTop="@+id/imageView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/imageView"
         android:text="TextView"
         android:textSize="25sp" />
 
     <TextView
-        android:textSize="25sp"
+        android:id="@+id/textView_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView_name"
+        android:layout_alignLeft="@+id/textView_name"
+        android:layout_alignTop="@+id/textView_name"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        android:text="TextView"
+        android:textSize="20sp"></TextView>
+
+    <TextView
+        android:textSize="20sp"
         android:id="@+id/textView_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
