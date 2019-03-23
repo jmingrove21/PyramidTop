@@ -2,6 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET,POST,PUT');
 header('Access-Control-Allow-Headers: X-Requested-With,Content-Type');
+header('Content-Type: text/html; charset=utf-8');
 $json_data = json_decode(file_get_contents('php://input'), TRUE);
 $store_info=$json_data['store_info'];
 
@@ -14,7 +15,10 @@ switch($store_info){
         include 'JSON/store_info.php';
         store_info($json_data);
         break;
-    default:
+    case 'modify':
+        include 'JSON/store_modify.php';
+        store_modify($json_data);
+        break;
 
 
 
