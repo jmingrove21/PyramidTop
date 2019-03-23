@@ -35,7 +35,9 @@ function login()
 				       if(result.confirm==1)
 					   {
 						   
-						   location.href = "information.html";
+						  // document.getElementById("storemaster_num").value = result.storemaster_num;
+						   //alert(storemaster_num);
+						   location.href = "main.html";
 						   
 					   }
 					   else if (result.confirm==0)

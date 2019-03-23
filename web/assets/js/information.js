@@ -13,6 +13,9 @@ var storemaster_name = ''; //가게주인
 var storemaster_phone = ''; //가게주인핸드폰번호
 var storemaster_rrn = ''; //가게주 주민번호
 var storemaster_num = ''; //사업자번호
+var store_restday = '';
+var store_notice = '';
+var store_phone = '';
 
 
 //
@@ -96,15 +99,28 @@ function getData3()
 			url:"http://54.180.102.7:80/get/store_manage.php",
 			type:"POST",
 			data: JSON.stringify(data),
-			
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			success: function(result) {
 				if (result) {
 					var result1 = JSON.parse(result);
+					$("#store_name").val(decodeURIComponent(result1.store_name));
+					$("#store_name1").val(decodeURIComponent(result1.store_name));
+					$("#store_address").val(result1.store_address);
+					$("#storemaster_name").val(result1.storemaster_name);
 					$("#storemaster_num").val(result1.storemaster_num);
+					$("#start_time").val(result1.start_time);
+					$("#end_time").val(result1.end_time);
+					$("#store_restday").val(result1.store_restday);
+					$("#start_time").val(result1.start_time);
+					$("#end_time").val(result1.end_time);
 					$("#store_name").val(result1.store_name);
-					  //document.getElementById("storemaster_num").value=result.storemaster_num;
+					$("#store_notice").val(result1.store_notice);
+					
+					$("#store_phone").val(result1.store_phone);
+					//document.getElementById("storemaster_num").value=result.storemaster_num;
 					//document.getElementById("store_name1").value=result.store_name;
-					alert(result);
+					//alert(result);
+
 				} else {
 					alert("불러오기 실패");
 				}
@@ -112,8 +128,10 @@ function getData3()
 			error: function(error){
 					alert(error);
 			}
+			
 		});
-
+	event.preventDefault();
+	
 }
 
 
