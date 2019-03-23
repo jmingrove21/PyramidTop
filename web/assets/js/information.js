@@ -16,8 +16,7 @@ var storemaster_num = ''; //사업자번호
 var store_restday = '';
 var store_notice = '';
 var store_phone = '';
-
-
+var store_profile_img = '';
 //
 // $(document).on("click", "#btn_login1", function (e) {
 //     //mId=$("#id").val();
@@ -104,7 +103,7 @@ function getData3()
 				if (result) {
 					var result1 = JSON.parse(result);
 					$("#store_name").val(decodeURIComponent(result1.store_name));
-					$("#store_name1").val(decodeURIComponent(result1.store_name));
+					//$("#store_name1").context(decodeURIComponent(result1.store_name));
 					$("#store_address").val(result1.store_address);
 					$("#storemaster_name").val(result1.storemaster_name);
 					$("#storemaster_num").val(result1.storemaster_num);
@@ -115,8 +114,8 @@ function getData3()
 					$("#end_time").val(result1.end_time);
 					$("#store_name").val(result1.store_name);
 					$("#store_notice").val(result1.store_notice);
-					
 					$("#store_phone").val(result1.store_phone);
+					$("#store_profile").attr('src', result1.store_profile_img);
 					//document.getElementById("storemaster_num").value=result.storemaster_num;
 					//document.getElementById("store_name1").value=result.store_name;
 					//alert(result);

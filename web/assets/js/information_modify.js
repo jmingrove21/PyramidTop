@@ -15,6 +15,8 @@ var storemaster_num = ''; //사업자번호
 var store_restday = '';
 var store_notice = '';
 var store_phone = '';
+var Store_profile_img = '';
+
 
 
 $(document).on("click", "#btn_modify", function (a) {
@@ -89,6 +91,17 @@ function modifyData()
 
 function modifyData()
 {
+// reCreate new Object and set File Data into it
+	var newObject  = {
+	   'lastModified'     : Store_profile_img.lastModified,
+	   'lastModifiedDate' : Store_profile_img.lastModifiedDate,
+	   'name'             : Store_profile_img.name,
+	   'size'             : Store_profile_img.size,
+	   'type'             : Store_profile_img.type
+	};  
+	
+JSON.stringify(newObject);
+	
 	 var data2 = 
 		 {
 			 		"store_info" : "modify",
@@ -101,8 +114,8 @@ function modifyData()
   					"store_phone" : Store_phone, //가게주인핸드폰번호
   					"storemaster_num" : Storemaster_num, //사업자번호
 			   		"store_notice" : Store_notice,
-			 		"store_restday" : Store_restday
-			   		
+			 		"store_restday" : Store_restday,
+			 		"store_profile_img" : newObject
            };
 		   
 		$.ajax({
@@ -114,8 +127,9 @@ function modifyData()
 			{
 				if (result) 
 				{
-					var result1 = JSON.parse(result);
-					alert(result1.confirm);
+					var result3 = JSON.parse(result);
+					if(result3.confirm==1)
+						alert("정보 수정 성공");
 				} 
 				else 
 				{
@@ -127,14 +141,37 @@ function modifyData()
 			}
 			
 		});
-	event.preventDefault();
+	//event.preventDefault();
 	
 }
 
+$(document).ready(function()
+			{
+            function readURL(input) 
+			{
+                if (input.files && input.files[0]) 
+				{
+                    var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
+                    reader.onload = function (e) 
+					{
+                        //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+                        $("#store_profile").attr("src", e.target.result);
+						//alert(e.target.result);
+						Store_profile_img = input.files[0];
+						//alert(Store_profile_img);
+                        //이미지 Tag의 SRC속성에 읽어들인 File내용을 지정
+                        //(아래 코드에서 읽어들인 dataURL형식)
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                    //File내용을 읽어 dataURL형식의 문자열로 저장
+                }
+            }//readURL()--
 
-
-
-
-
+            //file 양식으로 이미지를 선택(값이 변경) 되었을때 처리하는 코드
+            $("#FILE_TAG").change(function(){
+                 //선택한 이미지 경로 표시
+                readURL(this);
+            });
+  });
 
 
