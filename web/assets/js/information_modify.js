@@ -34,7 +34,7 @@ $(document).on("click", "#btn_modify", function (a) {
     modifyData();
 
 });
-
+/*
 function modifyData()
 {
            var data2 = {
@@ -85,43 +85,41 @@ function modifyData()
 
 }
 
-/*
+*/
 
-function getData3()
+function modifyData()
 {
-	 var data = {
-			"store_info" : 'info',
-			"store_id" : 'root',
-			"store_password" : '1234'
-		};
+	 var data2 = 
+		 {
+			 		"store_info" : "modify",
+			   		"store_name" : Store_name, //가게 상호명
+  					"store_phone" : Store_phone,  //가게 번호
+  					"store_address" : Store_address,  //가게 주소
+  					"start_time" : Start_time,  // 오픈시간
+			   		"end_time" : End_time,  //마감시간
+  					"storemaster_name" : Storemaster_name,  //가게주인
+  					"store_phone" : Store_phone, //가게주인핸드폰번호
+  					"storemaster_num" : Storemaster_num, //사업자번호
+			   		"store_notice" : Store_notice,
+			 		"store_restday" : Store_restday
+			   		
+           };
+		   
 		$.ajax({
 			url:"http://54.180.102.7:80/get/store_manage.php",
 			type:"POST",
-			data: JSON.stringify(data),
+			data: JSON.stringify(data2),
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			success: function(result) {
-				if (result) {
+			success: function(result) 
+			{
+				if (result) 
+				{
 					var result1 = JSON.parse(result);
-					$("#store_name").val(decodeURIComponent(result1.store_name));
-					$("#store_name1").val(decodeURIComponent(result1.store_name));
-					$("#store_address").val(result1.store_address);
-					$("#storemaster_name").val(result1.storemaster_name);
-					$("#storemaster_num").val(result1.storemaster_num);
-					$("#start_time").val(result1.start_time);
-					$("#end_time").val(result1.end_time);
-					$("#store_restday").val(result1.store_restday);
-					$("#start_time").val(result1.start_time);
-					$("#end_time").val(result1.end_time);
-					$("#store_name").val(result1.store_name);
-					$("#store_notice").val(result1.store_notice);
-					
-					$("#store_phone").val(result1.store_phone);
-					//document.getElementById("storemaster_num").value=result.storemaster_num;
-					//document.getElementById("store_name1").value=result.store_name;
-					//alert(result);
-
-				} else {
-					alert("불러오기 실패");
+					alert(result1.confirm);
+				} 
+				else 
+				{
+					alert("수정하기 실패");
 				}
 			},
 			error: function(error){
