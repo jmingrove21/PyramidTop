@@ -16,8 +16,11 @@
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
+  <link href="../assets/css/original.css" rel="stylesheet"/>
+  <link href="../assets/css/detail_window.css" rel="stylesheet"/>
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <!---<link href="../assets/demo/demo.css" rel="stylesheet" />-->
+	<script src="../assets/js/detail_window.js"></script>
 </head>
 
 <body class="">
@@ -41,7 +44,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active ">
+          <li class="active">
             <a href="./main.html">
               <i class="nc-icon nc-delivery-fast"></i>
               <p>주문현황</p>
@@ -154,8 +157,9 @@
 				  <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">	
-                      <th width="150px"> 주문시간</th>
-                      <th width="300px"> 메뉴</th>
+                      <th width="200px"> 주문시간 </th>
+                      <th width="280px"> 메뉴 </th>
+					  <th width="90px"> 상세보기</th>
                       <th class="text-right" width="100px"> 배송출발</th>
                     </thead>
                     <tbody>
@@ -169,6 +173,49 @@
 						  <br> #짬뽕1
 						  <br> #탕수육1
                         </td>
+						<td class="text-right">
+                        <div class="icon-big text-middle icon-warning">
+                      		<i id="temp1" style="cursor:pointer" class="trigger nc-icon nc-simple-add text-warning"></i>
+							<!----이거는 상세보기를 눌렀을 때 새 레이어창을 위한 코드입니다-->
+								<div class="modal"> 
+									<div class="modal-content"> 
+										<span class="close-button">&times;</span> 
+										<h1 class="title">메일 보내기</h1> 
+										<form action="#post.php" method="POST"> 
+											<label for="email">Email</label> 
+											<input type="email" name="email" placeholder="Your email" required="required"> 
+											<label></label> 
+											<textarea name="message" placeholder="Test Message" required="required"></textarea> 
+											<input type="button" id="cancel" value="취소"> 
+											<input type="submit" id="submit" value="보내기"> 
+										</form> 
+									</div> 
+     							</div>
+							<!---여기까지.....---------------->
+
+                   		</div>
+                        </td>
+						<td class="text-right">
+                        <div class="icon-big text-middle icon-warning">
+                      			<i id="temp2" class="nc-icon nc-delivery-fast text-warning" style="cursor:pointer"></i>
+                   		  </div>
+                        </td>
+                      </tr>
+						<tr>
+                        <td>
+                          날짜 : 19.03.10
+						  <br> 시간 : 19시 30분
+                        </td>
+                        <td>
+                          #짜장면1
+						  <br> #짬뽕1
+						  <br> #탕수육1
+                        </td>
+						<td class="text-right">
+                       	  <div class="icon-big text-middle icon-warning">
+                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
+                   		  </div>
+                        </td>
 <td class="text-right">
                         <div class="icon-big text-middle icon-warning">
                       			<i class="nc-icon nc-delivery-fast text-warning"></i>
@@ -185,23 +232,12 @@
 						  <br> #짬뽕1
 						  <br> #탕수육1
                         </td>
-<td class="text-right">
-                        <div class="icon-big text-middle icon-warning">
+					    <td class="text-right">
+                          <div class="icon-big text-middle icon-warning">
                       			<i class="nc-icon nc-delivery-fast text-warning"></i>
                    		  </div>
                         </td>
-                      </tr>
-						<tr>
-                        <td>
-                          날짜 : 19.03.10
-						  <br> 시간 : 19시 30분
-                        </td>
-                        <td>
-                          #짜장면1
-						  <br> #짬뽕1
-						  <br> #탕수육1
-                        </td>
-<td class="text-right">
+						<td class="text-right">
                         <div class="icon-big text-middle icon-warning">
                       			<i class="nc-icon nc-delivery-fast text-warning"></i>
                    		  </div>
@@ -229,7 +265,7 @@
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">음배달</p>
+                      <p class="card-category">음식배달</p>
                       <p class="card-title">4건
                         </p>
                     </div>
@@ -258,7 +294,7 @@
 <td class="text-right">
                         <div class="icon-big text-middle icon-warning">
                       			<i class="nc-icon nc-delivery-fast text-warning"></i>
-                   		  </div>
+                   		</div>
                         </td>
                       </tr>
 						<tr>
@@ -339,6 +375,7 @@
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
+  
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
@@ -349,7 +386,8 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../assets/demo/demo.js"></script>
+  <!--<script src="../assets/demo/demo.js"></script>
+  -->
   <script>
     $(document).ready(function() {
       // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
@@ -358,4 +396,4 @@
   </script>
 </body>
 
-</html>
+</html>>
