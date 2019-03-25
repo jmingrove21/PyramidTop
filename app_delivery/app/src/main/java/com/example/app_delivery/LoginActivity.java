@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -17,13 +18,35 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import android.content.SharedPreferences;
 
 public class LoginActivity extends AppCompatActivity {
+    private SharedPreferences appData;
+    private boolean saveLoginData;
+    private String id;
+    private String pwd;
+    private EditText idText;
+    private EditText pwdText;
+    private CheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_login);
+        appData=getSharedPreferences("appData",MODE_PRIVATE);
+        load_before_data();
+
+        idText=(EditText) findViewById(R.id.idText);
+        pwdText=(EditText) findViewById(R.id.pwdText);
+        checkBox=(CheckBox) findViewById(R.id.login_checkbox);
+
+        if(saveLoginData){
+            idText.setText(id);
+            pwdText.setText(pwd);
+            checkBox.setChecked(saveLoginData);
+        }
+
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -40,8 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    final EditText id=(EditText)findViewById(R.id.eid);
-                    final EditText pw=(EditText)findViewById(R.id.epw);
+
                     URL url = new URL("http://54.180.102.7:80/get/delivery_manage.php");
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -53,8 +75,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "login");
-                    jsonParam.put("user_id", id.getText().toString());
-                    jsonParam.put("user_password", pw.getText().toString());
+                    jsonParam.put("user_id", idText.getText().toString());
+                    jsonParam.put("user_password", pwdText.getText().toString());
 
 
                     Log.i("JSON", jsonParam.toString());
@@ -71,8 +93,10 @@ public class LoginActivity extends AppCompatActivity {
                         String json_result=jobj.getString("confirm");
                         Log.i("check_state", json_result);
                         if(json_result.equals("1")){
+                            save_login_data();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivityForResult(intent,101);
+                            finish();
                         }
                     }else{
                         Log.d("error","Connect fail");
@@ -106,5 +130,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         return sb.toString();
+    }
+    private void save_login_data() {
+        SharedPreferences.Editor editor = appData.edit();
+        editor.putBoolean("SAVE_LOGIN_DATA",checkBox.isChecked());
+        editor.putString("ID", idText.getText().toString().trim());
+        editor.putString("PWD", pwdText.getText().toString().trim());
+
+        editor.apply();
+    }
+
+    private void load_before_data(){
+        saveLoginData=appData.getBoolean("SAVE_LOGIN_DATA",false);
+        id=appData.getString("ID","");
+        pwd=appData.getString("PWD","");
+
     }
 }
