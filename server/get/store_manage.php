@@ -15,10 +15,6 @@ switch($store_info){
         include 'JSON/store_info.php';
         store_info($json_data);
         break;
-    case 'modify':
-        include 'JSON/store_modify.php';
-        store_modify($json_data);
-        break;
 
 
 
