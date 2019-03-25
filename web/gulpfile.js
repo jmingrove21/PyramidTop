@@ -5,7 +5,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
 var open = require('gulp-open');
 
-var Paths = {
+var Paths = { 
   HERE: './',
   DIST: 'dist/',
   CSS: './assets/css/',
