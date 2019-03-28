@@ -6,7 +6,7 @@
         header('Content-Type: text/html; charset=utf-8');
         $uploaddir = '/var/www/html/image/';
 
-        $storemaster_num=$_POST['storemaster_num'];
+        $store_serial=$_POST['store_serial'];
         $store_name=$_POST['store_name'];
         $storemaster_name=$_POST['storemaster_name'];
         $store_address=$_POST['store_address'];
@@ -22,13 +22,17 @@
 
         $path='http://ec2-54-180-102-7.ap-northeast-2.compute.amazonaws.com/image/'.$upload;
 
-        $query = "UPDATE STORE SET store_name='".$store_name."', storemaster_name='".$storemaster_name."', store_address='".$store_address."', start_time='".$start_time."', end_time='".$end_time."', store_restday='".$store_restday."', store_notice='".$store_notice."', store_phone='".$store_phone."', store_profile_img='".$path."' WHERE storemaster_num='".$storemaster_num."' LIMIT 1";
+        $query = "UPDATE store_tb SET store_name='".$store_name."',store_address='".$store_address."', start_time='".$start_time."', end_time='".$end_time."', store_restday='".$store_restday."', store_notice='".$store_notice."',  store_profile_img='".$path."' , store_phone='".$store_phone."' WHERE store_serial='".$store_serial."' LIMIT 1";
         $stmt = mysqli_query($connect,$query);
+
+        $query2="UPDATE store_master_tb SET  store_master_name='".$storemaster_name."'  WHERE store_serial='".$store_serial."' LIMIT 1";
+        $stmt2 = mysqli_query($connect,$query2);
         $confirm=-1;
-        if($stmt)
+        if($stmt && $stmt2)
             $confirm=1;
         else
             $confirm=0;
+
         $send_data=array(
             'confirm' =>$confirm,
             'path'=>$path
