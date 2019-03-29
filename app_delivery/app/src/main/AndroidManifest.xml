@@ -3,7 +3,11 @@
     package="com.example.app_delivery"
     android:targetSandboxVersion="1">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET">
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
+    </uses-permission>
+    <meta-data android:name="com.kakao.sdk.AppKey" android:value="ff3d392fa867adc9061e61c7c9c0f8de"/>
 
     <application
         android:networkSecurityConfig="@xml/security_config"
@@ -26,6 +30,8 @@
         </activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MapActivity"></activity>
+
     </application>
 
 </manifest>
