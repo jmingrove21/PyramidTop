@@ -144,12 +144,16 @@ function modifyData() {
             if (data) {
                 var result3 = JSON.parse(data);
                 if(result3.confirm==1)
-                alert("정보 수정 성공");
+				{
+					$("#store_profile").attr("src",result3.path);
+                	alert("정보 수정 성공");
+				}
             } else {
                 alert("수정하기 실패");
             }
         },
-        error: function (error) {
+        error: function (error) 
+		{
             alert(error);
         }
 
