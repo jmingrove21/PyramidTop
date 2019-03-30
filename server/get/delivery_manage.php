@@ -7,8 +7,8 @@ $delivery_info=$json_data['delivery_info'];
 
 switch($delivery_info){
     case 'login':
-        include 'JSON/user_login.php';
-        user_login($json_data);
+        include 'JSON/delivery_login.php';
+        delivery_login($json_data);
         break;
 
 }

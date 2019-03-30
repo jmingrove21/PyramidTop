@@ -5,7 +5,7 @@
 
         $id=$json_data['user_id'];
         $pw=$json_data['user_password'];
-        $query = "SELECT COUNT(*) AS num FROM USER AS u WHERE u.user_id='".$id."' AND u.user_pw='".$pw."'";
+        $query = "SELECT COUNT(*) AS num FROM user AS u WHERE u.user_id='".$id."' AND u.user_pw='".$pw."'";
         $stmt = mysqli_query($connect,$query);
         $result = mysqli_fetch_assoc($stmt);
 
