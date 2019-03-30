@@ -6,12 +6,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
@@ -42,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(customAdapter);
     }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        return true;
+    }
     @Override
     public void onBackPressed(){
         if(drawer.isDrawerOpen(GravityCompat.START)){
@@ -51,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class CustomAdapter extends BaseAdapter{
+    class CustomAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -72,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
 
-            ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
-            TextView textView_name = (TextView)view.findViewById(R.id.textView_name);
-            TextView textView_phone = (TextView)view.findViewById(R.id.textView_phone);
-            TextView textView_description = (TextView)view.findViewById(R.id.textView_description);
+            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
+            TextView textView_phone = (TextView) view.findViewById(R.id.textView_phone);
+            TextView textView_description = (TextView) view.findViewById(R.id.textView_description);
 
             imageView.setImageResource(IMAGES[i]);
             textView_name.setText(NAMES[i]);
