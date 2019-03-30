@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+
+#menubar 
+{
+	/*menubar의 ID를 가진 태그의 스타일 지정*/ 
+	height: 30px; 
+	/*menubar의 높이를 30px로 설정(제대로 설정 안하면 아래 내용이 깨짐)*/ 
+	width: 200px; 
+	/*menubar의 넓이를 850px로 설정(제대로 설정 안하면 브라우져 넓이가 좁아지면 깨짐)*/ 
+} 
+#menubar ul li 
+{ 
+	/* menubar의 ID를 가진 태그 안에 <ul> 태그 안에 <li> 태그의 스타일을 지정 */
+	list-style: none;  /* <li> 태그는 위의 이미지처럼 목록을 나타내는 점을 없앤다 */
+	color: white; /* 글씨 색을 흰색으로 설정 */
+	background-color: #2d2d2d; /* 배경색을 진한 회색(RGB(2D,2D,2D)으로 설정 */
+	float: left; /* <li>태그들이 왼쪽에 흐르게 설정(그러면 아래있는 내용은 오른쪽으로 옴) */
+	line-height: 30px; /* 글씨가 가운데로 오도록 설정하기 위해 한줄의 높이를 30px로 설정 */
+	vertical-align: middle; /* 세로 정렬을 가운데로 설정(위의 line-height와 같이 설정 필요함) */
+	text-align: center; /* 글씨 정렬을 가운데로 설정 */
+} 
+#menubar .menuLink 
+{ /* menubar 아이디를 가진 태그 안에 있는 menuLink 클래스 태그들의 스타일 설정 */
+	text-decoration:none; /* 링크(<a> 태그)가 가지는 기본 꾸밈 효과(밑줄 등)을 없앰 */
+	color: white; /* 폰트색을 흰색으로 설정 */
+	display: block; /* 링크를 글씨가 있는 부분 뿐만아니라 전체 영역을 클릭해도 링크가 걸리게 설정 */width: 1000px; /* 메뉴링크의 넓이 설정 */
+	font-size: 12px; /* 폰트 사이즈 12px로 설정 */
+	font-weight: bold; /* 폰트를 굵게 */
+	font-family: "Trebuchet MS", "Dotum", "Arial"; /* 기본 폰트 적용, 시스템 폰트를 종류별로 순서대로 */
+}
+#menubar .menuLink:hover 
+{ /*menubar 아이디를 가진 태그 안에 menuLink클래스를 가진 태그에 마우스가 over되면 스타일 설정 */
+	color: red; /* 글씨 색을 붉은색으로 설정 */
+	background-color: #4d4d4d; /* 배경색을 조금 더 밝은 회색으로 설정 */
+}
