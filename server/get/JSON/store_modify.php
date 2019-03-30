@@ -22,10 +22,10 @@
 
         $path='http://ec2-54-180-102-7.ap-northeast-2.compute.amazonaws.com/image/'.$upload;
 
-        $query = "UPDATE store_tb SET store_name='".$store_name."',store_address='".$store_address."', start_time='".$start_time."', end_time='".$end_time."', store_restday='".$store_restday."', store_notice='".$store_notice."',  store_profile_img='".$path."' , store_phone='".$store_phone."' WHERE store_serial='".$store_serial."' LIMIT 1";
+        $query = "UPDATE store SET store_name='".$store_name."',store_address='".$store_address."', start_time='".$start_time."', end_time='".$end_time."', store_restday='".$store_restday."', store_notice='".$store_notice."',  store_profile_img='".$path."' , store_phone='".$store_phone."' WHERE store_serial='".$store_serial."' LIMIT 1";
         $stmt = mysqli_query($connect,$query);
 
-        $query2="UPDATE store_master_tb SET  store_master_name='".$storemaster_name."'  WHERE store_serial='".$store_serial."' LIMIT 1";
+        $query2="UPDATE store_master SET  store_master_name='".$storemaster_name."'  WHERE store_serial='".$store_serial."' LIMIT 1";
         $stmt2 = mysqli_query($connect,$query2);
         $confirm=-1;
         if($stmt && $stmt2)

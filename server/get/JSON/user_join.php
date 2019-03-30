@@ -9,7 +9,7 @@ try{
     $phone=$_POST['user_phone'];
     $sex=$_POST['user_sex'];
 
-	$query = "INSERT INTO USER(user_name,user_id,user_pw,user_phone,user_sex) VALUES('".$name."','".$id."','".$pw."','".$phone."','".$sex."')";
+	$query = "INSERT INTO user(user_name,user_id,user_pw,user_phone,user_sex) VALUES('".$name."','".$id."','".$pw."','".$phone."','".$sex."')";
 	$stmt = mysqli_query($connect,$query);
 	if($stmt){
 		$confirm=1;
