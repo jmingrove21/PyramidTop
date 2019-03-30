@@ -75,8 +75,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "login");
-                    jsonParam.put("user_id", idText.getText().toString());
-                    jsonParam.put("user_password", pwdText.getText().toString());
+                    jsonParam.put("delivery_id", idText.getText().toString());
+                    jsonParam.put("delivery_password", pwdText.getText().toString());
 
 
                     Log.i("JSON", jsonParam.toString());
@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject jobj=new JSONObject(jsonReply);
                         String json_result=jobj.getString("confirm");
                         Log.i("check_state", json_result);
-                        if(json_result.equals("0")){//check_state : 1 (success), 0 (fail)
+                        if(json_result.equals("1")){//check_state : 1 (success), 0 (fail)
                             save_login_data();
                             Intent intent=new Intent(getApplicationContext(),MapActivity.class);
                             startActivityForResult(intent,101);
