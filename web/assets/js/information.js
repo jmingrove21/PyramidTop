@@ -1,7 +1,5 @@
 // JavaScript Document
 
-
-
 var store_name = ''; //가게 상호명
 var store_phone = ''; //가게 번호
 var store_address = ''; //가게 주소
@@ -17,6 +15,9 @@ var store_restday = '';
 var store_notice = '';
 var store_phone = '';
 var store_profile_img = '';
+var store_serial = '';
+
+
 //
 // $(document).on("click", "#btn_login1", function (e) {
 //     //mId=$("#id").val();
@@ -87,12 +88,13 @@ function getData3()
 
 */
 
+
+
 function getData3()
 {
 	 var data = {
 			"store_info" : 'info',
-			"store_id" : 'root',
-			"store_password" : '1234'
+			"store_serial" : store_serial
 		};
 		$.ajax({
 			url:"http://54.180.102.7:80/get/store_manage.php",
