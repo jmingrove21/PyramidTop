@@ -22,11 +22,10 @@
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../assets/js/information.js"></script>
-	<script src="../assets/js/login.js"></script>
 	<script src="../assets/js/information_modify.js"></script>
 </head>
 
-<body class="" onLoad="getData3();">
+<body class="" onLoad="init_information_page();">
 	
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
@@ -49,25 +48,25 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li>
-            <a href="./main.html">
+            <a id="information_main_href_id">
               <i class="nc-icon nc-delivery-fast"></i>
               <p>주문현황</p>
             </a>
           </li>
 		  <li>
-            <a href="./list.html">
+            <a id="information_list_href_id">
               <i class="nc-icon nc-bullet-list-67"></i>
               <p>주문내역조회</p>
             </a>
           </li>
 		  <li class="active">
-            <a href="./information.html">
+            <a id="information_information_href_id">
               <i class="nc-icon nc-badge"></i>
               <p>가게정보</p>
             </a>
           </li>
 		  <li>
-            <a href="./menu.html">
+            <a id="information_menu_href_id">
               <i class="nc-icon nc-shop"></i>
               <p>메뉴관리</p>
             </a>
@@ -87,7 +86,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-			  <p class="navbar-brand"></p>
+			  <p id="information_title_id" class="navbar-brand"></p>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
