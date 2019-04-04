@@ -1,7 +1,5 @@
 // JavaScript Document
 
-
-
 var store_name = ''; //가게 상호명
 var store_phone = ''; //가게 번호
 var store_address = ''; //가게 주소
@@ -17,82 +15,23 @@ var store_restday = '';
 var store_notice = '';
 var store_phone = '';
 var store_profile_img = '';
-//
-// $(document).on("click", "#btn_login1", function (e) {
-//     //mId=$("#id").val();
-//     //mPassword=$("#pw").val();
-// 	store_name = $("#store_name").val(); //가게 상호명
-// 	store_phone = $("#store_phone").val(); //가게 번호
-// 	store_address = $("#store_address").val(); //가게 주소
-// 	store_point_x = $("#store_point_x").val(); //주소의 x좌표
-// 	store_point_y = $("#store_point_y").val(); //주소의 y좌표
-// 	start_time = $("#start_time").val(); // 오픈시간
-// 	end_time = $("#end_time").val(); //마감시간
-// 	storemaster_name = $("#storemaster_name").val(); //가게주인
-// 	storemaster_phone = $("#storemaster_phone").val(); //가게주인핸드폰번호
-// 	storemaster_rrn = $("#storemaster_rrn").val(); //가게주 주민번호
-// 	storemaster_num = $("#storemaster_num").val(); //사업자번호
-//     information();
-//
-// });
-/*
-function getData3()
+var store_serial = '';
+var store_name_title = '';
+
+
+function init_information_page()
 {
-           var data1 = {
-			   		"store_info" : "info",
-                    "store_id" : "root", //가게 상호명
-				    "store_password" : "1234" //가게 번호
-           };
-
-           var json1 = JSON.stringify(data1);
-           var http1 = new XMLHttpRequest();
-           var url = "http://54.180.102.7:80/get/store_manage.php";
-
-		   http1.open('POST', encodeURI(url), true);
-           http1.setRequestHeader('Content-Type', 'application/json');
-           http1.onerror = function (u) {
-               alert("Server not response");
-           }
-		   console.log(json1);
-		   
-	
-	     
-           http1.send(json1);
-	
-           http1.onload = function () {
-		   
-               if (http1.readyState == 4) 
-			   {
-                   if (http1.status == 200)
-				   {
-                       var result1 = JSON.parse(http1.responseText);
-					   document.getElementById("storemaster_num").value = result1.storemaster_num;
-					   document.getElementById("store_name1").value = result1.store_name;
-				
-                   }
-                   else {
-                       alert("Connect fail..");
-                   }
-               }
-               else {
-                   alert("Connect fail...");
-               }
-		   }
-		   
-		   //}
-		   
-		  //http1.send(json1);
-
-}
-
-*/
-
-function getData3()
-{
-	 var data = {
+	var tmp = location.href.split("?")[1].split("=")[1];
+	store_name_title = decodeURIComponent(tmp.split("&")[0]);
+	store_serial = tmp.split("&")[1]; //시리얼 넘버
+	document.getElementById("information_title_id").innerHTML=store_name_title;
+	get_main_page();
+	get_list_page();
+	get_information_page();
+	get_menu_page();
+	var data = {
 			"store_info" : 'info',
-			"store_id" : 'root',
-			"store_password" : '1234'
+			"store_serial" : store_serial
 		};
 		$.ajax({
 			url:"http://54.180.102.7:80/get/store_manage.php",
@@ -131,6 +70,23 @@ function getData3()
 		});
 	event.preventDefault();
 	
+}
+
+
+function get_main_page(){
+			    document.getElementById("information_main_href_id").href = "./main.html?type="+store_name_title+"&"+store_serial;
+}
+
+function get_information_page(){
+			    document.getElementById("information_information_href_id").href = "./information.html?type="+store_name_title+"&"+store_serial;
+}
+
+function get_list_page(){
+			    document.getElementById("information_list_href_id").href = "./list.html?type="+store_name_title+"&"+store_serial;
+}
+
+function get_menu_page(){
+			    document.getElementById("information_menu_href_id").href = "./menu.html?type="+store_name_title+"&"+store_serial;
 }
 
 

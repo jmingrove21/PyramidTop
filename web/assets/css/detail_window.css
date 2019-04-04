@@ -1,19 +1,13 @@
 @charset "utf-8";
 /* CSS Document */
-
-body{ 
-         text-align: center; 
-         display: block; 
-         margin: 0 auto; 
-         font-size: 16px; 
-         color: #999; 
-     } 
      h1{ 
          font-family: 'Oswald', sans-serif; 
          font-size: 30px; 
          color: #216182; 
      } 
-     label { 
+
+
+     label{ 
          display: block; 
          margin-top: 20px; 
          letter-spacing: 2px; 
@@ -66,7 +60,7 @@ body{
          background-color: #216282; 
          opacity: 0.9; 
      }
-
+*/
     .modal { 
          position: fixed; 
          left: 0; 
@@ -102,10 +96,3 @@ body{
      .close-button:hover { 
          background-color: darkgray; 
      } 
-     .show-modal { 
-         opacity: 1; 
-         visibility: visible; 
-         transform: scale(1.0); 
-         transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s; 
-     }
-
