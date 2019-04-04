@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     final EditText id=(EditText)findViewById(R.id.eid);
                     final EditText pw=(EditText)findViewById(R.id.epw);
-                    URL url = new URL("http://54.180.102.7:80/get/JSON/user_login.php");
+                    URL url = new URL("http://54.180.102.7/get/JSON/user_app/user_manage.php");
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("user_info","login");
                     jsonParam.put("user_id", id.getText().toString());
                     jsonParam.put("user_password", pw.getText().toString());
 
