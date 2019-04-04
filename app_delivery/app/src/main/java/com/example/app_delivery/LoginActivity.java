@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 try {
 
-                    URL url = new URL("http://54.180.102.7:80/get/delivery_manage.php");
+                    URL url = new URL("http://54.180.102.7:80/get/JSON/delivery_app/delivery_manage.php");
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                     os.close();
                     if(conn.getResponseCode()==200){
                         InputStream response = conn.getInputStream();
-                        String jsonReply = convertStreamToString(response);
+                        String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj=new JSONObject(jsonReply);
                         String json_result=jobj.getString("confirm");
                         Log.i("check_state", json_result);
@@ -110,27 +110,6 @@ public class LoginActivity extends AppCompatActivity {
         thread.start();
     }
 
-    private static String convertStreamToString(InputStream is) {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
     private void save_login_data() {
         SharedPreferences.Editor editor = appData.edit();
         editor.putBoolean("SAVE_LOGIN_DATA",checkBox.isChecked());
