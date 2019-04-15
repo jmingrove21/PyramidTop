@@ -4,42 +4,45 @@
          $store_serial=$json_data['store_serial'];
 
        $query="
-             SELECT tb1.order_receipt_date, m.menu_name
+            SELECT DISTINCT tb1.order_receipt_date, m.menu_name, tb1.order_number
              FROM
              (
-             SELECT s.order_serial,s.order_receipt_date
+             SELECT s.order_number, s.order_receipt_date
              FROM Capstone.store_order AS s
              WHERE s.store_serial=".$store_serial."
              ) tb1
              INNER JOIN Capstone.order_menu AS o
              INNER JOIN Capstone.menu_info AS m
-             ON tb1.order_serial=o.order_serial
+             ON tb1.order_number=o.order_number
              AND o.menu_serial=m.menu_serial
-             WHERE tb1.order_serial=o.order_serial
-             ORDER BY tb1.order_receipt_date ASC
+             WHERE tb1.order_number=o.order_number
+             ORDER BY tb1.order_number ASC
              ";
          $stmt = mysqli_query($connect,$query);
 
          $menu=[];
-         $date=0;
+         $order_num=0;
          $total=[];
 
         while ($row = mysqli_fetch_row($stmt)) {
 
-            if($date===0||strtotime($date)-strtotime($row[0])==0){
+            if($order_num===0||$order_num==$row[2]){
                 $date=$row[0];
+                $order_num=$row[2];
             }else{
                 $data=array(
-                'date'=>$date,
+                'order_num'=>$order_num,
+                'date'=>$row[0],
                 'menu'=>$menu
                 );
                 $menu=[];
                 array_push($total,$data);
-                $date=$row[0];
+                $order_num=$row[2];
             }
             array_push($menu,$row[1]);
         }
         $data=array(
+                        'order_num'=>$order_num,
                         'date'=>$date,
                         'menu'=>$menu
          );
