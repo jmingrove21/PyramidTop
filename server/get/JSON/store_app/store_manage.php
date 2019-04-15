@@ -8,15 +8,15 @@ $store_info=$json_data['store_info'];
 
 switch($store_info){
     case 'login':
-        include 'JSON/store_login.php';
+        include 'store_login.php';
         store_login($json_data);
         break;
     case 'info':
-        include 'JSON/store_info.php';
+        include 'store_info.php';
         store_info($json_data);
         break;
     case 'order':
-        include 'JSON/store_order.php';
+        include 'store_order.php';
         store_order($json_data);
         break;
 

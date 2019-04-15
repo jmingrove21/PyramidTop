@@ -1,6 +1,6 @@
 <?php
     function store_login($json_data){
-        include 'db.php';
+        include '../db.php';
         $id=$json_data['store_id'];
         $pw=$json_data['store_password'];
         $query = "SELECT COUNT(*) AS num FROM store_master AS s WHERE s.store_master_id='".$id."' AND s.store_master_password='".$pw."'";

@@ -1,6 +1,6 @@
 <?php
     function store_info($json_data){
-        include 'db.php';
+        include '../db.php';
         header('Content-Type: text/html; charset=utf-8');
         $store_serial=$json_data['store_serial'];
         $query = "SELECT m.store_master_num, s.store_name, m.store_master_name, s.store_address, s.start_time, s.end_time, s.store_restday, s.store_notice, m.store_master_phone, s.store_profile_img FROM store AS s INNER JOIN store_master AS m ON s.store_serial=m.store_serial WHERE s.store_serial='".$store_serial."'";
