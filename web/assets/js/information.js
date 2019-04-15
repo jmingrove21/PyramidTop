@@ -13,7 +13,6 @@ var storemaster_rrn = ''; //가게주 주민번호
 var storemaster_num = ''; //사업자번호
 var store_restday = '';
 var store_notice = '';
-var store_phone = '';
 var store_profile_img = '';
 var store_serial = '';
 var store_name_title = '';
