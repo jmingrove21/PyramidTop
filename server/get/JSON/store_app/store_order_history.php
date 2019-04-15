@@ -12,7 +12,7 @@ function history($json_data){
                 )tb1
                 INNER JOIN Capstone.user_order AS u
                 INNER JOIN Capstone.order_menu AS o
-                INNER JOIN Capstone.menu AS m
+                INNER JOIN Capstone.menu_infoAS m
                 ON tb1.order_serial=u.order_serial
                 AND u.order_serial=o.order_serial
                 AND o.menu_serial=m.menu_serial

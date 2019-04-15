@@ -3,7 +3,7 @@
          include '../db.php';
          $delivery_id=$json_data['delivery_id'];
 
-         $query="SELECT destination, destination_x, destination_y FROM user_order ";
+         $query="SELECT destination, destination_x, destination_y FROM user_order WHERE order_number=1";
          $stmt = mysqli_query($connect,$query);
          $confirm=-1;
          if($stmt)

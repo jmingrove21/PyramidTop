@@ -12,7 +12,7 @@
              WHERE s.store_serial=".$store_serial."
              ) tb1
              INNER JOIN Capstone.order_menu AS o
-             INNER JOIN Capstone.menu AS m
+             INNER JOIN Capstone.menu_info AS m
              ON tb1.order_serial=o.order_serial
              AND o.menu_serial=m.menu_serial
              WHERE tb1.order_serial=o.order_serial
