@@ -19,7 +19,7 @@ function login()
 			 "store_password" : mPassword
 		};
 		$.ajax({
-			url:"http://54.180.102.7:80/get/store_manage.php",
+			url:"http://54.180.102.7:80/get/JSON/store_app/store_manage.php",
 			type:"POST",
 			data: JSON.stringify(data),
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
