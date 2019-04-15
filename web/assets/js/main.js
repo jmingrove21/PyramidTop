@@ -22,7 +22,7 @@ function main_list()
 					$.each(result1,function(key,value)
 					{
 						//alert('key:'+key+', date:'+value.date+', menu:'+value.menu);
-						alert(value.menu.length);
+						//alert(value.menu.length);
 						var date = new Date(value.date);
 						var year = date.getFullYear()%1000;
 						var month = date.getMonth();
@@ -33,12 +33,22 @@ function main_list()
 						var minute = date.getMinutes();
 						var second = date.getSeconds();
 						$("#now_menu").append("<tr>");
-						$("#now_menu").append("<td style=\"text-align:left\">"+"날짜 : "+year+"."+month+"."+day+"</br>"+"시간 : "+hour+"시 "+month+"분"+"</td>");
-						$("#now_menu").append("<td>"+"#"+value.menu[0]+"</br>"+"#"+value.menu[1]+"</br>"+"#"+value.menu[2]+"</br>"+"#"+value.menu[3]+"</td>");
-
-						$("#now_menu").append("<td>"+value.menu+"</td>");
-						$("#now_menu").append("<td class=\"text-right\">");
-						$("#now_menu").append("<div class=\"icon-big text-middle icon-warning\" style=\"font_size\"=3em>");
+						$("#now_menu").append("<td width=\"200px\" style=\"text-align: left\">"+"날짜 : "+year+"."+month+"."+day+"</br>"+"시간 : "+hour+"시 "+month+"분"+"</td>");
+						//$("#now_menu").append("<td>"+"#"+value.menu[0]+"</br>"+"#"+value.menu[1]+"</br>"+"#"+value.menu[2]+"</br>"+"#"+value.menu[3]+"</td>");
+						//$("#now_menu").append("<td>");
+						var string = "<td width=\"280px\">";
+						for(var i=0; i<value.menu.length; i++)
+						{
+							string = string + "#" + value.menu[i];
+							if(i<value.menu.length-1)
+								string = string + "</br>";
+						}
+						string = string + "</td>";
+						alert(string);
+						$("#now_menu").append(string);
+						$("#now_menu").append("<td width=\"90px\">"+value.menu+"</td>");
+						$("#now_menu").append("<td class=\"text-left\">");
+						$("#now_menu").append("<div width=\"100px\" class=\"icon-big text-middle icon-warning\" style=\"font_size\"=3em>");
 						$("#now_menu").append("<i class=\"nc-icon nc-delivery-fast text-warning\" style=\"cursor:pointer\"></i>");
 						$("#now_menu").append("</div>");
 						$("#now_menu").append("</td>");
