@@ -65,10 +65,10 @@ public class SplashActivity extends Activity {
                                 String store_serial = ((JSONObject) jArray.get(i)).get("store_serial").toString();
                                 String store_name = ((JSONObject) jArray.get(i)).get("store_name").toString();
                                 String store_branch_name = ((JSONObject) jArray.get(i)).get("store_branch_name").toString();
-                                String store_phone = "031-212-2121";
-                                String store_address = "경기도 수원시 아주대";
+                                String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString();
+                                String store_address = ((JSONObject) jArray.get(i)).get("store_address").toString();
                                 String store_distance = ((JSONObject) jArray.get(i)).get("distance").toString();
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_phone, store_address, store_distance);
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, store_distance);
                                 UtilSet.al_store.add(s);
                             }
 

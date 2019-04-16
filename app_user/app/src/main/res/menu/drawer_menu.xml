@@ -7,8 +7,8 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_party"
-            android:icon="@drawable/ic_party"
-            android:title="참여현황" />
+            android:icon="@drawable/ic_orderlist"
+            android:title="지난 주문내역" />
     </group>
 
     <item android:title="계정관리">
