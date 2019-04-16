@@ -1,4 +1,4 @@
-package com.example.app_delivery;
+package com.example.app_user;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
