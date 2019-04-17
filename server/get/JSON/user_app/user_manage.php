@@ -14,6 +14,9 @@ switch($user_info){
         include 'user_join.php';
         user_join($json_data);
         break;
-
+    case 'main':
+        include 'user_main.php';
+        user_main($json_data);
+        break;
 }
 ?>
