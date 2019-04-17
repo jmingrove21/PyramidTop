@@ -2,10 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
 
     <ImageView
         android:id="@+id/imageView"
@@ -50,15 +49,38 @@
         android:textSize="20sp"></TextView>
 
     <TextView
-        android:textSize="20sp"
-        android:id="@+id/textView_description"
+        android:id="@+id/branch_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "TextView"
+        android:layout_below="@+id/imageView"
+        android:layout_alignStart="@+id/imageView"
         android:layout_alignBottom="@+id/imageView"
-        android:layout_alignLeft="@+id/textView_name"
-        android:layout_alignStart="@+id/textView_name"
-        android:layout_alignParentRight = "true"
-        android:layout_alignParentEnd = "true"
-        ></TextView>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="-26dp"
+        android:fontFamily="sans-serif"
+        android:text="TextView"
+        android:textSize="18sp"></TextView>
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="51dp"
+        android:layout_alignStart="@+id/branch_name"
+        android:layout_alignTop="@+id/branch_name"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="-60dp"
+        android:fontFamily="sans-serif"
+        android:text="TextView"
+        android:textSize="18sp"></TextView>
 </RelativeLayout>

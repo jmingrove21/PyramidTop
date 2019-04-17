@@ -15,6 +15,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -26,17 +28,13 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
             <ListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignTop="@+id/fragment_container"
-                android:layout_marginTop="?attr/actionBarSize" />
-
-            <FrameLayout
-                android:id="@+id/fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_marginTop="?attr/actionBarSize"
                 android:layout_above="@+id/bottom_navigation"/>
 
             <android.support.design.widget.BottomNavigationView
@@ -46,6 +44,12 @@
                 android:layout_alignParentBottom="true"
                 app:menu="@menu/bottom_navigation"
                 android:background="?android:attr/windowBackground"/>
+
+            <FrameLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottom_navigation"/>
         </RelativeLayout>
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"

@@ -3,6 +3,7 @@ package com.example.app_user;
 public class Store {
     private int store_serial;
     private String store_name;
+    private String store_branch_name;
     private String store_phone;
     private String store_address;
     private float distance;
@@ -10,11 +11,18 @@ public class Store {
     public Store(String serial, String name, String branch_name, String address, String phone, String distance){
         this.store_address = address;
         this.store_name  = name;
-        if(!branch_name.equals(""))
-            store_name+=" "+branch_name;
+        this.store_branch_name = branch_name;
         this.store_serial = Integer.parseInt(serial);
         this.distance = Float.parseFloat(distance);
         this.store_phone = phone;
+    }
+
+    public String getStore_branch_name() {
+        return store_branch_name;
+    }
+
+    public void setStore_branch_name(String store_branch_name) {
+        this.store_branch_name = store_branch_name;
     }
 
     public int getStore_serial() {

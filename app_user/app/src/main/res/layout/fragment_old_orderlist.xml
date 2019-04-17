@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/bottom_navigation"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:background="@android:color/white"
+    >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="주문내역"
+        android:text="이전 주문내역"
         android:textSize="30sp"
         android:layout_centerInParent="true"/>
+
 </RelativeLayout>
