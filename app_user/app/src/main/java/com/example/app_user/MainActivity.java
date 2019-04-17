@@ -1,7 +1,9 @@
 package com.example.app_user;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,7 +23,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int[] IMAGES = {R.drawable.alchon, R.drawable.goobne, R.drawable.back, R.drawable.kyochon};
 
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity  {
 
 
         drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
         R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -49,6 +54,26 @@ public class MainActivity extends AppCompatActivity  {
         listView.setAdapter(customAdapter);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch(menuItem.getItemId()){
+            case R.id.old_olderlist:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new old_olderlist()).commit();
+                break;
+            case R.id.menu_idoption:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new profile()).commit();
+                break;
+            case R.id.menu_logout:
+                Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+                startActivityForResult(intent,101);
+                break;
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

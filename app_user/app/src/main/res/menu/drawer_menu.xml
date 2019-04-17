@@ -6,7 +6,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_party"
+            android:id="@+id/old_olderlist"
             android:icon="@drawable/ic_orderlist"
             android:title="지난 주문내역" />
     </group>
