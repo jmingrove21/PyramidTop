@@ -166,11 +166,11 @@
               <div class="card-footer ">
 				  <div class="table-responsive">
                   <table class="table">
-                    <thead class=" text-primary">	
-                      <th width="210px"> &nbsp;주문시간 </th>
-                      <th width="280px"> &nbsp;메뉴 </th>
-                      <th width="100px" style="text-align: center"> 상세보기</th>
-                      <th class="text-right" width="100px" style="text-align: center"> 배송출발</th>
+                    <thead class="text-primary">
+                      <th width="230px"> &nbsp;주문시간 </th>
+                      <th width="220px"> &nbsp;메뉴 </th>
+                      <th width="150px" style="text-align: center"> 상세보기 </th>
+                      <th class="text-right" width="150px" style="text-align: center"> 배송출발</th>
                     </thead>
                     <tbody id="now_menu">
                       <tr>
@@ -189,23 +189,23 @@
                       		<i id="temp1" style="cursor:pointer" class="nc-icon nc-simple-add text-warning" href="javascript:;" onclick="javascript:ViewSearch();">
 							</i>
 							<!----이거는 상세보기를 눌렀을 때 새 레이어창을 위한 코드입니다-->
-							<div id="detailPopup" class="modal" 
-								 style="text-align: center; 
-										 display: none; 
-										 margin: 0 auto; 
-										 font-size: 16px; 
-										 color: #999; "> 
-        						 <div class="modal-content"> 
-								 	<span class="close-button" onClick="CloseSearch();">&times;</span> 
-								 		<h1 class="title">주문 상세내역</h1> 
-								 		<form action="#post.php" method="POST"> 
-								   		<label for="email">주문자1</label> 
-								   		<input type="email" name="email" placeholder="Your email" required="required"> 
-								   		<label></label> 
-								   		<textarea name="message" placeholder="Test Message" required="required"></textarea> 
-								   		<input type="button" id="cancel" value="확인" onClick="CloseSearch();"> 
-								 		</form> 
-							 	</div> 
+							<div id="detailPopup" class="modal"
+								 style="text-align: center;
+										 display: none;
+										 margin: 0 auto;
+										 font-size: 16px;
+										 color: #999; ">
+        						 <div class="modal-content">
+								 	<span class="close-button" onClick="CloseSearch();">&times;</span>
+								 		<h1 class="title">주문 상세내역</h1>
+								 		<form action="#post.php" method="POST">
+								   		<label for="email">주문자1</label>
+								   		<input type="email" name="email" placeholder="Your email" required="required">
+								   		<label></label>
+								   		<textarea name="message" placeholder="Test Message" required="required"></textarea>
+								   		<input type="button" id="cancel" value="확인" onClick="CloseSearch();">
+								 		</form>
+							 	</div>
 						 </div>
 
 
@@ -215,7 +215,7 @@
                         </td>
 						<td class="text-right">
                         <div class="icon-big text-middle icon-warning">
-                      			<i id="temp2" class="nc-icon nc-delivery-fast text-warning" style="cursor:pointer"></i>
+                      			<i class="nc-icon nc-delivery-fast text-primary" style="cursor:pointer"></i>
                    		  </div>
                         </td>
                       </tr>
@@ -248,64 +248,17 @@
                   </div>
                 </div>
               </div>
-              <div class="card-footer ">
+              <div class="card-footer">
 				  <div class="table-responsive">
                   <table class="table">
-                    <thead class=" text-primary">	
-                      <th width="150px"> 출발시간</th>
-                      <th width="300px"> 메뉴</th>
-                      <th class="text-right" width="100px"> 배송완료</th>
+                    <thead class="text-primary">
+                      <th width="230px"> 출발시간</th>
+                      <th width="220px"> 메뉴</th>
+                      <th width="150px" style="text-align: center"> 상세보기 </th>
+                      <th class="text-right" width="150px"> 배송완료</th>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          날짜 : 19.03.10
-						  <br> 시간 : 19시 30분
-                        </td>
-                        <td>
-                          #짜장면1
-						  <br> #짬뽕1
-						  <br> #탕수육1
-                        </td>
-<td class="text-right">
-                        <div class="icon-big text-middle icon-warning">
-                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
-                   		</div>
-                        </td>
-                      </tr>
-						<tr>
-                        <td>
-                          날짜 : 19.03.10
-						  <br> 시간 : 19시 30분
-                        </td>
-                        <td>
-                          #짜장면1
-						  <br> #짬뽕1
-						  <br> #탕수육1
-                        </td>
-<td class="text-right">
-                        <div class="icon-big text-middle icon-warning">
-                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
-                   		  </div>
-                        </td>
-                      </tr>
-						<tr>
-                        <td>
-                          날짜 : 19.03.10
-						  <br> 시간 : 19시 30분
-                        </td>
-                        <td>
-                          #짜장면1
-						  <br> #짬뽕1
-						  <br> #탕수육1
-                        </td>
-<td class="text-right">
-                        <div class="icon-big text-middle icon-warning">
-                      			<i class="nc-icon nc-delivery-fast text-warning"></i>
-                   		  </div>
-                        </td>
-                      </tr>
-                      
+                    <tbody id="now_delivery">
+
                     </tbody>
                   </table>
                 </div>
