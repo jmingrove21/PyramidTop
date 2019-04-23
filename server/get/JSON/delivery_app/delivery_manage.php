@@ -14,6 +14,9 @@ switch($delivery_info){
         include 'delivery_order.php';
         delivery_order($json_data);
         break;
-
+    case 'request':
+        include 'delivery_request.php';
+        delivery_request($json_data);
+        break;
 }
 ?>
