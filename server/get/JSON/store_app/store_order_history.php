@@ -40,11 +40,7 @@ function store_order_history($json_data){
                  $order_num=$row['order_number'];
              }else{
                  array_push($user_order,$user_menu);
-                 $data=array(
-                "order_number"=>$order_num,
-                'order_receipt_date'=>$row['order_receipt_date'],
-                "user_order"=>$user_order
-                 );
+                 $data['user_order']=$user_order;
                  array_push($total,$data);
                  $order_num=$row['order_number'];
                  $user_order=[];

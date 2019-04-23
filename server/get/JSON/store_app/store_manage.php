@@ -27,7 +27,10 @@ switch($store_info){
         include 'store_order_history.php';
         store_order_history($json_data);
         break;
-
+    case 'menu':
+        include 'store_menu.php';
+        store_menu($json_data);
+        break;
 
 }
 ?>

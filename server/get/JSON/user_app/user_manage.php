@@ -18,5 +18,9 @@ switch($user_info){
         include 'user_main.php';
         user_main($json_data);
         break;
+    case 'store_info':
+        include 'user_store_info.php';
+        store_info($json_data);
+        break;
 }
 ?>
