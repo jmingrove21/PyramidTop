@@ -12,7 +12,7 @@
         			FROM Capstone.store_order AS so
         			INNER JOIN Capstone.store AS s
         			ON so.store_serial=s.store_serial
-        			WHERE so.order_status=3
+        			WHERE so.order_status=4
         			) tb1
         		INNER JOIN Capstone.order_menu AS o
         		INNER JOIN Capstone.menu AS m
