@@ -1,44 +1,47 @@
 package com.example.app_user;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class FirstMainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    int[] IMAGES = {R.drawable.alchon, R.drawable.goobne, R.drawable.back, R.drawable.kyochon};
+    int[] FIRSTIMAGES = {R.drawable.ilsic,R.drawable.yangsic,R.drawable.jungsic,R.drawable.hansic};
+    String[] FIRSTNAMES = {"일식","양식","중식","한식"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_first_main);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("가게 목록");
+        getSupportActionBar().setTitle("음식 목록");
 
 
         drawer = findViewById(R.id.drawer_layout);
@@ -50,17 +53,18 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView)findViewById(R.id.listView);
+        ListView listView = (ListView)findViewById(R.id.first_listView);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivityForResult(intent,101);
             }
         });
+
     }
 
     @Override
@@ -104,6 +108,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();
                     return true;
+
                 }
             };
 
@@ -124,7 +129,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         @Override
         public int getCount() {
-            return IMAGES.length;
+            return FIRSTIMAGES.length;
         }
 
         @Override
@@ -139,20 +144,16 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.customlayout, null);
+            view = getLayoutInflater().inflate(R.layout.first_main_layout, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
-            TextView textView_phone = (TextView) view.findViewById(R.id.textView_phone);
-            TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
-            TextView textView_address = (TextView) view.findViewById(R.id.address);
+            ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
+            TextView textView_name = (TextView) view.findViewById(R.id.first_name);
 
-            imageView.setImageResource(IMAGES[i]);
-            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
-            textView_phone.setText(UtilSet.al_store.get(i).getStore_phone());
-            textView_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());
-            textView_address.setText(UtilSet.al_store.get(i).getStore_address());
+
+            imageView.setImageResource(FIRSTIMAGES[i]);
+            textView_name.setText(FIRSTNAMES[i]);
+
             return view;
         }
     }
