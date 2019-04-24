@@ -58,7 +58,7 @@ function main_list()
 
 							//여기까지 주문 메뉴 이 다음부터 아이콘
 
-							$("#now_menu").append("<td><a class='text-info' href='javascript:;' style='font-weight: bold' onclick='javascript:ViewSearch();'>상세보기</a></td>");
+							$("#now_menu").append("<td><a class='text-info' href='#0' style='font-weight: bold'>상세보기</a></td>");
 							$("#now_menu").append("<td><a class='text-info' href='#0' style='font-weight: bold'>배송출발</a></td>");
 							$("#now_menu").append("</tr>");
 						}
@@ -84,7 +84,7 @@ function main_list()
 
 							//여기까지 주문 메뉴 이 다음부터 아이콘
 
-							$("#now_delivery").append("<td><a class='text-info' href='javascript:;' style='font-weight: bold' onClick='ViewSearch();'>상세보기</a></td>");
+							$("#now_delivery").append("<td><a class='text-info' href='#0' style='font-weight: bold'>상세보기</a></td>");
 							$("#now_delivery").append("<td><a class='text-info' href='#0' style='font-weight: bold'>배송출발</a></td>");
 							$("#now_delivery").append("</tr>");
 						}
@@ -136,11 +136,3 @@ function init_main_page(){
 	    event.preventDefault();
 	
 }
-
-
-function shift_menu()
-{
-	//$("#now_menu").
-}
-
-
