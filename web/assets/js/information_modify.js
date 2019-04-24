@@ -1,4 +1,4 @@
-// JavaScript Document
+﻿// JavaScript Document
 
 
 var store_name = ''; //가게 상호명
@@ -42,7 +42,7 @@ function modifyData()
            var data2 = {
 			   		"store_name" : Store_name, //가게 상호명
   					"store_phone" : Store_phone,  //가게 번호
-  					"store_address" : Store_address,  //가게 주소
+  					"store_address" : Store_address,  //가게 주소s
   					"start_time" : Start_time,  // 오픈시간
 			   		"end_time" : End_time,  //마감시간
   					"storemaster_name" : Storemaster_name,  //가게주인
