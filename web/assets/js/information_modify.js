@@ -124,7 +124,6 @@ function modifyData() {
             "start_time": Start_time,  // 오픈시간
             "end_time": End_time,  //마감시간
             "storemaster_name": Storemaster_name,  //가게주인
-            "store_phone": Store_phone, //가게주인핸드폰번호
             "storemaster_num": Storemaster_num, //사업자번호
             "store_notice": Store_notice,
             "store_restday": Store_restday,
@@ -132,7 +131,7 @@ function modifyData() {
         };
 
     $.ajax({
-        url: "http://54.180.102.7:80/get/JSON/store_modify.php",
+        url: "http://54.180.102.7:80/get/JSON/store_app/store_modify_info.php",
         data: formdata,
         dataType:'text',
         encrypt:"multipart/form-data",
