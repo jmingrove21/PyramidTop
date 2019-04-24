@@ -16,7 +16,7 @@ var store_restday = '';
 var store_notice = '';
 var store_phone = '';
 var Store_profile_img = '';
-
+var store_serial='';
 
 $(document).on("click", "#btn_modify", function (a) {
     mId2 = $("#store_id").val();
@@ -100,9 +100,14 @@ function modifyData() {
         'uploadFile': Store_profile_img
     };
 
+    var tmp = location.href.split("?")[1].split("=")[1];
+    store_serial = tmp.split("&")[1];
+    alert(store_serial);
+
     JSON.stringify(newObject);
     var formdata = new FormData();
     formdata.append('image_file', Store_profile_img);
+    formdata.append('store_serial', store_serial);
     formdata.append('store_info', "modify");
     formdata.append('store_name', Store_name);
     formdata.append('store_phone', Store_phone);
@@ -127,6 +132,7 @@ function modifyData() {
             "storemaster_num": Storemaster_num, //사업자번호
             "store_notice": Store_notice,
             "store_restday": Store_restday,
+            "store_serial" : store_serial,
             "store_profile_img": Store_profile_img
         };
 
