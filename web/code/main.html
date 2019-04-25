@@ -16,8 +16,6 @@
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
-  <link href="../assets/css/original.css" rel="stylesheet"/>
-  <link href="../assets/css/detail_window.css" rel="stylesheet"/>
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <!---<link href="../assets/demo/demo.css" rel="stylesheet" />-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -167,12 +165,13 @@
 				  <div class="table-responsive">
                   <table class="table">
                     <thead class="text-primary">
-                      <th width="230px"> &nbsp;주문시간 </th>
-                      <th width="220px"> &nbsp;메뉴 </th>
-                      <th width="150px" style="text-align: center"> 상세보기 </th>
-                      <th class="text-right" width="150px" style="text-align: center"> 배송출발</th>
+                      <th width="300px"> &nbsp;주문시간 </th>
+                      <th width="350px"> &nbsp;메뉴 </th>
+                      <th style="text-align: center"> 상세보기 </th>
+                      <th style="text-align: center"> 배송출발 </th>
                     </thead>
                     <tbody id="now_menu">
+                    <!--
                       <tr>
                         <td>
                           날짜 : 19.03.10
@@ -183,12 +182,12 @@
                           <br> #짬뽕1
                           <br> #탕수육1
                         </td>
-						<td class="text-right">
-                        <div class="icon-big text-middle icon-warning">
+						<td class="text-center">
 							
-                      		<i id="temp1" style="cursor:pointer" class="nc-icon nc-simple-add text-warning" href="javascript:;" data-toggle="modal" data-target="#myModal">
-							</i>
-							<!----이거는 상세보기를 눌렀을 때 새 레이어창을 위한 코드입니다-->
+                      		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+                              상세보기
+							</button>
+							----이거는 상세보기를 눌렀을 때 새 레이어창을 위한 코드입니다--
 
                           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -196,12 +195,11 @@
                                 <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">
-                                    &times
                                     </span>
-                                    <h4 class="modal-title" id="myModalLabel">
-                                      Modal title
-                                    </h4>
                                   </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                      상세보기
+                                    </h4>
                                 </div>
                                 <div class="modal-body">
                                   <p>
@@ -209,11 +207,8 @@
                                   </p>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal">
+                                  <button type="button" class="btn btn-primary" data-dismiss="modal">
                                     Close
-                                  </button>
-                                  <button type="button" class="btn btn-primary">
-                                    Save changes
                                   </button>
                                 </div>
                               </div>
@@ -221,27 +216,7 @@
                           </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        </div>
-
-
-							<!---여기까지.....---------------->
+							---여기까지.....---------------
 
                         </td>
 						<td class="text-right">
@@ -250,7 +225,7 @@
                    		  </div>
                         </td>
                       </tr>
-                      
+                    -->
                     </tbody>
                   </table>
                 </div>
@@ -285,8 +260,8 @@
                     <thead class="text-primary">
                       <th width="230px"> 출발시간</th>
                       <th width="220px"> 메뉴</th>
-                      <th width="150px" style="text-align: center"> 상세보기 </th>
-                      <th class="text-right" width="150px"> 배송완료</th>
+                      <th style="text-align:center"> 상세보기 </th>
+                      <th style="text-align:center"> 배송완료</th>
                     </thead>
                     <tbody id="now_delivery">
 
