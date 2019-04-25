@@ -21,7 +21,7 @@ function main_list()
 					var result1 = JSON.parse(result);
 					$.each(result1,function(key,value)
 					{
-						alert('key:'+key+',order_status:'+value.order_status+',order_num:'+value.order_num+', date:'+value.date+', menu:'+value.menu);
+						//alert('key:'+key+',order_status:'+value.order_status+',order_num:'+value.order_num+', date:'+value.date+', menu:'+value.menu);
 						//alert(value.menu.length);
 						var count =1;
 						var date = new Date(value.date);
@@ -40,7 +40,7 @@ function main_list()
 						if(order_status==3) {
 							var string_temp = "<tr id=\"";
 							string_temp = string_temp + order_num + "\"" + ">";
-							alert(string_temp);
+							//alert(string_temp);
 							$("#now_menu").append(string_temp); //tr 태그 추가. order_num을 id로 넘김
 							//var temp = document.getElementById("now_delivery").getElementsByTagName('tr');
 							//alert(temp.valueOf(id));
@@ -57,12 +57,16 @@ function main_list()
 							$("#now_menu").append(string);
 
 							//여기까지 주문 메뉴 이 다음부터 아이콘
-
-							$("#now_menu").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal'>상세보기</button></td>");
-							string = "<td class='text-center for_change_status'><button type='button' class='btn btn-primary btn-sm' onclick='change_deli_status(";
+							string = "<td class='text-center'><button type='button' class='btn btn-primary btn-sm' onclick='detail_deliver_list(";
+							string = string + order_num;
+							string = string + ");'>상세보기</button></td>";
+							//alert(string);
+							$("#now_menu").append(string);
+							//$("#now_menu").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal' onclick='detail_deliver_list();'>상세보기</button></td>");
+							string = "<td class='text-center'><button type='button' class='btn btn-primary btn-sm' onclick='change_deli_status(";
 							string = string + order_num;
 							string = string + ");'>배송출발</button></td>";
-							alert(string);
+							//alert(string);
 							$("#now_menu").append(string);
 							//$("#now_menu").append("<td class='text-center for_change_status'><button type='button' class='btn btn-primary btn-sm' onclick='change_deli_status();'>배송출발</button></td>");
 							$("#now_menu").append("</tr>");
@@ -71,7 +75,7 @@ function main_list()
 						{
 							var string_temp = "<tr id=\"";
 							string_temp = string_temp + order_num + "\"" + ">";
-							alert(string_temp);
+							//alert(string_temp);
 							$("#now_delivery").append(string_temp); //tr 태그 추가. order_num을 id로 넘김
 							//var temp = document.getElementById("now_menu").getElementsByTagName('tr');
 							//alert(temp.valueOf(id));
@@ -165,4 +169,25 @@ function change_deli_status(number) {
 			}
 		}
 	})
+}
+
+function detail_deliver_list(number)
+{
+	var data = {
+		"store_info": "detail_main",
+		"store_serial": store_serial,
+		"order_num": number
+	};
+	//alert(number);
+	$.ajax({
+		url: "http://54.180.102.7:80/get/JSON/store_app/store_manage.php",
+		type: "POST",
+		data: JSON.stringify(data),
+		success: function (result) {
+			if (result) {
+				var result1 = JSON.parse(result);
+				alert(result1);
+			}
+		}
+	});
 }
