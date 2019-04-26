@@ -22,5 +22,9 @@ switch($user_info){
         include 'user_store_info.php';
         store_info($json_data);
         break;
+    case 'make_order':
+        include 'user_make_order.php';
+        user_make_order($json_data);
+        break;
 }
 ?>
