@@ -27,9 +27,8 @@ import android.widget.TextView;
 
 public class First_Main_Activity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    int[] FIRSTIMAGES = {R.drawable.ilsic,R.drawable.yangsic,R.drawable.jungsic,R.drawable.hansic};
+    int[] FIRSTIMAGES = {1,2,3,4};
     String[] FIRSTNAMES = {"일식","양식","중식","한식"};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("음식 목록");
-
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -64,7 +62,6 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                 startActivityForResult(intent,101);
             }
         });
-
     }
 
     @Override
@@ -92,7 +89,6 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-
                     switch(item.getItemId()){
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
@@ -103,12 +99,10 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                         case R.id.nav_party:
                             selectedFragment = new PeopleFragment();
                             break;
-
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();
                     return true;
-
                 }
             };
 
@@ -116,6 +110,7 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
     }
+
     @Override
     public void onBackPressed(){
         if(drawer.isDrawerOpen(GravityCompat.START)){
@@ -149,7 +144,6 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
 
             ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);
-
 
             imageView.setImageResource(FIRSTIMAGES[i]);
             textView_name.setText(FIRSTNAMES[i]);
