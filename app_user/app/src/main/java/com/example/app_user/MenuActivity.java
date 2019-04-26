@@ -31,28 +31,24 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store_menu);
+        setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("메뉴 목록");
+        getSupportActionBar().setTitle("메뉴 선택");
 
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
-                R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView)findViewById(R.id.checkbox_ListView);
-        CustomAdapter customAdapter = new CustomAdapter();
-        listView.setAdapter(customAdapter);
     }
 
     @Override
@@ -131,13 +127,20 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.menulayout, null);
+            view = getLayoutInflater().inflate(R.layout.customlayout, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
 
-            TextView textView_name = (TextView) view.findViewById(R.id.menu_name);
+            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
+            TextView textView_phone = (TextView) view.findViewById(R.id.textView_phone);
+            TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
+            TextView textView_address = (TextView) view.findViewById(R.id.address);
 
+            imageView.setImageResource(IMAGES[i]);
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());
-
+            textView_phone.setText(UtilSet.al_store.get(i).getStore_phone());
+            textView_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());
+            textView_address.setText(UtilSet.al_store.get(i).getStore_address());
             return view;
         }
     }
