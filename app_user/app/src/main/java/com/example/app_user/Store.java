@@ -9,8 +9,11 @@ public class Store {
     private String store_branch_name;
     private String store_address_jibun;
     private String store_building_name;
+
+
     private String start_time;
     private String end_time;
+    private String store_notice;
     private String store_restday;
     private String store_profile_img;
     private String store_main_type_name;
@@ -72,7 +75,52 @@ public class Store {
         return distance;
     }
 
-    public void setDistance(float distance) {
-        this.distance = distance;
+    public void set_store_spec(String store_address_jibun,String store_building_name,String start_time, String end_time, String store_restday, String store_notice, String store_profile_img, String store_main_type_name, String store_sub_type_name){
+        this.store_address_jibun=store_address_jibun;
+        this.store_building_name=store_building_name;
+        this.start_time=start_time;
+        this.end_time=end_time;
+        this.store_restday=store_restday;
+        this.store_notice=store_notice;
+        this.store_profile_img=store_profile_img;
+        this.store_main_type_name=store_main_type_name;
+        this.store_sub_type_name=store_sub_type_name;
     }
+
+    public String getStore_address_jibun() {
+        return store_address_jibun;
+    }
+
+    public String getStore_building_name() {
+        return store_building_name;
+    }
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public String getStore_notice() {
+        return store_notice;
+    }
+
+    public String getStore_restday() {
+        return store_restday;
+    }
+
+    public String getStore_profile_img() {
+        return store_profile_img;
+    }
+
+    public String getStore_main_type_name() {
+        return store_main_type_name;
+    }
+
+    public String getStore_sub_type_name() {
+        return store_sub_type_name;
+    }
+
 }

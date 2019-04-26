@@ -198,8 +198,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         String jsonReply = UtilSet.convertStreamToString(response);
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
-                            String store_name=jobj.getString("store_name");
-                            String store_branch_name = jobj.getString("store_branch_name");
                             String store_address_jibun = jobj.getString("store_address_jibun");
                             String store_building_name = jobj.getString("store_building_name");
                             String start_time =jobj.getString("start_time");
@@ -207,12 +205,16 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                             String store_restday = jobj.getString("store_restday");
                             String store_notice = jobj.getString("store_notice");
                             String store_profile_img = jobj.getString("store_profile_img");
-                            String store_phone = jobj.getString("store_phone");
                             String store_main_type_name = jobj.getString("store_main_type_name");
                             String store_sub_type_name = jobj.getString("store_main_type_name");
 
-                            Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, store_distance);
-
+                            int index=-1;
+                            for(int i=0;i<UtilSet.al_store.size();i++){
+                                if(UtilSet.al_store.get(i).getStore_serial()==store_ser)  {
+                                    index=i;
+                                }
+                            }
+                            UtilSet.al_store.get(index).set_store_spec(store_address_jibun,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
 
                             Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
                             startActivityForResult(intent,101);
