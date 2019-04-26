@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 store_ser = UtilSet.al_store.get(position).getStore_serial();
+                store_info_specification();
             }
         });
     }
@@ -167,7 +168,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }
     }
 
-    public void store_info_init() {
+    public void store_info_specification() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -182,11 +183,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info", "asdfl jk");
-                    jsonParam.put("user_lat", 127.0435);
-                    jsonParam.put("user_long", 37.2799);
-                    jsonParam.put("user_count", 4);
-
+                    jsonParam.put("user_info", "store_info");
+                    jsonParam.put("store_serial", store_ser);
 
                     Log.i("JSON", jsonParam.toString());
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
@@ -199,17 +197,22 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         try {
-                            JSONArray jArray = new JSONArray(jsonReply);
-                            for (int i = 0; i < jArray.length(); i++) {
-                                String store_serial = ((JSONObject) jArray.get(i)).get("store_serial").toString();
-                                String store_name = ((JSONObject) jArray.get(i)).get("store_name").toString();
-                                String store_branch_name = ((JSONObject) jArray.get(i)).get("store_branch_name").toString();
-                                String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString();
-                                String store_address = ((JSONObject) jArray.get(i)).get("store_address").toString();
-                                String store_distance = ((JSONObject) jArray.get(i)).get("distance").toString();
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, store_distance);
-                                UtilSet.al_store.add(s);
-                            }
+                            JSONObject jobj = new JSONObject(jsonReply);
+                            String store_name=jobj.getString("store_name");
+                            String store_branch_name = jobj.getString("store_branch_name");
+                            String store_address_jibun = jobj.getString("store_address_jibun");
+                            String store_building_name = jobj.getString("store_building_name");
+                            String start_time =jobj.getString("start_time");
+                            String end_time = jobj.getString("end_time");
+                            String store_restday = jobj.getString("store_restday");
+                            String store_notice = jobj.getString("store_notice");
+                            String store_profile_img = jobj.getString("store_profile_img");
+                            String store_phone = jobj.getString("store_phone");
+                            String store_main_type_name = jobj.getString("store_main_type_name");
+                            String store_sub_type_name = jobj.getString("store_main_type_name");
+
+                            Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, store_distance);
+
 
                             Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
                             startActivityForResult(intent,101);

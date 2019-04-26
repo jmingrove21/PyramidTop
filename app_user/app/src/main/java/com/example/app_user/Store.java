@@ -1,9 +1,20 @@
 package com.example.app_user;
 
+import java.util.ArrayList;
+
 public class Store {
+    public ArrayList<Menu> menu_al=new ArrayList<>();
     private int store_serial;
     private String store_name;
     private String store_branch_name;
+    private String store_address_jibun;
+    private String store_building_name;
+    private String start_time;
+    private String end_time;
+    private String store_restday;
+    private String store_profile_img;
+    private String store_main_type_name;
+    private String store_sub_type_name;
     private String store_phone;
     private String store_address;
     private float distance;
