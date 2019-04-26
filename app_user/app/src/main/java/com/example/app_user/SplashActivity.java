@@ -43,7 +43,7 @@ public class SplashActivity extends Activity {
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info", "main");
+                    jsonParam.put("user_info", "store_list");
                     jsonParam.put("user_lat", 127.0435);
                     jsonParam.put("user_long", 37.2799);
                     jsonParam.put("user_count", 4);
@@ -72,7 +72,7 @@ public class SplashActivity extends Activity {
                                 UtilSet.al_store.add(s);
                             }
 
-                            Intent intent=new Intent(getApplicationContext(),FirstMainActivity.class);
+                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivityForResult(intent,101);
                             finish();
                         } catch (Exception e) {
