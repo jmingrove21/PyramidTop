@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    int store_ser;
     int[] IMAGES = {R.drawable.alchon, R.drawable.goobne, R.drawable.back, R.drawable.kyochon};
 
     @Override
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
                 startActivityForResult(intent,101);
             }
