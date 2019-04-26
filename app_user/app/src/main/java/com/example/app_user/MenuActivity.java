@@ -61,9 +61,10 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
         listView = (ListView) findViewById(R.id.checkbox_ListView);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.menulayout,R.id.checkbox_layout,data);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>();
         listView.setAdapter(adapter);
+//        listView.setOnItemClickListener();
 
         TextView text_store_name = (TextView) findViewById(R.id.store_name);
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
