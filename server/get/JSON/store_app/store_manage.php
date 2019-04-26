@@ -23,8 +23,14 @@ switch($store_info){
         include 'store_complete_order.php';
         store_complete_order($json_data);
         break;
-
-
+    case 'history':
+        include 'store_order_history.php';
+        store_order_history($json_data);
+        break;
+    case 'menu':
+        include 'store_menu.php';
+        store_menu($json_data);
+        break;
 
 }
 ?>

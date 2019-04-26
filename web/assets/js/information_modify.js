@@ -1,4 +1,4 @@
-// JavaScript Document
+﻿// JavaScript Document
 
 
 var store_name = ''; //가게 상호명
@@ -16,7 +16,7 @@ var store_restday = '';
 var store_notice = '';
 var store_phone = '';
 var Store_profile_img = '';
-
+var store_serial='';
 
 $(document).on("click", "#btn_modify", function (a) {
     mId2 = $("#store_id").val();
@@ -42,7 +42,7 @@ function modifyData()
            var data2 = {
 			   		"store_name" : Store_name, //가게 상호명
   					"store_phone" : Store_phone,  //가게 번호
-  					"store_address" : Store_address,  //가게 주소
+  					"store_address" : Store_address,  //가게 주소s
   					"start_time" : Start_time,  // 오픈시간
 			   		"end_time" : End_time,  //마감시간
   					"storemaster_name" : Storemaster_name,  //가게주인
@@ -100,9 +100,14 @@ function modifyData() {
         'uploadFile': Store_profile_img
     };
 
+    var tmp = location.href.split("?")[1].split("=")[1];
+    store_serial = tmp.split("&")[1];
+    alert(store_serial);
+
     JSON.stringify(newObject);
     var formdata = new FormData();
     formdata.append('image_file', Store_profile_img);
+    formdata.append('store_serial', store_serial);
     formdata.append('store_info', "modify");
     formdata.append('store_name', Store_name);
     formdata.append('store_phone', Store_phone);
@@ -124,15 +129,15 @@ function modifyData() {
             "start_time": Start_time,  // 오픈시간
             "end_time": End_time,  //마감시간
             "storemaster_name": Storemaster_name,  //가게주인
-            "store_phone": Store_phone, //가게주인핸드폰번호
             "storemaster_num": Storemaster_num, //사업자번호
             "store_notice": Store_notice,
             "store_restday": Store_restday,
+            "store_serial" : store_serial,
             "store_profile_img": Store_profile_img
         };
 
     $.ajax({
-        url: "http://54.180.102.7:80/get/JSON/store_modify.php",
+        url: "http://54.180.102.7:80/get/JSON/store_app/store_modify_info.php",
         data: formdata,
         dataType:'text',
         encrypt:"multipart/form-data",

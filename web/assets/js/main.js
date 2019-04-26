@@ -9,7 +9,7 @@ function main_list()
 {
 	
 	 var data = {
-			"store_info" : "order",
+			"store_info" : "main",
 			"store_serial" : store_serial
 		};
 		$.ajax({
@@ -21,39 +21,72 @@ function main_list()
 					var result1 = JSON.parse(result);
 					$.each(result1,function(key,value)
 					{
-						//alert('key:'+key+', date:'+value.date+', menu:'+value.menu);
+						alert('key:'+key+',order_status:'+value.order_status+',order_num:'+value.order_num+', date:'+value.date+', menu:'+value.menu);
 						//alert(value.menu.length);
+						var count =1;
 						var date = new Date(value.date);
 						var year = date.getFullYear()%1000;
-						var month = date.getMonth();
+						var month = date.getMonth()+1;
 						if(month<10)
 							month = "0"+month;
 						var day = date.getDate();
 						var hour = date.getHours();
 						var minute = date.getMinutes();
-						var second = date.getSeconds();
-						$("#now_menu").append("<tr>");
-						$("#now_menu").append("<td width=\"200px\" style=\"text-align: left\">"+"날짜 : "+year+"."+month+"."+day+"</br>"+"시간 : "+hour+"시 "+month+"분"+"</td>");
-						//$("#now_menu").append("<td>"+"#"+value.menu[0]+"</br>"+"#"+value.menu[1]+"</br>"+"#"+value.menu[2]+"</br>"+"#"+value.menu[3]+"</td>");
-						//$("#now_menu").append("<td>");
-						var string = "<td width=\"280px\">";
-						for(var i=0; i<value.menu.length; i++)
-						{
-							string = string + "#" + value.menu[i];
-							if(i<value.menu.length-1)
-								string = string + "</br>";
+						if(minute<10)
+							minute = "0" + minute;
+						var order_num = value.order_num;
+						var order_status = value.order_status;
+						//alert(order_num);
+						if(order_status==3) {
+							var string_temp = "<tr id=\"";
+							string_temp = string_temp + order_num + "\"" + ">";
+							//alert(string_temp);
+							$("#now_menu").append(string_temp); //tr 태그 추가. order_num을 id로 넘김
+							//var temp = document.getElementById("now_delivery").getElementsByTagName('tr');
+							//alert(temp.valueOf(id));
+							$("#now_menu").append("<td style=\"text-align: left\">" + "날짜 : " + year + "." + month + "." + day + "</br>" + "시간 : " + hour + "시 " + minute + "분" + "</td>");
+							//$("#now_menu").append("<td>"+"#"+value.menu[0]+"</br>"+"#"+value.menu[1]+"</br>"+"#"+value.menu[2]+"</br>"+"#"+value.menu[3]+"</td>");
+							//$("#now_menu").append("<td>");
+							var string = "<td>";
+							for (var i = 0; i < value.menu.length; i++) {
+								string = string + "#" + value.menu[i];
+								if (i < value.menu.length - 1)
+									string = string + "</br>";
+							}
+							string = string + "</td>";
+							$("#now_menu").append(string);
+
+							//여기까지 주문 메뉴 이 다음부터 아이콘
+
+							$("#now_menu").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal'>상세보기</button></td>");
+							$("#now_menu").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' onclick='change_deli_status();'>배송출발</button></td>");
+							$("#now_menu").append("</tr>");
 						}
-						string = string + "</td>";
-						alert(string);
-						$("#now_menu").append(string);
-						$("#now_menu").append("<td width=\"90px\">"+value.menu+"</td>");
-						$("#now_menu").append("<td class=\"text-left\">");
-						$("#now_menu").append("<div width=\"100px\" class=\"icon-big text-middle icon-warning\" style=\"font_size\"=3em>");
-						$("#now_menu").append("<i class=\"nc-icon nc-delivery-fast text-warning\" style=\"cursor:pointer\"></i>");
-						$("#now_menu").append("</div>");
-						$("#now_menu").append("</td>");
-						$("#now_menu").append("</tr>");
-					
+						else if(order_status==4 || order_status==5)
+						{
+							var string_temp = "<tr id=\"";
+							string_temp = string_temp + order_num + "\"" + ">";
+							//alert(string_temp);
+							$("#now_delivery").append(string_temp); //tr 태그 추가. order_num을 id로 넘김
+							//var temp = document.getElementById("now_menu").getElementsByTagName('tr');
+							//alert(temp.valueOf(id));
+							$("#now_delivery").append("<td style=\"text-align: left\">" + "날짜 : " + year + "." + month + "." + day + "</br>" + "시간 : " + hour + "시 " + minute + "분" + "</td>");
+							//$("#now_menu").append("<td>"+"#"+value.menu[0]+"</br>"+"#"+value.menu[1]+"</br>"+"#"+value.menu[2]+"</br>"+"#"+value.menu[3]+"</td>");
+							//$("#now_menu").append("<td>");
+							var string = "<td>";
+							for (var i = 0; i < value.menu.length; i++) {
+								string = string + "#" + value.menu[i];
+								if (i < value.menu.length - 1)
+									string = string + "</br>";
+							}
+							string = string + "</td>";
+							$("#now_delivery").append(string);
+							
+							//여기까지 주문 메뉴 이 다음부터 아이콘
+							$("#now_delivery").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal'>상세보기</button></td>");
+							$("#now_delivery").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm'>배송출발</button></td>");
+							$("#now_delivery").append("</tr>");
+						}
 
 					});
 					//document.getElementById("storemaster_num").value=result.storemaster_num;
@@ -101,4 +134,26 @@ function init_main_page(){
 		main_list();
 	    event.preventDefault();
 	
+}
+
+function change_deli_status(number) {
+	var data = {
+		"store_info": "complete_order",
+		"store_serial": store_serial,
+		"order_num": number
+	};
+	$.ajax({
+		url: "http://54.180.102.7:80/get/JSON/store_app/store_manage.php",
+		type: "POST",
+		data: JSON.stringify(data),
+		success: function (result) {
+			if (result) {
+				var result1 = JSON.stringify(result);
+				if (result1.confirm == 1)
+					alert("해당 주문의 배달 요청이 접수 되었습니다.");
+				else
+					alert("실패");
+			}
+		}
+	})
 }
