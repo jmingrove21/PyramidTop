@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 public class First_Main_Activity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    int[] FIRSTIMAGES = {R.drawable.ilsic,R.drawable.yangsic,R.drawable.jungsic,R.drawable.hansic};
+    int[] FIRSTIMAGES = {1,2,3,4};
     String[] FIRSTNAMES = {"일식","양식","중식","한식"};
 
 
@@ -61,7 +61,6 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                 startActivityForResult(intent,101);
             }
         });
-
     }
 
     @Override
