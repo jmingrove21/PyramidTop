@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("가게 목록");
+        getSupportActionBar().setTitle("가게목록");
 
 
         drawer = findViewById(R.id.drawer_layout);
