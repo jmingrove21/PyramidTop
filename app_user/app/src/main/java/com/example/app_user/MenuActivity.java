@@ -12,22 +12,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int index;
+    ArrayList<String> selectedItems = new ArrayList<>();
     int[] IMAGES = {R.drawable.alchon};
+    String[] data={"a","b","c","d","e","f","g","h"};
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,12 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        listView = (ListView) findViewById(R.id.checkbox_ListView);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>();
+        listView.setAdapter(adapter);
+
         TextView text_store_name = (TextView) findViewById(R.id.store_name);
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
         TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
@@ -70,6 +84,17 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
         text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
         text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
+    }
+
+    public void confirm(View v){
+        SparseBooleanArray booleans = listView.getCheckedItemPositions();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < data.length; i++) {
+            if (booleans.get(i)) {
+                sb.append(data[i]);
+            }
+        }
+        Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -151,7 +176,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
             view = getLayoutInflater().inflate(R.layout.menulayout, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
 
-            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
+            TextView textView_name = (TextView) view.findViewById(R.id.menu_name);
 
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());
             return view;

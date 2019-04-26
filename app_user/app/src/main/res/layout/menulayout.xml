@@ -3,33 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <CheckBox
-        android:id="@+id/checkbox_select"
-        android:layout_width="43dp"
-        android:layout_height="42dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="54dp"
-        android:layout_marginLeft="54dp"
-        android:layout_marginTop="27dp" />
-
-    <TextView
-        android:id="@+id/menu_name"
-        android:layout_width="282dp"
-        android:layout_height="37dp"
-        android:layout_alignTop="@+id/checkbox_select"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginRight="35dp"
-        android:layout_toRightOf="@+id/checkbox_select"
-        android:text="TextView"
-        android:textSize="25sp" />
+    <CheckedTextView
+        android:id = "@+id/checkbox_layout"
+        android:layout_width="match_parent"
+        android:layout_height= "wrap_content"
+        android:gravity="center_vertical"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:padding="5dp"
+        />
 
 </RelativeLayout>
