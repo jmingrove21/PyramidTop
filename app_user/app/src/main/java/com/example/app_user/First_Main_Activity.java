@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +23,19 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class First_Main_Activity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    int store_ser;
     int[] FIRSTIMAGES = {1,2,3,4};
-    String[] FIRSTNAMES = {"일식","양식","중식","한식"};
+    String[] FIRSTNAMES = {"돈가스,일식","양식","중식","한식"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +65,8 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivityForResult(intent,101);
+                store_info_specification();
+
             }
         });
     }
@@ -147,5 +157,77 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
 
             return view;
         }
+    }public void store_info_specification() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://54.180.102.7/get/JSON/user_app/user_manage.php");
+
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept", "application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("user_info", "store_info");
+                    jsonParam.put("user_lat", 37.2799);
+                    jsonParam.put("user_long", 127.0435);
+                    jsonParam.put("store_type","돈가스,일식");
+
+                    Log.i("JSON", jsonParam.toString());
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                    os.writeBytes(jsonParam.toString());
+
+                    os.flush();
+                    os.close();
+                    if (conn.getResponseCode() == 200) {
+                        InputStream response = conn.getInputStream();
+                        String jsonReply = UtilSet.convertStreamToString(response);
+                        try {
+                            JSONArray jArray = new JSONArray(jsonReply);
+                            for (int i = 0; i < jArray.length(); i++) {
+                                String store_serial=((JSONObject) jArray.get(i)).get("store_serial").toString();
+                                String store_name=((JSONObject) jArray.get(i)).get("store_name").toString();
+                                String store_branch_name=((JSONObject) jArray.get(i)).get("store_branch_name").toString();
+                                String store_address=((JSONObject) jArray.get(i)).get("store_address").toString();
+                                String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString().toString();
+                                String distance=((JSONObject) jArray.get(i)).get("distance").toString();
+
+                                String store_address_jibun = ((JSONObject) jArray.get(i)).get("store_address_jibun").toString();
+                                String store_building_name = ((JSONObject) jArray.get(i)).get("store_building_name").toString();
+                                String start_time =((JSONObject) jArray.get(i)).get("start_time").toString();
+                                String end_time = ((JSONObject) jArray.get(i)).get("end_time").toString();
+                                String store_restday = ((JSONObject) jArray.get(i)).get("store_restday").toString();
+                                String store_notice = ((JSONObject) jArray.get(i)).get("store_notice").toString();
+                                String store_profile_img = ((JSONObject) jArray.get(i)).get("store_profile_img").toString();
+                                String store_main_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
+                                String store_sub_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, distance);
+                                s.set_store_spec(store_address_jibun,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
+                                UtilSet.al_store.add(s);
+                            }
+
+                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                            startActivityForResult(intent,101);
+                            finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        Log.d("error", "Connect fail");
+                    }
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
     }
 }

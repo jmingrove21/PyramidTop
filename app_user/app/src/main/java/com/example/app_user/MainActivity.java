@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 store_ser = UtilSet.al_store.get(position).getStore_serial();
-                store_info_specification();
+                Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
+                intent.putExtra("index",store_ser);
+                startActivityForResult(intent,101);
             }
         });
     }
@@ -184,7 +186,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_info");
-                    jsonParam.put("store_serial", store_ser);
+                    jsonParam.put("user_lat", 37.2799);
+                    jsonParam.put("user_long", 127.0435);
+                    jsonParam.put("store_type","돈가스,일식");
 
                     Log.i("JSON", jsonParam.toString());
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
