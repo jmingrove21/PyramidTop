@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
     }
-
     @Override
     public void onBackPressed(){
         if(drawer.isDrawerOpen(GravityCompat.START)){
