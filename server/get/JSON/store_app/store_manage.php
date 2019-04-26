@@ -19,6 +19,10 @@ switch($store_info){
         include 'store_main.php';
         store_main($json_data);
         break;
+    case 'detail_main':
+        include 'store_detail_main.php';
+        store_detail_main($json_data);
+        break;
     case 'complete_order':
         include 'store_complete_order.php';
         store_complete_order($json_data);
