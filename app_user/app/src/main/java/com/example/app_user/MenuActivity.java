@@ -64,7 +64,17 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.menulayout,R.id.checkbox_layout,data);
 
         listView.setAdapter(adapter);
-//        listView.setOnItemClickListener();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = ((TextView)view).getText().toString();
+                if(selectedItems.contains(selectedItem)){
+                    selectedItems.remove(selectedItem);
+                }else{
+                    selectedItems.add(selectedItem);
+                }
+            }
+        });
 
         TextView text_store_name = (TextView) findViewById(R.id.store_name);
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
@@ -85,6 +95,15 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
         text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
         text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
+    }
+
+    public void showSelectedItems(View view){
+        String items="";
+        for(String item:selectedItems){
+            items+="-"+item+"\n";
+        }
+
+        Toast.makeText(this,"You have selected\n"+items,Toast.LENGTH_LONG).show();
     }
 
     public void confirm(View v){
@@ -177,7 +196,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
             view = getLayoutInflater().inflate(R.layout.menulayout, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
 
-            TextView textView_name = (TextView) view.findViewById(R.id.menu_name);
+            TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
 
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());
             return view;
