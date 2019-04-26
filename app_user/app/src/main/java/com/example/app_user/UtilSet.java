@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class UtilSet {
     public static ArrayList<Store> al_store = new ArrayList<>();
+    public static ArrayList<Store_Inform> inform_store = new ArrayList<>();
 
     public static String convertStreamToString(InputStream is) {
 
