@@ -34,7 +34,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitiy_store_menu);
         Intent intent = getIntent();
-        index =
+        index = intent.getIntExtra("index",0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
@@ -61,16 +61,15 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         TextView text_store_operation_end_time = (TextView) findViewById(R.id.store_operation_end_time);
         TextView text_store_notice = (TextView) findViewById(R.id.store_notice);
 
-        text_store_name.setText(UtilSet.al_store.get(intent).getStore_name());
-        text_store_phone.setText(UtilSet.al_store.get(i).getStore_phone());
-        text_store_building_name.setText(UtilSet.al_store.get(i).);
-        text_store_rest.setText(UtilSet.al_store.get(i).);
-        text_store_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());
-        text_store_address.setText(UtilSet.al_store.get(i).getStore_address());
-        text_store_operation_start_time.setText(UtilSet.al_store.get(i).);;
-        text_store_operation_end_time.setText(UtilSet.al_store.get(i).);
-        text_store_notice.setText(UtilSet.al_store.get(i))
-
+        text_store_name.setText(UtilSet.al_store.get(index).getStore_name());
+        text_store_phone.setText(UtilSet.al_store.get(index).getStore_phone());
+        text_store_building_name.setText(UtilSet.al_store.get(index).getStore_building_name());
+        text_store_rest.setText(UtilSet.al_store.get(index).getStore_restday());
+        text_store_branch_name.setText(UtilSet.al_store.get(index).getStore_branch_name());
+        text_store_address.setText(UtilSet.al_store.get(index).getStore_address());
+        text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
+        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
+        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
     }
 
     @Override
