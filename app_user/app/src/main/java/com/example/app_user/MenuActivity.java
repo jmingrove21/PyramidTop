@@ -128,19 +128,11 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
-            TextView textView_phone = (TextView) view.findViewById(R.id.textView_phone);
-            TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
-            TextView textView_address = (TextView) view.findViewById(R.id.address);
 
             imageView.setImageResource(IMAGES[i]);
-            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
-            textView_phone.setText(UtilSet.al_store.get(i).getStore_phone());
-            textView_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());
-            textView_address.setText(UtilSet.al_store.get(i).getStore_address());
             return view;
         }
     }

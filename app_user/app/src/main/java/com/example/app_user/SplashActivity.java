@@ -72,7 +72,7 @@ public class SplashActivity extends Activity {
                                 UtilSet.al_store.add(s);
                             }
 
-                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                            Intent intent=new Intent(getApplicationContext(),First_Main_Activity.class);
                             startActivityForResult(intent,101);
                             finish();
                         } catch (Exception e) {
