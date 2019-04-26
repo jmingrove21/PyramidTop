@@ -142,8 +142,8 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
             ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);
 
-            imageView.setImageResource(FIRSTIMAGES[i]);
-            textView_name.setText(FIRSTNAMES[i]);
+//            imageView.setImageResource();
+              textView_name.setText(FIRSTNAMES[i]);
 
             return view;
         }
