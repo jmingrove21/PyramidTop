@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info", "asdfljk");
+                    jsonParam.put("user_info", "asdfl jk");
                     jsonParam.put("user_lat", 127.0435);
                     jsonParam.put("user_long", 37.2799);
                     jsonParam.put("user_count", 4);
