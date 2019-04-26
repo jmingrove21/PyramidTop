@@ -26,19 +26,21 @@ import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    int index;
     int[] IMAGES = {R.drawable.alchon};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitiy_store_menu);
-
+        Intent intent = getIntent();
+        index =
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("메뉴 선택");
+        getSupportActionBar().setTitle("메뉴 선택 ");
 
 
         drawer = findViewById(R.id.drawer_layout);
@@ -48,6 +50,26 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        TextView text_store_name = (TextView) findViewById(R.id.store_name);
+        TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
+        TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
+        TextView text_store_rest = (TextView) findViewById(R.id.store_rest_day);
+        TextView text_store_branch_name = (TextView) findViewById(R.id.store_branch_name);
+        TextView text_store_address = (TextView) findViewById(R.id.store_address);
+        TextView text_store_operation_start_time = (TextView) findViewById(R.id.store_operation_start_time);
+        TextView text_store_operation_end_time = (TextView) findViewById(R.id.store_operation_end_time);
+        TextView text_store_notice = (TextView) findViewById(R.id.store_notice);
+
+        text_store_name.setText(UtilSet.al_store.get(intent).getStore_name());
+        text_store_phone.setText(UtilSet.al_store.get(i).getStore_phone());
+        text_store_building_name.setText(UtilSet.al_store.get(i).);
+        text_store_rest.setText(UtilSet.al_store.get(i).);
+        text_store_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());
+        text_store_address.setText(UtilSet.al_store.get(i).getStore_address());
+        text_store_operation_start_time.setText(UtilSet.al_store.get(i).);;
+        text_store_operation_end_time.setText(UtilSet.al_store.get(i).);
+        text_store_notice.setText(UtilSet.al_store.get(i))
 
     }
 
@@ -127,12 +149,12 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
+            view = getLayoutInflater().inflate(R.layout.menulayout, null);
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
 
-            imageView.setImageResource(IMAGES[i]);
+            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
             return view;
         }
     }

@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                             UtilSet.al_store.get(index).set_store_spec(store_address_jibun,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
 
                             Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
+                            intent.putExtra("index",index);
                             startActivityForResult(intent,101);
                             finish();
                         } catch (Exception e) {
