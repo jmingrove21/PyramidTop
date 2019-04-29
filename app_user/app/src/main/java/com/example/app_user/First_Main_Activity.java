@@ -175,7 +175,8 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                     jsonParam.put("user_info", "store_info");
                     jsonParam.put("user_lat", 37.2799);
                     jsonParam.put("user_long", 127.0435);
-                    jsonParam.put("store_type","돈가스,일식");
+                    jsonParam.put("store_type","한식");
+                    jsonParam.put("count",1);
 
                     Log.i("JSON", jsonParam.toString());
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
