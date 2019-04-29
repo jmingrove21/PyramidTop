@@ -25,6 +25,10 @@
         </activity>
         <activity android:name="com.example.app_user.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.app_user.First_Main_Activity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.app_user.MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.app_user.LoginActivity"/>
     </application>
 

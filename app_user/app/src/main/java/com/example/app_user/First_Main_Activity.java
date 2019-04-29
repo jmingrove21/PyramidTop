@@ -1,6 +1,7 @@
 package com.example.app_user;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -9,9 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -33,44 +31,42 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class First_Main_Activity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int store_ser;
-    int[] IMAGES = {R.drawable.alchon, R.drawable.goobne, R.drawable.back, R.drawable.kyochon};
+    int[] FIRSTIMAGES = {1,2,3,4};
+    String[] FIRSTNAMES = {"돈가스,일식","양식","중식","한식"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_first_main);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("가게목록");
-
+        getSupportActionBar().setTitle("음식 목록");
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
-        R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+                R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView)findViewById(R.id.listView);
+        ListView listView = (ListView)findViewById(R.id.first_listView);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                store_ser = UtilSet.al_store.get(position).getStore_serial();
-                Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
-                intent.putExtra("index",store_ser);
-                startActivityForResult(intent,101);
+                store_info_specification();
+
             }
         });
     }
@@ -100,7 +96,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-
                     switch(item.getItemId()){
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
@@ -111,12 +106,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         case R.id.nav_party:
                             selectedFragment = new PeopleFragment();
                             break;
-
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();
                     return true;
-
                 }
             };
 
@@ -124,6 +117,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
     }
+
     @Override
     public void onBackPressed(){
         if(drawer.isDrawerOpen(GravityCompat.START)){
@@ -137,7 +131,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         @Override
         public int getCount() {
-            return IMAGES.length;
+            return FIRSTIMAGES.length;
         }
 
         @Override
@@ -152,25 +146,18 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
+            view = getLayoutInflater().inflate(R.layout.activity_first_layout, null);
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
-            TextView textView_phone = (TextView) view.findViewById(R.id.textView_phone);
-            TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
-            TextView textView_address = (TextView) view.findViewById(R.id.address);
+            ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
+            TextView textView_name = (TextView) view.findViewById(R.id.first_name);
 
-            imageView.setImageResource(IMAGES[i]);
-            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
-            textView_phone.setText(UtilSet.al_store.get(i).getStore_phone());
-            textView_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());
-            textView_address.setText(UtilSet.al_store.get(i).getStore_address());
+//            imageView.setImageResource();
+              textView_name.setText(FIRSTNAMES[i]);
+
             return view;
         }
-    }
-
-    public void store_info_specification() {
+    }public void store_info_specification() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -201,27 +188,30 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         try {
-                            JSONObject jobj = new JSONObject(jsonReply);
-                            String store_address_jibun = jobj.getString("store_address_jibun");
-                            String store_building_name = jobj.getString("store_building_name");
-                            String start_time =jobj.getString("start_time");
-                            String end_time = jobj.getString("end_time");
-                            String store_restday = jobj.getString("store_restday");
-                            String store_notice = jobj.getString("store_notice");
-                            String store_profile_img = jobj.getString("store_profile_img");
-                            String store_main_type_name = jobj.getString("store_main_type_name");
-                            String store_sub_type_name = jobj.getString("store_main_type_name");
+                            JSONArray jArray = new JSONArray(jsonReply);
+                            for (int i = 0; i < jArray.length(); i++) {
+                                String store_serial=((JSONObject) jArray.get(i)).get("store_serial").toString();
+                                String store_name=((JSONObject) jArray.get(i)).get("store_name").toString();
+                                String store_branch_name=((JSONObject) jArray.get(i)).get("store_branch_name").toString();
+                                String store_address=((JSONObject) jArray.get(i)).get("store_address").toString();
+                                String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString().toString();
+                                String distance=((JSONObject) jArray.get(i)).get("distance").toString();
 
-                            int index=-1;
-                            for(int i=0;i<UtilSet.al_store.size();i++){
-                                if(UtilSet.al_store.get(i).getStore_serial()==store_ser)  {
-                                    index=i;
-                                }
+                                String store_address_jibun = ((JSONObject) jArray.get(i)).get("store_address_jibun").toString();
+                                String store_building_name = ((JSONObject) jArray.get(i)).get("store_building_name").toString();
+                                String start_time =((JSONObject) jArray.get(i)).get("start_time").toString();
+                                String end_time = ((JSONObject) jArray.get(i)).get("end_time").toString();
+                                String store_restday = ((JSONObject) jArray.get(i)).get("store_restday").toString();
+                                String store_notice = ((JSONObject) jArray.get(i)).get("store_notice").toString();
+                                String store_profile_img = ((JSONObject) jArray.get(i)).get("store_profile_img").toString();
+                                String store_main_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
+                                String store_sub_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, distance);
+                                s.set_store_spec(store_address_jibun,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
+                                UtilSet.al_store.add(s);
                             }
-                            UtilSet.al_store.get(index).set_store_spec(store_address_jibun,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
 
-                            Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
-                            intent.putExtra("index",index);
+                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivityForResult(intent,101);
                             finish();
                         } catch (Exception e) {

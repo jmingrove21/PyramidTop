@@ -12,33 +12,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    int index;
+    ArrayList<String> selectedItems = new ArrayList<>();
     int[] IMAGES = {R.drawable.alchon};
+    String[] data={"a","b","c","d","e","f","g","h"};
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activitiy_store_menu);
+        Intent intent = getIntent();
+        index = intent.getIntExtra("index",0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("메뉴 선택");
+        getSupportActionBar().setTitle("메뉴 선택 ");
 
 
         drawer = findViewById(R.id.drawer_layout);
@@ -49,6 +59,62 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        listView = (ListView) findViewById(R.id.checkbox_ListView);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.menulayout,R.id.checkbox_layout,data);
+
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = ((TextView)view).getText().toString();
+                if(selectedItems.contains(selectedItem)){
+                    selectedItems.remove(selectedItem);
+                }else{
+                    selectedItems.add(selectedItem);
+                }
+            }
+        });
+
+        TextView text_store_name = (TextView) findViewById(R.id.store_name);
+        TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
+        TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
+        TextView text_store_rest = (TextView) findViewById(R.id.store_rest_day);
+        TextView text_store_branch_name = (TextView) findViewById(R.id.store_branch_name);
+        TextView text_store_address = (TextView) findViewById(R.id.store_address);
+        TextView text_store_operation_start_time = (TextView) findViewById(R.id.store_operation_start_time);
+        TextView text_store_operation_end_time = (TextView) findViewById(R.id.store_operation_end_time);
+        TextView text_store_notice = (TextView) findViewById(R.id.store_notice);
+
+        text_store_name.setText(UtilSet.al_store.get(index).getStore_name());
+        text_store_phone.setText(UtilSet.al_store.get(index).getStore_phone());
+        text_store_building_name.setText(UtilSet.al_store.get(index).getStore_building_name());
+        text_store_rest.setText(UtilSet.al_store.get(index).getStore_restday());
+        text_store_branch_name.setText(UtilSet.al_store.get(index).getStore_branch_name());
+        text_store_address.setText(UtilSet.al_store.get(index).getStore_address());
+        text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
+        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
+        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
+    }
+
+    public void showSelectedItems(View view){
+        String items="";
+        for(String item:selectedItems){
+            items+="-"+item+"\n";
+        }
+
+        Toast.makeText(this,"You have selected\n"+items,Toast.LENGTH_LONG).show();
+    }
+
+    public void confirm(View v){
+        SparseBooleanArray booleans = listView.getCheckedItemPositions();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < data.length; i++) {
+            if (booleans.get(i)) {
+                sb.append(data[i]);
+            }
+        }
+        Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -127,20 +193,12 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
+            view = getLayoutInflater().inflate(R.layout.menulayout, null);
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
-            TextView textView_phone = (TextView) view.findViewById(R.id.textView_phone);
-            TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
-            TextView textView_address = (TextView) view.findViewById(R.id.address);
+            TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
 
-            imageView.setImageResource(IMAGES[i]);
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());
-            textView_phone.setText(UtilSet.al_store.get(i).getStore_phone());
-            textView_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());
-            textView_address.setText(UtilSet.al_store.get(i).getStore_address());
             return view;
         }
     }
