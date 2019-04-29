@@ -261,7 +261,7 @@ function detail_deliver_list(number)
 
 					//----------------------------아이디를 내용에 넣음----------------------------
 					var user_id = value.user_id;
-					temp_string = "아이디"+"&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;" + user_id + "<br>";
+					temp_string = "<h6 class='text-success' style='font-weight: bold'>"+ user_id + "</h6>"+ "<br>";
 					$("#myModal_text").append(temp_string);
 
 					//---------------------------번호를 내용에 넣음---------------------------
@@ -298,13 +298,16 @@ function detail_deliver_list(number)
 					temp_string = "주문날짜"+"&nbsp;&nbsp;:&nbsp;&nbsp;" + year+ "년 " + month +"월 "+ day +"일 " + "<br>";
 					$("#myModal_text").append(temp_string);
 
-					temp_string = "주문시간" + "&nbsp;&nbsp;:&nbsp;&nbsp;" + hour +"시"+ minute + "분" + "<br>"
+					temp_string = "주문시간" + "&nbsp;&nbsp;:&nbsp;&nbsp;" + hour +"시"+ minute + "분" + "<br>" + "<br>"
 					$("#myModal_text").append(temp_string);
+
+					$("#myModal_text").append("<h6 class='text-center text-primary' style='font-weight: bold'> 금액 : </h6>");
+
 					$("#myModal_text").append("<hr>");
 
 
 				});
-				$("#myModal_text").append("<h5 class='text-right text-info'> 총금액 : </h5>");
+				$("#myModal_text").append("<h5 class='text-center text-primary' style='font-weight: bold'> 총금액 : </h5>");
 
 			}
 		}
