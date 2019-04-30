@@ -26,19 +26,16 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.Console;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
-public class First_Main_Activity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class PartyListActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int store_ser;
-    int[] FIRSTIMAGES = {1,2,3,4,5,6,7,8,9,10,11,12,13};
-    String[] FIRSTNAME_INDEX={"Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q08","Q09","Q10","Q11","Q12","Q13"};
-    String[] FIRSTNAMES = {"도시락","돈가스,일식","디저트","분식","야식","양식","족발,보쌈","중국음식","치킨","탕,찜","패스트푸드","피자","한식"};
+    int[] FIRSTIMAGES = {1,2,3,4};
+    String[] FIRSTNAMES = {"돈가스,일식","양식","중식","한식"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +47,7 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("음식 목록");
+        getSupportActionBar().setTitle("참여 현황");
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -68,8 +65,7 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                store_info_specification(position);
-
+                store_info_specification();
 
             }
         });
@@ -161,12 +157,12 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
 
             return view;
         }
-    }public void store_info_specification(final int position) {
+    }public void store_info_specification() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                   URL url = new URL("http://54.180.102.7:80/get/JSON/user_app/user_manage.php");
+                    URL url = new URL("http://54.180.102.7/get/JSON/user_app/user_manage.php");
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -176,11 +172,10 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-
                     jsonParam.put("user_info", "store_info");
-                    jsonParam.put("user_lat", 37.282690);
-                    jsonParam.put("user_long", 127.050206);
-                    jsonParam.put("store_type",FIRSTNAME_INDEX[position]);
+                    jsonParam.put("user_lat", 37.2799);
+                    jsonParam.put("user_long", 127.0435);
+                    jsonParam.put("store_type","한식");
                     jsonParam.put("count",1);
 
                     Log.i("JSON", jsonParam.toString());
@@ -200,9 +195,10 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                                 String store_name=((JSONObject) jArray.get(i)).get("store_name").toString();
                                 String store_branch_name=((JSONObject) jArray.get(i)).get("store_branch_name").toString();
                                 String store_address=((JSONObject) jArray.get(i)).get("store_address").toString();
-                                String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString();
+                                String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString().toString();
                                 String distance=((JSONObject) jArray.get(i)).get("distance").toString();
 
+                                String store_address_jibun = ((JSONObject) jArray.get(i)).get("store_address_jibun").toString();
                                 String store_building_name = ((JSONObject) jArray.get(i)).get("store_building_name").toString();
                                 String start_time =((JSONObject) jArray.get(i)).get("start_time").toString();
                                 String end_time = ((JSONObject) jArray.get(i)).get("end_time").toString();
@@ -210,8 +206,9 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                                 String store_notice = ((JSONObject) jArray.get(i)).get("store_notice").toString();
                                 String store_profile_img = ((JSONObject) jArray.get(i)).get("store_profile_img").toString();
                                 String store_main_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
+                                String store_sub_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, distance);
-                                s.set_store_spec(store_address,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name);
+                                s.set_store_spec(store_address_jibun,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
                                 UtilSet.al_store.add(s);
                             }
 

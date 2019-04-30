@@ -255,6 +255,7 @@
             android:layout_alignTop="@+id/store_notice"
             android:layout_marginTop="60dp"
             />
+
         <Button
             android:id="@+id/order_button"
             android:layout_above = "@+id/bottom_navigation"
@@ -265,12 +266,13 @@
             android:text="주문 완료"
             />
 
+
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_navigation"
-            android:layout_marginBottom="0dp"/>
+            android:layout_marginBottom="0dp" />
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
