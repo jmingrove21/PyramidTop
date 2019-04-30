@@ -153,6 +153,7 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);
 
 //            imageView.setImageResource();
+
               textView_name.setText(FIRSTNAMES[i]);
 
             return view;
@@ -198,7 +199,6 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
                                 String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString().toString();
                                 String distance=((JSONObject) jArray.get(i)).get("distance").toString();
 
-                                String store_address_jibun = ((JSONObject) jArray.get(i)).get("store_address_jibun").toString();
                                 String store_building_name = ((JSONObject) jArray.get(i)).get("store_building_name").toString();
                                 String start_time =((JSONObject) jArray.get(i)).get("start_time").toString();
                                 String end_time = ((JSONObject) jArray.get(i)).get("end_time").toString();
@@ -206,9 +206,8 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
                                 String store_notice = ((JSONObject) jArray.get(i)).get("store_notice").toString();
                                 String store_profile_img = ((JSONObject) jArray.get(i)).get("store_profile_img").toString();
                                 String store_main_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
-                                String store_sub_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, distance);
-                                s.set_store_spec(store_address_jibun,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
+                                s.set_store_spec(store_address,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name);
                                 UtilSet.al_store.add(s);
                             }
 

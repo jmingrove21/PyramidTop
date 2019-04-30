@@ -1,6 +1,10 @@
 package com.example.app_user;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -11,7 +15,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,13 +25,12 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -37,7 +39,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private DrawerLayout drawer;
     int store_ser;
     int[] IMAGES = {R.drawable.alchon, R.drawable.goobne, R.drawable.back, R.drawable.kyochon,R.drawable.alchon};
-
+    URL ImageUrl = null;
+    InputStream is = null;
+    Bitmap bmImg = null;
+    ImageView imageView= null;
+    ProgressDialog p;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +139,50 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             super.onBackPressed();
         }
     }
+    private class AsyncTaskExample extends AsyncTask<String, String, Bitmap> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            p=new ProgressDialog(MainActivity.this);
+            p.setMessage("Please wait...It is downloading");
+            p.setIndeterminate(false);
+            p.setCancelable(false);
+            p.show();
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            try {
+
+                ImageUrl = new URL(strings[0]);
+                HttpURLConnection conn = (HttpURLConnection) ImageUrl.openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                is = conn.getInputStream();
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                bmImg = BitmapFactory.decodeStream(is, null, options);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bmImg;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if(imageView!=null) {
+                p.hide();
+                imageView.setImageBitmap(bitmap);
+            }else {
+                p.show();
+            }
+        }
+    }
 
     class CustomAdapter extends BaseAdapter {
 
@@ -162,7 +212,18 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
             TextView textView_address = (TextView) view.findViewById(R.id.address);
 
-            imageView.setImageResource(IMAGES[i]);
+            AsyncTaskExample asyncTask=new AsyncTaskExample();
+            asyncTask.execute( UtilSet.al_store.get(i).getStore_profile_img());
+            //imageView.setImageBitmap(bmp);
+
+//            try {
+//                URL url = url = new URL(UtilSet.al_store.get(i).getStore_profile_img());
+//                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());
             textView_phone.setText(UtilSet.al_store.get(i).getStore_phone());
             textView_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());

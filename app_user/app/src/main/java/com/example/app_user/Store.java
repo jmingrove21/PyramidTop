@@ -3,7 +3,7 @@ package com.example.app_user;
 import java.util.ArrayList;
 
 public class Store {
-    public ArrayList<Menu> menu_al=new ArrayList<>();
+    private ArrayList<Menu> menu_al=new ArrayList<>();
     private int store_serial;
     private String store_name;
     private String store_branch_name;
@@ -72,18 +72,6 @@ public class Store {
         return distance;
     }
 
-    public void set_store_spec(String store_address,String store_building_name,String start_time, String end_time, String store_restday, String store_notice, String store_profile_img, String store_main_type_name){
-        this.store_address=store_address;
-        this.store_building_name=store_building_name;
-        this.start_time=start_time;
-        this.end_time=end_time;
-        this.store_restday=store_restday;
-        this.store_notice=store_notice;
-        this.store_profile_img=store_profile_img;
-        this.store_main_type_name=store_main_type_name;
-    }
-
-
     public String getStore_building_name() {
         return store_building_name;
     }
@@ -111,6 +99,27 @@ public class Store {
     public String getStore_main_type_name() {
         return store_main_type_name;
     }
+
+    public ArrayList<Menu> getMenu_al() {
+        return menu_al;
+    }
+
+    public void setMenu_al(ArrayList<Menu> menu_al) {
+        this.menu_al = menu_al;
+    }
+    public void set_store_spec(String store_address,String store_building_name,String start_time, String end_time, String store_restday, String store_notice, String store_profile_img, String store_main_type_name){
+        this.store_address=store_address;
+        this.store_building_name=store_building_name;
+        this.start_time=start_time;
+        this.end_time=end_time;
+        this.store_restday=store_restday;
+        this.store_notice=store_notice;
+        this.store_profile_img=store_profile_img;
+        this.store_main_type_name=store_main_type_name;
+    }
+
+
+
 
 
 }
