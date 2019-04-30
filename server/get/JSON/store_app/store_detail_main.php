@@ -10,7 +10,7 @@
               (
  				 SELECT s.order_number,s.order_receipt_date
  				 FROM Capstone.store_order AS s
- 				 WHERE s.store_serial=".$store_serial." AND order_number=".$order_number."
+ 				 WHERE s.store_serial=".$store_serial." AND s.order_number=".$order_number."
               ) tb1
               INNER JOIN Capstone.order_menu AS o
               INNER JOIN Capstone.menu_info AS m
@@ -24,7 +24,6 @@
               ORDER BY USER_user_serial DESC
              ";
          $stmt = mysqli_query($connect,$query);
-
         $user_serial=0;
         $total=[];
         $menu=[];

@@ -2,7 +2,7 @@
     function store_complete_order($json_data){
         include '../db.php';
         $store_serial=$json_data['store_serial'];
-        $order_num=$json_data['order_num'];
+        $order_num=$json_data['order_number'];
         $query="UPDATE store_order SET order_status=4 WHERE order_number=".$order_num." AND store_serial=".$store_serial;
         $stmt = mysqli_query($connect,$query);
 

@@ -15,8 +15,8 @@
         while ($row = mysqli_fetch_assoc($stmt)) {
             $d=array(
                 "destination"=>$row['destination'],
-                "destination_long"=>$row['destination_lat'],
-                "destination_lat"=>$row['destination_long']
+                "destination_long"=>$row['destination_long'],
+                "destination_lat"=>$row['destination_lat']
             );
             array_push($data,$d);
         }
