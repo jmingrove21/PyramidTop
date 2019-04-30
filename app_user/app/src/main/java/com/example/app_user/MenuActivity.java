@@ -32,6 +32,7 @@ import java.util.ArrayList;
 public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int index;
+    int serial;
     ArrayList<String> selectedItems = new ArrayList<>();
     int[] IMAGES = {R.drawable.alchon};
     String[] data={"a","b","c","d","e","f","g","h"};
@@ -43,12 +44,13 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         setContentView(R.layout.activitiy_store_menu);
         Intent intent = getIntent();
         index = intent.getIntExtra("index",0);
+        serial = intent.getIntExtra("serial",0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("메뉴 선택 ");
+        getSupportActionBar().setTitle("메뉴 선택");
 
 
         drawer = findViewById(R.id.drawer_layout);

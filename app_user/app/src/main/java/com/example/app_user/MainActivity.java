@@ -36,7 +36,7 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int store_ser;
-    int[] IMAGES = {R.drawable.alchon, R.drawable.goobne, R.drawable.back, R.drawable.kyochon};
+    int[] IMAGES = {R.drawable.alchon, R.drawable.goobne, R.drawable.back, R.drawable.kyochon,R.drawable.alchon};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 store_ser = UtilSet.al_store.get(position).getStore_serial();
                 Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
-                intent.putExtra("index",store_ser);
+                intent.putExtra("serial",store_ser);
+                intent.putExtra("index",position);
                 startActivityForResult(intent,101);
             }
         });
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         String jsonReply = UtilSet.convertStreamToString(response);
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
-                            String store_address_jibun = jobj.getString("store_address_jibun");
+                            String store_address = jobj.getString("store_address");
                             String store_building_name = jobj.getString("store_building_name");
                             String start_time =jobj.getString("start_time");
                             String end_time = jobj.getString("end_time");
@@ -218,7 +219,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                                     index=i;
                                 }
                             }
-                            UtilSet.al_store.get(index).set_store_spec(store_address_jibun,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
+                        //    UtilSet.al_store.get(index).set_store_spec(store_address,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
 
                             Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
                             intent.putExtra("index",index);
