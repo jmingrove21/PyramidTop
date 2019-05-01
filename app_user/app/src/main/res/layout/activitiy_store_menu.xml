@@ -38,7 +38,6 @@
             android:id="@+id/store_image"
             android:layout_width="168dp"
             android:layout_height="176dp"
-            app:srcCompat="@drawable/alchon"
             android:layout_marginTop="?attr/actionBarSize"/>
         <TextView
             android:id="@+id/store_name"

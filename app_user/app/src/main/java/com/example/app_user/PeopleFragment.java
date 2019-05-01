@@ -11,8 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import java.util.List;
-
 public class PeopleFragment extends Fragment {
     String[] peopleItems = {"Hi","Hello","ExcuseMe"};
     @Nullable
@@ -26,7 +24,7 @@ public class PeopleFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),PartyListActivity.class);
+                Intent intent = new Intent(getActivity(), Party_List_Activity.class);
                 startActivity(intent);
             }
         });
