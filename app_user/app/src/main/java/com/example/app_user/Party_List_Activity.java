@@ -31,7 +31,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PartyListActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class Party_List_Activity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int store_ser;
     int[] FIRSTIMAGES = {1,2,3,4};
@@ -76,11 +76,11 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
         switch(menuItem.getItemId()){
             case R.id.old_olderlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new old_olderlist()).commit();
+                        new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new profile()).commit();
+                        new Profile()).commit();
                 break;
             case R.id.menu_logout:
                 Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
@@ -158,12 +158,13 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
 
             return view;
         }
-    }public void store_info_specification() {
+    }
+    public void store_info_specification() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://54.180.102.7/get/JSON/user_app/user_manage.php");
+                    URL url = new URL(UtilSet.url);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -196,7 +197,7 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
                                 String store_name=((JSONObject) jArray.get(i)).get("store_name").toString();
                                 String store_branch_name=((JSONObject) jArray.get(i)).get("store_branch_name").toString();
                                 String store_address=((JSONObject) jArray.get(i)).get("store_address").toString();
-                                String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString().toString();
+                                String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString();
                                 String distance=((JSONObject) jArray.get(i)).get("distance").toString();
 
                                 String store_building_name = ((JSONObject) jArray.get(i)).get("store_building_name").toString();

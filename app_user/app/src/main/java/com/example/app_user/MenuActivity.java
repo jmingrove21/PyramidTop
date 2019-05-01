@@ -1,6 +1,9 @@
 package com.example.app_user;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -11,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,10 +25,14 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,6 +72,19 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.menulayout,R.id.checkbox_layout,data);
 
         listView.setAdapter(adapter);
+
+
+        TextView text_store_name = (TextView) findViewById(R.id.store_name);
+        TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
+        TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
+        TextView text_store_rest = (TextView) findViewById(R.id.store_rest_day);
+        TextView text_store_branch_name = (TextView) findViewById(R.id.store_branch_name);
+        TextView text_store_address = (TextView) findViewById(R.id.store_address);
+        TextView text_store_operation_start_time = (TextView) findViewById(R.id.store_operation_start_time);
+        TextView text_store_operation_end_time = (TextView) findViewById(R.id.store_operation_end_time);
+        TextView text_store_notice = (TextView) findViewById(R.id.store_notice);
+        ImageView imageView=(ImageView) findViewById(R.id.store_image);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -78,16 +97,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
             }
         });
 
-        TextView text_store_name = (TextView) findViewById(R.id.store_name);
-        TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
-        TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
-        TextView text_store_rest = (TextView) findViewById(R.id.store_rest_day);
-        TextView text_store_branch_name = (TextView) findViewById(R.id.store_branch_name);
-        TextView text_store_address = (TextView) findViewById(R.id.store_address);
-        TextView text_store_operation_start_time = (TextView) findViewById(R.id.store_operation_start_time);
-        TextView text_store_operation_end_time = (TextView) findViewById(R.id.store_operation_end_time);
-        TextView text_store_notice = (TextView) findViewById(R.id.store_notice);
-
+        imageView.setImageBitmap(UtilSet.al_store.get(index).getStore_image());
         text_store_name.setText(UtilSet.al_store.get(index).getStore_name());
         text_store_phone.setText(UtilSet.al_store.get(index).getStore_phone());
         text_store_building_name.setText(UtilSet.al_store.get(index).getStore_building_name());
@@ -124,11 +134,11 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         switch(menuItem.getItemId()){
             case R.id.old_olderlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new old_olderlist()).commit();
+                        new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new profile()).commit();
+                        new Profile()).commit();
                 break;
             case R.id.menu_logout:
                 Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
@@ -176,32 +186,43 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         }
     }
 
-    class CustomAdapter extends BaseAdapter {
+//    class CustomAdapter extends BaseAdapter {
+//
+//        @Override
+//        public int
+//        getCount() {
+//            return IMAGES.length;
+//        }
+//
+//        @Override
+//        public Object getItem(int position) {
+//            return null;
+//        }
+//
+//        @Override
+//        public long getItemId(int position) {
+//            return 0;
+//        }
+//
+//        @Override
+//        public View getView(int i, View view, ViewGroup viewGroup) {
+//            view = getLayoutInflater().inflate(R.layout.menulayout, null);
+//            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
+//
+//            TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
+//
+//            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
+//            return view;
+//        }
+//    }
 
-        @Override
-        public int getCount() {
-            return IMAGES.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
             return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.menulayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
-
-            TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
-
-            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
-            return view;
         }
     }
 }

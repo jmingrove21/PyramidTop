@@ -75,11 +75,11 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
         switch(menuItem.getItemId()){
             case R.id.old_olderlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new old_olderlist()).commit();
+                        new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new profile()).commit();
+                        new Profile()).commit();
                 break;
             case R.id.menu_logout:
                 Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
@@ -163,7 +163,7 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
             public void run() {
                 try {
                     UtilSet.al_store.clear();
-                   URL url = new URL("http://54.180.102.7:80/get/JSON/user_app/user_manage.php");
+                   URL url = new URL(UtilSet.url);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
