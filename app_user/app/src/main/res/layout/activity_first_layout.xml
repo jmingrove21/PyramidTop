@@ -16,8 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="54dp"
         android:layout_marginLeft="54dp"
-        android:layout_marginTop="27dp"
-        app:srcCompat="@drawable/alchon" />
+        android:layout_marginTop="27dp"/>
 
     <TextView
         android:id="@+id/first_name"

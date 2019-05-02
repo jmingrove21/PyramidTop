@@ -34,7 +34,7 @@ public class SplashActivity extends Activity {
 //            @Override
 //            public void run() {
 //                try {
-//                    URL url = new URL("http://54.180.102.7/get/JSON/user_app/user_manage.php");
+//                    URL url = new URL(UtilSet.url);
 //
 //                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 //                    conn.setRequestMethod("POST");

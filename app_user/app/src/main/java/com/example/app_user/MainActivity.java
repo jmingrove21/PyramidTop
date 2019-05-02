@@ -1,6 +1,12 @@
 package com.example.app_user;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -11,8 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,21 +27,18 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    Bitmap bitmap;
     int store_ser;
-    int[] IMAGES = {R.drawable.alchon, R.drawable.goobne, R.drawable.back, R.drawable.kyochon,R.drawable.alchon};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,40 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         ListView listView = (ListView)findViewById(R.id.listView);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
+        Thread mThread=new Thread(){
+            @Override
+            public void run(){
+                for(int i=0;i<UtilSet.al_store.size();i++){
+                    try{
+                        if(UtilSet.al_store.get(i).getStore_profile_img().equals("null")){
+                            Drawable drawable = getResources().getDrawable(R.drawable.no_image);
+                            Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+                            UtilSet.al_store.get(i).setStore_image(bitmap);
+                            continue;
+                        }
+
+                        URL url=new URL( UtilSet.al_store.get(i).getStore_profile_img());
+                        HttpURLConnection conn=(HttpURLConnection) url.openConnection();
+                        conn.setDoInput(true);
+                        conn.connect();
+
+                        InputStream is=conn.getInputStream();
+                        bitmap= BitmapFactory.decodeStream(is);
+                        UtilSet.al_store.get(i).setStore_image(bitmap);
+                    }catch(MalformedURLException e){
+                        e.printStackTrace();
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        mThread.start();
+        try{
+            mThread.join();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,11 +117,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         switch(menuItem.getItemId()){
             case R.id.old_olderlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new old_olderlist()).commit();
+                        new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new profile()).commit();
+                        new Profile()).commit();
                 break;
             case R.id.menu_logout:
                 Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
@@ -125,20 +161,12 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
     }
-    @Override
-    public void onBackPressed(){
-        if(drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START);
-        }else{
-            super.onBackPressed();
-        }
-    }
 
     class CustomAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return IMAGES.length;
+            return UtilSet.al_store.size();
         }
 
         @Override
@@ -152,7 +180,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
 
@@ -162,7 +190,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
             TextView textView_address = (TextView) view.findViewById(R.id.address);
 
-            imageView.setImageResource(IMAGES[i]);
+            imageView.setImageBitmap(UtilSet.al_store.get(i).getStore_image());
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());
             textView_phone.setText(UtilSet.al_store.get(i).getStore_phone());
             textView_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());
@@ -170,75 +198,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             return view;
         }
     }
-
-    public void store_info_specification() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://54.180.102.7/get/JSON/user_app/user_manage.php");
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
-                    JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info", "store_info");
-                    jsonParam.put("user_lat", 37.2799);
-                    jsonParam.put("user_long", 127.0435);
-                    jsonParam.put("store_type","돈가스,일식");
-
-                    Log.i("JSON", jsonParam.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
-                    os.writeBytes(jsonParam.toString());
-
-                    os.flush();
-                    os.close();
-                    if (conn.getResponseCode() == 200) {
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-                        try {
-                            JSONObject jobj = new JSONObject(jsonReply);
-                            String store_address = jobj.getString("store_address");
-                            String store_building_name = jobj.getString("store_building_name");
-                            String start_time =jobj.getString("start_time");
-                            String end_time = jobj.getString("end_time");
-                            String store_restday = jobj.getString("store_restday");
-                            String store_notice = jobj.getString("store_notice");
-                            String store_profile_img = jobj.getString("store_profile_img");
-                            String store_main_type_name = jobj.getString("store_main_type_name");
-                            String store_sub_type_name = jobj.getString("store_main_type_name");
-
-                            int index=-1;
-                            for(int i=0;i<UtilSet.al_store.size();i++){
-                                if(UtilSet.al_store.get(i).getStore_serial()==store_ser)  {
-                                    index=i;
-                                }
-                            }
-                        //    UtilSet.al_store.get(index).set_store_spec(store_address,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name, store_sub_type_name);
-
-                            Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
-                            intent.putExtra("index",index);
-                            startActivityForResult(intent,101);
-                            finish();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                    } else {
-                        Log.d("error", "Connect fail");
-                    }
-                    conn.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
+    @Override
+    public void onBackPressed(){
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }else{
+            Intent intent=new Intent(getApplicationContext(),First_Main_Activity.class);
+            startActivityForResult(intent,101);
+            finish();
+        }
     }
 }

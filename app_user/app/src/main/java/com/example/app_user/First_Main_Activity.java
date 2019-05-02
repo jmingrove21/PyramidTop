@@ -26,19 +26,14 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.Console;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 public class First_Main_Activity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int store_ser;
-    int[] FIRSTIMAGES = {1,2,3,4,5,6,7,8,9,10,11,12,13};
-    String[] FIRSTNAME_INDEX={"Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q08","Q09","Q10","Q11","Q12","Q13"};
-    String[] FIRSTNAMES = {"도시락","돈가스,일식","디저트","분식","야식","양식","족발,보쌈","중국음식","치킨","탕,찜","패스트푸드","피자","한식"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +75,11 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
         switch(menuItem.getItemId()){
             case R.id.old_olderlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new old_olderlist()).commit();
+                        new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new profile()).commit();
+                        new Profile()).commit();
                 break;
             case R.id.menu_logout:
                 Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
@@ -135,7 +130,7 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
 
         @Override
         public int getCount() {
-            return FIRSTIMAGES.length;
+            return UtilSet.MENU_TYPE_IMAGE.length;
         }
 
         @Override
@@ -157,7 +152,8 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);
 
 //            imageView.setImageResource();
-              textView_name.setText(FIRSTNAMES[i]);
+            imageView.setImageResource(UtilSet.MENU_TYPE_IMAGE[i]);
+             textView_name.setText(UtilSet.MENU_TYPE_TEXT[i]);
 
             return view;
         }
@@ -166,7 +162,8 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
             @Override
             public void run() {
                 try {
-                   URL url = new URL("http://54.180.102.7:80/get/JSON/user_app/user_manage.php");
+                    UtilSet.al_store.clear();
+                   URL url = new URL(UtilSet.url);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -180,7 +177,7 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                     jsonParam.put("user_info", "store_info");
                     jsonParam.put("user_lat", 37.282690);
                     jsonParam.put("user_long", 127.050206);
-                    jsonParam.put("store_type",FIRSTNAME_INDEX[position]);
+                    jsonParam.put("store_type",UtilSet.MENU_TYPE_ID[position]);
                     jsonParam.put("count",1);
 
                     Log.i("JSON", jsonParam.toString());
@@ -212,6 +209,19 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                                 String store_main_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, distance);
                                 s.set_store_spec(store_address,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name);
+
+                                JSONArray store_menu=(JSONArray)((JSONObject)(jArray.get(i))).get("menu");
+                                for(int j=0;j<store_menu.length();j++){
+                                    String menu_type_code=((JSONObject)store_menu.get(j)).get("menu_type_code").toString();
+                                    String menu_type_name=((JSONObject)store_menu.get(j)).get("menu_type_name").toString();
+                                    s.getMenu_al().add(new com.example.app_user.Menu(menu_type_code,menu_type_name));
+                                    JSONArray menu_desc=(JSONArray)((JSONObject)store_menu.get(j)).get("menu description");
+                                    for(int k=0;k<menu_desc.length();k++){
+                                        String menu_code=((JSONObject)menu_desc.get(k)).get("menu_code").toString();
+                                        String menu_name=((JSONObject)menu_desc.get(k)).get("menu_name").toString();
+                                        s.getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code,menu_name));
+                                    }
+                                }
                                 UtilSet.al_store.add(s);
                             }
 
