@@ -1,6 +1,12 @@
 package com.example.app_user;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -11,21 +17,28 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    int[] IMAGES = {R.drawable.alchon, R.drawable.goobne, R.drawable.back, R.drawable.kyochon};
+    Bitmap bitmap;
+    int store_ser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +50,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("가게 목록");
+        getSupportActionBar().setTitle("가게목록");
 
 
         drawer = findViewById(R.id.drawer_layout);
@@ -52,8 +65,51 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         ListView listView = (ListView)findViewById(R.id.listView);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
+        Thread mThread=new Thread(){
+            @Override
+            public void run(){
+                for(int i=0;i<UtilSet.al_store.size();i++){
+                    try{
+                        if(UtilSet.al_store.get(i).getStore_profile_img().equals("null")){
+                            Drawable drawable = getResources().getDrawable(R.drawable.no_image);
+                            Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+                            UtilSet.al_store.get(i).setStore_image(bitmap);
+                            continue;
+                        }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+                        URL url=new URL( UtilSet.al_store.get(i).getStore_profile_img());
+                        HttpURLConnection conn=(HttpURLConnection) url.openConnection();
+                        conn.setDoInput(true);
+                        conn.connect();
+
+                        InputStream is=conn.getInputStream();
+                        bitmap= BitmapFactory.decodeStream(is);
+                        UtilSet.al_store.get(i).setStore_image(bitmap);
+                    }catch(MalformedURLException e){
+                        e.printStackTrace();
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        mThread.start();
+        try{
+            mThread.join();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                store_ser = UtilSet.al_store.get(position).getStore_serial();
+                Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
+                intent.putExtra("serial",store_ser);
+                intent.putExtra("index",position);
+                startActivityForResult(intent,101);
+            }
+        });
     }
 
     @Override
@@ -61,11 +117,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         switch(menuItem.getItemId()){
             case R.id.old_olderlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new old_olderlist()).commit();
+                        new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new profile()).commit();
+                        new Profile()).commit();
                 break;
             case R.id.menu_logout:
                 Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
@@ -105,20 +161,12 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
     }
-    @Override
-    public void onBackPressed(){
-        if(drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START);
-        }else{
-            super.onBackPressed();
-        }
-    }
 
     class CustomAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return IMAGES.length;
+            return UtilSet.al_store.size();
         }
 
         @Override
@@ -132,7 +180,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
 
@@ -142,12 +190,22 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
             TextView textView_address = (TextView) view.findViewById(R.id.address);
 
-            imageView.setImageResource(IMAGES[i]);
+            imageView.setImageBitmap(UtilSet.al_store.get(i).getStore_image());
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());
             textView_phone.setText(UtilSet.al_store.get(i).getStore_phone());
             textView_branch_name.setText(UtilSet.al_store.get(i).getStore_branch_name());
             textView_address.setText(UtilSet.al_store.get(i).getStore_address());
             return view;
+        }
+    }
+    @Override
+    public void onBackPressed(){
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }else{
+            Intent intent=new Intent(getApplicationContext(),First_Main_Activity.class);
+            startActivityForResult(intent,101);
+            finish();
         }
     }
 }

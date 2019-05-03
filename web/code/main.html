@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
+  <link href="../assets/css/Modal_Style..css" rel="stylesheet"/>
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -14,15 +15,16 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
+
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
-  <link href="../assets/css/original.css" rel="stylesheet"/>
-  <link href="../assets/css/detail_window.css" rel="stylesheet"/>
+
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <!---<link href="../assets/demo/demo.css" rel="stylesheet" />-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="../assets/js/login.js"></script>
-	<script src="../assets/js/main.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/Modal_Script.js"></script>
 	<!--
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -157,7 +159,7 @@
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">음식준비</p>
-                      <p class="card-title">3건
+                      <p class="card-title" id="number_cooking">
                         </p>
                     </div>
                   </div>
@@ -167,90 +169,40 @@
 				  <div class="table-responsive">
                   <table class="table">
                     <thead class="text-primary">
-                      <th width="230px"> &nbsp;주문시간 </th>
-                      <th width="220px"> &nbsp;메뉴 </th>
-                      <th width="150px" style="text-align: center"> 상세보기 </th>
-                      <th class="text-right" width="150px" style="text-align: center"> 배송출발</th>
+                      <th width="300px"> &nbsp;주문시간 </th>
+                      <th width="400px"> &nbsp;메뉴 </th>
+                      <th style="text-align: center"> 상세보기 </th>
+                      <th style="text-align: center"> 배송출발 </th>
                     </thead>
                     <tbody id="now_menu">
-                      <tr>
-                        <td>
-                          날짜 : 19.03.10
-						  <br> 시간 : 19시 30분
-                        </td>
-                        <td>
-                          #짜장면1
-                          <br> #짬뽕1
-                          <br> #탕수육1
-                        </td>
-						<td class="text-right">
-                        <div class="icon-big text-middle icon-warning">
-							
-                      		<i id="temp1" style="cursor:pointer" class="nc-icon nc-simple-add text-warning" href="javascript:;" data-toggle="modal" data-target="#myModal">
-							</i>
-							<!----이거는 상세보기를 눌렀을 때 새 레이어창을 위한 코드입니다-->
 
                           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">
-                                    &times
-                                    </span>
-                                    <h4 class="modal-title" id="myModalLabel">
-                                      Modal title
-                                    </h4>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <p>
-                                    One fine body&hellip;
-                                  </p>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    Close
-                                  </button>
-                                  <button type="button" class="btn btn-primary">
-                                    Save changes
-                                  </button>
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">
+                                      </span>
+                                    </button>
+                                      <h4 class="modal-title text-info" style="font-weight: bold" id="myModalLabel">
+                                        주문 상세내역
+                                      </h4>
+                                  </div>
+                                  <div class="modal-body">
+                                      <p id="myModal_text">
+
+                                      </p>
+                                  </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                      닫기
+                                    </button>
+                                    </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        </div>
-
-
-							<!---여기까지.....---------------->
-
-                        </td>
-						<td class="text-right">
-                        <div class="icon-big text-middle icon-warning">
-                      			<i class="nc-icon nc-delivery-fast text-primary" style="cursor:pointer"></i>
-                   		  </div>
-                        </td>
-                      </tr>
-                      
                     </tbody>
                   </table>
                 </div>
@@ -273,7 +225,7 @@
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">음식배달</p>
-                      <p class="card-title">4건
+                      <p class="card-title" id="number_delivery">
                         </p>
                     </div>
                   </div>
@@ -285,8 +237,8 @@
                     <thead class="text-primary">
                       <th width="230px"> 출발시간</th>
                       <th width="220px"> 메뉴</th>
-                      <th width="150px" style="text-align: center"> 상세보기 </th>
-                      <th class="text-right" width="150px"> 배송완료</th>
+                      <th style="text-align:center"> 상세보기 </th>
+                      <th style="text-align:center"> 배송상태</th>
                     </thead>
                     <tbody id="now_delivery">
 
@@ -355,6 +307,7 @@
       demo.initChartsPages();
     });
   </script>
+
 </body>
 
-</html>>>>>>>>
+</html>

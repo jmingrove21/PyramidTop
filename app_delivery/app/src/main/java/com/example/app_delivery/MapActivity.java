@@ -135,9 +135,9 @@ public class MapActivity extends AppCompatActivity {
         try {
             JSONArray json_result_al = (JSONArray) jobj.get("data");
             for (int i = 0; i < json_result_al.length(); i++) {
-                double x_dest = Double.parseDouble(((JSONObject) json_result_al.get(i)).get("destination_x").toString());
-                double y_dest = Double.parseDouble(((JSONObject) json_result_al.get(i)).get("destination_y").toString());
-                alTmapPoint.add(new TMapPoint(x_dest, y_dest));
+                double lat_dest = Double.parseDouble(((JSONObject) json_result_al.get(i)).get("destination_lat").toString());
+                double long_dest = Double.parseDouble(((JSONObject) json_result_al.get(i)).get("destination_long").toString());
+                alTmapPoint.add(new TMapPoint(lat_dest, long_dest));
             }
             set_Marker_in_Map();
         } catch (Exception e) {

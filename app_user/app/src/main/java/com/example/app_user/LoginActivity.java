@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     final EditText id=(EditText)findViewById(R.id.eid);
                     final EditText pw=(EditText)findViewById(R.id.epw);
-                    URL url = new URL("http://54.180.102.7/get/JSON/user_app/user_manage.php");
+                    URL url = new URL(UtilSet.url);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
