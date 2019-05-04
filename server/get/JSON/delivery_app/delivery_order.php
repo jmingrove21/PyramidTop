@@ -3,7 +3,7 @@
          include '../db.php';
          $delivery_id=$json_data['delivery_id'];
 
-         $query="SELECT destination, destination_x, destination_y FROM user_order WHERE order_number=1";
+         $query="SELECT destination, destination_lat, destination_long FROM user_order WHERE order_number=3";
          $stmt = mysqli_query($connect,$query);
          $confirm=-1;
          if($stmt)
@@ -15,8 +15,8 @@
         while ($row = mysqli_fetch_assoc($stmt)) {
             $d=array(
                 "destination"=>$row['destination'],
-                "destination_x"=>$row['destination_x'],
-                "destination_y"=>$row['destination_y']
+                "destination_long"=>$row['destination_long'],
+                "destination_lat"=>$row['destination_lat']
             );
             array_push($data,$d);
         }
@@ -25,5 +25,5 @@
             'confirm'=>$confirm,
             'data'=>$data
         );
-        echo json_encode($send_data);
+        echo json_encode($send_data,JSON_UNESCAPED_UNICODE);
 }

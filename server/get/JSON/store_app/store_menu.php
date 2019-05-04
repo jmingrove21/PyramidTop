@@ -1,45 +1,57 @@
 <?php
-    function store_menu($json_data){
+    function store_main($json_data){
          include '../db.php';
          $store_serial=$json_data['store_serial'];
 
-         $query="
-         SELECT menu_type_code, menu_type_name, menu_code, menu_name
-         FROM Capstone.menu AS m
-         INNER JOIN Capstone.store AS s
-         ON m.store_serial=s.store_serial
-         WHERE m.store_serial=".$store_serial." ORDER BY menu_code;
-         ";
+       $query="
+            SELECT tb1.order_receipt_date, m.menu_name, tb1.order_number,tb1.order_status
+             FROM
+             (
+             SELECT s.order_number, s.order_status, s.order_receipt_date
+             FROM Capstone.store_order AS s
+             WHERE s.store_serial=".$store_serial."
+             ) tb1
+             INNER JOIN Capstone.order_menu AS o
+             INNER JOIN Capstone.menu_info AS m
+             ON tb1.order_number=o.order_number
+             AND o.menu_serial=m.menu_serial
+             WHERE tb1.order_number=o.order_number AND tb1.order_status BETWEEN 3 AND 5
+             ORDER BY tb1.order_receipt_date DESC
+             ";
          $stmt = mysqli_query($connect,$query);
 
-         $menu_type='';
-         $total=[];
          $menu=[];
-         while($row=mysqli_fetch_assoc($stmt)){
-            if($menu_type==''||$menu_type==$row['menu_type_code']){
-                $menu_type=$row['menu_type_code'];
-                $menu_type_name=$row['menu_type_name'];
+         $order_num=0;
+         $order_status=0;
+         $total=[];
+
+        while ($row = mysqli_fetch_assoc($stmt)) {
+
+            if($order_num===0||$order_num==$row['order_number']){
+                $date=$row['order_receipt_date'];
+                $order_num=$row['order_number'];
+                $order_status=$row['order_status'];
             }else{
-                array_push($total,$data);
-                $menu_type=$row['menu_type_code'];
-                $menu_type_name=$row['menu_type_name'];
-                $menu=[];
-            }
-
-            $one_menu=array(
-                'menu_code'=>$row['menu_code'],
-                'menu_name'=>$row['menu_name']
-            );
-            array_push($menu,$one_menu);
-            $data=array(
-                'menu_type_code'=>$menu_type,
-                'menu_type_name'=>$menu_type_name,
+                $data=array(
+                'order_status'=>$order_status,
+                'order_num'=>$order_num,
+                'date'=>$row['order_receipt_date'],
                 'menu'=>$menu
-            );
-         }
-         array_push($total,$data);
+                );
+                $menu=[];
+                array_push($total,$data);
+                $order_num=$row['order_number'];
+                $order_status=$row['order_status'];
+            }
+            array_push($menu,$row['menu_name']);
+        }
+        $data=array(
+            'order_status'=>$order_status,
+            'order_num'=>$order_num,
+            'date'=>$date,
+            'menu'=>$menu
+         );
+        array_push($total,$data);
+  echo json_encode($total,JSON_UNESCAPED_UNICODE);
 
-         echo json_encode($total,JSON_UNESCAPED_UNICODE);
-
-
-}
+    }
