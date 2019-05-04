@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
   <meta charset="utf-8" />
@@ -10,15 +10,21 @@
     배달ONE
   </title>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport" />
+	
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+
   <!-- CSS Files -->
+  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  <link href="../assets/css/daterangepicker.css" rel="stylesheet"/>
+  <script src="../assets/js/moment.js"></script>
+  <script src="../assets/js/daterangepicker.js"></script>
   <script src="../assets/js/list.js"></script>
+	
 </head>
 
 <body class="" onLoad="init_list_page();">
@@ -133,9 +139,71 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
+			
               <div class="card-header">
-                <h4 class="card-title"> Simple Table</h4>
-              </div>
+				<h4 class="card-title"> 과거 주문 내역 조회</h4>
+				  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>시작일</label>
+                        <input id="start_pickdate" type="text" class="form-control">
+                      </div>
+                    </div>
+					  
+					<div class="col-md-4">
+                      <div class="form-group">
+                        <label>종료일</label>
+                        <input id="end_pickdate" type="text" class="form-control">
+                      </div>
+					  
+                    </div>
+					  
+					<div class="col-md-2 align-self-end text-center">
+
+                      <button id="pickdate" type='button' class='btn btn-outline-success'> 날짜선택</button>
+                      <script type="text/javascript">
+                        $(function() {
+                          // 시작 날짜와 끝나는 날짜를 지정한다. 여기에서는 30일로 설정하엿다
+                          var start_date = moment().subtract(29, 'days');
+                          var end_date = moment();
+                          function cb(start, end) {
+                            $('#start_pickdate').val(
+                                    start.format('YYYY-MM-DD'));
+                            $('#end_pickdate').val(
+                                    end.format('YYYY-MM-DD'));
+
+                          }
+                          cb(start_date, end_date);
+
+                          $('#pickdate')
+                                  .daterangepicker(
+                                          {
+                                            ranges : {
+                                              '오늘' : [ moment(), moment() ],
+                                              '어제' : [ moment().subtract(1, 'days'),
+                                                moment().subtract(1, 'days') ],
+                                              '지난 7일' : [ moment().subtract(6, 'days'),
+                                                moment() ],
+                                              '지난 30일' : [ moment().subtract(29, 'days'),
+                                                moment() ],
+                                              '이번 달' : [ moment().startOf('month'),
+                                                moment().endOf('month') ],
+                                              '지난 달' : [
+                                                moment().subtract(1, 'month')
+                                                        .startOf('month'),
+                                                moment().subtract(1, 'month')
+                                                        .endOf('month') ]
+                                            },
+                                            'startDate' :  start_date,
+                                            'endDate' : end_date
+                                          }, cb);
+                        });
+                      </script>
+                    </div>
+					<div class="col-md-2 align-self-end">
+						<button type='button' class='btn btn-outline-success'>조회하기 </button>
+                    </div>
+
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table">
@@ -356,134 +424,6 @@
               </div>
             </div>
           </div>
-          <div class="col-md-12">
-            <div class="card card-plain">
-              <div class="card-header">
-                <h4 class="card-title"> Table on Plain Background</h4>
-                <p class="card-category"> Here is a subtitle for this table</p>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Country
-                      </th>
-                      <th>
-                        City
-                      </th>
-                      <th class="text-right">
-                        Salary
-                      </th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-right">
-                          $36,738
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-right">
-                          $56,142
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Philip Chaney
-                        </td>
-                        <td>
-                          Korea, South
-                        </td>
-                        <td>
-                          Overland Park
-                        </td>
-                        <td class="text-right">
-                          $38,735
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-right">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $78,615
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Jon Porter
-                        </td>
-                        <td>
-                          Portugal
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $98,615
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <footer class="footer footer-black  footer-white ">
@@ -516,20 +456,18 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
+
   <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
+
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chart JS -->
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <!--  Google Maps Plugin 
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>-->
+  <!-- Chart JS
+  <script src="../assets/js/plugins/chartjs.min.js"></script>-->
   <!--  Notifications Plugin    -->
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
-  <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../assets/demo/demo.js"></script>
 </body>
 
 </html>
