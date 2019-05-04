@@ -28,10 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -58,7 +55,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("메뉴 선택");
 
-
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -72,7 +68,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.menulayout,R.id.checkbox_layout,data);
 
         listView.setAdapter(adapter);
-
 
         TextView text_store_name = (TextView) findViewById(R.id.store_name);
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
@@ -186,35 +181,35 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         }
     }
 
-//    class CustomAdapter extends BaseAdapter {
-//
-//        @Override
-//        public int
-//        getCount() {
-//            return IMAGES.length;
-//        }
-//
-//        @Override
-//        public Object getItem(int position) {
-//            return null;
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return 0;
-//        }
-//
-//        @Override
-//        public View getView(int i, View view, ViewGroup viewGroup) {
-//            view = getLayoutInflater().inflate(R.layout.menulayout, null);
-//            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
-//
-//            TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
-//
-//            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
-//            return view;
-//        }
-//    }
+    class CustomAdapter extends BaseAdapter {
+
+        @Override
+        public int
+        getCount() {
+            return IMAGES.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            view = getLayoutInflater().inflate(R.layout.menulayout, null);
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
+
+            TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
+
+            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
+            return view;
+        }
+    }
 
     public static Drawable LoadImageFromWebOperations(String url) {
         try {

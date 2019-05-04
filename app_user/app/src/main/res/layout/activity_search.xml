@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
-    tools:context=".FirstMainActivity"
+    tools:context=".SearchActivity"
     tools:openDrawer="start">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,8 +26,9 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
         <ListView
-            android:id="@+id/first_listView"
+            android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignTop="@+id/fragment_container"
@@ -56,3 +57,4 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"/>
 </android.support.v4.widget.DrawerLayout>
+

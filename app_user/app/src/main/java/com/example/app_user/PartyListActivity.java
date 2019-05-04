@@ -31,7 +31,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Party_List_Activity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class PartyListActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int store_ser;
     int[] FIRSTIMAGES = {1,2,3,4};
@@ -153,7 +153,6 @@ public class Party_List_Activity extends AppCompatActivity  implements Navigatio
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);
 
 //            imageView.setImageResource();
-
               textView_name.setText(FIRSTNAMES[i]);
 
             return view;
