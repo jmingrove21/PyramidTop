@@ -26,9 +26,11 @@
         </activity>
         <activity android:name="com.example.app_user.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.app_user.First_Main_Activity"
+        <activity android:name="com.example.app_user.FirstMainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.app_user.MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.app_user.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.app_user.LoginActivity"/>
     </application>
