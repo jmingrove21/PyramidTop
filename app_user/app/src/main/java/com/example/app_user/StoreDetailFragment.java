@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.zip.Inflater;
+
 public class StoreDetailFragment extends Fragment {
     @Nullable
     @Override
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        return  inflater.inflate(R.layout.store_detail_fragment,container,false);
+        View view =  inflater.inflate(R.layout.store_detail_fragment,container,false);
+
+        return view;
     }
 }
