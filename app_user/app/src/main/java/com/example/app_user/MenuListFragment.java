@@ -1,28 +1,27 @@
 package com.example.app_user;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
-import android.util.SparseBooleanArray;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
-import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class MenuListFragment extends Fragment {
 
@@ -33,7 +32,7 @@ public class MenuListFragment extends Fragment {
     }
 
     int index;
-    String[] data={"a","b","c","d","e","f","g","h"};
+    ArrayList<String> menu_data=new ArrayList<>();
     ListView listView;
     ArrayList<String> selectedItems = new ArrayList<>();
     public void setIndex(int index){
@@ -46,7 +45,7 @@ public class MenuListFragment extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.order_list);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(),R.layout.menulayout,R.id.checkbox_layout,data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(),R.layout.menulayout,R.id.checkbox_layout,menu_data);
 
         listView.setAdapter(adapter);
 
@@ -65,7 +64,15 @@ public class MenuListFragment extends Fragment {
         return view;
     }
 
-
+    public void set_menu_data(){
+        ArrayList<Menu> menu_al=UtilSet.al_store.get(index).getMenu_al();
+        for(int i=0;i<menu_al.size();i++){
+            ArrayList<MenuDesc> menu_desc_al=menu_al.get(i).getMenu_desc_al();
+            for(int j=0;j<menu_desc_al.size();j++){
+                this.menu_data.add(menu_desc_al.get(j).getMenu_name());
+            }
+        }
+    }
     @Override
     public void onAttach(Context context){
         super.onAttach(context);

@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +32,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -72,7 +78,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
         menulistfragment = new MenuListFragment();
         menulistfragment.setIndex(index);
-
+        menulistfragment.set_menu_data();
 
         setFrag(0);
 
@@ -184,11 +190,60 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     }
 
     public void showSelectedItems(View view){
+        store_info_specification(selectedItems);
         String items="";
         for(String item:selectedItems){
             items+="-" + item + "\n";
         }
         Toast.makeText(view.getContext(),"You have selected \n"+items,Toast.LENGTH_LONG).show();
     }
+    public void store_info_specification(final ArrayList<String> selectedItems) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(UtilSet.url);
 
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept", "application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    JSONObject jsonParam = new JSONObject();
+
+                    jsonParam.put("user_info", "make_order");
+                    jsonParam.put("user_serial", 3);
+                    jsonParam.put("store_serial", UtilSet.al_store.get(index).getStore_serial());
+                    jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
+                    jsonParam.put("destination_lat", 37.277218);
+                    jsonParam.put("destination_long", 127.046708);
+                    jsonParam.put("menu", selectedItems.toString());
+                    Log.i("JSON", jsonParam.toString());
+                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                    os.writeBytes(jsonParam.toString());
+
+                    os.flush();
+                    os.close();
+                    if (conn.getResponseCode() == 200) {
+                        InputStream response = conn.getInputStream();
+                        String jsonReply = UtilSet.convertStreamToString(response);
+
+                    } else {
+                        Log.d("error", "Connect fail");
+                    }
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try{
+            thread.join();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+    }
 }
