@@ -72,7 +72,10 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         menu_list_button = (Button) findViewById(R.id.menu_list_button);
 
         menulistfragment = new MenuListFragment();
+        menulistfragment.setIndex(index);
         storedetailfragment = new StoreDetailFragment();
+        storedetailfragment.setIndex(index);
+
         setFrag(0);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -88,12 +91,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         TextView text_store_name = (TextView) findViewById(R.id.store_name);
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
         TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
-//        TextView text_store_rest = (TextView) findViewById(R.id.store_rest_day);
-//        TextView text_store_branch_name = (TextView) findViewById(R.id.store_branch_name);
-//        TextView text_store_address = (TextView) findViewById(R.id.store_address);
-//        TextView text_store_operation_start_time = (TextView) findViewById(R.id.store_operation_start_time);
-//        TextView text_store_operation_end_time = (TextView) findViewById(R.id.store_operation_end_time);
-//        TextView text_store_notice = (TextView) findViewById(R.id.store_notice);
         ImageView imageView=(ImageView) findViewById(R.id.store_image);
 
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,18 +115,22 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 //        text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
 //        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
 //        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
+
+        store_inform_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFrag(0);
+            }
+        });
+
+        menu_list_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFrag(1);
+            }
+        });
     }
 
-    public void onClick(View v){
-        switch (v.getId()){
-            case R.id.store_inform_button:
-                setFrag(0);
-                break;
-            case R.id.menu_list_button:
-                setFrag(1);
-                break;
-        }
-    }
     public void setFrag(int n){
         fm = getFragmentManager();
         tran = fm.beginTransaction();
@@ -144,26 +145,26 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                 break;
         }
     }
-
-    public void showSelectedItems(View view){
-        String items="";
-        for(String item:selectedItems){
-            items+="-"+item+"\n";
-        }
-
-        Toast.makeText(this,"You have selected\n"+items,Toast.LENGTH_LONG).show();
-    }
-
-    public void confirm(View v){
-        SparseBooleanArray booleans = listView.getCheckedItemPositions();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < data.length; i++) {
-            if (booleans.get(i)) {
-                sb.append(data[i]);
-            }
-        }
-        Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_SHORT).show();
-    }
+//
+//    public void showSelectedItems(View view){
+//        String items="";
+//        for(String item:selectedItems){
+//            items+="-"+item+"\n";
+//        }
+//
+//        Toast.makeText(this,"You have selected\n"+items,Toast.LENGTH_LONG).show();
+//    }
+//
+//    public void confirm(View v){
+//        SparseBooleanArray booleans = listView.getCheckedItemPositions();
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < data.length; i++) {
+//            if (booleans.get(i)) {
+//                sb.append(data[i]);
+//            }
+//        }
+//        Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_SHORT).show();
+//    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -222,35 +223,35 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         }
     }
 
-    class CustomAdapter extends BaseAdapter {
-
-        @Override
-        public int
-        getCount() {
-            return IMAGES.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.menulayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
-
-            TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
-
-            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
-            return view;
-        }
-    }
+//    class CustomAdapter extends BaseAdapter {
+//
+//        @Override
+//        public int
+//        getCount() {
+//            return IMAGES.length;
+//        }
+//
+//        @Override
+//        public Object getItem(int position) {
+//            return null;
+//        }
+//
+//        @Override
+//        public long getItemId(int position) {
+//            return 0;
+//        }
+//
+//        @Override
+//        public View getView(int i, View view, ViewGroup viewGroup) {
+//            view = getLayoutInflater().inflate(R.layout.menulayout, null);
+//            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
+//
+//            TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
+//
+//            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
+//            return view;
+//        }
+//    }
 
     public static Drawable LoadImageFromWebOperations(String url) {
         try {

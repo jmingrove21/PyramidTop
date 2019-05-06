@@ -97,7 +97,6 @@ public class ListAdapter extends BaseAdapter {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONArray json_result_al=new JSONArray(jsonReply);
-                        //JSONArray json_result_al = (JSONArray) jobj.get("data");
                         for (int i = 0; i < json_result_al.length(); i++) {
 
 

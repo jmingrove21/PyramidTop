@@ -88,26 +88,26 @@
 
         <Button
             android:id="@+id/store_inform_button"
-            android:layout_width="116dp"
+            android:layout_width="102dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/fragment_container"
             android:layout_alignTop="@+id/store_image"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="198dp"
-            android:layout_marginEnd="283dp"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="111dp"
+            android:layout_marginEnd="139dp"
             android:text="상세보기"></Button>
 
         <Button
             android:id="@+id/menu_list_button"
-            android:layout_width="115dp"
+            android:layout_width="102dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/fragment_container"
             android:layout_alignTop="@+id/store_image"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="197dp"
-            android:layout_marginEnd="157dp"
+            android:layout_marginStart="270dp"
+            android:layout_marginTop="109dp"
+            android:layout_marginEnd="39dp"
             android:text="메뉴보기"></Button>
 
 
@@ -124,8 +124,9 @@
         <FrameLayout
             android:id="@+id/sub_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="323dp"
-            android:layout_above="@+id/order_button"></FrameLayout>
+            android:layout_height="290dp"
+            android:layout_above="@+id/order_button"
+            android:layout_marginTop="@+id/imageView"></FrameLayout>
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -135,6 +136,7 @@
         </FrameLayout>
 
     </RelativeLayout>
+
 
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
