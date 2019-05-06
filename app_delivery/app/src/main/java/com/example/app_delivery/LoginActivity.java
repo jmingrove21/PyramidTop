@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.i("check_state", json_result);
                         if(json_result.equals("1")){//check_state : 1 (success), 0 (fail)
                             save_login_data();
-                            Intent intent=new Intent(getApplicationContext(),MapActivity.class);
+                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivityForResult(intent,101);
                             finish();
                         }
@@ -108,6 +108,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         thread.start();
+        try{
+            thread.join();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     private void save_login_data() {

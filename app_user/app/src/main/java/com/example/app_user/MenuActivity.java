@@ -1,5 +1,7 @@
 package com.example.app_user;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +25,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,6 +43,12 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     int[] IMAGES = {R.drawable.alchon};
     String[] data={"a","b","c","d","e","f","g","h"};
     ListView listView;
+
+    Button store_inform_button, menu_list_button;
+    FragmentManager fm;
+    FragmentTransaction tran;
+    MenuListFragment menulistfragment;
+    StoreDetailFragment storedetailfragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,49 +68,81 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        store_inform_button = (Button) findViewById(R.id.store_inform_button);
+        menu_list_button = (Button) findViewById(R.id.menu_list_button);
+
+        menulistfragment = new MenuListFragment();
+        storedetailfragment = new StoreDetailFragment();
+        setFrag(0);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        listView = (ListView) findViewById(R.id.checkbox_ListView);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.menulayout,R.id.checkbox_layout,data);
-
-        listView.setAdapter(adapter);
+//        listView = (ListView) findViewById(R.id.checkbox_ListView);
+//        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.menulayout,R.id.checkbox_layout,data);
+//
+//        listView.setAdapter(adapter);
 
         TextView text_store_name = (TextView) findViewById(R.id.store_name);
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
         TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
-        TextView text_store_rest = (TextView) findViewById(R.id.store_rest_day);
-        TextView text_store_branch_name = (TextView) findViewById(R.id.store_branch_name);
-        TextView text_store_address = (TextView) findViewById(R.id.store_address);
-        TextView text_store_operation_start_time = (TextView) findViewById(R.id.store_operation_start_time);
-        TextView text_store_operation_end_time = (TextView) findViewById(R.id.store_operation_end_time);
-        TextView text_store_notice = (TextView) findViewById(R.id.store_notice);
+//        TextView text_store_rest = (TextView) findViewById(R.id.store_rest_day);
+//        TextView text_store_branch_name = (TextView) findViewById(R.id.store_branch_name);
+//        TextView text_store_address = (TextView) findViewById(R.id.store_address);
+//        TextView text_store_operation_start_time = (TextView) findViewById(R.id.store_operation_start_time);
+//        TextView text_store_operation_end_time = (TextView) findViewById(R.id.store_operation_end_time);
+//        TextView text_store_notice = (TextView) findViewById(R.id.store_notice);
         ImageView imageView=(ImageView) findViewById(R.id.store_image);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = ((TextView)view).getText().toString();
-                if(selectedItems.contains(selectedItem)){
-                    selectedItems.remove(selectedItem);
-                }else{
-                    selectedItems.add(selectedItem);
-                }
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String selectedItem = ((TextView)view).getText().toString();
+//                if(selectedItems.contains(selectedItem)){
+//                    selectedItems.remove(selectedItem);
+//                }else{
+//                    selectedItems.add(selectedItem);
+//                }
+//            }
+//        });
 
         imageView.setImageBitmap(UtilSet.al_store.get(index).getStore_image());
         text_store_name.setText(UtilSet.al_store.get(index).getStore_name());
         text_store_phone.setText(UtilSet.al_store.get(index).getStore_phone());
         text_store_building_name.setText(UtilSet.al_store.get(index).getStore_building_name());
-        text_store_rest.setText(UtilSet.al_store.get(index).getStore_restday());
-        text_store_branch_name.setText(UtilSet.al_store.get(index).getStore_branch_name());
-        text_store_address.setText(UtilSet.al_store.get(index).getStore_address());
-        text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
-        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
-        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
+//        text_store_rest.setText(UtilSet.al_store.get(index).getStore_restday());
+//        text_store_branch_name.setText(UtilSet.al_store.get(index).getStore_branch_name());
+//        text_store_address.setText(UtilSet.al_store.get(index).getStore_address());
+//        text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
+//        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
+//        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
+    }
+
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.store_inform_button:
+                setFrag(0);
+                break;
+            case R.id.menu_list_button:
+                setFrag(1);
+                break;
+        }
+    }
+    public void setFrag(int n){
+        fm = getFragmentManager();
+        tran = fm.beginTransaction();
+        switch (n){
+            case 0:
+                tran.replace(R.id.sub_fragment_container, storedetailfragment);
+                tran.commit();
+                break;
+            case 1:
+                tran.replace(R.id.sub_fragment_container, menulistfragment);
+                tran.commit();
+                break;
+        }
     }
 
     public void showSelectedItems(View view){
