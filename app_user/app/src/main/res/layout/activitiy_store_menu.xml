@@ -93,11 +93,9 @@
             android:layout_alignStart="@+id/fragment_container"
             android:layout_alignTop="@+id/store_image"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="170dp"
             android:layout_marginTop="111dp"
             android:layout_marginEnd="139dp"
-            android:layout_marginBottom="516dp"
             android:text="상세보기"></Button>
 
         <Button
@@ -107,11 +105,9 @@
             android:layout_alignStart="@+id/fragment_container"
             android:layout_alignTop="@+id/store_image"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="270dp"
             android:layout_marginTop="109dp"
             android:layout_marginEnd="39dp"
-            android:layout_marginBottom="518dp"
             android:text="메뉴보기"></Button>
 
 
@@ -128,9 +124,9 @@
         <FrameLayout
             android:id="@+id/sub_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="308dp"
-            android:layout_marginTop="@+id/imageView"
-            android:layout_above="@+id/order_button"></FrameLayout>
+            android:layout_height="290dp"
+            android:layout_above="@+id/order_button"
+            android:layout_marginTop="@+id/imageView"></FrameLayout>
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -141,11 +137,11 @@
 
     </RelativeLayout>
 
-    <!--<android.support.design.widget.NavigationView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:id="@+id/nav_view"-->
-        <!--app:headerLayout="@layout/nav_header"-->
-        <!--app:menu="@menu/drawer_menu"/>-->
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:id="@+id/nav_view"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu"/>
 </android.support.v4.widget.DrawerLayout>
