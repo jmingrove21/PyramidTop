@@ -76,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
                         for (int i = 0; i < json_result_al.length(); i++) {
                             int order_number=Integer.parseInt(((JSONObject) json_result_al.get(i)).get("order_number").toString());
                             int store_serial=Integer.parseInt(((JSONObject) json_result_al.get(i)).get("store_serial").toString());
-                            String order_receipt_date=((JSONObject) json_result_al.get(i)).get("order_receipt_date").toString();
+                            String delivery_request_time=((JSONObject) json_result_al.get(i)).get("delivery_request_time").toString();
                             String store_name=((JSONObject) json_result_al.get(i)).get("store_name").toString();
                             String store_branch_name=((JSONObject) json_result_al.get(i)).get("store_branch_name").toString();
                             float distance=Float.parseFloat(((JSONObject) json_result_al.get(i)).get("distance").toString());
 
-                            order_list.add(new Delivery_list(order_number,store_serial,order_receipt_date,store_name,store_branch_name,distance));
+                            order_list.add(new Delivery_list(order_number,store_serial,delivery_request_time,store_name,store_branch_name,distance));
                         }
                     }else{
                         Log.d("error","Connect fail");
