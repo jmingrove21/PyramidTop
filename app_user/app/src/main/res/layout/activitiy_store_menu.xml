@@ -88,26 +88,26 @@
 
         <Button
             android:id="@+id/store_inform_button"
-            android:layout_width="102dp"
+            android:layout_width="116dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/fragment_container"
             android:layout_alignTop="@+id/store_image"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="170dp"
-            android:layout_marginTop="111dp"
-            android:layout_marginEnd="139dp"
+            android:layout_marginTop="110dp"
+            android:layout_marginEnd="125dp"
             android:text="상세보기"></Button>
 
         <Button
             android:id="@+id/menu_list_button"
-            android:layout_width="102dp"
+            android:layout_width="114dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/fragment_container"
             android:layout_alignTop="@+id/store_image"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="270dp"
-            android:layout_marginTop="109dp"
-            android:layout_marginEnd="39dp"
+            android:layout_marginStart="289dp"
+            android:layout_marginTop="110dp"
+            android:layout_marginEnd="8dp"
             android:text="메뉴보기"></Button>
 
 
@@ -118,15 +118,16 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="showSelectedItems"
             android:text="주문 완료"
-            />
+            ></Button>
 
         <FrameLayout
             android:id="@+id/sub_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="290dp"
             android:layout_above="@+id/order_button"
-            android:layout_marginTop="@+id/imageView"></FrameLayout>
+            ></FrameLayout>
 
 
         <FrameLayout
@@ -137,7 +138,6 @@
         </FrameLayout>
 
     </RelativeLayout>
-
 
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
