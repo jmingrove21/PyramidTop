@@ -11,10 +11,11 @@ public class UtilSet {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
 
-        String line = null;
         try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+            while (true) {
+                final String line = reader.readLine();
+                if (line == null) break;
+                sb.append(line  + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -20,7 +20,7 @@ public class SplashActivity extends Activity {
 
         try{
             Thread.sleep(4000);
-            Intent intent=new Intent(getApplicationContext(),First_Main_Activity.class);
+            Intent intent=new Intent(getApplicationContext(),FirstMainActivity.class);
             startActivityForResult(intent,101);
         }catch(InterruptedException e){
             e.printStackTrace();
@@ -34,7 +34,7 @@ public class SplashActivity extends Activity {
 //            @Override
 //            public void run() {
 //                try {
-//                    URL url = new URL("http://54.180.102.7/get/JSON/user_app/user_manage.php");
+//                    URL url = new URL(UtilSet.url);
 //
 //                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 //                    conn.setRequestMethod("POST");

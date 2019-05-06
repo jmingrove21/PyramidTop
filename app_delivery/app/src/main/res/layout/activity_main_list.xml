@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="75"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="가게 이름"
+            android:layout_weight="60"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
+            android:textColor="#33aabb"
+            />
+        <TextView
+            android:id="@+id/textDate"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="시간"
+            android:layout_weight="40"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            />
+    </LinearLayout>
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:text="선택"
+        android:id="@+id/btn"
+        android:layout_weight="20"
+        />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        />
+
+</LinearLayout>

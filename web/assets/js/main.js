@@ -25,21 +25,21 @@ function main_list()
 						//alert('key:'+key+',order_status:'+value.order_status+',order_num:'+value.order_num+', date:'+value.date+', menu:'+value.menu);
 						//alert(value.menu.length);
 
-						var date = new Date(value.date);
-						var year = date.getFullYear()%1000;
-						var month = date.getMonth()+1;
-						if(month<10)
-							month = "0"+month;
-						var day = date.getDate();
-						var hour = date.getHours();
-						var minute = date.getMinutes();
-						if(minute<10)
-							minute = "0" + minute;
 						var order_num = value.order_num;
 						var order_status = value.order_status;
 						//alert(order_num);
 						if(order_status==3) {
 							count_cooking++;
+							var date = new Date(value.receipt_date);
+							var year = date.getFullYear()%1000;
+							var month = date.getMonth()+1;
+							if(month<10)
+								month = "0"+month;
+							var day = date.getDate();
+							var hour = date.getHours();
+							var minute = date.getMinutes();
+							if(minute<10)
+								minute = "0" + minute;
 							var string_temp = "<tr id=\"";
 							string_temp = string_temp + order_num + "\"" + ">";
 							//alert(string_temp);
@@ -61,7 +61,7 @@ function main_list()
 							//여기까지 주문 메뉴 이 다음부터 아이콘
 							string = "<td class='text-center'><button type='button' class='btn btn-primary btn-sm' onclick='detail_deliver_list(";
 							string = string + order_num;
-							string = string + ");'>상세보기</button></td>";
+							string = string + ");' data-toggle='modal' data-target='#myModal'>상세보기</button></td>";
 							//alert(string);
 							$("#now_menu").append(string);
 							//$("#now_menu").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal' onclick='detail_deliver_list();'>상세보기</button></td>");
@@ -73,9 +73,54 @@ function main_list()
 							//$("#now_menu").append("<td class='text-center for_change_status'><button type='button' class='btn btn-primary btn-sm' onclick='change_deli_status();'>배송출발</button></td>");
 							$("#now_menu").append("</tr>");
 						}
-						else if(order_status==4 || order_status==5)
+						else if(order_status==4)
 						{
 							count_delivery++;
+							var string_temp = "<tr id=\"";
+							string_temp = string_temp + order_num + "\"" + ">";
+							//alert(string_temp);
+							$("#now_delivery").append(string_temp); //tr 태그 추가. order_num을 id로 넘김
+							//var temp = document.getElementById("now_menu").getElementsByTagName('tr');
+							//alert(temp.valueOf(id));
+							$("#now_delivery").append("<td style='font-weight: bold' style='text-align: left' class='text-success'>" + "미출발" + "</td>");
+							//$("#now_menu").append("<td>"+"#"+value.menu[0]+"</br>"+"#"+value.menu[1]+"</br>"+"#"+value.menu[2]+"</br>"+"#"+value.menu[3]+"</td>");
+							//$("#now_menu").append("<td>");
+							var string = "<td>";
+							for (var i = 0; i < value.menu.length; i++) {
+								string = string + "#" + value.menu[i];
+								if (i < value.menu.length - 1)
+									string = string + "</br>";
+							}
+							string = string + "</td>";
+							$("#now_delivery").append(string);
+
+
+							//여기까지 주문 메뉴 이 다음부터 아이콘
+							string = "<td class='text-center'><button type='button' class='btn btn-primary btn-sm' onclick='detail_deliver_list(";
+							string = string + order_num;
+							string = string + ");' data-toggle='modal' data-target='#myModal'>상세보기</button></td>";
+							//alert(string);
+							$("#now_delivery").append(string);
+							if(order_status==4)
+								$("#now_delivery").append("<td class='text-center'><button id='status_delivery' type='button' class='btn btn-light btn-sm'>배달대기 </button></td>");
+							else if(order_status==5)
+								$("#now_delivery").append("<td class='text-center'><button id='status_delivery' type='button' class='btn btn-light btn-sm'>배달중 </button></td>");
+
+							$("#now_delivery").append("</tr>");
+						}
+						else if(order_status==5)
+						{
+							count_delivery++;
+							var date = new Date(value.delivery_departure_date);
+							var year = date.getFullYear()%1000;
+							var month = date.getMonth()+1;
+							if(month<10)
+								month = "0"+month;
+							var day = date.getDate();
+							var hour = date.getHours();
+							var minute = date.getMinutes();
+							if(minute<10)
+								minute = "0" + minute;
 							var string_temp = "<tr id=\"";
 							string_temp = string_temp + order_num + "\"" + ">";
 							//alert(string_temp);
@@ -96,7 +141,11 @@ function main_list()
 
 
 							//여기까지 주문 메뉴 이 다음부터 아이콘
-							$("#now_delivery").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal'>상세보기</button></td>");
+							string = "<td class='text-center'><button type='button' class='btn btn-primary btn-sm' onclick='detail_deliver_list(";
+							string = string + order_num;
+							string = string + ");' data-toggle='modal' data-target='#myModal'>상세보기</button></td>";
+							//alert(string);
+							$("#now_delivery").append(string);
 							if(order_status==4)
 								$("#now_delivery").append("<td class='text-center'><button id='status_delivery' type='button' class='btn btn-light btn-sm'>배달대기 </button></td>");
 							else if(order_status==5)
@@ -201,11 +250,67 @@ function detail_deliver_list(number)
 		data: JSON.stringify(data),
 		success: function (result)
 		{
-
-			if (result)
+			//alert(result);
+			var result1 = JSON.parse(result)
+			if(result1)
 			{
-				alert(result);
+				$("#myModal_text").empty();
+				$.each(result1,function(key,value) {
+					//alert(value.user_serial);
+					var temp_string="";
+
+					//----------------------------아이디를 내용에 넣음----------------------------
+					var user_id = value.user_id;
+					temp_string = "<h6 class='text-success' style='font-weight: bold'>"+ user_id + "</h6>"+ "<br>";
+					$("#myModal_text").append(temp_string);
+
+					//---------------------------번호를 내용에 넣음---------------------------
+
+					var user_phone = value.user_phone;
+					temp_string = "전화번호"+"&nbsp;&nbsp;:&nbsp;&nbsp;" + user_phone + "<br>";
+					$("#myModal_text").append(temp_string);
+
+					//--------------------------주소를 내용에 넣음---------------------------
+
+					var destination = value.destination;
+					temp_string = "주문주소"+"&nbsp;&nbsp;:&nbsp;&nbsp;" + destination + "<br>";
+					$("#myModal_text").append(temp_string);
+
+					//--------------------------메뉴를 내용에 넣음---------------------------
+
+					var user_menu = value.user_menu;
+					temp_string = "주문메뉴"+"&nbsp;&nbsp;:&nbsp;&nbsp;" + user_menu + "<br>";
+					$("#myModal_text").append(temp_string);
+
+
+					//--------------------------주문 들어온 날짜 및 시간을 내용에 넣음----------------
+
+					var date = new Date(value.order_receipt_date);
+					var year = date.getFullYear()%1000;
+					var month = date.getMonth()+1;
+					if(month<10)
+						month = "0"+month;
+					var day = date.getDate();
+					var hour = date.getHours();
+					var minute = date.getMinutes();
+					if(minute<10)
+						minute = "0" + minute;
+					temp_string = "주문날짜"+"&nbsp;&nbsp;:&nbsp;&nbsp;" + year+ "년 " + month +"월 "+ day +"일 " + "<br>";
+					$("#myModal_text").append(temp_string);
+
+					temp_string = "주문시간" + "&nbsp;&nbsp;:&nbsp;&nbsp;" + hour +"시"+ minute + "분" + "<br>" + "<br>"
+					$("#myModal_text").append(temp_string);
+
+					$("#myModal_text").append("<h6 class='text-center text-primary' style='font-weight: bold'> 금액 : </h6>");
+
+					$("#myModal_text").append("<hr>");
+
+
+				});
+				$("#myModal_text").append("<h5 class='text-center text-primary' style='font-weight: bold'> 총금액 : </h5>");
+
 			}
 		}
+
 	});
 }

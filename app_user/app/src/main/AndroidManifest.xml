@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.app_user"
     android:targetSandboxVersion="1">
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -25,9 +26,11 @@
         </activity>
         <activity android:name="com.example.app_user.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.app_user.First_Main_Activity"
+        <activity android:name="com.example.app_user.FirstMainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.app_user.MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.app_user.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.app_user.LoginActivity"/>
     </application>
