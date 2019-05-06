@@ -39,6 +39,7 @@
             android:layout_width="168dp"
             android:layout_height="176dp"
             android:layout_marginTop="?attr/actionBarSize"/>
+
         <TextView
             android:id="@+id/store_name"
             android:layout_width="282dp"
@@ -110,7 +111,6 @@
             android:layout_marginEnd="8dp"
             android:text="메뉴보기"></Button>
 
-
         <Button
             android:id="@+id/order_button"
             android:layout_above = "@+id/bottom_navigation"
@@ -129,14 +129,12 @@
             android:layout_above="@+id/order_button"
             ></FrameLayout>
 
-
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_navigation">
         </FrameLayout>
-
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
