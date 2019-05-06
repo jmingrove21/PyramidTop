@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("delivery_info", "get_delivery_order_list");
+                    jsonParam.put("delivery_info", "login");
                     jsonParam.put("delivery_id", idText.getText().toString());
                     jsonParam.put("delivery_password", pwdText.getText().toString());
 
@@ -108,6 +108,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         thread.start();
+        try{
+            thread.join();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     private void save_login_data() {

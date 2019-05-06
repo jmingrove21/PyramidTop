@@ -96,17 +96,17 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 //        TextView text_store_notice = (TextView) findViewById(R.id.store_notice);
         ImageView imageView=(ImageView) findViewById(R.id.store_image);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = ((TextView)view).getText().toString();
-                if(selectedItems.contains(selectedItem)){
-                    selectedItems.remove(selectedItem);
-                }else{
-                    selectedItems.add(selectedItem);
-                }
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String selectedItem = ((TextView)view).getText().toString();
+//                if(selectedItems.contains(selectedItem)){
+//                    selectedItems.remove(selectedItem);
+//                }else{
+//                    selectedItems.add(selectedItem);
+//                }
+//            }
+//        });
 
         imageView.setImageBitmap(UtilSet.al_store.get(index).getStore_image());
         text_store_name.setText(UtilSet.al_store.get(index).getStore_name());

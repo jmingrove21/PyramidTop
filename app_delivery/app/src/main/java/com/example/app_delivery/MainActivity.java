@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<Delivery_list> order_list=new ArrayList<>();
+    public static ArrayList<Delivery_list> order_list=new ArrayList<>();
     private BackPressCloseHandler backPressCloseHandler;
     private ListView m_oListView=null;
 
@@ -30,11 +30,12 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0;i<order_list.size();i++){
             ItemData oItem=new ItemData();
             oItem.strTitle=order_list.get(i).getStore_name();
-            oItem.strDate=order_list.get(i).getOrder_receipt_date();
+            oItem.strDate=order_list.get(i).getDelivery_request_time();
+
             oData.add(oItem);
         }
 
-
+        // ListView, Adapter 생성 및 연결 ------------------------
         m_oListView=(ListView)findViewById(R.id.listView);
         ListAdapter oAdapter=new ListAdapter(oData);
         m_oListView.setAdapter(oAdapter);
@@ -81,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
                             float distance=Float.parseFloat(((JSONObject) json_result_al.get(i)).get("distance").toString());
 
                             order_list.add(new Delivery_list(order_number,store_serial,order_receipt_date,store_name,store_branch_name,distance));
-
-                           // alTmapPoint.add(new TMapPoint(lat_dest, long_dest));
                         }
                     }else{
                         Log.d("error","Connect fail");
