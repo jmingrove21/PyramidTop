@@ -126,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="290dp"
             android:layout_above="@+id/order_button"
-            android:layout_marginTop="@+id/imageView"></FrameLayout>
+            ></FrameLayout>
 
 
         <FrameLayout
