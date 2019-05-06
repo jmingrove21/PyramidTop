@@ -7,7 +7,8 @@ var deli_list='';
 
 function main_list()
 {
-	
+	var count_cooking =0;
+	var count_delivery=0;
 	 var data = {
 			"store_info" : "main",
 			"store_serial" : store_serial
@@ -21,9 +22,9 @@ function main_list()
 					var result1 = JSON.parse(result);
 					$.each(result1,function(key,value)
 					{
-						alert('key:'+key+',order_status:'+value.order_status+',order_num:'+value.order_num+', date:'+value.date+', menu:'+value.menu);
+						//alert('key:'+key+',order_status:'+value.order_status+',order_num:'+value.order_num+', date:'+value.date+', menu:'+value.menu);
 						//alert(value.menu.length);
-						var count =1;
+
 						var date = new Date(value.date);
 						var year = date.getFullYear()%1000;
 						var month = date.getMonth()+1;
@@ -38,6 +39,7 @@ function main_list()
 						var order_status = value.order_status;
 						//alert(order_num);
 						if(order_status==3) {
+							count_cooking++;
 							var string_temp = "<tr id=\"";
 							string_temp = string_temp + order_num + "\"" + ">";
 							//alert(string_temp);
@@ -57,13 +59,23 @@ function main_list()
 							$("#now_menu").append(string);
 
 							//여기까지 주문 메뉴 이 다음부터 아이콘
-
-							$("#now_menu").append("<td><a class='text-info' href='#0' style='font-weight: bold'>상세보기</a></td>");
-							$("#now_menu").append("<td><a class='text-info' href='#0' style='font-weight: bold'>배송출발</a></td>");
+							string = "<td class='text-center'><button type='button' class='btn btn-primary btn-sm' onclick='detail_deliver_list(";
+							string = string + order_num;
+							string = string + ");'>상세보기</button></td>";
+							//alert(string);
+							$("#now_menu").append(string);
+							//$("#now_menu").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal' onclick='detail_deliver_list();'>상세보기</button></td>");
+							string = "<td class='text-center'><button type='button' class='btn btn-primary btn-sm' onclick='change_deli_status(";
+							string = string + order_num;
+							string = string + ");'>배송출발</button></td>";
+							//alert(string);
+							$("#now_menu").append(string);
+							//$("#now_menu").append("<td class='text-center for_change_status'><button type='button' class='btn btn-primary btn-sm' onclick='change_deli_status();'>배송출발</button></td>");
 							$("#now_menu").append("</tr>");
 						}
-						else if(order_status==4)
+						else if(order_status==4 || order_status==5)
 						{
+							count_delivery++;
 							var string_temp = "<tr id=\"";
 							string_temp = string_temp + order_num + "\"" + ">";
 							//alert(string_temp);
@@ -82,14 +94,25 @@ function main_list()
 							string = string + "</td>";
 							$("#now_delivery").append(string);
 
-							//여기까지 주문 메뉴 이 다음부터 아이콘
 
-							$("#now_delivery").append("<td><a class='text-info' href='#0' style='font-weight: bold'>상세보기</a></td>");
-							$("#now_delivery").append("<td><a class='text-info' href='#0' style='font-weight: bold'>배송출발</a></td>");
+							//여기까지 주문 메뉴 이 다음부터 아이콘
+							$("#now_delivery").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal'>상세보기</button></td>");
+							if(order_status==4)
+								$("#now_delivery").append("<td class='text-center'><button id='status_delivery' type='button' class='btn btn-light btn-sm'>배달대기 </button></td>");
+							else if(order_status==5)
+								$("#now_delivery").append("<td class='text-center'><button id='status_delivery' type='button' class='btn btn-light btn-sm'>배달중 </button></td>");
+
 							$("#now_delivery").append("</tr>");
 						}
 
+
 					});
+					var number_cooking="";
+					number_cooking = count_cooking + "건";
+					var number_delivery="";
+					number_delivery = count_delivery + "건";
+					document.getElementById("number_cooking").innerHTML = number_cooking;
+					document.getElementById("number_delivery").innerHTML = number_delivery;
 					//document.getElementById("storemaster_num").value=result.storemaster_num;
 					//document.getElementById("store_name1").value=result.store_name;
 					//alert(result);
@@ -135,4 +158,54 @@ function init_main_page(){
 		main_list();
 	    event.preventDefault();
 	
+}
+
+function change_deli_status(number) {
+	var data = {
+		"store_info": "complete_order",
+		"store_serial": store_serial,
+		"order_number": number
+	};
+	//alert(number);
+	$.ajax({
+		url: "http://54.180.102.7:80/get/JSON/store_app/store_manage.php",
+		type: "POST",
+		data: JSON.stringify(data),
+		success: function (result) {
+			if (result) {
+				var result1 = JSON.parse(result);
+				//alert(result1.confirm);
+				if (result1.confirm == 1) {
+					alert("해당 주문의 배달 요청이 접수 되었습니다.");
+					location.reload();
+				}
+				else
+					alert("실패");
+			}
+		}
+	})
+}
+
+function detail_deliver_list(number)
+{
+	var data = {
+		"store_info": "detail_main",
+		"store_serial": store_serial,
+		"order_number": number
+	};
+	//alert(number);
+	$.ajax
+	({
+		url: "http://54.180.102.7:80/get/JSON/store_app/store_manage.php",
+		type: "POST",
+		data: JSON.stringify(data),
+		success: function (result)
+		{
+
+			if (result)
+			{
+				alert(result);
+			}
+		}
+	});
 }
