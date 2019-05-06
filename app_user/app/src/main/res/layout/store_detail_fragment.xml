@@ -8,7 +8,6 @@
 
     <TextView
         android:id="@+id/store_rest"
-<<<<<<< HEAD
         android:layout_width="75dp"
         android:layout_height="25dp"
         android:layout_alignParentStart="true"
@@ -19,22 +18,6 @@
         android:layout_marginTop="41dp"
         android:layout_marginEnd="336dp"
         android:layout_marginRight="338dp"
-=======
-        android:layout_width="62dp"
-        android:layout_height="27dp"
-        android:layout_alignStart="@+id/store_building_name"
-        android:layout_alignLeft="@+id/store_building_name"
-        android:layout_alignTop="@+id/store_branch_name"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="338dp"
-        android:layout_marginRight="338dp"
-        android:layout_marginBottom="611dp"
->>>>>>> parent of 0312d078... delete
         android:text="휴무일: "
         android:textSize="20sp"></TextView>
 
@@ -42,7 +25,6 @@
         android:id="@+id/store_rest_day"
         android:layout_width="274dp"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -51,20 +33,6 @@
         android:layout_marginTop="38dp"
         android:layout_marginEnd="50dp"
         android:layout_marginRight="118dp"
-=======
-        android:layout_alignStart="@+id/store_rest"
-        android:layout_alignLeft="@+id/store_building_name"
-        android:layout_alignTop="@+id/store_building_name"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="101dp"
-        android:layout_marginLeft="87dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="610dp"
->>>>>>> parent of 0312d078... delete
         android:text="TextView"
         android:textSize="20sp"></TextView>
 
@@ -72,7 +40,6 @@
         android:id="@+id/store_branch_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -80,25 +47,12 @@
         android:layout_marginTop="9dp"
         android:layout_marginEnd="336dp"
         android:layout_marginRight="328dp"
-=======
-        android:layout_below="@+id/store_image"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="-1dp"
-        android:layout_marginEnd="328dp"
-        android:layout_marginRight="328dp"
-        android:layout_marginBottom="652dp"
->>>>>>> parent of 0312d078... delete
         android:fontFamily="sans-serif"
         android:text="TextView"
         android:textSize="18sp"></TextView>
 
     <TextView
         android:id="@+id/store_address"
-<<<<<<< HEAD
         android:layout_width="353dp"
         android:layout_height="36dp"
         android:layout_alignParentStart="true"
@@ -108,20 +62,6 @@
         android:layout_marginTop="77dp"
         android:layout_marginEnd="56dp"
         android:layout_marginRight="-2dp"
-=======
-        android:layout_width="wrap_content"
-        android:layout_height="51dp"
-        android:layout_alignStart="@+id/store_branch_name"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="77dp"
-        android:layout_marginEnd="-2dp"
-        android:layout_marginRight="-2dp"
-        android:layout_marginBottom="574dp"
->>>>>>> parent of 0312d078... delete
         android:fontFamily="sans-serif"
         android:text="TextView"
         android:textSize="18sp"></TextView>
@@ -130,7 +70,6 @@
         android:id="@+id/store_operation"
         android:layout_width="95dp"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -138,18 +77,6 @@
         android:layout_marginTop="122dp"
         android:layout_marginEnd="316dp"
         android:layout_marginRight="307dp"
-=======
-        android:layout_alignStart="@+id/store_address"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="122dp"
-        android:layout_marginEnd="307dp"
-        android:layout_marginRight="307dp"
-        android:layout_marginBottom="532dp"
->>>>>>> parent of 0312d078... delete
         android:fontFamily="sans-serif"
         android:text="운영시간:"
         android:textSize="18sp"></TextView>
@@ -158,7 +85,6 @@
         android:id="@+id/store_operation_start_time"
         android:layout_width="wrap_content"
         android:layout_height="28dp"
-<<<<<<< HEAD
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -166,18 +92,6 @@
         android:layout_marginTop="122dp"
         android:layout_marginEnd="235dp"
         android:layout_marginRight="189dp"
-=======
-        android:layout_alignStart="@+id/store_operation"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="102dp"
-        android:layout_marginTop="122dp"
-        android:layout_marginEnd="189dp"
-        android:layout_marginRight="189dp"
-        android:layout_marginBottom="525dp"
->>>>>>> parent of 0312d078... delete
         android:fontFamily="sans-serif"
         android:text="TextView"
         android:textSize="18sp"></TextView>
@@ -186,7 +100,6 @@
         android:id="@+id/store_operation_wave"
         android:layout_width="22dp"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -194,18 +107,6 @@
         android:layout_marginTop="123dp"
         android:layout_marginEnd="164dp"
         android:layout_marginRight="152dp"
-=======
-        android:layout_alignStart="@+id/store_operation"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="225dp"
-        android:layout_marginTop="123dp"
-        android:layout_marginEnd="152dp"
-        android:layout_marginRight="152dp"
-        android:layout_marginBottom="533dp"
->>>>>>> parent of 0312d078... delete
         android:fontFamily="sans-serif"
         android:text="~"
         android:textSize="18sp"></TextView>
@@ -217,27 +118,16 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-<<<<<<< HEAD
         android:layout_marginStart="280dp"
         android:layout_marginTop="121dp"
         android:layout_marginEnd="57dp"
         android:layout_marginRight="31dp"
-=======
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="121dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginRight="31dp"
-        android:layout_marginBottom="522dp"
->>>>>>> parent of 0312d078... delete
         android:fontFamily="sans-serif"
         android:text="TextView"
         android:textSize="18sp"></TextView>
 
     <TextView
         android:id="@+id/store_notice"
-<<<<<<< HEAD
         android:layout_width="412dp"
         android:layout_height="62dp"
         android:layout_alignParentStart="true"
@@ -247,20 +137,6 @@
         android:layout_marginTop="168dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
-=======
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="168dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="453dp"
->>>>>>> parent of 0312d078... delete
         android:fontFamily="sans-serif"
         android:text="TextView"
         android:textSize="18sp"></TextView>
