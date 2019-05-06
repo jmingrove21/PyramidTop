@@ -118,18 +118,22 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 //        text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
 //        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
 //        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
+
+        store_inform_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFrag(0);
+            }
+        });
+
+        menu_list_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFrag(1);
+            }
+        });
     }
 
-    public void onClick(View v){
-        switch (v.getId()){
-            case R.id.store_inform_button:
-                setFrag(0);
-                break;
-            case R.id.menu_list_button:
-                setFrag(1);
-                break;
-        }
-    }
     public void setFrag(int n){
         fm = getFragmentManager();
         tran = fm.beginTransaction();
