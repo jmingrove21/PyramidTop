@@ -66,7 +66,6 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 store_info_specification();
-
             }
         });
     }
