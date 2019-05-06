@@ -10,9 +10,9 @@ switch($delivery_info){
         include 'delivery_login.php';
         delivery_login($json_data);
         break;
-    case 'order':
-        include 'delivery_order.php';
-        delivery_order($json_data);
+    case 'approve':
+        include 'delivery_approve.php';
+        delivery_approve($json_data);
         break;
     case 'request':
         include 'delivery_request.php';
