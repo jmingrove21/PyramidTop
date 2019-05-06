@@ -3,6 +3,9 @@ package com.example.app_delivery;
 public class Delivery_list {
 
     private int store_serial;
+
+
+
     private String delivery_request_time;
     private String store_name;
     private String store_branch_name;
