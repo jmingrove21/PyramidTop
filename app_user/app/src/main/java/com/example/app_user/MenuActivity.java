@@ -35,15 +35,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener, MenuListFragment.OnArrayList{
     private DrawerLayout drawer;
     int index;
     int serial;
     ArrayList<String> selectedItems = new ArrayList<>();
-    int[] IMAGES = {R.drawable.alchon};
-    String[] data={"a","b","c","d","e","f","g","h"};
-    ListView listView;
-
     Button store_inform_button, menu_list_button;
     FragmentManager fm;
     FragmentTransaction tran;
@@ -84,46 +80,23 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-//        listView = (ListView) findViewById(R.id.checkbox_ListView);
-//        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.menulayout,R.id.checkbox_layout,data);
-//
-//        listView.setAdapter(adapter);
-
         TextView text_store_name = (TextView) findViewById(R.id.store_name);
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
         TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
         ImageView imageView=(ImageView) findViewById(R.id.store_image);
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String selectedItem = ((TextView)view).getText().toString();
-//                if(selectedItems.contains(selectedItem)){
-//                    selectedItems.remove(selectedItem);
-//                }else{
-//                    selectedItems.add(selectedItem);
-//                }
-//            }
-//        });
 
         imageView.setImageBitmap(UtilSet.al_store.get(index).getStore_image());
         text_store_name.setText(UtilSet.al_store.get(index).getStore_name());
         text_store_phone.setText(UtilSet.al_store.get(index).getStore_phone());
         text_store_building_name.setText(UtilSet.al_store.get(index).getStore_building_name());
-//        text_store_rest.setText(UtilSet.al_store.get(index).getStore_restday());
-//        text_store_branch_name.setText(UtilSet.al_store.get(index).getStore_branch_name());
-//        text_store_address.setText(UtilSet.al_store.get(index).getStore_address());
-//        text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
-//        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
-//        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
 
-//        store_inform_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               // setFrag(0);
-//            }
-//        });
+        store_inform_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               setFrag(0);
+            }
+        });
 
         menu_list_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,26 +120,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                 break;
         }
     }
-//
-//    public void showSelectedItems(View view){
-//        String items="";
-//        for(String item:selectedItems){
-//            items+="-"+item+"\n";
-//        }
-//
-//        Toast.makeText(this,"You have selected\n"+items,Toast.LENGTH_LONG).show();
-//    }
-//
-//    public void confirm(View v){
-//        SparseBooleanArray booleans = listView.getCheckedItemPositions();
-//        StringBuilder sb = new StringBuilder();
-//        for (int i = 0; i < data.length; i++) {
-//            if (booleans.get(i)) {
-//                sb.append(data[i]);
-//            }
-//        }
-//        Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_SHORT).show();
-//    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -225,34 +178,17 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         }
     }
 
-//    class CustomAdapter extends BaseAdapter {
-//
-//        @Override
-//        public int
-//        getCount() {
-//            return IMAGES.length;
-//        }
-//
-//        @Override
-//        public Object getItem(int position) {
-//            return null;
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return 0;
-//        }
-//
-//        @Override
-//        public View getView(int i, View view, ViewGroup viewGroup) {
-//            view = getLayoutInflater().inflate(R.layout.menulayout, null);
-//            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
-//
-//            TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
-//
-//            textView_name.setText(UtilSet.al_store.get(i).getStore_name());
-//            return view;
-//        }
-//    }
+    @Override
+    public void onArrayList(ArrayList<String> Items){
+        selectedItems = Items;
+    }
+
+    public void showSelectedItems(View view){
+        String items="";
+        for(String item:selectedItems){
+            items+="-" + item + "\n";
+        }
+        Toast.makeText(view.getContext(),"You have selected \n"+items,Toast.LENGTH_LONG).show();
+    }
 
 }
