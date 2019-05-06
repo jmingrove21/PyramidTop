@@ -31,9 +31,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class First_Main_Activity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    int store_ser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +50,12 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
-                R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView)findViewById(R.id.first_listView);
+        ListView listView = (ListView) findViewById(R.id.first_listView);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
 
@@ -64,15 +63,13 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 store_info_specification(position);
-
-
             }
         });
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch(menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.old_olderlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Old_Orderlist()).commit();
@@ -82,8 +79,8 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                         new Profile()).commit();
                 break;
             case R.id.menu_logout:
-                Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
-                startActivityForResult(intent,101);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivityForResult(intent, 101);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -95,7 +92,7 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-                    switch(item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
                             break;
@@ -112,16 +109,16 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                 }
             };
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
     @Override
-    public void onBackPressed(){
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
@@ -146,24 +143,25 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_first_layout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 300));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);
 
-//            imageView.setImageResource();
             imageView.setImageResource(UtilSet.MENU_TYPE_IMAGE[i]);
-             textView_name.setText(UtilSet.MENU_TYPE_TEXT[i]);
+            textView_name.setText(UtilSet.MENU_TYPE_TEXT[i]);
 
             return view;
         }
-    }public void store_info_specification(final int position) {
+    }
+
+    public void store_info_specification(final int position) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     UtilSet.al_store.clear();
-                   URL url = new URL(UtilSet.url);
+                    URL url = new URL(UtilSet.url);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -177,12 +175,11 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                     jsonParam.put("user_info", "store_info");
                     jsonParam.put("user_lat", 37.282690);
                     jsonParam.put("user_long", 127.050206);
-                    jsonParam.put("store_type",UtilSet.MENU_TYPE_ID[position]);
-                    jsonParam.put("count",1);
+                    jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
+                    jsonParam.put("count", 1);
 
                     Log.i("JSON", jsonParam.toString());
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
                     os.writeBytes(jsonParam.toString());
 
                     os.flush();
@@ -193,45 +190,46 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                         try {
                             JSONArray jArray = new JSONArray(jsonReply);
                             for (int i = 0; i < jArray.length(); i++) {
-                                String store_serial=((JSONObject) jArray.get(i)).get("store_serial").toString();
-                                String store_name=((JSONObject) jArray.get(i)).get("store_name").toString();
-                                String store_branch_name=((JSONObject) jArray.get(i)).get("store_branch_name").toString();
-                                String store_address=((JSONObject) jArray.get(i)).get("store_address").toString();
-                                String store_phone = ((JSONObject) jArray.get(i)).get("store_phone").toString();
-                                String distance=((JSONObject) jArray.get(i)).get("distance").toString();
+                                JSONObject jobj = (JSONObject) jArray.get(i);
+                                String store_serial = jobj.get("store_serial").toString();
+                                String store_name = jobj.get("store_name").toString();
+                                String store_branch_name = jobj.get("store_branch_name").toString();
+                                String store_address = jobj.get("store_address").toString();
+                                String store_phone = jobj.get("store_phone").toString();
+                                String distance = jobj.get("distance").toString();
 
-                                String store_building_name = ((JSONObject) jArray.get(i)).get("store_building_name").toString();
-                                String start_time =((JSONObject) jArray.get(i)).get("start_time").toString();
-                                String end_time = ((JSONObject) jArray.get(i)).get("end_time").toString();
-                                String store_restday = ((JSONObject) jArray.get(i)).get("store_restday").toString();
-                                String store_notice = ((JSONObject) jArray.get(i)).get("store_notice").toString();
-                                String store_profile_img = ((JSONObject) jArray.get(i)).get("store_profile_img").toString();
-                                String store_main_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
+                                String store_building_name = jobj.get("store_building_name").toString();
+                                String start_time = jobj.get("start_time").toString();
+                                String end_time = jobj.get("end_time").toString();
+                                String store_restday = jobj.get("store_restday").toString();
+                                String store_notice = jobj.get("store_notice").toString();
+                                String store_profile_img = jobj.get("store_profile_img").toString();
+                                String store_main_type_name = jobj.get("store_main_type_name").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, distance);
-                                s.set_store_spec(store_address,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name);
+                                s.set_store_spec(store_address, store_building_name, start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name);
 
-                                JSONArray store_menu=(JSONArray)((JSONObject)(jArray.get(i))).get("menu");
-                                for(int j=0;j<store_menu.length();j++){
-                                    String menu_type_code=((JSONObject)store_menu.get(j)).get("menu_type_code").toString();
-                                    String menu_type_name=((JSONObject)store_menu.get(j)).get("menu_type_name").toString();
-                                    s.getMenu_al().add(new com.example.app_user.Menu(menu_type_code,menu_type_name));
-                                    JSONArray menu_desc=(JSONArray)((JSONObject)store_menu.get(j)).get("menu description");
-                                    for(int k=0;k<menu_desc.length();k++){
-                                        String menu_code=((JSONObject)menu_desc.get(k)).get("menu_code").toString();
-                                        String menu_name=((JSONObject)menu_desc.get(k)).get("menu_name").toString();
-                                        s.getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code,menu_name));
+                                JSONArray jobj_menu = (JSONArray) jobj.get("menu");
+                                for (int j = 0; j < jobj_menu.length(); j++) {
+                                    JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);
+                                    String menu_type_code = jobj_menu_spec.get("menu_type_code").toString();
+                                    String menu_type_name = jobj_menu_spec.get("menu_type_name").toString();
+                                    s.getMenu_al().add(new com.example.app_user.Menu(menu_type_code, menu_type_name));
+                                    JSONArray menu_menu_desc = (JSONArray) jobj_menu_spec.get("menu description");
+                                    for (int k = 0; k < menu_menu_desc.length(); k++) {
+                                        JSONObject jobj_menu_desc_spec = (JSONObject) menu_menu_desc.get(k);
+                                        String menu_code = jobj_menu_desc_spec.get("menu_code").toString();
+                                        String menu_name = jobj_menu_desc_spec.get("menu_name").toString();
+                                        s.getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name));
                                     }
                                 }
                                 UtilSet.al_store.add(s);
                             }
-
-                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
-                            startActivityForResult(intent,101);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivityForResult(intent, 101);
                             finish();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     } else {
                         Log.d("error", "Connect fail");
                     }
@@ -241,7 +239,6 @@ public class First_Main_Activity extends AppCompatActivity  implements Navigatio
                 }
             }
         });
-
         thread.start();
     }
 }

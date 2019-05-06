@@ -24,7 +24,7 @@
         ";
         $stmt = mysqli_query($connect,$query);
         $row=mysqli_fetch_assoc($stmt);
-        $order_serial=$row['u'];
+        $order_serial=$row['u']+1;
 
         foreach($menu as $m){
             $insert_query2="INSERT INTO Capstone.order_menu (user_order_serial, order_number, menu_serial) VALUES(".$order_serial.",".$order_num.",'".$m."')";
@@ -37,7 +37,8 @@
         else
             $confirm=0;
         $send_data=array(
-            'confirm'=>$confirm
+            'confirm'=>$confirm,
+            'order_number'=>$order_num
         );
         echo json_encode($send_data);
     }

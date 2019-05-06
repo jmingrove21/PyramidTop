@@ -5,12 +5,12 @@
          $order_number=$json_data['order_number'];
 
        $query="
-               SELECT m.menu_name, tb1.order_number,USER_user_serial,user_name
+            SELECT tb1.*,m.menu_name, USER_user_serial,user_id, user_phone, destination
               FROM
               (
- 				 SELECT s.order_number
+ 				 SELECT s.order_number,s.order_receipt_date
  				 FROM Capstone.store_order AS s
- 				 WHERE s.store_serial=".$store_serial." AND order_number=".$order_number."
+ 				 WHERE s.store_serial=".$store_serial." AND s.order_number=".$order_number."
               ) tb1
               INNER JOIN Capstone.order_menu AS o
               INNER JOIN Capstone.menu_info AS m
@@ -24,7 +24,6 @@
               ORDER BY USER_user_serial DESC
              ";
          $stmt = mysqli_query($connect,$query);
-
         $user_serial=0;
         $total=[];
         $menu=[];
@@ -32,13 +31,14 @@
         while ($row = mysqli_fetch_assoc($stmt)) {
             if($user_serial===0||$user_serial==$row['USER_user_serial']){
                 $user_serial=$row['USER_user_serial'];
-                $user_name=$row['user_name'];
-
+                $user_id=$row['user_id'];
+                $user_phone=$row['user_phone'];
             }else{
                 $data['user_menu']=$menu;
                 array_push($total,$data);
                 $user_serial=$row['USER_user_serial'];
-                $user_name=$row['user_name'];
+                $user_id=$row['user_id'];
+                $user_phone=$row['user_phone'];
                 $menu=[];
             }
 
@@ -46,8 +46,11 @@
 
             $data=array(
                     'user_serial'=>$row['USER_user_serial'],
-                    'user_name'=>$row['user_name'],
-                    'user_menu'=>$menu
+                    'user_id'=>$row['user_id'],
+                    'user_phone'=>$row['user_phone'],
+                    'destination'=>$row['destination'],
+                    'user_menu'=>$menu,
+                    'order_receipt_date'=>$row['order_receipt_date']
             );
         }
         $data['user_menu']=$menu;

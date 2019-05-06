@@ -61,8 +61,8 @@
                                  'user_serial'=>$row['USER_user_serial'],
                                  'user_name'=>$row['user_name'],
                                  "destination"=>$row['destination'],
-                                 "destination_long"=>$row['destination_lat'],
-                                 "destination_lat"=>$row['destination_long'],
+                                 "destination_long"=>$row['destination_long'],
+                                 "destination_lat"=>$row['destination_lat'],
                                  'menu'=>$menu
                  );
             $data=array(

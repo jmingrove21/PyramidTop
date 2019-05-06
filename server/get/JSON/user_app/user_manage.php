@@ -26,5 +26,9 @@ switch($user_info){
         include 'user_make_order.php';
         user_make_order($json_data);
         break;
+    case 'participate_order':
+        include 'user_participate_order.php';
+        participate_order($json_data);
+        break;
 }
 ?>

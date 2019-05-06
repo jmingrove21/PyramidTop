@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -14,9 +15,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
     private DrawerLayout drawer;
     Bitmap bitmap;
     int store_ser;
@@ -42,14 +41,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_search);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("가게목록");
+
+        getSupportActionBar().setTitle("검색");
 
 
         drawer = findViewById(R.id.drawer_layout);
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
-        R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+                R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 store_ser = UtilSet.al_store.get(position).getStore_serial();
-                Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
+                Intent intent=new Intent(getApplicationContext(),SearchActivity.class);
                 intent.putExtra("serial",store_ser);
                 intent.putExtra("index",position);
                 startActivityForResult(intent,101);
@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();
                     return true;
-
                 }
             };
 
