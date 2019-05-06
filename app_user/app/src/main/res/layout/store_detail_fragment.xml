@@ -51,6 +51,7 @@
         android:text="TextView"
         android:textSize="18sp"></TextView>
 
+    
     <TextView
         android:id="@+id/store_address"
         android:layout_width="353dp"
