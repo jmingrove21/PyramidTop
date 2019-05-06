@@ -1,15 +1,14 @@
 package com.example.app_delivery;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.skt.Tmap.TMapData;
@@ -21,11 +20,8 @@ import com.skt.Tmap.TMapView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,7 +32,7 @@ public class MapActivity extends AppCompatActivity {
     ArrayList alTmapPoint;
     private String id = "delivery_1";
     private String key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
-    TMapData tmapdata;
+    TMapData tmapdata=new TMapData();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +67,12 @@ public class MapActivity extends AppCompatActivity {
             markerItem1 = new TMapMarkerItem();
             // 마커 아이콘 지정
             markerItem1.setIcon(bitmap);// 마커 아이콘 지정
+            markerItem1.setName(String.valueOf(i));
             // 마커의 좌표 지정
             markerItem1.setTMapPoint((TMapPoint) alTmapPoint.get(i));
+            markerItem1.setCanShowCallout(true);
+            markerItem1.setCalloutTitle(String.valueOf(i));
+
             //지도에 마커 추가
             tMapView.addMarkerItem("markerItem" + (i + 1), markerItem1);
 
@@ -82,6 +82,8 @@ public class MapActivity extends AppCompatActivity {
                 new TMapData.FindPathDataListenerCallback() {
                     @Override
                     public void onFindPathData(TMapPolyLine polyLine) {
+                        polyLine.setLineColor(Color.BLUE);
+                        polyLine.setLineWidth(8.0f);
                         tMapView.addTMapPath(polyLine);
                     }
                 });
@@ -140,6 +142,7 @@ public class MapActivity extends AppCompatActivity {
                 alTmapPoint.add(new TMapPoint(lat_dest, long_dest));
             }
             set_Marker_in_Map();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,8 +156,8 @@ public class MapActivity extends AppCompatActivity {
         } catch (SecurityException e) {
             e.printStackTrace();
         }
-
-
     }
+
+
 
 }

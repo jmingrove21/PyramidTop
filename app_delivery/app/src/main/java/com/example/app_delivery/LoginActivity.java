@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("delivery_info", "login");
+                    jsonParam.put("delivery_info", "get_delivery_order_list");
                     jsonParam.put("delivery_id", idText.getText().toString());
                     jsonParam.put("delivery_password", pwdText.getText().toString());
 
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.i("check_state", json_result);
                         if(json_result.equals("1")){//check_state : 1 (success), 0 (fail)
                             save_login_data();
-                            Intent intent=new Intent(getApplicationContext(),MapActivity.class);
+                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivityForResult(intent,101);
                             finish();
                         }
