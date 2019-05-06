@@ -1,19 +1,17 @@
 <?php
-    function store_info($json_data){
-        include '../db.php';
+    function user_search_store($json_data){
+        include "../db.php";
+        $search=$json_data['search'];
         $user_lat=$json_data['user_lat'];
         $user_long=$json_data['user_long'];
-        $count=$json_data['count'];
-        $store_type = $json_data['store_type'];
-
 
          $query="
          SELECT store_serial,store_name, store_branch_name,store_phone, store_address_jibun, store_building_name, start_time, end_time, store_restday, store_notice, store_profile_img, store_phone, store_main_type_name, store_sub_type_name,( 6371 * acos( cos( radians(".$user_lat.") ) * cos( radians( store_latitude) )
                                                                                                                                                                                                                                                                                    * cos( radians( store_longitude ) - radians(".$user_long.") )
                                                                                                                                                                                                                                                                                    + sin( radians(".$user_lat.") ) * sin( radians( store_latitude ) ) ) ) AS distance
          FROM Capstone.store
-         WHERE store_main_type_code='".$store_type."'
-         ORDER BY distance ASC LIMIT ".$count.",5
+         WHERE store_name LIKE '%".$search."%'
+         ORDER BY distance ASC
          ";
 
          $stmt = mysqli_query($connect,$query);

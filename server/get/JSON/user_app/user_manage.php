@@ -30,5 +30,9 @@ switch($user_info){
         include 'user_participate_order.php';
         participate_order($json_data);
         break;
+    case 'search_store':
+        include 'user_search_store.php';
+        user_search_store($json_data);
+        break;
 }
 ?>
