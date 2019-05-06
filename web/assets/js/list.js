@@ -34,3 +34,25 @@ function get_list_page(){
 function get_menu_page(){
 			    document.getElementById("list_menu_href_id").href = "./menu.html?type="+store_name+"&"+store_serial;
 }
+
+function choose_datetime()
+{
+	var data = {
+		"store_info": "history",
+		"store_serial": store_serial,
+		"from_date": "2019-04-22",
+		"to_date": "2019-04-24"
+	};
+	//alert(number);
+	$.ajax({
+		url: "http://54.180.102.7:80/get/JSON/store_app/store_manage.php",
+		type: "POST",
+		data: JSON.stringify(data),
+		success: function (result) {
+			if (result) {
+
+				alert(result);
+			}
+		}
+	})
+}

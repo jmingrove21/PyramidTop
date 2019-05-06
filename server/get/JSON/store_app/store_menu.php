@@ -1,3 +1,4 @@
+        }
 <?php
     function store_main($json_data){
          include '../db.php';
