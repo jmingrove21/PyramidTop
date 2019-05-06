@@ -71,10 +71,12 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         store_inform_button = (Button) findViewById(R.id.store_inform_button);
         menu_list_button = (Button) findViewById(R.id.menu_list_button);
 
-        menulistfragment = new MenuListFragment();
-        menulistfragment.setIndex(index);
         storedetailfragment = new StoreDetailFragment();
         storedetailfragment.setIndex(index);
+
+        menulistfragment = new MenuListFragment();
+        menulistfragment.setIndex(index);
+
 
         setFrag(0);
 
@@ -116,12 +118,12 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 //        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
 //        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
 
-        store_inform_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setFrag(0);
-            }
-        });
+//        store_inform_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//               // setFrag(0);
+//            }
+//        });
 
         menu_list_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,13 +255,4 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 //        }
 //    }
 
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }
