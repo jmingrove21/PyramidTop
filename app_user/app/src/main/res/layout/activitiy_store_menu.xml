@@ -86,174 +86,30 @@
             android:text="TextView"
             android:textSize="20sp"></TextView>
 
-        <TextView
-            android:id="@+id/store_rest"
-            android:layout_width="62dp"
-            android:layout_height="27dp"
-            android:layout_alignStart="@+id/store_building_name"
-            android:layout_alignLeft="@+id/store_building_name"
-            android:layout_alignTop="@+id/store_building_name"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="37dp"
-            android:layout_marginEnd="176dp"
-            android:layout_marginRight="176dp"
-            android:text="휴무일: "
-            android:textSize="20sp"></TextView>
-
-        <TextView
-            android:id="@+id/store_rest_day"
-            android:layout_width="147dp"
+        <Button
+            android:id="@+id/store_inform_button"
+            android:layout_width="116dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/store_building_name"
-            android:layout_alignLeft="@+id/store_building_name"
-            android:layout_alignTop="@+id/store_building_name"
+            android:layout_alignStart="@+id/fragment_container"
+            android:layout_alignTop="@+id/store_image"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="87dp"
-            android:layout_marginLeft="87dp"
-            android:layout_marginTop="38dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:text="TextView"
-            android:textSize="20sp"></TextView>
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="198dp"
+            android:layout_marginEnd="283dp"
+            android:text="상세보기"></Button>
 
-        <TextView
-            android:id="@+id/store_branch_name"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/menu_list_button"
+            android:layout_width="115dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/store_image"
-            android:layout_alignStart="@+id/store_image"
-            android:layout_alignBottom="@+id/store_image"
+            android:layout_alignStart="@+id/fragment_container"
+            android:layout_alignTop="@+id/store_image"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="-1dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="-27dp"
-            android:fontFamily="sans-serif"
-            android:text="TextView"
-            android:textSize="18sp"></TextView>
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="197dp"
+            android:layout_marginEnd="157dp"
+            android:text="메뉴보기"></Button>
 
-        <TextView
-            android:id="@+id/store_address"
-            android:layout_width="wrap_content"
-            android:layout_height="51dp"
-            android:layout_alignStart="@+id/store_branch_name"
-            android:layout_alignTop="@+id/store_branch_name"
-            android:layout_alignBottom="@+id/store_branch_name"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="-27dp"
-            android:fontFamily="sans-serif"
-            android:text="TextView"
-            android:textSize="18sp"></TextView>
-
-        <TextView
-            android:id="@+id/store_operation"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/store_address"
-            android:layout_alignTop="@+id/store_address"
-            android:layout_alignBottom="@+id/store_address"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="331dp"
-            android:layout_marginRight="331dp"
-            android:layout_marginBottom="-27dp"
-            android:fontFamily="sans-serif"
-            android:text="운영시간:"
-            android:textSize="18sp"></TextView>
-
-        <TextView
-            android:id="@+id/store_operation_start_time"
-            android:layout_width="117dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/store_operation"
-            android:layout_alignTop="@+id/store_address"
-            android:layout_alignBottom="@+id/store_address"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="82dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="212dp"
-            android:layout_marginRight="212dp"
-            android:layout_marginBottom="-27dp"
-            android:fontFamily="sans-serif"
-            android:text="TextView"
-            android:textSize="18sp"></TextView>
-
-        <TextView
-            android:id="@+id/store_operation_wave"
-            android:layout_width="36dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/store_operation_start_time"
-            android:layout_alignTop="@+id/store_address"
-            android:layout_alignBottom="@+id/store_address"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="26dp"
-            android:layout_marginEnd="173dp"
-            android:layout_marginRight="173dp"
-            android:layout_marginBottom="-26dp"
-            android:fontFamily="sans-serif"
-            android:text=" ~ "
-            android:textSize="18sp"></TextView>
-
-        <TextView
-            android:id="@+id/store_operation_end_time"
-            android:layout_width="148dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/store_address"
-            android:layout_alignTop="@+id/store_address"
-            android:layout_alignBottom="@+id/store_address"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="263dp"
-            android:layout_marginTop="26dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="-26dp"
-            android:fontFamily="sans-serif"
-            android:text="TextView"
-            android:textSize="18sp"></TextView>
-
-        <TextView
-            android:id="@+id/store_notice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/store_operation"
-            android:layout_alignTop="@+id/store_operation"
-            android:layout_alignBottom="@+id/store_operation"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="-60dp"
-            android:fontFamily="sans-serif"
-            android:text="TextView"
-            android:textSize="18sp"></TextView>
-
-        <ListView
-            android:id="@+id/checkbox_ListView"
-            android:layout_width="match_parent"
-            android:layout_height="333dp"
-            android:layout_above="@+id/order_button"
-            android:layout_alignTop="@+id/store_notice"
-            android:layout_marginTop="60dp"
-            />
 
         <Button
             android:id="@+id/order_button"
@@ -265,20 +121,26 @@
             android:text="주문 완료"
             />
 
+        <FrameLayout
+            android:id="@+id/sub_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="323dp"
+            android:layout_above="@+id/order_button"></FrameLayout>
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_navigation"
-            android:layout_marginBottom="0dp" />
+            android:layout_above="@+id/bottom_navigation">
+        </FrameLayout>
+
     </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:id="@+id/nav_view"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu"/>
+    <!--<android.support.design.widget.NavigationView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:id="@+id/nav_view"-->
+        <!--app:headerLayout="@layout/nav_header"-->
+        <!--app:menu="@menu/drawer_menu"/>-->
 </android.support.v4.widget.DrawerLayout>
