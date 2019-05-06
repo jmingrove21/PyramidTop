@@ -39,6 +39,7 @@
             android:layout_width="168dp"
             android:layout_height="176dp"
             android:layout_marginTop="?attr/actionBarSize"/>
+
         <TextView
             android:id="@+id/store_name"
             android:layout_width="282dp"
@@ -129,7 +130,6 @@
             android:id="@+id/sub_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="308dp"
-            android:layout_marginTop="@+id/imageView"
             android:layout_above="@+id/order_button"></FrameLayout>
 
         <FrameLayout
