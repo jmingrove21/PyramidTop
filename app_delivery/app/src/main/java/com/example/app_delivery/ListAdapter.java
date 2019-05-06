@@ -1,6 +1,7 @@
 package com.example.app_delivery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,7 @@ public class ListAdapter extends BaseAdapter {
         Button oButton=(Button)convertView.findViewById(R.id.btn);
         oTextTitle.setText(m_oData.get(position).strTitle);
         oTextDate.setText(m_oData.get(position).strDate);
+
         oButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,10 +99,8 @@ public class ListAdapter extends BaseAdapter {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONArray json_result_al=new JSONArray(jsonReply);
-                        for (int i = 0; i < json_result_al.length(); i++) {
 
 
-                        }
                     }else{
                         Log.d("error","Connect fail");
                     }

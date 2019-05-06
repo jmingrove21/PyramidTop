@@ -45,8 +45,6 @@ public class LoginActivity extends AppCompatActivity {
             pwdText.setText(pwd);
             checkBox.setChecked(saveLoginData);
         }
-
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
