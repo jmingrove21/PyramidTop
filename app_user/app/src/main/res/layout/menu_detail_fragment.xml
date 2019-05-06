@@ -7,6 +7,7 @@
     android:layout_marginTop="?attr/actionBarSize">
 
     <ListView
+        android:id="@+id/order_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/order_button"></ListView>

@@ -11,10 +11,13 @@ import android.widget.TextView;
 import java.util.zip.Inflater;
 
 public class StoreDetailFragment extends Fragment {
-    int index=0;
+    int index;
+   public void setIndex(int index){
+       this.index=index;
+   }
+
     @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+    @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view =  inflater.inflate(R.layout.store_detail_fragment,container,false);
 
         TextView text_store_rest = (TextView) view.findViewById(R.id.store_rest_day);
