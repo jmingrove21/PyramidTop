@@ -124,9 +124,14 @@
         <FrameLayout
             android:id="@+id/sub_fragment_container"
             android:layout_width="match_parent"
+<<<<<<< HEAD
             android:layout_height="290dp"
             android:layout_above="@+id/order_button"
             android:layout_marginTop="@+id/imageView"></FrameLayout>
+=======
+            android:layout_height="match_parent"
+            android:layout_above="@+id/order_button"></FrameLayout>
+>>>>>>> parent of 0312d078... delete
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -145,4 +150,8 @@
         android:id="@+id/nav_view"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"/>
+<<<<<<< HEAD
 </android.support.v4.widget.DrawerLayout>
+=======
+</android.support.v4.widget.DrawerLayout>
+>>>>>>> parent of 0312d078... delete

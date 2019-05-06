@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id = "@+id/nav_home"
+        android:icon = "@drawable/ic_home"
+        android:title="홈"/>
+    <item
+        android:id = "@+id/nav_orderlist"
+        android:icon = "@drawable/ic_orderlist"
+        android:title="주문내역"/>
+
+    <item
+        android:id = "@+id/nav_party"
+        android:icon = "@drawable/ic_people"
+        android:title="참여현황"/>
+</menu>
