@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Menu {
     private ArrayList<MenuDesc> menu_desc_al=new ArrayList<>();
 
+
     private String menu_type_code;
     private String menu_type_name;
 
@@ -36,4 +37,6 @@ public class Menu {
     public void setMenu_desc_al(ArrayList<MenuDesc> menu_desc_al) {
         this.menu_desc_al = menu_desc_al;
     }
+
+
 }

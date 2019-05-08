@@ -3,9 +3,6 @@ package com.example.app_user;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -17,26 +14,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.lang.reflect.Array;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,7 +35,8 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     private DrawerLayout drawer;
     int index;
     int serial;
-    ArrayList<String> selectedItems = new ArrayList<>();
+
+    ArrayList<String> selectedItems=new ArrayList<>();
     Button store_inform_button, menu_list_button;
     FragmentManager fm;
     FragmentTransaction tran;
@@ -61,6 +52,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         serial = intent.getIntExtra("serial",0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+        UtilSet.al_store.get(index).setMenu_str();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,7 +70,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
         menulistfragment = new MenuListFragment();
         menulistfragment.setIndex(index);
-        menulistfragment.set_menu_data();
 
         setFrag(0);
 
@@ -190,14 +181,17 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     }
 
     public void showSelectedItems(View view){
-        store_info_specification(selectedItems);
         String items="";
         for(String item:selectedItems){
             items+="-" + item + "\n";
+
         }
+        store_info_specification(selectedItems);
+
         Toast.makeText(view.getContext(),"You have selected \n"+items,Toast.LENGTH_LONG).show();
+
     }
-    public void store_info_specification(final ArrayList<String> selectedItems) {
+    public void store_info_specification(final ArrayList<String> getSelectedItems) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -212,24 +206,47 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-
+                    JSONArray jArry=new JSONArray();
                     jsonParam.put("user_info", "make_order");
                     jsonParam.put("user_serial", 3);
                     jsonParam.put("store_serial", UtilSet.al_store.get(index).getStore_serial());
                     jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
                     jsonParam.put("destination_lat", 37.277218);
                     jsonParam.put("destination_long", 127.046708);
-                    jsonParam.put("menu", selectedItems.toString());
+
+                    for(int idx=0;idx<UtilSet.al_store.get(index).getMenu_desc_al().size();idx++){
+                        for(int j=0;j<getSelectedItems.size();j++){
+                            if(UtilSet.al_store.get(index).getMenu_desc_al().get(idx).getMenu_name().equals(getSelectedItems.get(j))){
+                                JSONObject jobj_temp=new JSONObject();
+                                jobj_temp.put("menu_code",UtilSet.al_store.get(index).getMenu_desc_al().get(idx).getMenu_code());
+                                jobj_temp.put("menu_name",UtilSet.al_store.get(index).getMenu_desc_al().get(idx).getMenu_name());
+                                jobj_temp.put("menu_price",UtilSet.al_store.get(index).getMenu_desc_al().get(idx).getMenu_price());
+                                jArry.put(jobj_temp);
+                                break;
+                            }
+                        }
+
+                    }
+
+                    jsonParam.put("menu", jArry);
+
                     Log.i("JSON", jsonParam.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    os.writeBytes(jsonParam.toString());
+                    OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
+                    os.write(jsonParam.toString());
 
                     os.flush();
                     os.close();
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
+                        JSONObject jobj=new JSONObject(jsonReply);
+                        String json_result=jobj.getString("confirm");
+                        if(json_result.equals("1")){
+                            System.out.println("Success order make");
 
+                        }else{
+                            Log.d("error", "Responce code : 0 - fail make order");
+                        }
                     } else {
                         Log.d("error", "Connect fail");
                     }

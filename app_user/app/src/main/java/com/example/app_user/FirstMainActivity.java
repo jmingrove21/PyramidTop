@@ -219,7 +219,9 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                                         JSONObject jobj_menu_desc_spec = (JSONObject) menu_menu_desc.get(k);
                                         String menu_code = jobj_menu_desc_spec.get("menu_code").toString();
                                         String menu_name = jobj_menu_desc_spec.get("menu_name").toString();
-                                        s.getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name));
+                                        int menu_price=Integer.parseInt(jobj_menu_desc_spec.get("menu_price").toString());
+                                        String menu_img= jobj_menu_desc_spec.get("menu_img").toString();
+                                        s.getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name,menu_price,menu_img));
                                     }
                                 }
                                 UtilSet.al_store.add(s);
