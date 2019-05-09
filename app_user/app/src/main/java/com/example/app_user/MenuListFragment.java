@@ -98,7 +98,7 @@ public class MenuListFragment extends Fragment {
 
             TextView textView_name = (TextView) view.findViewById(R.id.checkbox_layout);
 
-            
+
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());
             return view;
         }

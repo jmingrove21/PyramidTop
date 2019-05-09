@@ -67,7 +67,7 @@
             android:layout_marginEnd="1dp"
             android:layout_marginRight="1dp"
             android:text="TextView"
-            android:textSize="20sp"></TextView>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/store_building_name"
@@ -84,7 +84,7 @@
             android:layout_marginEnd="1dp"
             android:layout_marginRight="1dp"
             android:text="TextView"
-            android:textSize="20sp"></TextView>
+            android:textSize="20sp"/>
 
         <Button
             android:id="@+id/store_inform_button"
@@ -96,7 +96,7 @@
             android:layout_marginStart="170dp"
             android:layout_marginTop="111dp"
             android:layout_marginEnd="125dp"
-            android:text="상세보기"></Button>
+            android:text="상세보기"/>
 
         <Button
             android:id="@+id/menu_list_button"
@@ -108,7 +108,7 @@
             android:layout_marginStart="289dp"
             android:layout_marginTop="110dp"
             android:layout_marginEnd="8dp"
-            android:text="메뉴보기"></Button>
+            android:text="메뉴보기"/>
 
 
         <Button
@@ -126,24 +126,24 @@
             android:layout_width="match_parent"
             android:layout_height="290dp"
             android:layout_above="@+id/order_button"
-            ></FrameLayout>
+            />
 
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_navigation">
-        </FrameLayout>
+            android:layout_above="@+id/bottom_navigation"/>
+
 
     </RelativeLayout>
 
 
-    <!--<android.support.design.widget.NavigationView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:id="@+id/nav_view"-->
-        <!--app:headerLayout="@layout/nav_header"-->
-        <!--app:menu="@menu/drawer_menu"/>-->
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:id="@+id/nav_view"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu"/>
 </android.support.v4.widget.DrawerLayout>
