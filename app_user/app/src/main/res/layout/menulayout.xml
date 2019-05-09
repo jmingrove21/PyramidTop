@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/checkbox_layout"
     android:layout_width="match_parent"
+<<<<<<< HEAD
     android:layout_height="match_parent">
 
     <CheckedTextView
@@ -15,3 +15,10 @@
         />
 
 </RelativeLayout>
+=======
+    android:layout_height= "wrap_content"
+    android:gravity="center_vertical"
+    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+    android:padding="10dp"
+    />
+>>>>>>> 41d412b02621c04851a3d4768337422a9953677e

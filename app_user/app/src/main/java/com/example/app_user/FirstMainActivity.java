@@ -171,13 +171,13 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-
                     jsonParam.put("user_info", "store_info");
-                    jsonParam.put("user_lat", 37.282690);
-                    jsonParam.put("user_long", 127.050206);
+                //    jsonParam.put("user_lat", 37.282690);
+                //    jsonParam.put("user_long", 127.050206);
+                    jsonParam.put("user_lat", 37.267088);
+                    jsonParam.put("user_long", 127.081193);
                     jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
                     jsonParam.put("count", 1);
-
                     Log.i("JSON", jsonParam.toString());
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                     os.writeBytes(jsonParam.toString());
@@ -219,7 +219,9 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                                         JSONObject jobj_menu_desc_spec = (JSONObject) menu_menu_desc.get(k);
                                         String menu_code = jobj_menu_desc_spec.get("menu_code").toString();
                                         String menu_name = jobj_menu_desc_spec.get("menu_name").toString();
-                                        s.getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name));
+                                        int menu_price=Integer.parseInt(jobj_menu_desc_spec.get("menu_price").toString());
+                                        String menu_img= jobj_menu_desc_spec.get("menu_img").toString();
+                                        s.getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name,menu_price,menu_img));
                                     }
                                 }
                                 UtilSet.al_store.add(s);
@@ -240,5 +242,10 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             }
         });
         thread.start();
+        try{
+            thread.join();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
     }
 }

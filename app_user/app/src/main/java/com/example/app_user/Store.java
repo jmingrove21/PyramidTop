@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class Store {
     private ArrayList<Menu> menu_al=new ArrayList<>();
+
+
+    private ArrayList<MenuDesc> menu_desc_al=new ArrayList<>();
+
     private Bitmap store_image;
     private int store_serial;
     private String store_name;
@@ -97,9 +101,25 @@ public class Store {
         this.store_profile_img=store_profile_img;
         this.store_main_type_name=store_main_type_name;
     }
+    public void setMenu_str(){
+        for(int i=0;i<menu_al.size();i++){
+            for(int j=0;j<menu_al.get(i).getMenu_desc_al().size();j++){
+               menu_desc_al.add(menu_al.get(i).getMenu_desc_al().get(j));
+            }
+        }
+    }
 
-
-
-
+    public ArrayList<String> getMenu_str(){
+        ArrayList<String> menu_name=new ArrayList<>();
+        for(int i=0;i<menu_al.size();i++){
+            for(int j=0;j<menu_al.get(i).getMenu_desc_al().size();j++){
+                menu_name.add(menu_al.get(i).getMenu_desc_al().get(j).getMenu_name());
+            }
+        }
+        return menu_name;
+    }
+    public ArrayList<MenuDesc> getMenu_desc_al() {
+        return menu_desc_al;
+    }
 
 }
