@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ public class OrderAdapter extends ArrayAdapter<String> {
         if(convertView == null){
             inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.orderlist_layout,null);
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,900));
         }
         TextView text_store_name = (TextView) convertView.findViewById(R.id.store_name);
         ImageView img = (ImageView) convertView.findViewById(R.id.imageView);
@@ -43,7 +45,7 @@ public class OrderAdapter extends ArrayAdapter<String> {
         TextView text_minimum_price = (TextView) convertView.findViewById(R.id.minimum_price);
 
         text_store_name.setText(store_name[position]);
-        img.setImageResource(images[position]);
+       // img.setImageResource(images[position]);
         text_party_number.setText(party_number[position]);
         text_current_price.setText(current_price[position]);
         text_minimum_price.setText(minimum_price[position]);
