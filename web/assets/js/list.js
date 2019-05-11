@@ -50,21 +50,8 @@ function choose_datetime()
 		data: JSON.stringify(data),
 		success: function (result) {
 			if (result) {
+
 				alert(result);
-				var result1 = JSON.parse(result);
-				$.each(result1,function(key,value)
-				{
-					var len = value.user_order.length;
-					var string = "";
-
-
-
-
-
-
-
-
-				});
 			}
 		}
 	})
