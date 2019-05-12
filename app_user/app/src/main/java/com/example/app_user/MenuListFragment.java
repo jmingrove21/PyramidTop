@@ -74,6 +74,4 @@ public class MenuListFragment extends Fragment {
         super.onDetach();
         OnArrayList = null;
     }
-
-
 }
