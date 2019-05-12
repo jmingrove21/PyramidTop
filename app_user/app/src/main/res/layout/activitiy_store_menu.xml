@@ -13,26 +13,25 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/relativelayout_container"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
+            android:id="@+id/relative_container"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_alignTop="@+id/fragment_container"
-            android:layout_marginTop="0dp"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_navigation">
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:menu="@menu/bottom_navigation"
-            android:background="?android:attr/windowBackground"/>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:background="@color/colorPrimary"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <ImageView
             android:id="@+id/store_image"
@@ -68,7 +67,7 @@
             android:layout_marginEnd="1dp"
             android:layout_marginRight="1dp"
             android:text="TextView"
-            android:textSize="20sp"></TextView>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/store_building_name"
@@ -85,56 +84,64 @@
             android:layout_marginEnd="1dp"
             android:layout_marginRight="1dp"
             android:text="TextView"
-            android:textSize="20sp"></TextView>
+            android:textSize="20sp"/>
 
-        <Button
-            android:id="@+id/store_inform_button"
-            android:layout_width="116dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/fragment_container"
-            android:layout_alignTop="@+id/store_image"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="170dp"
-            android:layout_marginTop="110dp"
-            android:layout_marginEnd="125dp"
-            android:text="상세보기"></Button>
+            <Button
+                android:id="@+id/store_inform_button"
+                android:layout_width="116dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="170dp"
+                android:layout_marginTop="166dp"
+                android:layout_marginEnd="125dp"
+                android:text="상세보기" />
 
-        <Button
-            android:id="@+id/menu_list_button"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/fragment_container"
-            android:layout_alignTop="@+id/store_image"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="289dp"
-            android:layout_marginTop="110dp"
-            android:layout_marginEnd="8dp"
-            android:text="메뉴보기"></Button>
+            <Button
+                android:id="@+id/menu_list_button"
+                android:layout_width="114dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="290dp"
+                android:layout_marginTop="166dp"
+                android:layout_marginEnd="8dp"
+                android:text="메뉴보기" />
 
-        <Button
-            android:id="@+id/order_button"
-            android:layout_above = "@+id/bottom_navigation"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="showSelectedItems"
-            android:text="주문 완료"
-            ></Button>
+            <Button
+                android:id="@+id/order_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginStart="160dp"
+                android:layout_marginTop="556dp"
+                android:layout_marginEnd="163dp"
+                android:onClick="showSelectedItems"
+                android:text="주문 완료" />
 
-        <FrameLayout
-            android:id="@+id/sub_fragment_container"
+            <FrameLayout
+                android:id="@+id/sub_fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="311dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="246dp"
+                android:layout_marginEnd="0dp" />
+        </RelativeLayout>
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
-            android:layout_height="290dp"
-            android:layout_above="@+id/order_button"
-            ></FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_navigation">
-        </FrameLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/bottom_navigation"
+            android:background="?android:attr/windowBackground"/>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

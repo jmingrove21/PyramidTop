@@ -122,11 +122,11 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()){
             case R.id.old_olderlist:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                         new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                         new Profile()).commit();
                 break;
             case R.id.menu_logout:
@@ -156,7 +156,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                             break;
 
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                             selectedFragment).commit();
                     return true;
                 }
