@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1e1b70f9-e088-4f36-94d8-dc90f726ea77" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_approve.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_manage.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_manage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_request.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_request.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/get/JSON/store_app/store_complete_order.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/store_app/store_complete_order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/get/JSON/store_app/store_detail_main.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/store_app/store_detail_main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/get/JSON/store_app/store_main.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/store_app/store_main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/get/JSON/store_app/store_menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/store_app/store_menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/get/JSON/store_app/store_modify_info.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/store_app/store_modify_info.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/get/JSON/store_app/store_order_history.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/store_app/store_order_history.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/get/JSON/user_app/user_manage.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/user_app/user_manage.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,32 +33,41 @@
     <session id="-87890385">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="293" />
+          <entry key="html" value="435" />
           <entry key="iml" value="10" />
-          <entry key="php" value="5416" />
+          <entry key="php" value="6198" />
+          <entry key="txt" value="39" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="293" />
+          <entry key="HTML" value="435" />
           <entry key="IDEA_MODULE" value="10" />
-          <entry key="Perl" value="5416" />
+          <entry key="PLAIN_TEXT" value="39" />
+          <entry key="Perl" value="6198" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="3" />
+          <entry key="html" value="5" />
           <entry key="iml" value="1" />
-          <entry key="php" value="54" />
+          <entry key="php" value="65" />
           <entry key="png" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="3" />
+          <entry key="HTML" value="5" />
           <entry key="IDEA_MODULE" value="1" />
           <entry key="Image" value="1" />
-          <entry key="Perl" value="54" />
+          <entry key="Perl" value="65" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
     </session>
@@ -77,7 +76,60 @@
     <favorites_list name="PyramidTop" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="true" current-in-tab="false">
+        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_make_order.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="37" column="20" lean-forward="true" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="true" current-in-tab="true">
+        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/store_app/store_main.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-418" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="true" current-in-tab="false">
+        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_store_info.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="63" column="47" lean-forward="true" selection-start-line="63" selection-start-column="47" selection-end-line="63" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="true" current-in-tab="false">
+        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_approve.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="57">
+              <caret line="3" selection-start-line="3" selection-end-line="4" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="true" current-in-tab="false">
+        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/test.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="40" column="46" selection-start-line="40" selection-start-column="46" selection-end-line="40" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="true" current-in-tab="false">
+        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_manage.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -92,11 +144,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_store_info.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/update.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/put_image.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/image.php" />
-        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_manage.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_search_store.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_route.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_manage.php" />
@@ -106,13 +156,16 @@
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/store_app/store_complete_order.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_request.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/store_app/store_detail_main.php" />
-        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/test.html" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/store_app/store_main.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_approve.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/store_app/store_menu.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_departure.php" />
         <option value="$PROJECT_DIR$/.idea/PyramidTop.iml" />
         <option value="$PROJECT_DIR$/server/get/JSON/store_app/store_menu.php" />
+        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_manage.php" />
+        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/test.html" />
+        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_store_info.php" />
+        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_make_order.php" />
       </list>
     </option>
   </component>
@@ -123,10 +176,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1" />
-    <option name="y" value="227" />
-    <option name="width" value="1417" />
-    <option name="height" value="674" />
+    <option name="y" value="226" />
+    <option name="width" value="1418" />
+    <option name="height" value="675" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -280,6 +332,12 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app_user" />
   </component>
   <component name="RecentsManager">
@@ -311,6 +369,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1556256573664</updated>
+      <workItem from="1557219344751" duration="12426000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/jmingrove21/PyramidTop into haram&#10;&#10;# Conflicts:&#10;#&#9;.idea/PyramidTop.iml">
       <created>1557130383434</created>
@@ -326,48 +385,46 @@
       <option name="project" value="LOCAL" />
       <updated>1557130772892</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="배달원 요청&amp;승인 완료 &amp;가게와 배달원 주문접수 배달처리 연동 완료">
+      <created>1557132745552</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1557132745552</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44564000" />
+    <option name="totallyTimeSpent" value="58464000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
       <window_info id="Capture Tool" order="1" />
-      <window_info content_ui="combo" id="Project" order="2" weight="0.2590604" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.1590604" />
       <window_info id="Structure" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="File Transfer" weight="0.0" />
-      <window_info anchor="bottom" id="TODO" order="0" />
-      <window_info anchor="bottom" id="Terminal" order="1" weight="0.3328446" />
-      <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.5013423" side_tool="true" weight="0.3289855" />
-      <window_info anchor="bottom" id="Version Control" order="3" sideWeight="0.4986577" weight="0.3289855" />
-      <window_info anchor="right" id="Capture Analysis" order="0" />
-      <window_info anchor="right" id="Theme Preview" order="1" />
-      <window_info anchor="right" id="Palette&#9;" order="2" />
+      <window_info anchor="bottom" id="Debug" order="0" />
+      <window_info anchor="bottom" id="Run" order="1" />
+      <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.3328446" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5013423" side_tool="true" weight="0.3289855" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4986577" weight="0.3289855" />
+      <window_info anchor="bottom" id="File Transfer" order="7" weight="0.0" />
+      <window_info active="true" anchor="right" id="Remote Host" order="0" visible="true" weight="0.20872483" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Captures" order="0" weight="0.25" />
-      <window_info id="Capture Tool" order="1" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.2590604" />
-      <window_info id="Structure" order="3" side_tool="true" />
-      <window_info id="Image Layers" order="4" />
-      <window_info id="Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="File Transfer" order="0" weight="0.0" />
-      <window_info anchor="bottom" id="TODO" order="1" />
-      <window_info anchor="bottom" id="Terminal" order="2" weight="0.3328446" />
-      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5013423" side_tool="true" weight="0.3289855" />
-      <window_info anchor="bottom" id="Version Control" order="4" sideWeight="0.4986577" weight="0.3289855" />
-      <window_info anchor="right" id="Capture Analysis" order="0" />
-      <window_info anchor="right" id="Theme Preview" order="1" />
-      <window_info anchor="right" id="Palette&#9;" order="2" />
-    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -378,7 +435,8 @@
     <MESSAGE value="가게 주문 상세보기 수정&amp; 사용자어플 가게 정보 불러오기 수정" />
     <MESSAGE value="사용자 어플 가게 정보 보내기 완료" />
     <MESSAGE value="Merge branch 'master' of https://github.com/jmingrove21/PyramidTop into haram&#10;&#10;# Conflicts:&#10;#&#9;.idea/PyramidTop.iml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/jmingrove21/PyramidTop into haram&#10;&#10;# Conflicts:&#10;#&#9;.idea/PyramidTop.iml" />
+    <MESSAGE value="배달원 요청&amp;승인 완료 &amp;가게와 배달원 주문접수 배달처리 연동 완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="배달원 요청&amp;승인 완료 &amp;가게와 배달원 주문접수 배달처리 연동 완료" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app_user/app/src/main/java/com/example/app_user/MainActivity.java">
