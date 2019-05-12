@@ -37,6 +37,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     int serial;
 
     ArrayList<String> selectedItems=new ArrayList<>();
+    ArrayList<String> selectedMenu=new ArrayList<>();
     Button store_inform_button, menu_list_button;
     FragmentManager fm;
     FragmentTransaction tran;
@@ -81,7 +82,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
         TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
         ImageView imageView=(ImageView) findViewById(R.id.store_image);
-
 
         imageView.setImageBitmap(UtilSet.al_store.get(index).getStore_image());
         text_store_name.setText(UtilSet.al_store.get(index).getStore_name());
@@ -181,12 +181,17 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     }
 
     public void showSelectedItems(View view){
-        String items="";
-        for(String item:selectedItems){
-            items+="-" + item + "\n";
 
+        Intent intent = getIntent();
+        selectedMenu = intent.getStringArrayListExtra("selectedmenu");
+        int order_total = intent.getIntExtra("order_total",0);
+
+        String items="";
+        for(String item:selectedMenu){
+            items+="-" + item + "\n";
         }
-        store_info_specification(selectedItems);
+        items+="-" + order_total + "\n";
+        store_info_specification(selectedMenu);
 
         Toast.makeText(view.getContext(),"You have selected \n"+items,Toast.LENGTH_LONG).show();
 
