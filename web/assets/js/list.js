@@ -94,7 +94,7 @@ function choose_datetime()
 					var temp_count = 1;
 					temp_count = temp_count*1;
 
-					//----------------여기부터는 줄을 분할해서 출력--------------------
+					//----------------여기부터는 줄을 분할해서 출력 작업중--------------------
 
 					$.each(value.user_order, function(key,value)
 					{
