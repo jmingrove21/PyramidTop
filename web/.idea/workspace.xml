@@ -2,8 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44a7511f-9e14-4147-8225-b6a25033e086" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../app_user/app/src/main/java/com/example/app_user/OrderAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/orderlist_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/java/com/example/app_user/MenuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/java/com/example/app_user/MenuActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/java/com/example/app_user/MenuListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/java/com/example/app_user/MenuListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/java/com/example/app_user/OrderFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/java/com/example/app_user/OrderFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/activitiy_store_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/activitiy_store_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/activity_first_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/activity_first_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/fragment_orderlist.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/fragment_orderlist.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/menu_detail_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/menu_detail_fragment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/menulayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/menulayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/store_detail_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/res/layout/store_detail_fragment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/app/src/main/res/menu/bottom_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/app/src/main/res/menu/bottom_navigation.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app_user/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../app_user/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/code/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/list.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/code/list.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,17 +37,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2580">
-              <caret line="172" selection-start-line="172" selection-end-line="172" />
+            <state relative-caret-position="743">
+              <caret line="215" column="22" selection-start-line="215" selection-start-column="22" selection-end-line="215" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assets/js/list.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
+            <state relative-caret-position="-550">
+              <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+              <folding>
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -37,7 +58,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/information_modify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2175">
+            <state relative-caret-position="679">
               <caret line="145" column="21" selection-start-line="145" selection-start-column="21" selection-end-line="145" selection-end-column="21" />
             </state>
           </provider>
@@ -46,24 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1395">
+            <state relative-caret-position="679">
               <caret line="93" column="35" selection-start-line="93" selection-start-column="35" selection-end-line="93" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/code/main.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="186" column="59" selection-start-line="186" selection-start-column="59" selection-end-line="186" selection-end-column="59" />
-              <folding>
-                <element signature="n#style#0;n#th#2;n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#th#3;n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#th#2;n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#th#3;n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -71,8 +76,34 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5370">
-              <caret line="358" column="44" selection-start-line="358" selection-start-column="44" selection-end-line="358" selection-end-column="44" />
+            <state relative-caret-position="273">
+              <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+              <folding>
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#1;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h6#0;n#!!top" expanded="true" />
+                <element signature="e#4#10#0" expanded="true" />
+                <element signature="e#10#16#0" expanded="true" />
+                <element signature="e#17#23#0" expanded="true" />
+                <element signature="e#23#29#0" expanded="true" />
+                <element signature="e#4#10#0" expanded="true" />
+                <element signature="e#10#16#0" expanded="true" />
+                <element signature="e#17#23#0" expanded="true" />
+                <element signature="e#23#29#0" expanded="true" />
+                <element signature="e#4#10#0" expanded="true" />
+                <element signature="e#10#16#0" expanded="true" />
+                <element signature="e#17#23#0" expanded="true" />
+                <element signature="e#23#29#0" expanded="true" />
+                <element signature="e#4#10#0" expanded="true" />
+                <element signature="e#10#16#0" expanded="true" />
+                <element signature="e#17#23#0" expanded="true" />
+                <element signature="e#23#29#0" expanded="true" />
+                <element signature="n#style#0;n#h6#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h5#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -122,10 +153,10 @@
         <option value="$PROJECT_DIR$/assets/js/Modal_Script.js" />
         <option value="$PROJECT_DIR$/assets/css/Modal_Style..css" />
         <option value="$PROJECT_DIR$/assets/js/bootstrap-material-datetimepicker.js" />
-        <option value="$PROJECT_DIR$/code/list.html" />
-        <option value="$PROJECT_DIR$/assets/js/list.js" />
         <option value="$PROJECT_DIR$/assets/js/main.js" />
         <option value="$PROJECT_DIR$/code/main.html" />
+        <option value="$PROJECT_DIR$/code/list.html" />
+        <option value="$PROJECT_DIR$/assets/js/list.js" />
       </list>
     </option>
   </component>
@@ -207,11 +238,12 @@
       <workItem from="1557121907510" duration="5960000" />
       <workItem from="1557136757587" duration="754000" />
       <workItem from="1557552996378" duration="363000" />
+      <workItem from="1557554820138" duration="13455000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79473000" />
+    <option name="totallyTimeSpent" value="92928000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
@@ -329,51 +361,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2580">
-          <caret line="172" selection-start-line="172" selection-end-line="172" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/information_modify.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2175">
-          <caret line="145" column="21" selection-start-line="145" selection-start-column="21" selection-end-line="145" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/code/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1395">
-          <caret line="93" column="35" selection-start-line="93" selection-start-column="35" selection-end-line="93" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5370">
-          <caret line="358" column="44" selection-start-line="358" selection-start-column="44" selection-end-line="358" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="186" column="59" selection-start-line="186" selection-start-column="59" selection-end-line="186" selection-end-column="59" />
+        <state relative-caret-position="651">
+          <caret line="198" column="44" selection-start-line="198" selection-start-column="44" selection-end-line="198" selection-end-column="44" />
           <folding>
             <element signature="n#style#0;n#th#2;n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#3;n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#2;n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#3;n#thead#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="679">
+          <caret line="93" column="35" selection-start-line="93" selection-start-column="35" selection-end-line="93" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/information_modify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="679">
+          <caret line="145" column="21" selection-start-line="145" selection-start-column="21" selection-end-line="145" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+          <folding>
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#1;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h6#0;n#!!top" expanded="true" />
+            <element signature="e#4#10#0" expanded="true" />
+            <element signature="e#10#16#0" expanded="true" />
+            <element signature="e#17#23#0" expanded="true" />
+            <element signature="e#23#29#0" expanded="true" />
+            <element signature="e#4#10#0" expanded="true" />
+            <element signature="e#10#16#0" expanded="true" />
+            <element signature="e#17#23#0" expanded="true" />
+            <element signature="e#23#29#0" expanded="true" />
+            <element signature="e#4#10#0" expanded="true" />
+            <element signature="e#10#16#0" expanded="true" />
+            <element signature="e#17#23#0" expanded="true" />
+            <element signature="e#23#29#0" expanded="true" />
+            <element signature="e#4#10#0" expanded="true" />
+            <element signature="e#10#16#0" expanded="true" />
+            <element signature="e#17#23#0" expanded="true" />
+            <element signature="e#23#29#0" expanded="true" />
+            <element signature="n#style#0;n#h6#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h5#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="743">
+          <caret line="215" column="22" selection-start-line="215" selection-start-column="22" selection-end-line="215" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-550">
+          <caret line="95" lean-forward="true" selection-start-line="95" selection-end-line="95" />
+          <folding>
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
