@@ -18,5 +18,13 @@ switch($delivery_info){
         include 'delivery_request.php';
         delivery_request($json_data);
         break;
+    case 'departure':
+        include 'delivery_departure.php';
+        delivery_departure($json_data);
+        break;
+    case 'complete':
+        include 'delivery_complete.php';
+        delivery_complete($json_data);
+        break;
 }
 ?>

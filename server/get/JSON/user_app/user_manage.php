@@ -2,6 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET,POST,PUT');
 header('Access-Control-Allow-Headers: X-Requested-With,Content-Type');
+header('Content-Type: text/html; charset=utf-8');
 $json_data = json_decode(file_get_contents('php://input'), TRUE);
 $user_info=$json_data['user_info'];
 
@@ -33,6 +34,10 @@ switch($user_info){
     case 'search_store':
         include 'user_search_store.php';
         user_search_store($json_data);
+        break;
+    case 'lookup_participate':
+        include 'user_lookup_participate.php';
+        lookup_participate($json_data);
         break;
 }
 ?>

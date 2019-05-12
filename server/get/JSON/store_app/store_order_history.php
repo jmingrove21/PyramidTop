@@ -15,7 +15,7 @@ function store_order_history($json_data){
         			FROM Capstone.store_order AS so
         			INNER JOIN Capstone.store AS s
         			ON so.store_serial=s.store_serial
-        			WHERE so.order_status=6 AND so.store_serial=".$store_serial." AND so.order_receipt_date BETWEEN '".$from_date."' AND '".$to_date."'
+        			WHERE so.order_status=7 AND so.store_serial=".$store_serial." AND so.order_receipt_date BETWEEN '".$from_date."' AND '".$to_date."'
         			) tb1
         		INNER JOIN Capstone.order_menu AS o
         		INNER JOIN Capstone.menu AS m
@@ -47,7 +47,8 @@ function store_order_history($json_data){
                  $order_num=$row['order_number'];
                  $user_order=[];
                  $user_serial=$row['USER_user_serial'];
-                                 $menu=[];
+                 $menu=[];
+                 $total_price=0;
              }
              if($user_serial===0||$user_serial==$row['USER_user_serial']){
                  $user_serial=$row['USER_user_serial'];
