@@ -145,7 +145,7 @@
   
   
 </div> -->
-      <div class="content">
+      <div id="list_source" class="content">
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
@@ -184,7 +184,7 @@
                                       <span aria-hidden="true">
                                       </span>
                                     </button>
-                                      <h4 class="modal-title text-info" style="font-weight: bold" id="myModalLabel">
+                                      <h4 class="pull-left modal-title text-info" style="font-weight: bold" id="myModalLabel">
                                         주문 상세내역
                                       </h4>
                                   </div>
@@ -235,7 +235,7 @@
 				  <div class="table-responsive">
                   <table class="table">
                     <thead class="text-primary">
-                      <th width="230px"> 출발시간</th>
+                      <th width="230px"> 승인/출발 시간</th>
                       <th width="220px"> 메뉴</th>
                       <th style="text-align:center"> 상세보기 </th>
                       <th style="text-align:center"> 배송상태</th>
@@ -252,8 +252,16 @@
               </div>
             </div>
           </div>
-</div>
-</div>
+        </div>
+      </div>
+
+      <script type="text/javascript">
+        window.setInterval("main_list()",5000);
+      </script>
+
+
+
+
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
           <div class="row">

@@ -8,7 +8,7 @@
     <item
         android:id = "@+id/nav_orderlist"
         android:icon = "@drawable/ic_orderlist"
-        android:title="주문내역"/>
+        android:title="주문현황"/>
 
     <item
         android:id = "@+id/nav_party"

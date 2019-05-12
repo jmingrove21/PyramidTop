@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_above="@+id/bottom_navigation"
-    android:background="@android:color/holo_blue_bright"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:background="@android:color/holo_blue_bright">
 
     <ListView
         android:id="@+id/order_list"
