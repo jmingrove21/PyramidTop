@@ -34,6 +34,8 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".Delivery_list_Activity"></activity>
+        <activity android:name=".Delivery_to_Store_Activity"></activity>
+
 
     </application>
 

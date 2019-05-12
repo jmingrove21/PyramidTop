@@ -1,6 +1,7 @@
 package com.example.app_delivery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.DataOutputStream;
@@ -31,18 +33,25 @@ public class MapActivity extends AppCompatActivity {
     TMapView tMapView;
     ArrayList alTmapPoint;
     private String id = "delivery_1";
-    private String key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
     TMapData tmapdata=new TMapData();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         this.tMapView = new TMapView(this);
         this.alTmapPoint = new ArrayList();
-        tMapView.setSKTMapApiKey(key);
+        tMapView.setSKTMapApiKey(UtilSet.tmap_key);
         set_MapView();
-        request_delivery_list();
 
+        if(getIntent().hasExtra("json")) {
+            try{
+                JSONObject mJsonObject = new JSONObject(getIntent().getStringExtra("json"));
+                get_destination(mJsonObject);
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     private void set_MapView() {
@@ -89,53 +98,10 @@ public class MapActivity extends AppCompatActivity {
                 });
 
     }
-    public void request_delivery_list() {
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-
-                    URL url = new URL("http://54.180.102.7:80/get/JSON/delivery_app/delivery_manage.php");
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
-                    JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("delivery_info", "order");
-                    jsonParam.put("delivery_id", id);
-
-                    Log.i("JSON", jsonParam.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
-                    os.writeBytes(jsonParam.toString());
-                    os.flush();
-                    os.close();
-
-                    if (conn.getResponseCode() == 200) {
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-                        JSONObject jobj = new JSONObject(jsonReply);
-                        get_destination(jobj);
-                    } else {
-                        Log.d("error", "Connect fail");
-                    }
-                    conn.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-    }
 
     private void get_destination(JSONObject jobj) {
         try {
-            JSONArray json_result_al = (JSONArray) jobj.get("data");
+            JSONArray json_result_al = (JSONArray) jobj.get("user_order");
             for (int i = 0; i < json_result_al.length(); i++) {
                 double lat_dest = Double.parseDouble(((JSONObject) json_result_al.get(i)).get("destination_lat").toString());
                 double long_dest = Double.parseDouble(((JSONObject) json_result_al.get(i)).get("destination_long").toString());
@@ -146,18 +112,5 @@ public class MapActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
-    public void get_application_dest() {
-        try {
-            final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
 }
