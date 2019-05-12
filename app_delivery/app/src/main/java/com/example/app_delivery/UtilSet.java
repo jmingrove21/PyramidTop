@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class UtilSet {
+    public static String tmap_key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
+
     public static String convertStreamToString(InputStream is) {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
