@@ -1,27 +1,25 @@
 <?php
-	#post로 받아오기
-    function delivery_login($json_data){
+    function delivery_approve($json_data){
         include '../db.php';
+        date_default_timezone_set("Asia/Seoul");
+        $current=date("Y-m-d H:i:s");
 
-        $id=$json_data['delivery_id'];
-        $pw=$json_data['delivery_password'];
-        $query = "SELECT COUNT(*) AS num FROM delivery  WHERE delivery_id='".$id."' AND delivery_password='".$pw."'";
+        $order_number=$json_data['order_number'];
+        $store_serial=$json_data['store_serial'];
+        $approve_query="UPDATE store_order SET order_status=5, delivery_approve_time='".$current."' WHERE order_number=".$order_number;
+        $approve_stmt = mysqli_query($connect,$approve_query);
+        
 
+        $query="SELECT store_address_jibun,store_phone,store_latitude,store_longitude FROM store WHERE store_serial=".$store_serial;
         $stmt = mysqli_query($connect,$query);
-        $result = mysqli_fetch_assoc($stmt);
+        $result=mysqli_fetch_assoc($stmt);
 
-        $confirm=-1;
-        if($result['num']=="1"){
-            $confirm=1; //login success
-        }else{
-            $confirm=0; //login fail
-        }
-
-        $send_data=array(
-            'confirm'=>$confirm
+        $data=array(
+            'store_address'=>$result['store_address_jibun'],
+            'store_phone'=>$result['store_phone'],
+            'store_latitude'=>$result['store_latitude'],
+            'store_longitude'=>$result['store_longitude']
         );
+        echo json_encode($data,JSON_UNESCAPED_UNICODE);
 
-        echo json_encode($send_data);
-	}
-
-
+    }

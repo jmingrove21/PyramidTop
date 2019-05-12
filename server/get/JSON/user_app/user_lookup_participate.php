@@ -1,11 +1,9 @@
 <?php
-    function store_info($json_data){
-        include '../db.php';
+    include "../db.php";
+    function lookup_participate($json_data){
         $user_lat=$json_data['user_lat'];
         $user_long=$json_data['user_long'];
-        $count=$json_data['count'];
-        $store_type = $json_data['store_type'];
-
+        $count=$json_data['user_count'];
 
          $query="
          SELECT store_serial,store_name, store_branch_name,store_phone, store_address_jibun, store_building_name, start_time, end_time, store_restday, store_notice, store_profile_img, store_phone, store_main_type_name, store_sub_type_name,( 6371 * acos( cos( radians(".$user_lat.") ) * cos( radians( store_latitude) )
@@ -79,5 +77,5 @@
          }
 
          echo json_encode($total_store,JSON_UNESCAPED_UNICODE);
-}
 
+    }
