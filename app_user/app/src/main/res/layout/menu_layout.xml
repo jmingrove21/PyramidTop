@@ -1,160 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="27dp"
-        app:srcCompat="@drawable/alchon" />
-
-    <TextView
-        android:id="@+id/menu_inform"
-        android:layout_width="163dp"
-        android:layout_height="31dp"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="242dp"
-        android:layout_marginLeft="152dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_toRightOf="@+id/imageView"
-        android:text="Textview"
-        android:textSize="10sp" />
-
-    <TextView
-        android:id="@+id/menu_name"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="177dp"
-        android:layout_marginLeft="87dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="181dp"
-        android:layout_marginRight="181dp"
-        android:layout_toRightOf="@+id/imageView"
-        android:text="메뉴이름:"
-        android:textSize="10sp" />
-
-    <TextView
-        android:id="@+id/price_inform"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignLeft="@+id/menu_inform"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="177dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="183dp"
-        android:layout_marginRight="183dp"
-        android:text="가격:"
-        android:textSize="10sp"></TextView>
-
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="93dp"
-        android:layout_height="30dp"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignLeft="@+id/menu_inform"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="241dp"
-        android:layout_marginLeft="90dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="77dp"
-        android:layout_marginRight="77dp"
-        android:text="TextView"
-        android:textSize="10sp"></TextView>
-
-    <TextView
-        android:id="@+id/won"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignLeft="@+id/menu_inform"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="338dp"
-        android:layout_marginLeft="187dp"
-        android:layout_marginTop="69dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginRight="35dp"
-        android:text="원"
-        android:textSize="10sp"></TextView>
-
-    <Button
-        android:id="@+id/minus"
-        android:layout_width="58dp"
-        android:layout_height="38dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="203dp"
-        android:layout_marginTop="114dp"
-        android:layout_marginEnd="150dp"
-        android:text="ㅡ" />
-
-    <Button
-        android:id="@+id/plus"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="319dp"
-        android:layout_marginTop="113dp"
-        android:layout_marginEnd="33dp"
-        android:text="+" />
-
-    <TextView
-        android:id="@+id/order_number"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignLeft="@+id/menu_inform"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="269dp"
-        android:layout_marginLeft="27dp"
-        android:layout_marginTop="126dp"
-        android:layout_marginEnd="102dp"
-        android:layout_marginRight="102dp"
-        android:text="1"
-        android:textAlignment="center"
-        android:textSize="10sp"></TextView>
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="25"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/alchon" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="75"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="33"
+            android:weightSum="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/menu_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:text="Textview"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/menu_inform"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="Textview"
+                android:textSize="10sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="33"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:text="Textview"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/price_inform"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:text="Textview"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/won"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:text="Textview"
+                android:textSize="10sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="34"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <Button
+                android:id="@+id/minus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="ㅡ" />
+            <TextView
+                android:id="@+id/order_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="1"
+                android:textAlignment="center"
+                android:textSize="10sp"></TextView>
+            <Button
+                android:id="@+id/plus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="+" />
 
 
-    <Button
-        android:id="@+id/choice"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="155dp"
-        android:layout_marginEnd="71dp"
-        android:text="선택"
-        android:textSize="10sp" />
+            <Button
+                android:id="@+id/choice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:text="선택"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

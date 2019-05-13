@@ -27,7 +27,12 @@ public class MenuProduct extends ArrayAdapter<String> {
     LayoutInflater inflater;
 
     int total = 0;
+    TextView text_order_number;
     int order_number;
+    Button button_choice;
+    Button button_plus;
+    Button button_minus;
+
     public MenuProduct(Context context, String[] menu_name, String[] price, Bitmap[] images){
         super(context,R.layout.orderlist_layout,menu_name);
 
@@ -47,10 +52,10 @@ public class MenuProduct extends ArrayAdapter<String> {
         final TextView text_menu_name = (TextView) convertView.findViewById(R.id.menu_inform);
         ImageView image_images = (ImageView) convertView.findViewById(R.id.imageView);
         TextView text_price = (TextView) convertView.findViewById(R.id.price);
-        final TextView text_order_number = (TextView) convertView.findViewById(R.id.order_number);
-        final Button button_plus = (Button) convertView.findViewById(R.id.plus);
-        final Button button_minus = (Button) convertView.findViewById(R.id.minus);
-        final Button button_choice = (Button) convertView.findViewById(R.id.choice);
+        text_order_number = (TextView) convertView.findViewById(R.id.order_number);
+        button_plus = (Button) convertView.findViewById(R.id.plus);
+        button_minus = (Button) convertView.findViewById(R.id.minus);
+        button_choice = (Button) convertView.findViewById(R.id.choice);
 
         text_menu_name.setText(menu_name[position]);
         // image_images.setImageResource(images[position]);
