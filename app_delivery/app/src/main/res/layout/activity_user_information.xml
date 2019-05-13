@@ -17,21 +17,21 @@
 
             <TextView
                 android:id="@+id/user_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="40"
+                android:layout_weight="20"
                 android:paddingLeft="10dp"
-                android:text="가게 이름"
+                android:text="User name"
                 android:textColor="#33aabb"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/user_phonenum"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="60"
+                android:layout_weight="80"
                 android:paddingLeft="10dp"
-                android:text="가게 이름"
+                android:text="User Phone number"
                 android:textColor="#33aabb"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -43,7 +43,7 @@
             android:layout_weight="33"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:text="시간" />
+            android:text="User destination" />
 
         <TextView
             android:id="@+id/user_menu"
@@ -52,7 +52,7 @@
             android:layout_weight="33"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:text="시간" />
+            android:text="User menu" />
     </LinearLayout>
 
     <Button

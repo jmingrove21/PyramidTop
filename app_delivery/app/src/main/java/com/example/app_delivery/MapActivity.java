@@ -57,7 +57,7 @@ public class MapActivity extends AppCompatActivity {
             try{
                 JSONObject mJsonObject = new JSONObject(getIntent().getStringExtra("json"));
                 get_destination(mJsonObject);
-                get_user_infomation(mJsonObject);
+                get_user_information(mJsonObject);
             }catch(JSONException e){
                 e.printStackTrace();
             }
@@ -79,7 +79,7 @@ public class MapActivity extends AppCompatActivity {
         linearLayoutTmap.addView(tMapView);
     }
 
-    public void get_user_infomation(JSONObject jobj){
+    public void get_user_information(JSONObject jobj){
         try {
             JSONArray json_result_al = (JSONArray) jobj.get("user_order");
             for(int i=0;i<json_result_al.length();i++){
@@ -125,18 +125,31 @@ public class MapActivity extends AppCompatActivity {
             //지도에 마커 추가
             tMapView.addMarkerItem("markerItem" + (i + 1), markerItem1);
 
-        }
-        tMapView.setCenterPoint(127.043840, 37.278307);
-        tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(37.279548, 127.043791), (TMapPoint)alTmapPoint.get(0),  alTmapPoint, 0,
-                new TMapData.FindPathDataListenerCallback() {
-                    @Override
-                    public void onFindPathData(TMapPolyLine polyLine) {
-                        polyLine.setLineColor(Color.BLUE);
-                        polyLine.setLineWidth(8.0f);
-                        tMapView.addTMapPath(polyLine);
-                    }
-                });
+        } tMapView.setCenterPoint(127.043840, 37.278307);
 
+        if(alTmapPoint.size()==1){
+            tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH,new TMapPoint(37.279548, 127.043791), (TMapPoint)alTmapPoint.get(alTmapPoint.size()-1), new TMapData.FindPathDataListenerCallback() {
+                @Override
+                public void onFindPathData(TMapPolyLine polyLine) {
+                    polyLine.setLineColor(Color.BLUE);
+                    polyLine.setLineWidth(8.0f);
+                    tMapView.addTMapPath(polyLine);
+                }
+            });
+        }
+        else {
+            TMapPoint t_end=(TMapPoint)alTmapPoint.get(0);
+            alTmapPoint.remove(0);
+            tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(37.279548, 127.043791), t_end, alTmapPoint, 0,
+                    new TMapData.FindPathDataListenerCallback() {
+                        @Override
+                        public void onFindPathData(TMapPolyLine polyLine) {
+                            polyLine.setLineColor(Color.BLUE);
+                            polyLine.setLineWidth(8.0f);
+                            tMapView.addTMapPath(polyLine);
+                        }
+                    });
+        }
     }
 
     private void get_destination(JSONObject jobj) {
