@@ -1,139 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="27dp"
-        app:srcCompat="@drawable/alchon" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="50"
+        android:weightSum="1"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/store_name"
-        android:layout_width="282dp"
-        android:layout_height="37dp"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@+id/imageView"
-        android:text="TextView"
-        android:textSize="25sp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
 
-    <TextView
-        android:id="@+id/party_number"
-        android:layout_width="164dp"
-        android:layout_height="41dp"
-        android:layout_alignLeft="@+id/store_name"
-        android:layout_alignTop="@+id/store_name"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="247dp"
-        android:layout_marginLeft="112dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:text="TextView"
-        android:textSize="20sp" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/alchon" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/party_number_ui"
-        android:layout_width="112dp"
-        android:layout_height="41dp"
-        android:layout_alignLeft="@+id/store_name"
-        android:layout_alignTop="@+id/store_name"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="135dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="164dp"
-        android:layout_marginRight="164dp"
-        android:text="참여인원:"
-        android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:weightSum="1"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/current"
-        android:layout_width="109dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="251dp"
-        android:layout_marginRight="262dp"
-        android:layout_marginBottom="-41dp"
-        android:fontFamily="sans-serif"
-        android:text="현재 주문 금액:"
-        android:textSize="18sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                >
+                <TextView
+                    android:id="@+id/store_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="TextView"
+                    android:textSize="20sp"/>
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/current_price"
-        android:layout_width="244dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="-41dp"
-        android:fontFamily="sans-serif"
-        android:text="TextView"
-        android:textSize="18sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_weight="0.5"
+                android:weightSum="1"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/minimum_price"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_alignTop="@+id/branch_name"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="41dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="-88dp"
-        android:fontFamily="sans-serif"
-        android:text="TextView"
-        android:textSize="18sp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight = "0.5"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/party_number_ui"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="참여인원:"
+                        android:textSize="20sp" />
+                </LinearLayout>
 
-    <TextView
-        android:id="@+id/minimum"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_alignTop="@+id/branch_name"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="251dp"
-        android:layout_marginRight="251dp"
-        android:layout_marginBottom="-90dp"
-        android:fontFamily="sans-serif"
-        android:text="최소 주문 금액:"
-        android:textSize="18sp"/>
-</RelativeLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/party_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="TextView"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="50"
+        android:weightSum="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/current"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif"
+                    android:text="현재 주문 금액:"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/current_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif"
+                    android:text="TextView"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/minimum"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif"
+                    android:text="최소 주문 금액:"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/minimum_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif"
+                    android:text="TextView"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
