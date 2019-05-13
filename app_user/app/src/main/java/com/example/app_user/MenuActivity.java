@@ -42,6 +42,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     FragmentManager fm;
     FragmentTransaction tran;
     MenuListFragment menulistfragment;
+    MenuFragment menuFragment;
     StoreDetailFragment storedetailfragment;
 
     @Override
@@ -71,6 +72,9 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
         menulistfragment = new MenuListFragment();
         menulistfragment.setIndex(index);
+
+        menuFragment = new MenuFragment();
+        menuFragment.setIndex(index);
 
         setFrag(0);
 
@@ -112,7 +116,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                 tran.commit();
                 break;
             case 1:
-                tran.replace(R.id.sub_fragment_container, menulistfragment);
+                tran.replace(R.id.sub_fragment_container, menuFragment);
                 tran.commit();
                 break;
         }
@@ -190,7 +194,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         for(String item:selectedMenu){
             items+="-" + item + "\n";
         }
-        items+="-" + order_total + "\n";
+        items+="-" + order_total + "원\n";
         store_info_specification(selectedMenu);
 
         Toast.makeText(view.getContext(),"You have selected \n"+items,Toast.LENGTH_LONG).show();

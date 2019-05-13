@@ -22,6 +22,12 @@ public class MenuFragment extends Fragment {
     String[] menu_name = {"1","2","3","4"};
     String[] price = {"1000","2000","3000"};
 
+    int index;
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     @Nullable
     @Override
 
