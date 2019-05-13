@@ -214,6 +214,12 @@ function main_list()
 
 
 					});
+
+					if(count_cooking==0)
+						$("#now_menu").append("<tr><td colspan='4' class='text-gray text-center' style='font-weight: bold; font-size: x-large'><br>주문이 존재하지 않습니다</td></tr>");
+					if(count_delivery==0)
+						$("#now_delivery").append("<tr><td colspan='4' class='text-gray text-center' style='font-weight: bold; font-size: x-large'><br>주문이 존재하지 않습니다</td></tr>")
+
 					var number_cooking="";
 					number_cooking = count_cooking + "건";
 					var number_delivery="";
