@@ -17,7 +17,7 @@
               INNER JOIN Capstone.user_order AS u
               INNER JOIN Capstone.user AS user
               ON tb1.order_number=o.order_number
-              AND o.menu_serial=m.menu_serial
+              AND o.menu_code=m.menu_code
               AND u.user_order_serial=o.user_order_serial
               AND u.USER_user_serial=user.user_serial
               WHERE tb1.order_number=o.order_number

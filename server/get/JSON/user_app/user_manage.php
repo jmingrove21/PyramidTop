@@ -39,5 +39,9 @@ switch($user_info){
         include 'user_lookup_participate.php';
         lookup_participate($json_data);
         break;
+    case 'order_finish':
+        include 'user_order_finish.php';
+        order_finish($json_data);
+        break;
 }
 ?>

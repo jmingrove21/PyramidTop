@@ -20,9 +20,8 @@ function store_order_history($json_data){
         		INNER JOIN Capstone.order_menu AS o
         		INNER JOIN Capstone.menu AS m
                 INNER JOIN Capstone.user_order AS uo
-        		ON o.menu_serial=m.menu_serial AND tb1.order_number=o.order_number AND uo.user_order_serial=o.user_order_serial
+        		ON o.menu_code=m.menu_code AND tb1.order_number=o.order_number AND uo.user_order_serial=o.user_order_serial
         		) tb2
-
         	INNER JOIN Capstone.user AS u
 			ON tb2.USER_user_serial=u.user_serial
         	ORDER BY order_receipt_date,tb2.order_number,USER_user_serial
