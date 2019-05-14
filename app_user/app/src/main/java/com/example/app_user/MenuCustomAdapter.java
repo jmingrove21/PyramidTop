@@ -2,7 +2,6 @@ package com.example.app_user;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ public class MenuCustomAdapter extends BaseAdapter {
     int total = 0;
     ArrayList<String> selectedItems = new ArrayList<>();
 
-    private MenuListFragment.OnArrayList OnArrayList;
 
     public interface OnArrayList {
     }
@@ -77,7 +75,7 @@ public class MenuCustomAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
         ImageView image_images = (ImageView) convertView.findViewById(R.id.imageView);
-        // image_images.setImageResource(images[position]);
+        image_images.setImageBitmap(MenuFragment.menuProductItems.get(position).getMenu_image());
 
         holder.text_menu_name.setText(MenuFragment.menuProductItems.get(position).getMenu_inform());
         holder.text_price_inform.setText(MenuFragment.menuProductItems.get(position).getPrice_inform());

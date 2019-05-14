@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -17,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,8 +27,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -69,12 +73,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             public void run(){
                 for(int i=0;i<UtilSet.al_store.size();i++){
                     try{
-                        if(UtilSet.al_store.get(i).getStore_profile_img().equals("null")){
-                            Drawable drawable = getResources().getDrawable(R.drawable.no_image);
-                            Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-                            UtilSet.al_store.get(i).setStore_image(bitmap);
-                            continue;
-                        }
 
                         URL url=new URL(UtilSet.al_store.get(i).getStore_profile_img());
                         HttpURLConnection conn=(HttpURLConnection) url.openConnection();
@@ -101,14 +99,123 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 store_ser = UtilSet.al_store.get(position).getStore_serial();
+                store_info_detail(store_ser,position);
+                Thread mThread=new Thread(){
+                    @Override
+                    public void run(){
+                        for(int i=0;i<UtilSet.al_store.get(position).getMenu_al().size();i++){
+                            for(int j=0;j<UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().size();j++) {
+                                try {
+
+                                    URL url = new URL(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
+                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                    conn.setDoInput(true);
+                                    conn.connect();
+
+                                    InputStream is = conn.getInputStream();
+                                    bitmap = BitmapFactory.decodeStream(is);
+                                    UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j) .setMenu_image(bitmap);                       } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                };
+                mThread.start();
+                try{
+                    mThread.join();
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+                UtilSet.target_store=UtilSet.al_store.get(position);
                 Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
                 intent.putExtra("serial",store_ser);
                 intent.putExtra("index",position);
                 startActivityForResult(intent,101);
             }
         });
+    }
+    public void store_info_detail(final int store_serial, final int position) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(UtilSet.url);
+
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                    conn.setRequestProperty("Accept", "application/json");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("user_info", "store_detail");
+                    jsonParam.put("store_serial", store_serial);
+
+                    Log.i("JSON", jsonParam.toString());
+                    OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+                    os.write(jsonParam.toString());
+
+                    os.flush();
+                    os.close();
+                    if (conn.getResponseCode() == 200) {
+                        InputStream response = conn.getInputStream();
+                        String jsonReply = UtilSet.convertStreamToString(response);
+                        try {
+                            JSONObject jobj = new JSONObject(jsonReply);
+
+                            // String store_serial = jobj.get("store_serial").toString();
+                            //String store_name = jobj.get("store_name").toString();
+                            String store_phone = jobj.get("store_phone").toString();
+                            String store_building_name = jobj.get("store_building_name").toString();
+                            String start_time = jobj.get("start_time").toString();
+                            String end_time = jobj.get("end_time").toString();
+                            String store_restday = jobj.get("store_restday").toString();
+                            String store_notice = jobj.get("store_notice").toString();
+                            String store_main_type_name = jobj.get("store_main_type_name").toString();
+                            String store_sub_type_name = jobj.get("store_sub_type_name").toString();
+
+                            UtilSet.al_store.get(position).set_store_spec(store_phone, store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
+
+                            JSONArray jobj_menu = (JSONArray) jobj.get("menu");
+                            for (int j = 0; j < jobj_menu.length(); j++) {
+                                JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);
+                                String menu_type_code = jobj_menu_spec.get("menu_type_code").toString();
+                                String menu_type_name = jobj_menu_spec.get("menu_type_name").toString();
+                                UtilSet.al_store.get(position).getMenu_al().add(new com.example.app_user.Menu(menu_type_code, menu_type_name));
+                                JSONArray menu_menu_desc = (JSONArray) jobj_menu_spec.get("menu description");
+                                for (int k = 0; k < menu_menu_desc.length(); k++) {
+                                    JSONObject jobj_menu_desc_spec = (JSONObject) menu_menu_desc.get(k);
+                                    String menu_code = jobj_menu_desc_spec.get("menu_code").toString();
+                                    String menu_name = jobj_menu_desc_spec.get("menu_name").toString();
+                                    int menu_price = Integer.parseInt(jobj_menu_desc_spec.get("menu_price").toString());
+                                    String menu_img = jobj_menu_desc_spec.get("menu_img").toString();
+                                    UtilSet.al_store.get(position).getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name, menu_price, menu_img));
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d("error", "Connect fail");
+                    }
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -139,12 +246,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
                     switch(item.getItemId()){
                         case R.id.nav_home:
+                            UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
+                            UtilSet.target_store=null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
+                            UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;
 

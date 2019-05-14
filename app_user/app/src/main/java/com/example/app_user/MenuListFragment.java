@@ -4,14 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,7 +38,7 @@ public class MenuListFragment extends Fragment {
 
         listView = (ListView) view.findViewById(R.id.order_list);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), R.layout.menulayout, R.id.checkbox_layout, UtilSet.al_store.get(index).getMenu_str());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), R.layout.menulayout, R.id.checkbox_layout, UtilSet.target_store.getMenu_str());
 
         listView.setAdapter(adapter);
 

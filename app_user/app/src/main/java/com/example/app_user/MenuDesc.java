@@ -1,6 +1,9 @@
 package com.example.app_user;
 
+import android.graphics.Bitmap;
+
 public class MenuDesc {
+    private Bitmap menu_image;
     private String menu_code;
     private String menu_name;
     private int menu_price;
@@ -34,6 +37,13 @@ public class MenuDesc {
 
     public String getMenu_img() {
         return menu_img;
+    }
+    public Bitmap getMenu_image() {
+        return menu_image;
+    }
+
+    public void setMenu_image(Bitmap menu_image) {
+        this.menu_image = menu_image;
     }
 
 }
