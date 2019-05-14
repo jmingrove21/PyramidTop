@@ -19,8 +19,14 @@ public class MenuFragment extends Fragment {
 
     Bitmap[] bitmap;
     ListView listView;
-    String[] menu_name = {"1","2","3","4"};
-    String[] price = {"1000","2000","3000"};
+    String[] menu_name = {"1","2","3","4","5","6","7","8"};
+    String[] price = {"1000","2000","3000","4000","1000","2000","3000","4000"};
+
+    int index;
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     @Nullable
     @Override

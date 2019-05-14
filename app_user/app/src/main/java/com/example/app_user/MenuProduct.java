@@ -30,6 +30,8 @@ public class MenuProduct extends ArrayAdapter<String> {
     TextView text_order_number;
     int order_number;
     Button button_choice;
+    Button button_plus;
+    Button button_minus;
 
     public MenuProduct(Context context, String[] menu_name, String[] price, Bitmap[] images){
         super(context,R.layout.orderlist_layout,menu_name);
@@ -45,14 +47,14 @@ public class MenuProduct extends ArrayAdapter<String> {
         if(convertView == null){
             inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.menu_layout,null);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,700));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,500));
         }
         final TextView text_menu_name = (TextView) convertView.findViewById(R.id.menu_inform);
         ImageView image_images = (ImageView) convertView.findViewById(R.id.imageView);
         TextView text_price = (TextView) convertView.findViewById(R.id.price);
         text_order_number = (TextView) convertView.findViewById(R.id.order_number);
-        Button button_plus = (Button) convertView.findViewById(R.id.plus);
-        Button button_minus = (Button) convertView.findViewById(R.id.minus);
+        button_plus = (Button) convertView.findViewById(R.id.plus);
+        button_minus = (Button) convertView.findViewById(R.id.minus);
         button_choice = (Button) convertView.findViewById(R.id.choice);
 
         text_menu_name.setText(menu_name[position]);
@@ -84,6 +86,8 @@ public class MenuProduct extends ArrayAdapter<String> {
                 if(s.equals("선택")){
                     order_number = Integer.parseInt(text_order_number.getText().toString());
                     total = total + (order_number * Integer.parseInt(price[position]));
+                    s = "선택해제";
+                    button_choice.setText(s);
 
                     String selectedItem = ((TextView) text_menu_name).getText().toString();
                     selectedItems.add(selectedItem);
@@ -91,12 +95,11 @@ public class MenuProduct extends ArrayAdapter<String> {
                     Intent intent=new Intent(v.getContext(),MenuActivity.class);
                     intent.putExtra("selectedmenu",selectedItems);
                     intent.putExtra("order_total",total);
-
-                    s = "선택해제";
-                    button_choice.setText(s);
                 }else{
                     order_number = Integer.parseInt(text_order_number.getText().toString());
                     total = total - (order_number * Integer.parseInt(price[position]));
+                    s = "선택";
+                    button_choice.setText(s);
 
                     String selectedItem = ((TextView) text_menu_name).getText().toString();
                     selectedItems.remove(selectedItem);
@@ -104,9 +107,6 @@ public class MenuProduct extends ArrayAdapter<String> {
                     Intent intent=new Intent(v.getContext(),MenuActivity.class);
                     intent.putExtra("selectedmenu",selectedItems);
                     intent.putExtra("order_total",total);
-
-                    s = "선택";
-                    button_choice.setText(s);
                 }
             }
         });
