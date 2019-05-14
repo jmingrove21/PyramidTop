@@ -42,7 +42,7 @@ public class MenuFragment extends Fragment {
         ArrayList<MenuProductItem> list = new ArrayList<>();
         for(int i = 0; i < UtilSet.target_store.getMenu_desc_al().size(); i++){
             MenuProductItem menuProductItem = new MenuProductItem();
-            menuProductItem.setOrder_number(1);
+            menuProductItem.setOrder_number(0);
             menuProductItem.setMenu_inform( UtilSet.target_store.getMenu_desc_al().get(i).getMenu_name());
             menuProductItem.setPrice_inform(String.valueOf(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_price()));
             menuProductItem.setMenu_image(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_image());

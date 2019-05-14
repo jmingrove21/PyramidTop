@@ -39,11 +39,12 @@ public class Store {
         this.distance = Float.parseFloat(distance);
         this.store_phone = phone;
     }
-    public Store(String serial, String name, String branch_name, String address, String minimum_price, String distance, String store_profile_img){
+    public Store(String serial, String name, String branch_name, String address, String store_phone, String minimum_price, String distance, String store_profile_img){
         this.store_serial = Integer.parseInt(serial);
         this.store_name=name;
         this.store_branch_name=branch_name;
         this.store_address=address;
+        this.store_phone=store_phone;
         this.minimum_order_price=minimum_price;
         this.distance=Float.parseFloat(distance);
         this.store_profile_img=store_profile_img;
@@ -108,8 +109,7 @@ public class Store {
         return minimum_order_price;
     }
 
-    public void set_store_spec(String store_phone, String store_building_name, String start_time, String end_time, String store_restday, String store_notice, String store_main_type_name, String store_sub_type_name){
-        this.store_phone=store_phone;
+    public void set_store_spec( String store_building_name, String start_time, String end_time, String store_restday, String store_notice, String store_main_type_name, String store_sub_type_name){
         this.store_building_name=store_building_name;
         this.start_time=start_time;
         this.end_time=end_time;

@@ -198,10 +198,11 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                                 String store_name = jobj.get("store_name").toString();
                                 String store_branch_name = jobj.get("store_branch_name").toString();
                                 String store_address = jobj.get("store_address").toString();
+                                String store_phone=jobj.get("store_phone").toString();
                                 String distance = jobj.get("distance").toString();
                                 String minimum_order_price=jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address,minimum_order_price, distance,store_profile_img);
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance,store_profile_img);
                                 UtilSet.al_store.add(s);
                             }
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
