@@ -8,7 +8,7 @@
 
 
          $query="
-         SELECT store_serial,store_name, store_branch_name,store_phone, store_address_jibun, store_building_name, start_time, end_time, store_restday, store_notice, store_profile_img, store_phone, store_main_type_name, store_sub_type_name,( 6371 * acos( cos( radians(".$user_lat.") ) * cos( radians( store_latitude) )
+         SELECT store_serial,store_name, store_branch_name,store_phone, store_address_jibun, store_building_name, start_time, end_time, store_restday, store_notice, store_profile_img, store_phone, store_main_type_name, store_sub_type_name,minimum_order_price,( 6371 * acos( cos( radians(".$user_lat.") ) * cos( radians( store_latitude) )
                                                                                                                                                                                                                                                                                    * cos( radians( store_longitude ) - radians(".$user_long.") )
                                                                                                                                                                                                                                                                                    + sin( radians(".$user_lat.") ) * sin( radians( store_latitude ) ) ) ) AS distance
          FROM Capstone.store
@@ -25,6 +25,7 @@
                 'store_branch_name'=>$row2['store_branch_name'],
                 'store_phone'=>$row2['store_phone'],
                 'store_address'=>$row2['store_address_jibun'],
+                'minimum_order_price'=>$row2['minimum_order_price'],
                 'distance'=>$row2['distance'],
                 'store_building_name'=>$row2['store_building_name'],
                 'start_time'=>$row2['start_time'],
