@@ -26,12 +26,12 @@ public class StoreDetailFragment extends Fragment {
         TextView text_store_operation_end_time = (TextView) view.findViewById(R.id.store_operation_end_time);
         TextView text_store_notice = (TextView) view.findViewById(R.id.store_notice);
 
-        text_store_rest.setText(UtilSet.al_store.get(index).getStore_restday());
-        text_store_branch_name.setText(UtilSet.al_store.get(index).getStore_branch_name());
-        text_store_address.setText(UtilSet.al_store.get(index).getStore_address());
-        text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
-        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
-        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
+        text_store_rest.setText(UtilSet.target_store.getStore_restday());
+        text_store_branch_name.setText(UtilSet.target_store.getStore_branch_name());
+        text_store_address.setText(UtilSet.target_store.getStore_address());
+        text_store_operation_start_time.setText(UtilSet.target_store.getStart_time());;
+        text_store_operation_end_time.setText(UtilSet.target_store.getEnd_time());
+        text_store_notice.setText(UtilSet.target_store.getStore_notice());
         return view;
     }
 }

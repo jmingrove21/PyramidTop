@@ -3,6 +3,8 @@ package com.example.app_user;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -33,9 +35,10 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener,MenuCustomAdapter.OnArrayList{
     private DrawerLayout drawer;
+    private Bitmap bitmap;
     int index;
     int serial;
-
+    private String type; //order_make, order_participate
 
     public static ArrayList<MenuProductItem > menuArrayList;
     ArrayList<String> selectedItems=new ArrayList<>();
@@ -48,14 +51,17 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitiy_store_menu);
         Intent intent = getIntent();
+        type=intent.getStringExtra("type");
         index = intent.getIntExtra("index",0);
         serial = intent.getIntExtra("serial",0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        UtilSet.al_store.get(index).setMenu_str();
+
+        UtilSet.target_store.setMenu_str();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,10 +91,10 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
         ImageView imageView=(ImageView) findViewById(R.id.store_image);
 
-        imageView.setImageBitmap(UtilSet.al_store.get(index).getStore_image());
-        text_store_name.setText(UtilSet.al_store.get(index).getStore_name());
-        text_store_phone.setText(UtilSet.al_store.get(index).getStore_phone());
-        text_store_building_name.setText(UtilSet.al_store.get(index).getStore_building_name());
+        imageView.setImageBitmap(UtilSet.target_store.getStore_image());
+        text_store_name.setText(UtilSet.target_store.getStore_name());
+        text_store_phone.setText(UtilSet.target_store.getStore_phone());
+        text_store_building_name.setText(UtilSet.target_store.getStore_building_name());
 
         store_inform_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +102,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                setFrag(0);
             }
         });
-
         menu_list_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,12 +153,15 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
                     switch(item.getItemId()){
                         case R.id.nav_home:
+                            UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
+                            UtilSet.target_store=null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
+                            UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;
 
@@ -177,10 +185,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         }
     }
 
-    @Override
-    public void onArrayList(ArrayList<String> Items){
-        selectedItems = Items;
-    }
 
     public void showSelectedItems(View view){
 
@@ -216,18 +220,18 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                     JSONArray jArry=new JSONArray();
                     jsonParam.put("user_info", "make_order");
                     jsonParam.put("user_serial", 3);
-                    jsonParam.put("store_serial", UtilSet.al_store.get(index).getStore_serial());
+                    jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
                     jsonParam.put("destination_lat", 37.277218);
                     jsonParam.put("destination_long", 127.046708);
 
-                    for(int idx=0;idx<UtilSet.al_store.get(index).getMenu_desc_al().size();idx++){
+                    for(int idx=0;idx<UtilSet.target_store.getMenu_desc_al().size();idx++){
                         for(int j=0;j<getSelectedItems.size();j++){
-                            if(UtilSet.al_store.get(index).getMenu_desc_al().get(idx).getMenu_name().equals(getSelectedItems.get(j))){
+                            if(UtilSet.target_store.getMenu_desc_al().get(idx).getMenu_name().equals(getSelectedItems.get(j))){
                                 JSONObject jobj_temp=new JSONObject();
-                                jobj_temp.put("menu_code",UtilSet.al_store.get(index).getMenu_desc_al().get(idx).getMenu_code());
-                                jobj_temp.put("menu_name",UtilSet.al_store.get(index).getMenu_desc_al().get(idx).getMenu_name());
-                                jobj_temp.put("menu_price",UtilSet.al_store.get(index).getMenu_desc_al().get(idx).getMenu_price());
+                                jobj_temp.put("menu_code",UtilSet.target_store.getMenu_desc_al().get(idx).getMenu_code());
+                                jobj_temp.put("menu_name",UtilSet.target_store.getMenu_desc_al().get(idx).getMenu_name());
+                                jobj_temp.put("menu_price",UtilSet.target_store.getMenu_desc_al().get(idx).getMenu_price());
                                 jArry.put(jobj_temp);
                                 break;
                             }

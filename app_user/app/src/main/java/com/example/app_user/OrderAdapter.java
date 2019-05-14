@@ -12,7 +12,6 @@ import android.widget.TextView;
 public class OrderAdapter extends ArrayAdapter<String> {
 
     Context context;
-
     LayoutInflater inflater;
 
     public OrderAdapter(Context context,String[] store_name){
@@ -27,7 +26,6 @@ public class OrderAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(R.layout.orderlist_layout,null);
             convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,450));
         }
-
 
         TextView text_store_name = (TextView) convertView.findViewById(R.id.store_name);
         ImageView img = (ImageView) convertView.findViewById(R.id.imageView);

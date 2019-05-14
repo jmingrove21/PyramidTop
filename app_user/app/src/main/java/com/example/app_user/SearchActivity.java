@@ -139,12 +139,15 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
 
                     switch(item.getItemId()){
                         case R.id.nav_home:
+                            UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
+                            UtilSet.target_store=null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
+                            UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;
 

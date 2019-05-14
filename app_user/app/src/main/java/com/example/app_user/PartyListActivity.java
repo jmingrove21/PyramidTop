@@ -33,7 +33,6 @@ import java.net.URL;
 
 public class PartyListActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    int store_ser;
     int[] FIRSTIMAGES = {1,2,3,4};
     String[] FIRSTNAMES = {"돈가스,일식","양식","중식","한식"};
 
@@ -97,12 +96,15 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
                     Fragment selectedFragment = null;
                     switch(item.getItemId()){
                         case R.id.nav_home:
+                            UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
+                            UtilSet.target_store=null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
+                            UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;
                     }

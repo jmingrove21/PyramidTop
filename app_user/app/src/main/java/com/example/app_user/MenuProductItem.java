@@ -1,5 +1,6 @@
 package com.example.app_user;
 
+import android.graphics.Bitmap;
 import android.widget.Button;
 
 public class MenuProductItem {
@@ -7,6 +8,7 @@ public class MenuProductItem {
     private Button btn_choice;
     private String menu_inform;
     private String price_inform;
+    private Bitmap menu_image;
     private int order_number;
 
     public String getMenu_inform() {
@@ -39,5 +41,13 @@ public class MenuProductItem {
 
     public void setChoice(Button choice) {
         this.btn_choice = choice;
+    }
+
+    public Bitmap getMenu_image() {
+        return menu_image;
+    }
+
+    public void setMenu_image(Bitmap menu_image) {
+        this.menu_image = menu_image;
     }
 }

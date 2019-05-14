@@ -1,16 +1,11 @@
 package com.example.app_user;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -18,12 +13,9 @@ import java.util.ArrayList;
 
 public class MenuFragment extends Fragment {
 
-    Bitmap[] bitmap;
     ListView listView;
     private MenuCustomAdapter menuCustomAdapter;
     public static ArrayList<MenuProductItem> menuProductItems;
-    String[] menu_name = {"1","2","3","4","5","6","7","8"};
-    String[] price = {"1000","2000","3000","4000","1000","2000","3000","4000"};
 
     int index;
 
@@ -48,11 +40,12 @@ public class MenuFragment extends Fragment {
 
     private ArrayList<MenuProductItem> getMenuProductItem(){
         ArrayList<MenuProductItem> list = new ArrayList<>();
-        for(int i = 0; i < menu_name.length; i++){
+        for(int i = 0; i < UtilSet.target_store.getMenu_desc_al().size(); i++){
             MenuProductItem menuProductItem = new MenuProductItem();
             menuProductItem.setOrder_number(1);
-            menuProductItem.setMenu_inform(menu_name[i]);
-            menuProductItem.setPrice_inform(price[i]);
+            menuProductItem.setMenu_inform( UtilSet.target_store.getMenu_desc_al().get(i).getMenu_name());
+            menuProductItem.setPrice_inform(String.valueOf(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_price()));
+            menuProductItem.setMenu_image(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_image());
             list.add(menuProductItem);
         }
         return list;
