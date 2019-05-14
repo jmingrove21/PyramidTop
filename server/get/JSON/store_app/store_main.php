@@ -14,7 +14,7 @@
              INNER JOIN Capstone.order_menu AS o
              INNER JOIN Capstone.menu_info AS m
              ON tb1.order_number=o.order_number
-             AND o.menu_serial=m.menu_serial
+             AND o.menu_code=m.menu_code
              WHERE tb1.order_number=o.order_number AND tb1.order_status BETWEEN 3 AND 6
              ORDER BY tb1.order_receipt_date DESC, order_number,m.menu_serial ASC
              ";
