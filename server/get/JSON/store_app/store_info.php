@@ -4,7 +4,7 @@
         header('Content-Type: text/html; charset=utf-8');
         $store_serial=$json_data['store_serial'];
         $query = "
-        SELECT m.store_master_num, s.store_name, m.store_master_name, s.store_address_jibun, s.start_time, s.end_time, s.store_restday, s.store_notice, m.store_master_phone, s.store_profile_img, s.store_phone
+        SELECT m.store_master_num, s.store_name, m.store_master_name, s.store_address_jibun, s.start_time, s.end_time, s.store_restday, s.store_notice, m.store_master_phone, s.store_profile_img, s.store_phone,s.minimum_order_price
         FROM Capstone.store AS s
         INNER JOIN Capstone.store_master AS m
         ON s.store_serial=m.store_serial
@@ -21,7 +21,8 @@
             'store_restday'=>$result['store_restday'],
             'store_notice'=>$result['store_notice'],
             'store_phone'=>$result['store_phone'],
-            'store_profile_img'=>$result['store_profile_img']
+            'store_profile_img'=>$result['store_profile_img'],
+            'minimum_order_price'=>$result['minimum_order_price']
         );
         echo json_encode($send_data);
     }
