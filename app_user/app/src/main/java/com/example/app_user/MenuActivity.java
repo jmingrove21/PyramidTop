@@ -221,7 +221,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                     jsonParam.put("user_info", "make_order");
                     jsonParam.put("user_serial", 3);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
-                    jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
+                    jsonParam.put("destination", "경기도 수원시 영통구 우만동 우만주공아파트");
                     jsonParam.put("destination_lat", 37.277218);
                     jsonParam.put("destination_long", 127.046708);
 
@@ -236,7 +236,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                                 break;
                             }
                         }
-
                     }
 
                     jsonParam.put("menu", jArry);
