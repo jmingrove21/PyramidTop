@@ -31,17 +31,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener, MenuListFragment.OnArrayList{
+public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener,MenuCustomAdapter.OnArrayList{
     private DrawerLayout drawer;
     int index;
     int serial;
 
+
+    public static ArrayList<MenuProductItem > menuArrayList;
     ArrayList<String> selectedItems=new ArrayList<>();
     ArrayList<String> selectedMenu=new ArrayList<>();
     Button store_inform_button, menu_list_button;
     FragmentManager fm;
     FragmentTransaction tran;
-    MenuListFragment menulistfragment;
     MenuFragment menuFragment;
     StoreDetailFragment storedetailfragment;
 
@@ -69,9 +70,6 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
         storedetailfragment = new StoreDetailFragment();
         storedetailfragment.setIndex(index);
-
-        menulistfragment = new MenuListFragment();
-        menulistfragment.setIndex(index);
 
         menuFragment = new MenuFragment();
         menuFragment.setIndex(index);
@@ -187,8 +185,8 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     public void showSelectedItems(View view){
 
         Intent intent = getIntent();
-        selectedMenu = intent.getStringArrayListExtra("selectedmenu");
-        int order_total = intent.getIntExtra("order_total",0);
+        selectedMenu = intent.getStringArrayListExtra("selectedMenuList");
+        int order_total = intent.getIntExtra("select_order_total",0);
 
         String items="";
         for(String item:selectedMenu){

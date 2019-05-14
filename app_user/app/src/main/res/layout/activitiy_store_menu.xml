@@ -96,7 +96,8 @@
                 android:layout_marginStart="170dp"
                 android:layout_marginTop="166dp"
                 android:layout_marginEnd="125dp"
-                android:text="상세보기" />
+                android:text="상세보기"
+                android:textSize="10sp"/>
 
             <Button
                 android:id="@+id/menu_list_button"
@@ -108,26 +109,28 @@
                 android:layout_marginStart="290dp"
                 android:layout_marginTop="166dp"
                 android:layout_marginEnd="8dp"
-                android:text="메뉴보기" />
+                android:text="메뉴보기"
+                android:textSize="10sp"/>
 
             <Button
                 android:id="@+id/order_button"
-                android:layout_width="wrap_content"
+                android:layout_width="133dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginStart="160dp"
-                android:layout_marginTop="556dp"
-                android:layout_marginEnd="163dp"
+                android:layout_marginStart="141dp"
+                android:layout_marginTop="501dp"
+                android:layout_marginEnd="137dp"
                 android:onClick="showSelectedItems"
-                android:text="주문 완료" />
+                android:text="주문 완료"
+                android:textSize="10sp"/>
 
             <FrameLayout
                 android:id="@+id/sub_fragment_container"
                 android:layout_width="match_parent"
-                android:layout_height="311dp"
+                android:layout_height="249dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
