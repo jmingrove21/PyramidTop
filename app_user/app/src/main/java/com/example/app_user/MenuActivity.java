@@ -36,6 +36,8 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
     int index;
     int serial;
 
+
+    public static ArrayList<MenuProductItem > menuArrayList;
     ArrayList<String> selectedItems=new ArrayList<>();
     ArrayList<String> selectedMenu=new ArrayList<>();
     Button store_inform_button, menu_list_button;
