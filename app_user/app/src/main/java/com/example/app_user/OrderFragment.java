@@ -118,6 +118,8 @@ public class OrderFragment extends DialogFragment {
             @Override
             public void run() {
                 try {
+                    UtilSet.al_order.get(position).getStore().getMenu_al().clear();
+                    UtilSet.al_order.get(position).getStore().getMenu_desc_al().clear();
                     URL url = new URL(UtilSet.url);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -143,9 +145,7 @@ public class OrderFragment extends DialogFragment {
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
 
-                            // String store_serial = jobj.get("store_serial").toString();
-                            //String store_name = jobj.get("store_name").toString();
-                            String store_phone = jobj.get("store_phone").toString();
+
                             String store_building_name = jobj.get("store_building_name").toString();
                             String start_time = jobj.get("start_time").toString();
                             String end_time = jobj.get("end_time").toString();
@@ -154,7 +154,7 @@ public class OrderFragment extends DialogFragment {
                             String store_main_type_name = jobj.get("store_main_type_name").toString();
                             String store_sub_type_name = jobj.get("store_sub_type_name").toString();
 
-                            UtilSet.al_order.get(position).getStore().set_store_spec(store_phone, store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
+                            UtilSet.al_order.get(position).getStore().set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
 
                             JSONArray jobj_menu = (JSONArray) jobj.get("menu");
                             for (int j = 0; j < jobj_menu.length(); j++) {
@@ -230,6 +230,7 @@ public class OrderFragment extends DialogFragment {
                                 String store_name = jobj.get("store_name").toString();
                                 String store_branch_name = jobj.get("store_branch_name").toString();
                                 String store_address = jobj.get("store_address").toString();
+                                String store_phone = jobj.get("store_phone").toString();
                                 String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String distance = jobj.get("distance").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
@@ -238,7 +239,7 @@ public class OrderFragment extends DialogFragment {
                                 String total_order_price = jobj.get("total_order_price").toString();
                                 Order o = new Order(order_create_date, participate_person, total_order_price);
 
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, minimum_order_price, distance, store_profile_img);
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
                                 o.setStore(s);
                                 UtilSet.al_order.add(o);
                             }

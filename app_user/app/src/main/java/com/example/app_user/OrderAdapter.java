@@ -24,7 +24,7 @@ public class OrderAdapter extends ArrayAdapter<String> {
         if(convertView == null){
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.orderlist_layout,null);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,450));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
         }
 
         TextView text_store_name = (TextView) convertView.findViewById(R.id.store_name);

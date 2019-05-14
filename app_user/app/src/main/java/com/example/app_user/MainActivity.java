@@ -144,6 +144,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             @Override
             public void run() {
                 try {
+                    UtilSet.al_store.get(position).getMenu_al().clear();
+                    UtilSet.al_store.get(position).getMenu_desc_al().clear();
+
                     URL url = new URL(UtilSet.url);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -169,9 +172,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
 
-                            // String store_serial = jobj.get("store_serial").toString();
-                            //String store_name = jobj.get("store_name").toString();
-                            String store_phone = jobj.get("store_phone").toString();
+
                             String store_building_name = jobj.get("store_building_name").toString();
                             String start_time = jobj.get("start_time").toString();
                             String end_time = jobj.get("end_time").toString();
@@ -180,7 +181,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                             String store_main_type_name = jobj.get("store_main_type_name").toString();
                             String store_sub_type_name = jobj.get("store_sub_type_name").toString();
 
-                            UtilSet.al_store.get(position).set_store_spec(store_phone, store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
+                            UtilSet.al_store.get(position).set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
 
                             JSONArray jobj_menu = (JSONArray) jobj.get("menu");
                             for (int j = 0; j < jobj_menu.length(); j++) {

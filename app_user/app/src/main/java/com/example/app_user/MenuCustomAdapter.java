@@ -61,7 +61,7 @@ public class MenuCustomAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.menu_layout,null,true);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,250));
 
             holder.button_choice = (Button) convertView.findViewById(R.id.choice);
             holder.button_minus = (Button) convertView.findViewById(R.id.minus);
@@ -128,7 +128,9 @@ public class MenuCustomAdapter extends BaseAdapter {
                 if(tmp_tv.equals("선택")){
                     tv.setText("선택 해제");
                     MenuFragment.menuProductItems.get(pos).setChoice(tv);
-
+                    holder.button_minus.setVisibility(View.VISIBLE);
+                    holder.button_plus.setVisibility(View.VISIBLE);
+                    holder.text_order_number.setVisibility(View.VISIBLE);
                     tmp_ordernum = Integer.parseInt(holder.text_order_number.getText().toString());
                     total = total + (tmp_ordernum * Integer.parseInt(MenuFragment.menuProductItems.get(position).getPrice_inform()));
 
@@ -142,6 +144,13 @@ public class MenuCustomAdapter extends BaseAdapter {
                 }else{
                     tv.setText("선택");
                     MenuFragment.menuProductItems.get(pos).setChoice(tv);
+
+                    MenuFragment.menuProductItems.get(position).setOrder_number(0);
+                    holder.text_order_number.setText(String.valueOf(MenuFragment.menuProductItems.get(position).getOrder_number()));
+
+                    holder.button_minus.setVisibility(View.INVISIBLE);
+                    holder.button_plus.setVisibility(View.INVISIBLE);
+                    holder.text_order_number.setVisibility(View.INVISIBLE);
 
                     tmp_ordernum = Integer.parseInt(holder.text_order_number.getText().toString());
                     total = total - (tmp_ordernum * Integer.parseInt(MenuFragment.menuProductItems.get(position).getPrice_inform()));

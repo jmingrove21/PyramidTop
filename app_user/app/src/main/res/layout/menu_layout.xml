@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="25"
+        android:paddingLeft="10sp"
         android:orientation="vertical">
         <ImageView
             android:id="@+id/imageView"
@@ -19,11 +20,12 @@
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="75"
+        android:paddingRight="10sp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="33"
+            android:layout_weight="30"
             android:weightSum="1"
             android:orientation="horizontal">
             <TextView
@@ -31,71 +33,83 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
-                android:text="메뉴이름:"
+                android:text="메뉴 : "
+                android:textAlignment="textEnd"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/menu_inform"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
+                android:textAlignment="center"
                 android:text="Textview"
                 android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="33"
+            android:layout_weight="30"
             android:orientation="horizontal"
             android:weightSum="1">
+
             <TextView
                 android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:text="가격:"
+                android:layout_weight="0.35"
+                android:text="가격 : "
+                android:textAlignment="textEnd"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/price_inform"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:text="Textview"
+                android:textAlignment="textEnd"
                 android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/won"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.4"
+                android:layout_weight="0.45"
+                android:paddingLeft="10sp"
                 android:text="원"
                 android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="34"
+            android:layout_weight="40"
             android:orientation="horizontal"
+            android:paddingLeft="30sp"
             android:weightSum="1">
             <Button
                 android:id="@+id/minus"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
+                android:layout_weight="0.28"
                 android:text="-"
+                android:visibility="invisible"
                 android:textSize="7sp"/>
             <TextView
                 android:id="@+id/order_number"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
-                android:text="1"
+                android:text="0"
+                android:visibility="invisible"
                 android:textAlignment="center"
+                android:gravity="center_vertical"
                 android:textSize="15sp"></TextView>
             <Button
                 android:id="@+id/plus"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
+                android:layout_weight="0.28"
                 android:text="+"
+                android:visibility="invisible"
                 android:textSize="7sp"/>
 
 
@@ -103,7 +117,9 @@
                 android:id="@+id/choice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1"
+                android:layout_weight="0.15"
+                android:layout_marginLeft="50sp"
+                android:layout_marginRight="10sp"
                 android:text="선택"
                 android:textSize="10sp" />
         </LinearLayout>
