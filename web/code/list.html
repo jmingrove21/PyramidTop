@@ -16,10 +16,13 @@
 
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../assets/css/datepicker.min.css" rel="stylesheet" type="text/css">
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
 
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/datepicker.min.js"></script>
+  <script src="../assets/js/i18n/datepicker.en.js"></script>
   <script src="../assets/js/list.js"></script>
 	
 </head>
@@ -143,29 +146,125 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>시작일</label>
-                        <input id="start_pickdate" type="text" class="form-control">
+                        <input id="pick_start" type="text" class="form-control" autocomplete="off">
+
+                        <script>
+                          // Create start date
+                          var start = new Date(),
+                                  prevDay,
+                                  startHours = 0;
+
+                          // 09:00 AM
+                          start.setHours(9);
+                          start.setMinutes(0);
+
+                          // If today is Saturday or Sunday set 10:00 AM
+                          if ([6, 0].indexOf(start.getDay()) != -1) {
+                            start.setHours(10);
+                            startHours = 10
+                          }
+
+                          $('#pick_start').datepicker({
+                            timepicker: true,
+                            language: 'en',
+                            startDate: start,
+                            minHours: startHours,
+                            maxHours: 24,
+                            todayButton : new Date(),
+                            clearButton : true,
+                            autoClose : true,
+                            onSelect: function (fd, d, picker) {
+                              // Do nothing if selection was cleared
+                              if (!d) return;
+
+                              var day = d.getDay();
+
+                              // Trigger only if date is changed
+                              if (prevDay != undefined && prevDay == day) return;
+                              prevDay = day;
+
+                              // If chosen day is Saturday or Sunday when set
+                              // hour value for weekends, else restore defaults
+                              if (day == 6 || day == 0) {
+                                picker.update({
+                                  minHours: 10,
+                                  maxHours: 16
+                                })
+                              } else {
+                                picker.update({
+                                  minHours: 0,
+                                  maxHours: 24
+                                })
+                              }
+                            }
+                          })
+                        </script>
+
+
+
                       </div>
-                    </div>
-
-                    <div class="col-md-1 align-self-end text-left">
-
-                      <button id="pickdate" type='button' class='btn btn-outline-success'> 선택</button>
-
                     </div>
 
 					<div class="col-md-4">
                       <div class="form-group">
                         <label>종료일</label>
-                        <input id="end_pickdate" type="text" class="form-control">
+                        <input id="pick_end" type="text" class="form-control" autocomplete="off">
+
+                        <script>
+                          // Create start date
+                          var start = new Date(),
+                                  prevDay,
+                                  startHours = 0;
+
+                          // 09:00 AM
+                          start.setHours(9);
+                          start.setMinutes(0);
+
+                          // If today is Saturday or Sunday set 10:00 AM
+                          if ([6, 0].indexOf(start.getDay()) != -1) {
+                            start.setHours(10);
+                            startHours = 10
+                          }
+
+                          $('#pick_end').datepicker({
+                            timepicker: true,
+                            language: 'en',
+                            startDate: start,
+                            minHours: startHours,
+                            maxHours: 24,
+                            todayButton : new Date(),
+                            clearButton : true,
+                            autoClose : true,
+                            onSelect: function (fd, d, picker) {
+                              // Do nothing if selection was cleared
+                              if (!d) return;
+
+                              var day = d.getDay();
+
+                              // Trigger only if date is changed
+                              if (prevDay != undefined && prevDay == day) return;
+                              prevDay = day;
+
+                              // If chosen day is Saturday or Sunday when set
+                              // hour value for weekends, else restore defaults
+                              if (day == 6 || day == 0) {
+                                picker.update({
+                                  minHours: 10,
+                                  maxHours: 16
+                                })
+                              } else {
+                                picker.update({
+                                  minHours: 0,
+                                  maxHours: 24
+                                })
+                              }
+                            }
+                          })
+                        </script>
                       </div>
 					  
                     </div>
 					  
-					<div class="col-md-1 align-self-end text-left">
-
-                      <button id="pickdate" type='button' class='btn btn-outline-success'> 선택</button>
-
-                    </div>
 					<div class="col-md-2 align-self-end">
                       <button type='button' class='btn btn-outline-success' onclick="choose_datetime()"> 조회하기 </button>
                     </div>
