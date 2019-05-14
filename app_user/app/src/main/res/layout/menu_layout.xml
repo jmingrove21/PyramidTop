@@ -32,14 +32,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
                 android:text="메뉴이름:"
-                android:textSize="10sp" />
+                android:textSize="15sp" />
             <TextView
                 android:id="@+id/menu_inform"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
                 android:text="Textview"
-                android:textSize="10sp" />
+                android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,21 +53,21 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
                 android:text="가격:"
-                android:textSize="10sp" />
+                android:textSize="15sp" />
             <TextView
                 android:id="@+id/price_inform"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
                 android:text="Textview"
-                android:textSize="10sp" />
+                android:textSize="15sp" />
             <TextView
                 android:id="@+id/won"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
                 android:text="원"
-                android:textSize="10sp" />
+                android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
-                android:text="ㅡ" />
+                android:text="-"
+                android:textSize="7sp"/>
             <TextView
                 android:id="@+id/order_number"
                 android:layout_width="match_parent"
@@ -88,13 +89,14 @@
                 android:layout_weight="0.3"
                 android:text="1"
                 android:textAlignment="center"
-                android:textSize="10sp"></TextView>
+                android:textSize="15sp"></TextView>
             <Button
                 android:id="@+id/plus"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
-                android:text="+" />
+                android:text="+"
+                android:textSize="7sp"/>
 
 
             <Button

@@ -4,4 +4,6 @@
     <integer name="btn_plus_pos">2</integer>
     <integer name="btn_minus_view">3</integer>
     <integer name="btn_minus_pos">4</integer>
+    <integer name="btn_choice_view">5</integer>
+    <integer name="btn_choice_pos">6</integer>
 </resources>

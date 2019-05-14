@@ -16,9 +16,15 @@ import java.util.ArrayList;
 
 public class MenuCustomAdapter extends BaseAdapter {
     private Context context;
+
     int tmp_ordernum;
     int total = 0;
     ArrayList<String> selectedItems = new ArrayList<>();
+
+    private MenuListFragment.OnArrayList OnArrayList;
+
+    public interface OnArrayList {
+    }
 
     public MenuCustomAdapter(Context context) {
 
@@ -57,7 +63,7 @@ public class MenuCustomAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.menu_layout,null,true);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,500));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
 
             holder.button_choice = (Button) convertView.findViewById(R.id.choice);
             holder.button_minus = (Button) convertView.findViewById(R.id.minus);
@@ -111,13 +117,19 @@ public class MenuCustomAdapter extends BaseAdapter {
             }
         });
 
+        holder.button_choice.setTag(R.integer.btn_choice_view, convertView);
+        holder.button_choice.setTag(R.integer.btn_choice_pos, position);
         holder.button_choice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tmpTv = holder.button_choice.getText().toString();
+                View tempview = (View) holder.button_choice.getTag(R.integer.btn_choice_view);
+                Button tv = (Button) tempview.findViewById(R.id.choice);
+                Integer pos = (Integer) holder.button_choice.getTag(R.integer.btn_choice_pos);
+                String tmp_tv = tv.getText().toString();
 
-                if(tmpTv=="선택"){
-                    MenuFragment.menuProductItems.get(position).getChoice().setText("선택 해제");
+                if(tmp_tv.equals("선택")){
+                    tv.setText("선택 해제");
+                    MenuFragment.menuProductItems.get(pos).setChoice(tv);
 
                     tmp_ordernum = Integer.parseInt(holder.text_order_number.getText().toString());
                     total = total + (tmp_ordernum * Integer.parseInt(MenuFragment.menuProductItems.get(position).getPrice_inform()));
@@ -126,11 +138,12 @@ public class MenuCustomAdapter extends BaseAdapter {
                     selectedItems.add(selectedItem);
 
                     Intent intent=new Intent(v.getContext(),MenuActivity.class);
-                    intent.putExtra("selectedmenu",selectedItems);
-                    intent.putExtra("order_total",total);
+                    intent.putExtra("selectedMenuList",selectedItems);
+                    intent.putExtra("select_order_total",total);
 
                 }else{
-                    MenuFragment.menuProductItems.get(position).getChoice().setText("선택");
+                    tv.setText("선택");
+                    MenuFragment.menuProductItems.get(pos).setChoice(tv);
 
                     tmp_ordernum = Integer.parseInt(holder.text_order_number.getText().toString());
                     total = total - (tmp_ordernum * Integer.parseInt(MenuFragment.menuProductItems.get(position).getPrice_inform()));

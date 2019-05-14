@@ -4,7 +4,7 @@ import android.widget.Button;
 
 public class MenuProductItem {
 
-    private Button choice;
+    private Button btn_choice;
     private String menu_inform;
     private String price_inform;
     private int order_number;
@@ -34,10 +34,10 @@ public class MenuProductItem {
     }
 
     public Button getChoice() {
-        return choice;
+        return btn_choice;
     }
 
     public void setChoice(Button choice) {
-        this.choice = choice;
+        this.btn_choice = choice;
     }
 }
