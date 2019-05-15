@@ -241,7 +241,9 @@ public class PeopleFragment extends DialogFragment {
                                 String order_create_date = jobj.get("order_create_date").toString();
                                 String participate_person = jobj.get("participate_persons").toString();
                                 String total_order_price = jobj.get("total_order_price").toString();
-                                Order o = new Order(order_create_date, participate_person, total_order_price);
+                                String order_number = jobj.get("order_number").toString();
+
+                                Order o = new Order(order_create_date, participate_person, total_order_price,order_number);
 
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
                                 o.setStore(s);
