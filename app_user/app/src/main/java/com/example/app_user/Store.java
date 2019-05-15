@@ -16,6 +16,10 @@ public class Store {
     private String store_branch_name;
     private String store_building_name;
 
+
+
+    private int store_order_number=0;
+
     private String start_time;
     private String end_time;
     private String store_notice;
@@ -108,7 +112,13 @@ public class Store {
     public String getMinimum_order_price() {
         return minimum_order_price;
     }
+    public int getStore_order_number() {
+        return store_order_number;
+    }
 
+    public void setStore_order_number(int store_order_number) {
+        this.store_order_number = store_order_number;
+    }
     public void set_store_spec( String store_building_name, String start_time, String end_time, String store_restday, String store_notice, String store_main_type_name, String store_sub_type_name){
         this.store_building_name=store_building_name;
         this.start_time=start_time;
