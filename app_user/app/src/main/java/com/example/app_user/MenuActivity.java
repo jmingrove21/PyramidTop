@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuWrapperFactory;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -40,8 +41,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     int serial;
     private String type; //order_make, order_participate
 
-    public static ArrayList<MenuProductItem> menuArrayList;
-    ArrayList<String> selectedMenu = new ArrayList<>();
+    String selectedMenu;
     Button store_inform_button, menu_list_button;
     FragmentManager fm;
     FragmentTransaction tran;
@@ -188,13 +188,14 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
     public void showSelectedItems(View view) {
 
-        store_info_specification();
+        store_info_specification(view);
 
        // Toast.makeText(view.getContext(), "You have selected \n" + items, Toast.LENGTH_LONG).show();
 
     }
 
-    public void store_info_specification() {
+    public void store_info_specification(View v) {
+        final View view = v;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -217,11 +218,13 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("destination_lat", 37.277218);
                     jsonParam.put("destination_long", 127.046708);
                     int total_price=0;
+
                     for (int idx = 0; idx < MenuFragment.menuProductItems.size(); idx++) {
                         if (MenuFragment.menuProductItems.get(idx).getOrder_number()!=0) {
                             JSONObject jobj_temp = new JSONObject();
                             jobj_temp.put("menu_code", MenuFragment.menuProductItems.get(idx).getMenu_code());
                             jobj_temp.put("menu_name", MenuFragment.menuProductItems.get(idx).getMenu_inform());
+                            selectedMenu = ""+MenuFragment.menuProductItems.get(idx).getMenu_inform()+"\n";
                             jobj_temp.put("menu_count",MenuFragment.menuProductItems.get(idx).getOrder_number());
                             jobj_temp.put("menu_price",MenuFragment.menuProductItems.get(idx).getPrice_inform());
                             int menu_total_price=Integer.parseInt(MenuFragment.menuProductItems.get(idx).getPrice_inform())*MenuFragment.menuProductItems.get(idx).getOrder_number();
@@ -229,6 +232,13 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                             jobj_temp.put("menu_total_price",menu_total_price);
                             jArry.put(jobj_temp);
                         }
+                    }
+
+                    if(total_price==0){
+                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(view.getContext(), ""+selectedMenu, Toast.LENGTH_LONG).show();
+                        selectedMenu = "";
                     }
                     jsonParam.put("total_price",total_price);
                     jsonParam.put("menu", jArry);
