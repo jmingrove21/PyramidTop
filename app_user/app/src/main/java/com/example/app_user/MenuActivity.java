@@ -190,7 +190,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         store_info_specification(view);
 
-       // Toast.makeText(view.getContext(), "You have selected \n" + items, Toast.LENGTH_LONG).show();
+        // Toast.makeText(view.getContext(), "You have selected \n" + items, Toast.LENGTH_LONG).show();
 
     }
 
@@ -217,30 +217,35 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("destination", "경기도 수원시 영통구 우만동 우만주공아파트");
                     jsonParam.put("destination_lat", 37.277218);
                     jsonParam.put("destination_long", 127.046708);
-                    int total_price=0;
+                    int total_price = 0;
+                    if (MenuFragment.menuProductItems == null) {
+                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     for (int idx = 0; idx < MenuFragment.menuProductItems.size(); idx++) {
-                        if (MenuFragment.menuProductItems.get(idx).getOrder_number()!=0) {
+                        if (MenuFragment.menuProductItems.get(idx).getOrder_number() != 0) {
                             JSONObject jobj_temp = new JSONObject();
                             jobj_temp.put("menu_code", MenuFragment.menuProductItems.get(idx).getMenu_code());
                             jobj_temp.put("menu_name", MenuFragment.menuProductItems.get(idx).getMenu_inform());
-                            selectedMenu = ""+MenuFragment.menuProductItems.get(idx).getMenu_inform()+"\n";
-                            jobj_temp.put("menu_count",MenuFragment.menuProductItems.get(idx).getOrder_number());
-                            jobj_temp.put("menu_price",MenuFragment.menuProductItems.get(idx).getPrice_inform());
-                            int menu_total_price=Integer.parseInt(MenuFragment.menuProductItems.get(idx).getPrice_inform())*MenuFragment.menuProductItems.get(idx).getOrder_number();
-                            total_price+=menu_total_price;
-                            jobj_temp.put("menu_total_price",menu_total_price);
+                            selectedMenu = "" + MenuFragment.menuProductItems.get(idx).getMenu_inform() + "\n";
+                            jobj_temp.put("menu_count", MenuFragment.menuProductItems.get(idx).getOrder_number());
+                            jobj_temp.put("menu_price", MenuFragment.menuProductItems.get(idx).getPrice_inform());
+                            int menu_total_price = Integer.parseInt(MenuFragment.menuProductItems.get(idx).getPrice_inform()) * MenuFragment.menuProductItems.get(idx).getOrder_number();
+                            total_price += menu_total_price;
+                            jobj_temp.put("menu_total_price", menu_total_price);
                             jArry.put(jobj_temp);
                         }
                     }
-
-                    if(total_price==0){
+                    if(total_price==0) {
                         Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(view.getContext(), ""+selectedMenu, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    if(total_price!=0) {
+                        Toast.makeText(view.getContext(), "" + selectedMenu, Toast.LENGTH_LONG).show();
                         selectedMenu = "";
                     }
-                    jsonParam.put("total_price",total_price);
+                    jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
 
                     Log.i("JSON", jsonParam.toString());
