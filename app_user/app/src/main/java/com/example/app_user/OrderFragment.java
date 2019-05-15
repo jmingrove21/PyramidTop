@@ -1,6 +1,7 @@
 package com.example.app_user;
 
-import android.content.Intent;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,6 +27,10 @@ import java.net.URL;
 public class OrderFragment extends DialogFragment {
     Bitmap bitmap;
     ListView listView;
+    SubMenuFragment subMenuFragment;
+
+    FragmentManager fm;
+    FragmentTransaction tran;
 
     @Nullable
     @Override
@@ -42,6 +46,7 @@ public class OrderFragment extends DialogFragment {
 
         OrderAdapter orderAdapter = new OrderAdapter(getActivity(), store_name);
         listView.setAdapter(orderAdapter);
+
         Thread mThread = new Thread() {
             @Override
             public void run() {
@@ -104,11 +109,12 @@ public class OrderFragment extends DialogFragment {
                     e.printStackTrace();
                 }
                 UtilSet.target_store=UtilSet.al_order.get(position).getStore();
-                Intent intent = new Intent(v.getContext(), MenuActivity.class);
 
-                intent.putExtra("serial", store_ser);
-                intent.putExtra("index", position);
-                startActivityForResult(intent, 101);
+                subMenuFragment = new SubMenuFragment();
+                subMenuFragment.setIndex(position);
+
+                getFragmentManager().beginTransaction().replace(R.id.full_order_list,
+                        subMenuFragment).commit();
             }
         });
         return view;
