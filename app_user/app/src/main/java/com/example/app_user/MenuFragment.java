@@ -46,6 +46,7 @@ public class MenuFragment extends Fragment {
             menuProductItem.setMenu_inform( UtilSet.target_store.getMenu_desc_al().get(i).getMenu_name());
             menuProductItem.setPrice_inform(String.valueOf(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_price()));
             menuProductItem.setMenu_image(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_image());
+            menuProductItem.setMenu_code(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_code());
             list.add(menuProductItem);
         }
         return list;

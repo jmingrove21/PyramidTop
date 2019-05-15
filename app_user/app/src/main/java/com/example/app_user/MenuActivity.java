@@ -33,16 +33,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener,MenuCustomAdapter.OnArrayList{
+public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
     private DrawerLayout drawer;
     private Bitmap bitmap;
     int index;
     int serial;
     private String type; //order_make, order_participate
 
-    public static ArrayList<MenuProductItem > menuArrayList;
-    ArrayList<String> selectedItems=new ArrayList<>();
-    ArrayList<String> selectedMenu=new ArrayList<>();
+    public static ArrayList<MenuProductItem> menuArrayList;
+    ArrayList<String> selectedMenu = new ArrayList<>();
     Button store_inform_button, menu_list_button;
     FragmentManager fm;
     FragmentTransaction tran;
@@ -55,9 +54,9 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitiy_store_menu);
         Intent intent = getIntent();
-        type=intent.getStringExtra("type");
-        index = intent.getIntExtra("index",0);
-        serial = intent.getIntExtra("serial",0);
+        type = intent.getStringExtra("type");
+        index = intent.getIntExtra("index", 0);
+        serial = intent.getIntExtra("serial", 0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
@@ -82,14 +81,14 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
         setFrag(0);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         TextView text_store_name = (TextView) findViewById(R.id.store_name);
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
         TextView text_store_building_name = (TextView) findViewById(R.id.store_building_name);
-        ImageView imageView=(ImageView) findViewById(R.id.store_image);
+        ImageView imageView = (ImageView) findViewById(R.id.store_image);
 
         imageView.setImageBitmap(UtilSet.target_store.getStore_image());
         text_store_name.setText(UtilSet.target_store.getStore_name());
@@ -99,7 +98,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         store_inform_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               setFrag(0);
+                setFrag(0);
             }
         });
         menu_list_button.setOnClickListener(new View.OnClickListener() {
@@ -110,10 +109,10 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
         });
     }
 
-    public void setFrag(int n){
+    public void setFrag(int n) {
         fm = getFragmentManager();
         tran = fm.beginTransaction();
-        switch (n){
+        switch (n) {
             case 0:
                 tran.replace(R.id.sub_fragment_container, storedetailfragment);
                 tran.commit();
@@ -127,7 +126,7 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch(menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.old_olderlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                         new Old_Orderlist()).commit();
@@ -137,8 +136,8 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                         new Profile()).commit();
                 break;
             case R.id.menu_logout:
-                Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
-                startActivityForResult(intent,101);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivityForResult(intent, 101);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -151,17 +150,17 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
 
-                    switch(item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.nav_home:
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new PeopleFragment();
                             break;
 
@@ -172,37 +171,30 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                 }
             };
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
+
     @Override
-    public void onBackPressed(){
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
 
 
-    public void showSelectedItems(View view){
+    public void showSelectedItems(View view) {
 
-        Intent intent = getIntent();
-        selectedMenu = intent.getStringArrayListExtra("selectedMenuList");
-        int order_total = intent.getIntExtra("select_order_total",0);
+        store_info_specification();
 
-        String items="";
-        for(String item:selectedMenu){
-            items+="-" + item + "\n";
-        }
-        items+="-" + order_total + "원\n";
-        store_info_specification(selectedMenu);
-
-        Toast.makeText(view.getContext(),"You have selected \n"+items,Toast.LENGTH_LONG).show();
+       // Toast.makeText(view.getContext(), "You have selected \n" + items, Toast.LENGTH_LONG).show();
 
     }
-    public void store_info_specification(final ArrayList<String> getSelectedItems) {
+
+    public void store_info_specification() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -217,32 +209,32 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-                    JSONArray jArry=new JSONArray();
+                    JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
                     jsonParam.put("user_serial", 3);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
-                    jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
+                    jsonParam.put("destination", "경기도 수원시 영통구 우만동 우만주공아파트");
                     jsonParam.put("destination_lat", 37.277218);
                     jsonParam.put("destination_long", 127.046708);
-
-                    for(int idx=0;idx<UtilSet.target_store.getMenu_desc_al().size();idx++){
-                        for(int j=0;j<getSelectedItems.size();j++){
-                            if(UtilSet.target_store.getMenu_desc_al().get(idx).getMenu_name().equals(getSelectedItems.get(j))){
-                                JSONObject jobj_temp=new JSONObject();
-                                jobj_temp.put("menu_code",UtilSet.target_store.getMenu_desc_al().get(idx).getMenu_code());
-                                jobj_temp.put("menu_name",UtilSet.target_store.getMenu_desc_al().get(idx).getMenu_name());
-                                jobj_temp.put("menu_price",UtilSet.target_store.getMenu_desc_al().get(idx).getMenu_price());
-                                jArry.put(jobj_temp);
-                                break;
-                            }
+                    int total_price=0;
+                    for (int idx = 0; idx < MenuFragment.menuProductItems.size(); idx++) {
+                        if (MenuFragment.menuProductItems.get(idx).getOrder_number()!=0) {
+                            JSONObject jobj_temp = new JSONObject();
+                            jobj_temp.put("menu_code", MenuFragment.menuProductItems.get(idx).getMenu_code());
+                            jobj_temp.put("menu_name", MenuFragment.menuProductItems.get(idx).getMenu_inform());
+                            jobj_temp.put("menu_count",MenuFragment.menuProductItems.get(idx).getOrder_number());
+                            jobj_temp.put("menu_price",MenuFragment.menuProductItems.get(idx).getPrice_inform());
+                            int menu_total_price=Integer.parseInt(MenuFragment.menuProductItems.get(idx).getPrice_inform())*MenuFragment.menuProductItems.get(idx).getOrder_number();
+                            total_price+=menu_total_price;
+                            jobj_temp.put("menu_total_price",menu_total_price);
+                            jArry.put(jobj_temp);
                         }
-
                     }
-
+                    jsonParam.put("total_price",total_price);
                     jsonParam.put("menu", jArry);
 
                     Log.i("JSON", jsonParam.toString());
-                    OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
+                    OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
                     os.write(jsonParam.toString());
 
                     os.flush();
@@ -250,12 +242,12 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
-                        JSONObject jobj=new JSONObject(jsonReply);
-                        String json_result=jobj.getString("confirm");
-                        if(json_result.equals("1")){
+                        JSONObject jobj = new JSONObject(jsonReply);
+                        String json_result = jobj.getString("confirm");
+                        if (json_result.equals("1")) {
                             System.out.println("Success order make");
 
-                        }else{
+                        } else {
                             Log.d("error", "Responce code : 0 - fail make order");
                         }
                     } else {
@@ -268,9 +260,9 @@ public class MenuActivity extends AppCompatActivity  implements NavigationView.O
             }
         });
         thread.start();
-        try{
+        try {
             thread.join();
-        }catch(InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
