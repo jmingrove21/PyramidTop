@@ -15,6 +15,7 @@
         $store_notice=$_POST['store_notice'];
         $store_phone=$_POST['store_phone'];
         $store_profile_img=$_FILES["image_file"];
+        $minimum_order_price=$_POST['minimum_order_price'];
         $upload=$_FILES['image_file']['name'];
 
         $store_query="SELECT store_id FROM store WHERE store_serial=".$store_serial;
@@ -26,7 +27,7 @@
 
         $path='http://ec2-54-180-102-7.ap-northeast-2.compute.amazonaws.com/get/JSON/image/'.$row['store_id'].'/'.$upload;
 
-        $query="UPDATE Capstone.store SET store_name='".$store_name."', store_address_jibun='".$store_address."', start_time='".$start_time."', end_time='".$end_time."', store_restday='".$store_restday."', store_notice='".$store_notice."', store_profile_img='".$path."', store_phone='".$store_phone."' WHERE store_serial=".$store_serial;
+        $query="UPDATE Capstone.store SET store_name='".$store_name."', store_address_jibun='".$store_address."', start_time='".$start_time."', end_time='".$end_time."', store_restday='".$store_restday."', store_notice='".$store_notice."', store_profile_img='".$path."', store_phone='".$store_phone."', minimum_order_price=".$minimum_order_price." WHERE store_serial=".$store_serial;
 
         $stmt=mysqli_query($connect,$query);
 
