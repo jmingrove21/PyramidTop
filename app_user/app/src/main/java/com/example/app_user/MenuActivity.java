@@ -212,7 +212,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
-                    jsonParam.put("user_serial", 20);
+                    jsonParam.put("user_serial", UtilSet.user_serial);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
                     jsonParam.put("destination", "경기도 수원시 팔달구 우만동 아주대학교");
@@ -220,10 +220,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("destination_long", 127.046799);
 
                     int total_price = 0;
-                    if (MenuFragment.menuProductItems == null) {
-                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
-                        return;
-                    }
+//                    if (MenuFragment.menuProductItems == null) {
+//                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
 
                     for (int idx = 0; idx < MenuFragment.menuProductItems.size(); idx++) {
                         if (MenuFragment.menuProductItems.get(idx).getOrder_number() != 0) {
@@ -239,14 +239,14 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                             jArry.put(jobj_temp);
                         }
                     }
-                    if(total_price==0) {
-                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    if(total_price!=0) {
-                        Toast.makeText(view.getContext(), "" + selectedMenu, Toast.LENGTH_LONG).show();
-                        selectedMenu = "";
-                    }
+//                    if(total_price==0) {
+//                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
+//                    if(total_price!=0) {
+//                        Toast.makeText(view.getContext(), "" + selectedMenu, Toast.LENGTH_LONG).show();
+//                        selectedMenu = "";
+//                    }
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
 
