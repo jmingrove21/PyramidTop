@@ -106,7 +106,7 @@ function modifyData() {
 
     var tmp = location.href.split("?")[1].split("=")[1];
     store_serial = tmp.split("&")[1];
-    alert(store_serial);
+    //alert(store_serial);
 
     JSON.stringify(newObject);
     var formdata = new FormData();
