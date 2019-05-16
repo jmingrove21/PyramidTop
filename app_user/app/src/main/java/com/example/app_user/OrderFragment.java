@@ -109,11 +109,8 @@ public class OrderFragment extends DialogFragment {
                     e.printStackTrace();
                 }
                 UtilSet.target_store=UtilSet.al_order.get(position).getStore();
-<<<<<<< HEAD
                 UtilSet.target_store.setStore_order_number(UtilSet.al_order.get(position).getOrder_number());
-=======
                 Intent intent = new Intent(v.getContext(), MenuActivity.class);
->>>>>>> parent of ad4d380d... 최소주문금액 기반 주문 처리 완료.
 
                 subMenuFragment = new SubMenuFragment();
                 subMenuFragment.setIndex(position);

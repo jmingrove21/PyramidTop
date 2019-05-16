@@ -212,11 +212,13 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
-                    jsonParam.put("user_serial", 3);
+                    jsonParam.put("user_serial", 7);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
-                    jsonParam.put("destination", "경기도 수원시 영통구 우만동 우만주공아파트");
-                    jsonParam.put("destination_lat", 37.277218);
-                    jsonParam.put("destination_long", 127.046708);
+                    jsonParam.put("order_number",UtilSet.target_store.getStore_order_number());
+                    jsonParam.put("destination", "경기도 수원시 팔달구 우만동 아주대학교");
+                    jsonParam.put("destination_lat", 37.277999);
+                    jsonParam.put("destination_long", 127.046799);
+
                     int total_price = 0;
                     if (MenuFragment.menuProductItems == null) {
                         Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
