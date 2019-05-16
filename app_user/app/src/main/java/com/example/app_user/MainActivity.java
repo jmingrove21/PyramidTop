@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }
+
                 UtilSet.target_store=UtilSet.al_store.get(position);
                 Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
                 intent.putExtra("serial",store_ser);

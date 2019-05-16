@@ -211,7 +211,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     jsonParam.put("user_info", "make_order");
                     jsonParam.put("user_serial", 20);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
-                    jsonParam.put("order_number",UtilSet.target_store.getStore_order_number());
+                    jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
                     jsonParam.put("destination", "경기도 수원시 팔달구 우만동 아주대학교");
                     jsonParam.put("destination_lat", 37.3333);
                     jsonParam.put("destination_long", 127.3333);
