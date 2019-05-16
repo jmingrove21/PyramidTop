@@ -16,6 +16,8 @@ var store_notice = '';
 var store_profile_img = '';
 var store_serial = '';
 var store_name_title = '';
+var store_minimum_order_price = '';
+
 
 
 function init_information_page()
@@ -45,6 +47,7 @@ function init_information_page()
 					$("#store_address").val(result1.store_address);
 					$("#storemaster_name").val(result1.storemaster_name);
 					$("#storemaster_num").val(result1.storemaster_num);
+					$("#cost_lower_bound").val(result1.minimum_order_price);
 					$("#start_time").val(result1.start_time);
 					$("#end_time").val(result1.end_time);
 					$("#store_restday").val(result1.store_restday);
@@ -54,6 +57,7 @@ function init_information_page()
 					$("#store_notice").val(result1.store_notice);
 					$("#store_phone").val(result1.store_phone);
 					$("#store_profile").attr('src', result1.store_profile_img);
+
 					//document.getElementById("storemaster_num").value=result.storemaster_num;
 					//document.getElementById("store_name1").value=result.store_name;
 					//alert(result);
