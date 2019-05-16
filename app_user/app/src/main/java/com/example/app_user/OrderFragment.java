@@ -112,8 +112,8 @@ public class OrderFragment extends DialogFragment {
                 UtilSet.target_store=UtilSet.al_order.get(position).getStore();
                 UtilSet.target_store.setStore_order_number(UtilSet.al_order.get(position).getOrder_number());
 
-                UtilSet.target_store=UtilSet.al_order.get(position).getStore();
                 Intent intent = new Intent(v.getContext(), SubMenuActivity.class);
+
 
                 intent.putExtra("serial", store_ser);
                 intent.putExtra("index", position);
@@ -247,8 +247,7 @@ public class OrderFragment extends DialogFragment {
                                 String order_create_date = jobj.get("order_create_date").toString();
                                 String participate_person = jobj.get("participate_persons").toString();
                                 String total_order_price = jobj.get("total_order_price").toString();
-                                String order_number=jobj.get("order_number").toString();
-                                Order o = new Order(order_create_date, participate_person, total_order_price,order_number);
+                                Order o = new Order(order_create_date, participate_person, total_order_price);
 
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
                                 o.setStore(s);
