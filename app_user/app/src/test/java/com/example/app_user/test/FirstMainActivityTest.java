@@ -31,7 +31,7 @@ public class FirstMainActivityTest {
 
     @Test
     public void store_info_specification() {
-        System.out.println("store_info_specification run");
+        System.out.println("get_store_information run");
 
     }
 }

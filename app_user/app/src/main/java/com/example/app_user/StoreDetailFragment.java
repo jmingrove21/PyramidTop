@@ -20,18 +20,18 @@ public class StoreDetailFragment extends Fragment {
         View view =  inflater.inflate(R.layout.store_detail_fragment,container,false);
 
         TextView text_store_rest = (TextView) view.findViewById(R.id.store_rest_day);
-        TextView text_store_branch_name = (TextView) view.findViewById(R.id.store_branch_name);
         TextView text_store_address = (TextView) view.findViewById(R.id.store_address);
         TextView text_store_operation_start_time = (TextView) view.findViewById(R.id.store_operation_start_time);
         TextView text_store_operation_end_time = (TextView) view.findViewById(R.id.store_operation_end_time);
         TextView text_store_notice = (TextView) view.findViewById(R.id.store_notice);
+        TextView text_store_minimum_price=(TextView) view.findViewById(R.id.store_mininum_price);
 
-        text_store_rest.setText(UtilSet.al_store.get(index).getStore_restday());
-        text_store_branch_name.setText(UtilSet.al_store.get(index).getStore_branch_name());
-        text_store_address.setText(UtilSet.al_store.get(index).getStore_address());
-        text_store_operation_start_time.setText(UtilSet.al_store.get(index).getStart_time());;
-        text_store_operation_end_time.setText(UtilSet.al_store.get(index).getEnd_time());
-        text_store_notice.setText(UtilSet.al_store.get(index).getStore_notice());
+        text_store_rest.setText(UtilSet.target_store.getStore_restday());
+        text_store_minimum_price.setText(UtilSet.target_store.getMinimum_order_price());
+        text_store_address.setText(UtilSet.target_store.getStore_address());
+        text_store_operation_start_time.setText(UtilSet.target_store.getStart_time());;
+        text_store_operation_end_time.setText(UtilSet.target_store.getEnd_time());
+        text_store_notice.setText(UtilSet.target_store.getStore_notice());
         return view;
     }
 }

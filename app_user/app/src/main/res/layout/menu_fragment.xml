@@ -8,6 +8,8 @@
     <ListView
         android:id="@+id/menu_choice_list"
         android:listSelector="@android:color/transparent"
+        android:focusable="false"
+        android:clickable="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/order_button"></ListView>

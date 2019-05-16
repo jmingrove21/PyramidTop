@@ -1,9 +1,6 @@
 package com.example.app_user;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,10 +14,15 @@ import java.util.ArrayList;
 
 public class MenuFragment extends Fragment {
 
-    Bitmap[] bitmap;
     ListView listView;
-    String[] menu_name = {"1","2","3","4"};
-    String[] price = {"1000","2000","3000"};
+    private MenuCustomAdapter menuCustomAdapter;
+    public static ArrayList<MenuProductItem> menuProductItems;
+
+    int index;
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     @Nullable
     @Override
@@ -29,9 +31,26 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.menu_fragment,container,false);
 
         listView = (ListView) view.findViewById(R.id.menu_choice_list);
-        MenuProduct menuProduct = new MenuProduct(getActivity(),menu_name,price,bitmap);
-        listView.setAdapter(menuProduct);
+        menuProductItems = getMenuProductItem();
+        menuCustomAdapter = new MenuCustomAdapter(getActivity());
 
+        listView.setAdapter(menuCustomAdapter);
         return view;
     }
+
+    private ArrayList<MenuProductItem> getMenuProductItem(){
+        ArrayList<MenuProductItem> list = new ArrayList<>();
+        for(int i = 0; i < UtilSet.target_store.getMenu_desc_al().size(); i++){
+            MenuProductItem menuProductItem = new MenuProductItem();
+            menuProductItem.setOrder_number(0);
+            menuProductItem.setMenu_inform( UtilSet.target_store.getMenu_desc_al().get(i).getMenu_name());
+            menuProductItem.setPrice_inform(String.valueOf(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_price()));
+            menuProductItem.setMenu_image(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_image());
+            menuProductItem.setMenu_code(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_code());
+            list.add(menuProductItem);
+        }
+        return list;
+    }
+
+
 }

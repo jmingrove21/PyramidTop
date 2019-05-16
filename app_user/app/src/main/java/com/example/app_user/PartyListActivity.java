@@ -33,7 +33,6 @@ import java.net.URL;
 
 public class PartyListActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    int store_ser;
     int[] FIRSTIMAGES = {1,2,3,4};
     String[] FIRSTNAMES = {"돈가스,일식","양식","중식","한식"};
 
@@ -97,12 +96,15 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
                     Fragment selectedFragment = null;
                     switch(item.getItemId()){
                         case R.id.nav_home:
+                            UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
+                            UtilSet.target_store=null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
+                            UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;
                     }
@@ -206,7 +208,7 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
                                 String store_profile_img = ((JSONObject) jArray.get(i)).get("store_profile_img").toString();
                                 String store_main_type_name = ((JSONObject) jArray.get(i)).get("store_main_type_name").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, distance);
-                                s.set_store_spec(store_address,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name);
+                                //s.set_store_spec(store_address,store_building_name,start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name);
                                 UtilSet.al_store.add(s);
                             }
 

@@ -22,6 +22,11 @@ public class Store {
     private String store_restday;
     private String store_profile_img;
     private String store_main_type_name;
+    private String store_sub_type_name;
+
+
+
+    private String minimum_order_price;
     private String store_phone;
     private String store_address;
     private float distance;
@@ -33,6 +38,16 @@ public class Store {
         this.store_serial = Integer.parseInt(serial);
         this.distance = Float.parseFloat(distance);
         this.store_phone = phone;
+    }
+    public Store(String serial, String name, String branch_name, String address, String store_phone, String minimum_price, String distance, String store_profile_img){
+        this.store_serial = Integer.parseInt(serial);
+        this.store_name=name;
+        this.store_branch_name=branch_name;
+        this.store_address=address;
+        this.store_phone=store_phone;
+        this.minimum_order_price=minimum_price;
+        this.distance=Float.parseFloat(distance);
+        this.store_profile_img=store_profile_img;
     }
 
     public String getStore_branch_name() {
@@ -90,18 +105,21 @@ public class Store {
     public void setStore_image(Bitmap store_image) {
         this.store_image = store_image;
     }
+    public String getMinimum_order_price() {
+        return minimum_order_price;
+    }
 
-    public void set_store_spec(String store_address,String store_building_name,String start_time, String end_time, String store_restday, String store_notice, String store_profile_img, String store_main_type_name){
-        this.store_address=store_address;
+    public void set_store_spec( String store_building_name, String start_time, String end_time, String store_restday, String store_notice, String store_main_type_name, String store_sub_type_name){
         this.store_building_name=store_building_name;
         this.start_time=start_time;
         this.end_time=end_time;
         this.store_restday=store_restday;
         this.store_notice=store_notice;
-        this.store_profile_img=store_profile_img;
         this.store_main_type_name=store_main_type_name;
+        this.store_sub_type_name=store_sub_type_name;
     }
     public void setMenu_str(){
+        menu_desc_al.clear();
         for(int i=0;i<menu_al.size();i++){
             for(int j=0;j<menu_al.get(i).getMenu_desc_al().size();j++){
                menu_desc_al.add(menu_al.get(i).getMenu_desc_al().get(j));

@@ -9,13 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class OrderAdapter extends ArrayAdapter<String> {
+public class PeopleAdapter extends ArrayAdapter<String> {
 
     Context context;
     LayoutInflater inflater;
 
-    public OrderAdapter(Context context,String[] store_name){
-        super(context,R.layout.orderlist_layout,store_name);
+    public PeopleAdapter(Context context, String[] store_name){
+        super(context,R.layout.party_layout,store_name);
         this.context = context;
     }
 
@@ -23,7 +23,7 @@ public class OrderAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent){
         if(convertView == null){
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.orderlist_layout,null);
+            convertView = inflater.inflate(R.layout.party_layout,null);
             convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
         }
 

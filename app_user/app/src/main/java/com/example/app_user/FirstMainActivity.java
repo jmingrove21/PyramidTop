@@ -62,7 +62,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                store_info_specification(position);
+                get_store_information(position);
             }
         });
     }
@@ -94,12 +94,15 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
+                            UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
+                            UtilSet.target_store=null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
+                            UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;
                     }
@@ -155,7 +158,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
-    public void store_info_specification(final int position) {
+    public void get_store_information(final int position) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -177,7 +180,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     jsonParam.put("user_lat", 37.267088);
                     jsonParam.put("user_long", 127.081193);
                     jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
-                    jsonParam.put("count", 1);
+                    jsonParam.put("count", 5);
                     Log.i("JSON", jsonParam.toString());
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                     os.writeBytes(jsonParam.toString());
@@ -195,35 +198,11 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                                 String store_name = jobj.get("store_name").toString();
                                 String store_branch_name = jobj.get("store_branch_name").toString();
                                 String store_address = jobj.get("store_address").toString();
-                                String store_phone = jobj.get("store_phone").toString();
+                                String store_phone=jobj.get("store_phone").toString();
                                 String distance = jobj.get("distance").toString();
-
-                                String store_building_name = jobj.get("store_building_name").toString();
-                                String start_time = jobj.get("start_time").toString();
-                                String end_time = jobj.get("end_time").toString();
-                                String store_restday = jobj.get("store_restday").toString();
-                                String store_notice = jobj.get("store_notice").toString();
+                                String minimum_order_price=jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-                                String store_main_type_name = jobj.get("store_main_type_name").toString();
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, distance);
-                                s.set_store_spec(store_address, store_building_name, start_time, end_time, store_restday, store_notice, store_profile_img, store_main_type_name);
-
-                                JSONArray jobj_menu = (JSONArray) jobj.get("menu");
-                                for (int j = 0; j < jobj_menu.length(); j++) {
-                                    JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);
-                                    String menu_type_code = jobj_menu_spec.get("menu_type_code").toString();
-                                    String menu_type_name = jobj_menu_spec.get("menu_type_name").toString();
-                                    s.getMenu_al().add(new com.example.app_user.Menu(menu_type_code, menu_type_name));
-                                    JSONArray menu_menu_desc = (JSONArray) jobj_menu_spec.get("menu description");
-                                    for (int k = 0; k < menu_menu_desc.length(); k++) {
-                                        JSONObject jobj_menu_desc_spec = (JSONObject) menu_menu_desc.get(k);
-                                        String menu_code = jobj_menu_desc_spec.get("menu_code").toString();
-                                        String menu_name = jobj_menu_desc_spec.get("menu_name").toString();
-                                        int menu_price=Integer.parseInt(jobj_menu_desc_spec.get("menu_price").toString());
-                                        String menu_img= jobj_menu_desc_spec.get("menu_img").toString();
-                                        s.getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name,menu_price,menu_img));
-                                    }
-                                }
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance,store_profile_img);
                                 UtilSet.al_store.add(s);
                             }
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
