@@ -2,6 +2,7 @@ package com.example.app_user;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -112,11 +113,9 @@ public class OrderFragment extends DialogFragment {
                 UtilSet.target_store.setStore_order_number(UtilSet.al_order.get(position).getOrder_number());
                 Intent intent = new Intent(v.getContext(), MenuActivity.class);
 
-                subMenuFragment = new SubMenuFragment();
-                subMenuFragment.setIndex(position);
-
-//                getFragmentManager().beginTransaction().replace(R.id.full_order_list,
-//                        subMenuFragment).commit();
+                intent.putExtra("serial", store_ser);
+                intent.putExtra("index", position);
+                startActivityForResult(intent, 101);
             }
         });
         return view;

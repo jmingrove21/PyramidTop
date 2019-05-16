@@ -4,7 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -13,8 +13,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.view.menu.MenuWrapperFactory;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -32,9 +30,8 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
+public class SubMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
     private DrawerLayout drawer;
     private Bitmap bitmap;
     int index;
@@ -212,12 +209,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
+                    jsonParam.put("user_serial", 20);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("order_number",UtilSet.target_store.getStore_order_number());
                     jsonParam.put("destination", "경기도 수원시 팔달구 우만동 아주대학교");
-                    jsonParam.put("destination_lat", 37.277999);
-                    jsonParam.put("destination_long", 127.046799);
-
+                    jsonParam.put("destination_lat", 37.3333);
+                    jsonParam.put("destination_long", 127.3333);
                     int total_price = 0;
                     if (MenuFragment.menuProductItems == null) {
                         Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
@@ -242,10 +239,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                         Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
                         return;
                     }
-                    if(total_price!=0) {
-                        Toast.makeText(view.getContext(), "" + selectedMenu, Toast.LENGTH_LONG).show();
-                        selectedMenu = "";
-                    }
+//                    if(total_price!=0) {
+//                        Toast.makeText(view.getContext(), "" + selectedMenu, Toast.LENGTH_LONG).show();
+//                        selectedMenu = "";
+//                    }
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
 
@@ -261,7 +258,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                         JSONObject jobj = new JSONObject(jsonReply);
                         String json_result = jobj.getString("confirm");
                         if (json_result.equals("1")) {
-                            System.out.println("Success order make");
+                            System.out.println("Success order make - minimum not yet");
+
+                        }else if (json_result.equals("2")) {
+                            System.out.println("Success order make - minimum success");
 
                         } else {
                             Log.d("error", "Responce code : 0 - fail make order");
