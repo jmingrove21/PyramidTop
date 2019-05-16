@@ -18,7 +18,10 @@
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
-  <link href="../assets/css/menubar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/menu.js"></script>
 </head>
 
@@ -129,34 +132,61 @@
   
   
 </div> -->
-		
+
       <div class="content">
-		<nav id="menubar">
-			<ul>
-			  <li class="active">
-				<a href="#">
-				  <p>메인메뉴</p>
-				</a>
-			  </li>
-			  <li>
-				<a href="#">
-				  <p>사이드메뉴</p>
-				</a>
-			  </li>
-			  <li>
-				<a href="#">
-				  <p>주류</p>
-				</a>
-			  </li>
-			  <li>
-				<a href="#">
-				  <p>메뉴관리</p>
-				</a>
-			  </li>
-			</ul>
-		</nav>
-        <div class="row"> </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">
+                  가게 메뉴 관리
+                </h4>
+
+                  <style>
+                  </style>
+              </div>
+              <div class="card-body">
+
+
+                  <ul class="nav nav-tabs mr-auto nav-justified" id="myTab" role="tablist">
+                    <li class="nav-item active">
+                      <a class="nav-link active text-success" style="font-weight: bold; font-size: medium" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">전체보기</a>
+                    </li>
+                   <li class="nav-item">
+                      <a class="nav-link text-success" style="font-weight: bold; font-size: medium" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">메인메뉴</a>
+                   </li>
+                   <li class="nav-item">
+                     <a class="nav-link text-success" style="font-weight: bold; font-size: medium" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">사이드메뉴</a>
+                   </li>
+                   <li class="nav-item">
+                      <a class="nav-link text-success" style="font-weight: bold; font-size: medium" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">주류</a>
+                   </li>
+                    <li class="nav-item">
+                      <a class="nav-link btn-magnify" href="#pablo">
+                        <i class="nc-icon nc-simple-add text-success" style="font-weight: bold; font-size: large"></i>
+                     </a>
+                   </li>
+
+                  </ul>
+
+                <br>
+
+
+
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">asdad.</div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">.qweq</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">zxcc</div>
+              </div>
+
+
+          </div>
+
+        </div>
       </div>
+
+
+
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
           <div class="row">
@@ -187,9 +217,7 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
+
   <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>

@@ -203,21 +203,25 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row"> </div>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4 pr-1">
                       <div class="form-group">
                         <label>가게주소</label>
                         <input id="store_address" type="text" class="form-control">
                       </div>
 					  
                     </div>
-					<div class="col-md-6">
+					<div class="col-md-4 px-1">
                       <div class="form-group">
                         <label>가게번호</label>
                         <input id="store_phone" type="text" class="form-control">
                       </div>
-					  
+                    </div>
+                    <div class="col-md-4 pl-1">
+                      <div class="form-group">
+                        <label>최소 주문금액</label>
+                        <input id="cost_lower_bound" type="text" class="form-control">
+                      </div>
                     </div>
 					
 					
@@ -235,6 +239,7 @@
                         <input id="end_time" type="text" class="form-control">
                       </div>
                     </div>
+
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>정기휴무</label>
@@ -246,15 +251,21 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>공지사항</label>
+
                         <input id="store_notice" type="text" class="form-control">
+
                       </div>
                     </div>
                   </div>
 				  <div class="row">
                     <div class="col-md-12">
+                      <div class="form-group">
+                        <label>사진변경</label>
 
-         			   <input type="file" id="FILE_TAG" name="FILE_TAG">
- 
+         			   <input type="file" class="custom-file-input" id="FILE_TAG" name="FILE_TAG">
+                       <label class="custom-file-label text-info" style="font-weight: bold" for="FILE_TAG">사진 선택하기</label>
+                        <br>
+                      </div>
                     </div>
                   </div>
                   <div class="row">

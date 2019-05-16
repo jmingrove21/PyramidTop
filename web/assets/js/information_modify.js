@@ -17,8 +17,12 @@ var store_notice = '';
 var store_phone = '';
 var Store_profile_img = '';
 var store_serial='';
+var minimum_cost='';
+
 
 $(document).on("click", "#btn_modify", function (a) {
+    minimum_cost = $("#cost_lower_bound").val();
+    minimum_cost = 1*minimum_cost;
     mId2 = $("#store_id").val();
     mPassword2 = $("#store_pw").val();
     Store_name = $("#store_name").val(); //가게 상호명
@@ -112,6 +116,7 @@ function modifyData() {
     formdata.append('store_name', Store_name);
     formdata.append('store_phone', Store_phone);
     formdata.append('store_address', Store_address);
+    formdata.append('minimum_order_price', minimum_cost);
     formdata.append('start_time', Start_time);
     formdata.append('end_time', End_time);
     formdata.append('storemaster_name', Storemaster_name);
