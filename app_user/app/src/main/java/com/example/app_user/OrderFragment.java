@@ -111,10 +111,11 @@ public class OrderFragment extends DialogFragment {
                 }
                 UtilSet.target_store=UtilSet.al_order.get(position).getStore();
                 UtilSet.target_store.setOrder_number(UtilSet.al_order.get(position).getOrder_number());
-                Intent intent = new Intent(v.getContext(), MenuActivity.class);
+                Intent intent = new Intent(v.getContext(), SubMenuActivity.class);
 
                 intent.putExtra("serial", store_ser);
                 intent.putExtra("index", position);
+
                 startActivityForResult(intent, 101);
             }
         });

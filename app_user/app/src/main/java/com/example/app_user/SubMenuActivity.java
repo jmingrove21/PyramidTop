@@ -49,7 +49,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activitiy_store_menu);
+        setContentView(R.layout.activitiy_sub_store_menu);
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         index = intent.getIntExtra("index", 0);
@@ -149,21 +149,23 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            UtilSet.target_store = null;
-                            selectedFragment = new HomeFragment();
+                            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
+                            startActivityForResult(intent, 101);
                             break;
                         case R.id.nav_orderlist:
                             UtilSet.target_store = null;
                             selectedFragment = new OrderFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                                    selectedFragment).commit();
                             break;
                         case R.id.nav_party:
                             UtilSet.target_store = null;
                             selectedFragment = new PeopleFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                                    selectedFragment).commit();
                             break;
 
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-                            selectedFragment).commit();
                     return true;
                 }
             };
