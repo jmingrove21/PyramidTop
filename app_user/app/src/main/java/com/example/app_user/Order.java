@@ -9,13 +9,14 @@ public class Order {
     private String order_create_date;
     private int participate_person;
     private int total_order_price;
+    private int order_number=0;
 
 
-
-    public Order(String order_create_date,String participate_person, String total_order_price){
+    public Order(String order_create_date,String participate_person, String total_order_price, String order_number){
         this.order_create_date=order_create_date;
         this.participate_person=Integer.parseInt(participate_person);
         this.total_order_price=Integer.parseInt(total_order_price);
+        this.order_number=Integer.parseInt(order_number);
     }
 
     public void setStore(Store store) {
@@ -38,5 +39,13 @@ public class Order {
 
     public int getTotal_order_price() {
         return total_order_price;
+    }
+
+    public int getOrder_number() {
+        return order_number;
+    }
+
+    public void setOrder_number(int order_number) {
+        this.order_number = order_number;
     }
 }
