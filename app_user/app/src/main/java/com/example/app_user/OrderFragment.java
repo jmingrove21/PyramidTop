@@ -109,7 +109,11 @@ public class OrderFragment extends DialogFragment {
                     e.printStackTrace();
                 }
                 UtilSet.target_store=UtilSet.al_order.get(position).getStore();
+<<<<<<< HEAD
                 UtilSet.target_store.setStore_order_number(UtilSet.al_order.get(position).getOrder_number());
+=======
+                Intent intent = new Intent(v.getContext(), MenuActivity.class);
+>>>>>>> parent of ad4d380d... 최소주문금액 기반 주문 처리 완료.
 
                 subMenuFragment = new SubMenuFragment();
                 subMenuFragment.setIndex(position);
@@ -245,8 +249,7 @@ public class OrderFragment extends DialogFragment {
                                 String order_create_date = jobj.get("order_create_date").toString();
                                 String participate_person = jobj.get("participate_persons").toString();
                                 String total_order_price = jobj.get("total_order_price").toString();
-                                String order_number=jobj.get("order_number").toString();
-                                Order o = new Order(order_create_date, participate_person, total_order_price,order_number);
+                                Order o = new Order(order_create_date, participate_person, total_order_price);
 
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
                                 o.setStore(s);
