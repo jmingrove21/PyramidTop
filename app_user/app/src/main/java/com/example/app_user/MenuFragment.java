@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -34,7 +35,6 @@ public class MenuFragment extends Fragment {
         menuCustomAdapter = new MenuCustomAdapter(getActivity());
 
         listView.setAdapter(menuCustomAdapter);
-
         return view;
     }
 
@@ -46,8 +46,11 @@ public class MenuFragment extends Fragment {
             menuProductItem.setMenu_inform( UtilSet.target_store.getMenu_desc_al().get(i).getMenu_name());
             menuProductItem.setPrice_inform(String.valueOf(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_price()));
             menuProductItem.setMenu_image(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_image());
+            menuProductItem.setMenu_code(UtilSet.target_store.getMenu_desc_al().get(i).getMenu_code());
             list.add(menuProductItem);
         }
         return list;
     }
+
+
 }

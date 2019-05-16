@@ -8,6 +8,7 @@ public class MenuProductItem {
     private Button btn_choice;
     private String menu_inform;
     private String price_inform;
+    private String menu_code;
     private Bitmap menu_image;
     private int order_number;
 
@@ -49,5 +50,12 @@ public class MenuProductItem {
 
     public void setMenu_image(Bitmap menu_image) {
         this.menu_image = menu_image;
+    }
+    public String getMenu_code() {
+        return menu_code;
+    }
+
+    public void setMenu_code(String menu_code) {
+        this.menu_code = menu_code;
     }
 }

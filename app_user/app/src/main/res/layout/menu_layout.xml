@@ -112,13 +112,12 @@
                 android:visibility="invisible"
                 android:textSize="7sp"/>
 
-
             <Button
                 android:id="@+id/choice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.15"
-                android:layout_marginLeft="50sp"
+                android:layout_marginLeft="40sp"
                 android:layout_marginRight="10sp"
                 android:text="선택"
                 android:textSize="10sp" />

@@ -171,8 +171,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         String jsonReply = UtilSet.convertStreamToString(response);
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
-
-
                             String store_building_name = jobj.get("store_building_name").toString();
                             String start_time = jobj.get("start_time").toString();
                             String end_time = jobj.get("end_time").toString();

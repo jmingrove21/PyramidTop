@@ -69,7 +69,6 @@ public class MenuCustomAdapter extends BaseAdapter {
             holder.text_order_number = (TextView) convertView.findViewById(R.id.order_number);
             holder.text_menu_name = (TextView) convertView.findViewById(R.id.menu_inform);
             holder.text_price_inform = (TextView) convertView.findViewById(R.id.price_inform);
-
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder)convertView.getTag();
