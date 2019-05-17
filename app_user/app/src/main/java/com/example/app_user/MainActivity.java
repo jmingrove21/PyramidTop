@@ -36,12 +36,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     Bitmap bitmap;
     int store_ser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,400));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
@@ -317,4 +317,5 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             finish();
         }
     }
+
 }
