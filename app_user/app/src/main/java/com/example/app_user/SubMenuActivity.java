@@ -218,8 +218,12 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     jsonParam.put("destination_lat", 37.3333);
                     jsonParam.put("destination_long", 127.3333);
                     int total_price = 0;
-                    if (MenuFragment.menuProductItems == null) {
-                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
+                    if(total_price==0) {
+                        SubMenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( SubMenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         return;
                     }
 
@@ -238,13 +242,20 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                         }
                     }
                     if(total_price==0) {
-                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
-                        return;
+                        SubMenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( SubMenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-//                    if(total_price!=0) {
-//                        Toast.makeText(view.getContext(), "" + selectedMenu, Toast.LENGTH_LONG).show();
-//                        selectedMenu = "";
-//                    }
+                    final String str = Integer.toString(total_price);
+                    if(total_price!=0) {
+                        SubMenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( SubMenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
 
