@@ -37,6 +37,8 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     int index;
     int serial;
     private String type; //order_make, order_participate
+    boolean flag = false;
+
 
     String selectedMenu;
     Button store_inform_button, menu_list_button;
@@ -189,12 +191,10 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
         store_info_specification(view);
 
-        // Toast.makeText(view.getContext(), "You have selected \n" + items, Toast.LENGTH_LONG).show();
-
     }
 
     public void store_info_specification(View v) {
-        final View view = v;
+        flag = false;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -218,10 +218,11 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     jsonParam.put("destination_lat", 37.3333);
                     jsonParam.put("destination_long", 127.3333);
                     int total_price = 0;
-                    if(total_price==0) {
+                    if (MenuFragment.menuProductItems == null) {
                         SubMenuActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText( SubMenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                                return;
                             }
                         });
                         return;
@@ -248,14 +249,18 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                             }
                         });
                     }
+
                     final String str = Integer.toString(total_price);
+
                     if(total_price!=0) {
                         SubMenuActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText( SubMenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        flag = true;
                     }
+
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
 
@@ -293,6 +298,11 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        if(flag){
+            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
+            startActivityForResult(intent, 101);
         }
     }
 }

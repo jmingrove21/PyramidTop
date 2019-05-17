@@ -39,6 +39,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     private Bitmap bitmap;
     int index;
     int serial;
+    boolean flag = false;
     private String type; //order_make, order_participate
 
     String selectedMenu;
@@ -194,6 +195,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
     public void store_info_specification(View view) {
 
+        flag = false;
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -257,6 +259,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                                 Toast.makeText( MenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        flag = true;
                     }
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
@@ -298,6 +301,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        if(flag){
+            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
+            startActivityForResult(intent, 101);
         }
     }
 }

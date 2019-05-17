@@ -2,6 +2,7 @@ package com.example.app_user;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,7 +29,6 @@ import java.net.URL;
 public class OrderFragment extends DialogFragment {
     Bitmap bitmap;
     ListView listView;
-    SubMenuFragment subMenuFragment;
 
     FragmentManager fm;
     FragmentTransaction tran;
@@ -272,4 +272,5 @@ public class OrderFragment extends DialogFragment {
             e.printStackTrace();
         }
     }
+
 }
