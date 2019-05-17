@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e1b70f9-e088-4f36-94d8-dc90f726ea77" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="1e1b70f9-e088-4f36-94d8-dc90f726ea77" name="Default Changelist" comment="사용자 주문 완료후 접수 처리">
+      <change beforePath="$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_complete.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_complete.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_departure.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_departure.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/get/JSON/store_app/store_detail_main.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/store_app/store_detail_main.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/get/JSON/user_app/user_lookup_participate.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/user_app/user_lookup_participate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/get/JSON/user_app/user_make_order.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/user_app/user_make_order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/get/JSON/user_app/user_manage.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/user_app/user_manage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/get/JSON/user_app/user_store_info.php" beforeDir="false" afterPath="$PROJECT_DIR$/server/get/JSON/user_app/user_store_info.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,11 +75,12 @@
         <counts>
           <entry key="project.closed" value="3" />
           <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
     </session>
@@ -83,38 +90,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$USER_HOME$/Desktop/데이터마이닝 hw1/hw1/hw1_1/scikit_knn.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="551">
-              <caret line="29" column="23" lean-forward="true" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="false">
-        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_lookup_participate.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="29" column="34" lean-forward="true" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="false">
-        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/test.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="49" column="20" lean-forward="true" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="true">
-        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_ordered_list.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="6" column="5" lean-forward="true" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
+              <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -304,30 +284,6 @@
             <path>
               <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="get" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="JSON" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="delivery_app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="get" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="JSON" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="store_app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="get" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="JSON" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="user_app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="web" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
@@ -380,6 +336,7 @@
       <workItem from="1557833638398" duration="4491000" />
       <workItem from="1557897404048" duration="8203000" />
       <workItem from="1557999005573" duration="2619000" />
+      <workItem from="1558079481776" duration="366000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/jmingrove21/PyramidTop into haram&#10;&#10;# Conflicts:&#10;#&#9;.idea/PyramidTop.iml">
       <created>1557130383434</created>
@@ -413,15 +370,14 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92633000" />
+    <option name="totallyTimeSpent" value="92999000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
       <window_info id="Capture Tool" order="1" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.15838926" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.18389262" />
       <window_info id="Structure" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Designer" order="5" />
@@ -431,10 +387,10 @@
       <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.10144927" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5013423" side_tool="true" weight="0.3289855" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50067115" side_tool="true" visible="true" weight="0.03188406" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4986577" weight="0.33333334" />
-      <window_info anchor="bottom" id="File Transfer" order="7" visible="true" weight="0.03188406" />
-      <window_info active="true" anchor="right" id="Remote Host" order="0" visible="true" weight="0.3295302" />
+      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49932885" visible="true" weight="0.03188406" />
+      <window_info anchor="right" id="Remote Host" order="0" visible="true" weight="0.3295302" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
@@ -488,7 +444,7 @@
     <entry file="file://$USER_HOME$/Desktop/데이터마이닝 hw1/hw1/hw1_1/scikit_knn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="551">
-          <caret line="29" column="23" lean-forward="true" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+          <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
         </state>
       </provider>
     </entry>

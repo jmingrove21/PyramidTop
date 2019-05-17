@@ -3,6 +3,7 @@
         include "../db.php";
         $delivery_status=$json_data['delivery_status'];
         $user_serial=$json_data['user_serial'];
+        $order_number=$json_data['order_number'];
         date_default_timezone_set("Asia/Seoul");
         $current=date("Y-m-d H:i:s");
 
@@ -18,7 +19,7 @@
             $query2="UPDATE user_order SET arrival_time='".$current."' WHERE USER_user_serial=".$user_serial;
             $stmt2 = mysqli_query($connect,$query2);
             if($stmt1&$stmt2)
-                $confirm=1;
+                $confirm=2;
         }else{
             $confirm=0;
         }
