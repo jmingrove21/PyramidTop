@@ -22,17 +22,24 @@
                 android:layout_weight="20"
                 android:paddingLeft="10dp"
                 android:text="User name"
-                android:textColor="#33aabb"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/user_phonenum"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="80"
+                android:layout_weight="40"
                 android:paddingLeft="10dp"
                 android:text="User Phone number"
-                android:textColor="#33aabb"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/user_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:paddingLeft="10dp"
+                android:text="total"
+                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
         </LinearLayout>
 

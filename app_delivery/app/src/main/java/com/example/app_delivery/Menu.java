@@ -2,6 +2,12 @@ package com.example.app_delivery;
 
 public class Menu {
     public String menu_name;
-    public String menu_price;
-    public String menu_count;
+    public int menu_count;
+    public int menu_price;
+
+    public Menu(String menu_name, String menu_count, String menu_price){
+        this.menu_name=menu_name;
+        this.menu_count=Integer.parseInt(menu_count);
+        this.menu_price=Integer.parseInt(menu_price);
+    }
 }
