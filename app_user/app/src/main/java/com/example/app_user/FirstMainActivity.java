@@ -33,11 +33,15 @@ import java.net.URL;
 
 public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_main);
+
+        backPressCloseHandler = new BackPressCloseHandler(this);
+
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -119,11 +123,8 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        backPressCloseHandler.onBackPressed();
+
     }
 
     class CustomAdapter extends BaseAdapter {
@@ -146,7 +147,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_first_layout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 300));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 200));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);

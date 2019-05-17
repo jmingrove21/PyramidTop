@@ -92,9 +92,9 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     if(conn.getResponseCode()==200){
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
-                        // JSONArray json_result_al=new JSONArray(jsonReply);
                         JSONObject jobj=new JSONObject(jsonReply);
                         Intent intent=new Intent(getApplicationContext(),MapActivity.class);
+                        intent.putExtra("order_number",order_number);
                         intent.putExtra("json", jobj.toString());
                         startActivityForResult(intent,101);
                         finish();

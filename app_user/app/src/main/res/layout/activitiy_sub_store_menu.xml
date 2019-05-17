@@ -135,7 +135,6 @@
                     android:layout_height="0dp"
                     android:layout_weight="15"
                     android:orientation="vertical">
-
                     <Button
                         android:id="@+id/order_button"
                         android:layout_width="match_parent"
@@ -162,7 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="?android:attr/windowBackground"
-            app:menu="@menu/bottom_navigation" />
+            app:menu="@menu/sub_bottom_navigation" />
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
