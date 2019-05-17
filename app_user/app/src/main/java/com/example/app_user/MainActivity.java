@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,380));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
