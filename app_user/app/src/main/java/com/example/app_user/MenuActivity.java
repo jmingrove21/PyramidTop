@@ -4,7 +4,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -14,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuWrapperFactory;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -32,7 +33,6 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
     private DrawerLayout drawer;
@@ -190,12 +190,11 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         store_info_specification(view);
 
-        // Toast.makeText(view.getContext(), "You have selected \n" + items, Toast.LENGTH_LONG).show();
-
     }
 
-    public void store_info_specification(View v) {
-        final View view = v;
+    public void store_info_specification(View view) {
+
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -220,10 +219,15 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("destination_long", 127.046799);
 
                     int total_price = 0;
-//                    if (MenuFragment.menuProductItems == null) {
-//                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
+                    if (MenuFragment.menuProductItems == null) {
+                        MenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( MenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        });
+                        return;
+                    }
 
                     for (int idx = 0; idx < MenuFragment.menuProductItems.size(); idx++) {
                         if (MenuFragment.menuProductItems.get(idx).getOrder_number() != 0) {
@@ -239,14 +243,21 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                             jArry.put(jobj_temp);
                         }
                     }
-//                    if(total_price==0) {
-//                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
-//                    if(total_price!=0) {
-//                        Toast.makeText(view.getContext(), "" + selectedMenu, Toast.LENGTH_LONG).show();
-//                        selectedMenu = "";
-//                    }
+                    if(total_price==0) {
+                        MenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( MenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    final String str = Integer.toString(total_price);
+                    if(total_price!=0) {
+                        MenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( MenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
 
@@ -275,6 +286,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     e.printStackTrace();
                 }
             }
+            private Handler handler = new Handler() {
+                public void handleMessage(Message msg) {
+                    Toast.makeText(getApplicationContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
+                    super.handleMessage(msg);
+                }
+            };
         });
         thread.start();
         try {
