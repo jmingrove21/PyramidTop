@@ -257,12 +257,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                             UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;
-
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();
                     return true;
-
                 }
             };
 
@@ -291,7 +289,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,400));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,380));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
@@ -317,5 +315,4 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             finish();
         }
     }
-
 }

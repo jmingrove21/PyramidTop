@@ -182,7 +182,9 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent intent=new Intent(getApplicationContext(),FirstMainActivity.class);
+            startActivityForResult(intent,101);
+            finish();
         }
     }
 
