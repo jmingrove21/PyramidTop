@@ -1,16 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="50"
-        android:weightSum="1"
-        android:orientation="horizontal">
+        android:layout_weight="20"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textSize="14sp"
+            android:layout_weight="0.5"
+            android:text="시간" />
+
+        <TextView
+            android:id="@+id/order_status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:textSize="14sp"
+            android:text="시간"
+            android:textAlignment="textEnd" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="80"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -21,149 +46,108 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/alchon" />
+                />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.7"
-            android:weightSum="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.5"
-                >
+                android:layout_weight="0.33">
+
                 <TextView
                     android:id="@+id/store_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="TextView"
-                    android:textSize="20sp"/>
+                    android:textSize="17sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_weight="0.5"
-                android:weightSum="1"
-                android:orientation="horizontal">
+                android:layout_height="0dp"
+                android:layout_weight="0.33"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight = "0.5"
+                    android:layout_weight="0.5"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/party_number_ui"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="참여인원:"
-                        android:textSize="20sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/party_number"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="TextView"
-                        android:textSize="20sp" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.34"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/current"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif"
+                        android:text="현재 금액 / 최소 금액 :"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAlignment="textEnd"
+                        android:fontFamily="sans-serif"
+                        android:text="TextView"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="50"
-        android:weightSum="1"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/current"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="sans-serif"
-                    android:text="현재 주문 금액:"
-                    android:textSize="20sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/current_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="sans-serif"
-                    android:text="TextView"
-                    android:textSize="20sp"/>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/minimum"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="sans-serif"
-                    android:text="최소 주문 금액:"
-                    android:textSize="20sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/minimum_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="sans-serif"
-                    android:text="TextView"
-                    android:textSize="20sp"/>
-            </LinearLayout>
-        </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>
+
