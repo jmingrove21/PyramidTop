@@ -37,6 +37,8 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     int index;
     int serial;
     private String type; //order_make, order_participate
+    boolean flag = false;
+
 
     String selectedMenu;
     Button store_inform_button, menu_list_button;
@@ -49,7 +51,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activitiy_store_menu);
+        setContentView(R.layout.activitiy_sub_store_menu);
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         index = intent.getIntExtra("index", 0);
@@ -149,21 +151,23 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            UtilSet.target_store = null;
-                            selectedFragment = new HomeFragment();
+                            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
+                            startActivityForResult(intent, 101);
                             break;
                         case R.id.nav_orderlist:
                             UtilSet.target_store = null;
                             selectedFragment = new OrderFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                                    selectedFragment).commit();
                             break;
                         case R.id.nav_party:
                             UtilSet.target_store = null;
                             selectedFragment = new PeopleFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                                    selectedFragment).commit();
                             break;
 
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-                            selectedFragment).commit();
                     return true;
                 }
             };
@@ -187,12 +191,10 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
         store_info_specification(view);
 
-        // Toast.makeText(view.getContext(), "You have selected \n" + items, Toast.LENGTH_LONG).show();
-
     }
 
     public void store_info_specification(View v) {
-        final View view = v;
+        flag = false;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -209,15 +211,20 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
-                    jsonParam.put("user_serial", 20);
+                    jsonParam.put("user_serial", UtilSet.user_serial);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
-                    jsonParam.put("order_number",UtilSet.target_store.getStore_order_number());
+                    jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
                     jsonParam.put("destination", "경기도 수원시 팔달구 우만동 아주대학교");
                     jsonParam.put("destination_lat", 37.3333);
                     jsonParam.put("destination_long", 127.3333);
                     int total_price = 0;
                     if (MenuFragment.menuProductItems == null) {
-                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
+                        SubMenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( SubMenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        });
                         return;
                     }
 
@@ -236,13 +243,24 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                         }
                     }
                     if(total_price==0) {
-                        Toast.makeText(view.getContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
-                        return;
+                        SubMenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( SubMenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-//                    if(total_price!=0) {
-//                        Toast.makeText(view.getContext(), "" + selectedMenu, Toast.LENGTH_LONG).show();
-//                        selectedMenu = "";
-//                    }
+
+                    final String str = Integer.toString(total_price);
+
+                    if(total_price!=0) {
+                        SubMenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( SubMenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        flag = true;
+                    }
+
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
 
@@ -280,6 +298,11 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        if(flag){
+            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
+            startActivityForResult(intent, 101);
         }
     }
 }

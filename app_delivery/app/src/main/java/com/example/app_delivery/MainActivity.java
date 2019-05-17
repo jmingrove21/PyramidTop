@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONArray json_result_al=new JSONArray(jsonReply);
-                        //JSONArray json_result_al = (JSONArray) jobj.get("data");
                         for (int i = 0; i < json_result_al.length(); i++) {
                             int order_number=Integer.parseInt(((JSONObject) json_result_al.get(i)).get("order_number").toString());
                             int store_serial=Integer.parseInt(((JSONObject) json_result_al.get(i)).get("store_serial").toString());

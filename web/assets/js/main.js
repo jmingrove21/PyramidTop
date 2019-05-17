@@ -348,9 +348,14 @@ function detail_deliver_list(number)
 					var temp_string2 = "";
 					$.each(value.user_menu ,function(key,value)
 					{
-						temp_string2 = temp_string2 + value.menu_name + ",";
 						var price = value.menu_price*1;
-						subtotal = subtotal + price;
+						var menu_count = value.menu_count*1;
+						if(menu_count>1)
+							temp_string2 = temp_string2 + value.menu_name + "*" + value.menu_count + " ,"
+						else
+							temp_string2 = temp_string2 + value.menu_name + " ,";
+
+						subtotal = subtotal + price*menu_count;
 
 					});
 					temp_string = temp_string + temp_string2 + "<br>";

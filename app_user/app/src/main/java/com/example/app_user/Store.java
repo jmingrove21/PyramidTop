@@ -24,12 +24,11 @@ public class Store {
     private String store_main_type_name;
     private String store_sub_type_name;
 
-
-
     private String minimum_order_price;
     private String store_phone;
     private String store_address;
     private float distance;
+    private int order_number;
 
     public Store(String serial, String name, String branch_name, String address, String phone, String distance){
         this.store_address = address;
@@ -108,6 +107,16 @@ public class Store {
     public String getMinimum_order_price() {
         return minimum_order_price;
     }
+
+
+    public int getOrder_number() {
+        return order_number;
+    }
+
+    public void setOrder_number(int order_number) {
+        this.order_number = order_number;
+    }
+
 
     public void set_store_spec( String store_building_name, String start_time, String end_time, String store_restday, String store_notice, String store_main_type_name, String store_sub_type_name){
         this.store_building_name=store_building_name;

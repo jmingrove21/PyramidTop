@@ -33,11 +33,11 @@ public class PeopleAdapter extends ArrayAdapter<String> {
         TextView text_current_price = (TextView) convertView.findViewById(R.id.current_price);
         TextView text_minimum_price = (TextView) convertView.findViewById(R.id.minimum_price);
 
-        text_store_name.setText(UtilSet.al_order.get(position).getStore().getStore_name());
-        img.setImageBitmap(UtilSet.al_order.get(position).getStore().getStore_image());
-        text_party_number.setText(String.valueOf(UtilSet.al_order.get(position).getParticipate_person()));
-        text_current_price.setText(String.valueOf(UtilSet.al_order.get(position).getTotal_order_price()));
-        text_minimum_price.setText(UtilSet.al_order.get(position).getStore().getMinimum_order_price());
+        text_store_name.setText(UtilSet.al_my_order.get(position).getStore().getStore_name());
+        img.setImageBitmap(UtilSet.al_my_order.get(position).getStore().getStore_image());
+        text_party_number.setText(String.valueOf(UtilSet.al_my_order.get(position).getParticipate_person()));
+        text_current_price.setText(String.valueOf(UtilSet.al_my_order.get(position).getTotal_order_price()));
+        text_minimum_price.setText(UtilSet.al_my_order.get(position).getStore().getMinimum_order_price());
 
         return convertView;
     }
