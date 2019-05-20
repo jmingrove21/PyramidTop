@@ -8,10 +8,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_user"
+        android:icon="@drawable/playstore_icon"
+        android:label="배달ONE"
         android:networkSecurityConfig="@xml/security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
@@ -19,6 +18,7 @@
         <activity
             android:name="com.example.app_user.SplashActivity"
             android:screenOrientation="portrait"
+            android:label="배달ONE"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
