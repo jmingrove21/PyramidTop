@@ -68,5 +68,18 @@ public class Order {
         this.delivery_departure_time=delivery_departure_time;
 
     }
-
+    public String getOrderStatus(){
+        if(order_status==1)
+            return "접수 대기";
+        else if(order_status==3)
+            return "접수 완료";
+        else if(order_status==4||order_status==5)
+            return "배달 준비";
+        else if(order_status==6)
+            return "배달 중";
+        else if(order_status==7)
+            return "배달 완료";
+        else
+            return "";
+    }
 }

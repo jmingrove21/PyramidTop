@@ -30,9 +30,6 @@ public class OrderFragment extends DialogFragment {
     Bitmap bitmap;
     ListView listView;
 
-    FragmentManager fm;
-    FragmentTransaction tran;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
