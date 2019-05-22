@@ -59,6 +59,7 @@ public class PeopleFragment extends DialogFragment {
             }
         });
 
+        
 
         Thread mThread = new Thread() {
             @Override
