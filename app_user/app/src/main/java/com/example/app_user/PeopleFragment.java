@@ -46,6 +46,19 @@ public class PeopleFragment extends DialogFragment {
 
         PeopleAdapter peopleAdapter = new PeopleAdapter(getActivity(), store_name);
         listView.setAdapter(peopleAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), PartyDetailActivity.class);
+
+//                intent.putExtra("serial", store_ser);
+                intent.putExtra("index", position);
+
+                startActivityForResult(intent, 101);
+            }
+        });
+
         Thread mThread = new Thread() {
             @Override
             public void run() {

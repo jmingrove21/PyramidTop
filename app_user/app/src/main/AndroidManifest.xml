@@ -36,6 +36,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.app_user.SubMenuActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.app_user.PartyDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.app_user.LoginActivity"/>
     </application>
 
