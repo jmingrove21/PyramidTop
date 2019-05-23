@@ -214,9 +214,9 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     jsonParam.put("user_serial", UtilSet.user_serial);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
-                    jsonParam.put("destination", "경기도 수원시 팔달구 우만동 아주대학교");
-                    jsonParam.put("destination_lat", 37.3333);
-                    jsonParam.put("destination_long", 127.3333);
+                    jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
+                    jsonParam.put("destination_lat", 37.277298);
+                    jsonParam.put("destination_long", 127.046888);
                     int total_price = 0;
                     if (MenuFragment.menuProductItems == null) {
                         SubMenuActivity.this.runOnUiThread(new Runnable() {
