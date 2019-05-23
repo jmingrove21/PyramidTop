@@ -42,7 +42,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     private DrawerLayout drawer;
     int type,index,serial;
     private String str = "Test";
-    private String test[] = {"1","2","3","4"};
+    private String[] test = {"1","2","3","4"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,7 +187,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         @Override
         public int getCount() {
-            return UtilSet.MENU_TYPE_IMAGE.length;
+            return test.length;
         }
 
         @Override
@@ -203,7 +203,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.party_detail_layout_menu_listview, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 100));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 30));
 
             TextView text_name = (TextView) view.findViewById(R.id.menu_name);
             TextView text_menu_count_input = (TextView) view.findViewById(R.id.menu_count_input);
