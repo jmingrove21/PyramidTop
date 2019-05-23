@@ -269,5 +269,4 @@ public class OrderFragment extends DialogFragment {
             e.printStackTrace();
         }
     }
-
 }
