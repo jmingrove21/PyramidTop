@@ -50,14 +50,20 @@ public class OrderFragment extends DialogFragment {
             public void run() {
                 for (int i = 0; i < UtilSet.al_order.size(); i++) {
                     try {
-                        URL url = new URL(UtilSet.al_order.get(i).getStore().getStore_profile_img());
-                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                        conn.setDoInput(true);
-                        conn.connect();
+                        if(UtilSet.getBitmapFromMemCache(UtilSet.al_order.get(i).getStore().getStore_profile_img())!=null){
+                            bitmap=UtilSet.getBitmapFromMemCache(UtilSet.al_order.get(i).getStore().getStore_profile_img());
+                            UtilSet.al_order.get(i).getStore().setStore_image(bitmap);
+                        }else {
+                            URL url = new URL(UtilSet.al_order.get(i).getStore().getStore_profile_img());
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setDoInput(true);
+                            conn.connect();
 
-                        InputStream is = conn.getInputStream();
-                        bitmap = BitmapFactory.decodeStream(is);
-                        UtilSet.al_order.get(i).getStore().setStore_image(bitmap);
+                            InputStream is = conn.getInputStream();
+                            bitmap = BitmapFactory.decodeStream(is);
+                            UtilSet.al_order.get(i).getStore().setStore_image(bitmap);
+                            UtilSet.addBitmapToMemoryCache(UtilSet.al_order.get(i).getStore().getStore_profile_img(), bitmap);
+                        }
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     } catch (IOException e) {

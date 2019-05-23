@@ -17,12 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="배재훈"
+        android:text="이성훈"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BaeJaeHoon95@naver.com" />
+        android:text="lsh94@naver.com" />
 
 </LinearLayout>

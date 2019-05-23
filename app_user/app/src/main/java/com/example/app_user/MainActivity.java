@@ -36,12 +36,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Stack;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     Bitmap bitmap;
     int store_ser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -60,40 +60,45 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
-        R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView)findViewById(R.id.listView);
+        ListView listView = (ListView) findViewById(R.id.listView);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
-        Thread mThread=new Thread(){
+        Thread mThread = new Thread() {
             @Override
-            public void run(){
-                for(int i=0;i<UtilSet.al_store.size();i++){
-                    try{
+            public void run() {
+                for (int i = 0; i < UtilSet.al_store.size(); i++) {
+                    try {
+                        if (UtilSet.getBitmapFromMemCache(UtilSet.al_store.get(i).getStore_profile_img()) != null) {
+                            bitmap = UtilSet.getBitmapFromMemCache(UtilSet.al_store.get(i).getStore_profile_img());
+                            UtilSet.al_store.get(i).setStore_image(bitmap);
+                        } else {
+                            URL url = new URL(UtilSet.al_store.get(i).getStore_profile_img());
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setDoInput(true);
+                            conn.connect();
 
-                        URL url=new URL(UtilSet.al_store.get(i).getStore_profile_img());
-                        HttpURLConnection conn=(HttpURLConnection) url.openConnection();
-                        conn.setDoInput(true);
-                        conn.connect();
-
-                        InputStream is=conn.getInputStream();
-                        bitmap= BitmapFactory.decodeStream(is);
-                        UtilSet.al_store.get(i).setStore_image(bitmap);
-                    }catch(MalformedURLException e){
+                            InputStream is = conn.getInputStream();
+                            bitmap = BitmapFactory.decodeStream(is);
+                            UtilSet.al_store.get(i).setStore_image(bitmap);
+                            UtilSet.addBitmapToMemoryCache(UtilSet.al_store.get(i).getStore_profile_img(), bitmap);
+                        }
+                    } catch (MalformedURLException e) {
                         e.printStackTrace();
-                    }catch(IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
             }
         };
         mThread.start();
-        try{
+        try {
             mThread.join();
-        }catch(InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -101,22 +106,29 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 store_ser = UtilSet.al_store.get(position).getStore_serial();
-                store_info_detail(store_ser,position);
-                Thread mThread=new Thread(){
+                store_info_detail(store_ser, position);
+                Thread mThread = new Thread() {
                     @Override
-                    public void run(){
-                        for(int i=0;i<UtilSet.al_store.get(position).getMenu_al().size();i++){
-                            for(int j=0;j<UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().size();j++) {
+                    public void run() {
+                        for (int i = 0; i < UtilSet.al_store.get(position).getMenu_al().size(); i++) {
+                            for (int j = 0; j < UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().size(); j++) {
                                 try {
+                                    if (UtilSet.getBitmapFromMemCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img()) != null) {
+                                        bitmap = UtilSet.getBitmapFromMemCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
+                                        UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).setMenu_image(bitmap);
+                                    } else {
+                                        URL url = new URL(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
+                                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                        conn.setDoInput(true);
+                                        conn.connect();
 
-                                    URL url = new URL(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
-                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                    conn.setDoInput(true);
-                                    conn.connect();
+                                        InputStream is = conn.getInputStream();
+                                        bitmap = BitmapFactory.decodeStream(is);
+                                        UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).setMenu_image(bitmap);
+                                        UtilSet.addBitmapToMemoryCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img(), bitmap);
+                                    }
 
-                                    InputStream is = conn.getInputStream();
-                                    bitmap = BitmapFactory.decodeStream(is);
-                                    UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j) .setMenu_image(bitmap);                       } catch (MalformedURLException e) {
+                                } catch (MalformedURLException e) {
                                     e.printStackTrace();
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -126,20 +138,21 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     }
                 };
                 mThread.start();
-                try{
+                try {
                     mThread.join();
-                }catch(InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-                UtilSet.target_store=UtilSet.al_store.get(position);
-                Intent intent=new Intent(getApplicationContext(),MenuActivity.class);
-                intent.putExtra("serial",store_ser);
-                intent.putExtra("index",position);
-                startActivityForResult(intent,101);
+                UtilSet.target_store = UtilSet.al_store.get(position);
+                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                intent.putExtra("serial", store_ser);
+                intent.putExtra("index", position);
+                startActivityForResult(intent, 101);
             }
         });
     }
+
     public void store_info_detail(final int store_serial, final int position) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -220,7 +233,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch(menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.old_olderlist:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Old_Orderlist()).commit();
@@ -230,8 +243,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         new Profile()).commit();
                 break;
             case R.id.menu_logout:
-                Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
-                startActivityForResult(intent,101);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivityForResult(intent, 101);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -244,17 +257,17 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
 
-                    switch(item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.nav_home:
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new PeopleFragment();
                             break;
                     }
@@ -264,8 +277,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 }
             };
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
@@ -289,7 +302,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 300));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
@@ -305,13 +318,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             return view;
         }
     }
+
     @Override
-    public void onBackPressed(){
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }else{
-            Intent intent=new Intent(getApplicationContext(),FirstMainActivity.class);
-            startActivityForResult(intent,101);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
+            startActivityForResult(intent, 101);
             finish();
         }
     }
