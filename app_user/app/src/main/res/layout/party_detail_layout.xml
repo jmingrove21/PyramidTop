@@ -513,6 +513,7 @@ tools:openDrawer="start">
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation"/>
 </RelativeLayout>
+<<<<<<< HEAD
 <!--<android.support.design.widget.NavigationView-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="match_parent"-->
@@ -520,4 +521,14 @@ tools:openDrawer="start">
     <!--android:id="@+id/nav_view"-->
     <!--app:headerLayout="@layout/nav_header"-->
     <!--app:menu="@menu/drawer_menu"/>-->
+=======
+
+<android.support.design.widget.NavigationView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:id="@+id/nav_view"
+    app:headerLayout="@layout/nav_header"
+    app:menu="@menu/drawer_menu"/>
+>>>>>>> b58d16ada97c7d44871d8a3548cb2a7756f453f7
 </android.support.v4.widget.DrawerLayout>
