@@ -58,7 +58,7 @@ public class PeopleFragment extends DialogFragment {
                 startActivityForResult(intent, 101);
             }
         });
-        
+
         Thread mThread = new Thread() {
             @Override
             public void run() {
