@@ -19,9 +19,14 @@
                 android:title="계정설정" />
 
             <item
-                android:id="@+id/menu_logout"
+                android:id="@+id/menu_login"
                 android:icon="@drawable/ic_logout"
-                android:title="로그아웃" />
+                android:title="로그인" />
+
+            <item
+                android:id="@+id/menu_register"
+                android:icon="@drawable/ic_people"
+                android:title="회원가입" />
 
         </menu>
     </item>

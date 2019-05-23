@@ -127,10 +127,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.old_olderlist:
+                getSupportActionBar().setTitle("지난 주문 내역");
                 getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                         new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
+                getSupportActionBar().setTitle("계정 설정");
                 getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                         new Profile()).commit();
                 break;
@@ -148,21 +150,21 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            UtilSet.target_store = null;
+                            UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
-                            UtilSet.target_store = null;
+                            getSupportActionBar().setTitle("주문 현황");
+                            UtilSet.target_store=null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
-                            UtilSet.target_store = null;
+                            getSupportActionBar().setTitle("참여 현황");
+                            UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;
-
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                             selectedFragment).commit();

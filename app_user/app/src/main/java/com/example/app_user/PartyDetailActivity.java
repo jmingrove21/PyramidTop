@@ -124,11 +124,13 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.old_olderlist:
-                getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                getSupportActionBar().setTitle("지난 주문 내역");
+                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
                         new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
-                getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                getSupportActionBar().setTitle("계정 설정");
+                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
                         new Profile()).commit();
                 break;
             case R.id.menu_logout:
@@ -152,15 +154,17 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
                             startActivityForResult(intent, 101);
                             break;
                         case R.id.nav_orderlist:
+                            getSupportActionBar().setTitle("주문 현황");
                             UtilSet.target_store = null;
                             selectedFragment = new OrderFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                            getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
                                     selectedFragment).commit();
                             break;
                         case R.id.nav_party:
+                            getSupportActionBar().setTitle("참여 현황");
                             UtilSet.target_store = null;
                             selectedFragment = new PeopleFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                            getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
                                     selectedFragment).commit();
                             break;
 
