@@ -13,7 +13,7 @@
                SELECT DISTINCT tb2.*, user_name,user_phone
         	FROM
         		(
-        		SELECT tb1.*,menu_name,menu_price,USER_user_serial, destination, destination_lat, destination_long
+        		SELECT tb1.*,menu_name,menu_price,menu_count,USER_user_serial, destination, destination_lat, destination_long
         		FROM
         			(
         			SELECT so.order_number, so.store_serial, order_receipt_date, s.store_name, s.store_latitude, s.store_longitude, s.store_address_jibun
@@ -25,7 +25,7 @@
         		INNER JOIN Capstone.order_menu AS o
         		INNER JOIN Capstone.menu AS m
                 INNER JOIN Capstone.user_order AS uo
-        		ON o.menu_serial=m.menu_serial AND tb1.order_number=o.order_number AND uo.user_order_serial=o.user_order_serial
+        		ON o.menu_code=m.menu_code AND tb1.order_number=o.order_number AND uo.user_order_serial=o.user_order_serial
 
         		) tb2
 
@@ -66,11 +66,12 @@
                  $menu=[];
                  $user_price=0;
              }
-             $user_price+=$row['menu_price'];
-             $total_price+=$row['menu_price'];
+             $user_price+=$row['menu_price']*$row['menu_count'];
+             $total_price+=$row['menu_price']*$row['menu_count'];
              $menu_info=array(
                 'menu_name'=>$row['menu_name'],
-                'menu_price'=>$row['menu_price']
+                'menu_price'=>$row['menu_price'],
+                'menu_count'=>$row['menu_count']
              );
              array_push($menu,$menu_info);
              $user_menu=array(

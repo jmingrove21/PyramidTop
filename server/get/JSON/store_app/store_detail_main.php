@@ -5,7 +5,7 @@
          $order_number=$json_data['order_number'];
 
        $query="
-            SELECT tb1.*,m.menu_name, menu_price, USER_user_serial,user_id, user_phone, destination
+            SELECT tb1.*,m.menu_name, menu_price,menu_count, USER_user_serial,user_id, user_phone, destination
               FROM
               (
  				 SELECT s.order_number,s.order_receipt_date
@@ -43,7 +43,8 @@
             }
              $menu_info=array(
                 'menu_name'=>$row['menu_name'],
-                'menu_price'=>$row['menu_price']
+                'menu_price'=>$row['menu_price'],
+                'menu_count'=>$row['menu_count']
              );
              array_push($menu,$menu_info);
 

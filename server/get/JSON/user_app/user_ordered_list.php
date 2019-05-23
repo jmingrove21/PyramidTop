@@ -1,20 +1,16 @@
 <?php
-
-    function lookup_participate($json_data){
-    include "../db.php";
-        $user_lat=$json_data['user_lat'];
-        $user_long=$json_data['user_long'];
-        $count=$json_data['user_count'];
+ function ordered_list($json_data){
+        include "../db.php";
+        $user_serial=$json_data['user_serial'];
 
          $query="
-         SELECT so.store_serial,store_name, store_phone,store_branch_name,store_address_jibun,store_profile_img,minimum_order_price,order_create_date,order_number,( 6371 * acos( cos( radians(".$user_lat.") ) * cos( radians( store_latitude) )
-                                                                                                                                                                                                                                                                                   * cos( radians( store_longitude ) - radians(".$user_long.") )
-                                                                                                                                                                                                                                                                                   + sin( radians(".$user_lat.") ) * sin( radians( store_latitude ) ) ) ) AS distance
+         SELECT so.store_serial,order_status,store_name, store_phone,store_branch_name,store_address_jibun,store_profile_img,minimum_order_price,order_create_date,order_receipt_date, delivery_request_time, delivery_approve_time, delivery_departure_time, so.order_number
          FROM Capstone.store AS s
          INNER JOIN Capstone.store_order AS so
-         ON s.store_serial=so.store_serial
-         WHERE order_status=1
-         ORDER BY distance ASC
+         INNER JOIN Capstone.user_order AS uo
+         ON s.store_serial=so.store_serial AND so.order_number=uo.order_number
+         WHERE order_status!=8 AND uo.USER_user_serial=".$user_serial." 
+         ORDER BY store_order_serial DESC
          ";
 
          $stmt = mysqli_query($connect,$query);
@@ -49,18 +45,23 @@
 
             $store=array(
                 'order_number'=>$row2['order_number'],
+                'order_status'=>$row2['order_status'],
                 'store_serial'=>$row2['store_serial'],
                 'store_name'=>$row2['store_name'],
                 'store_phone'=>$row2['store_phone'],
                 'store_branch_name'=>$row2['store_branch_name'],
                 'store_address'=>$row2['store_address_jibun'],
                 'minimum_order_price'=>$row2['minimum_order_price'],
-                'distance'=>$row2['distance'],
                 'store_profile_img'=>$row2['store_profile_img'],
                 'order_create_date'=>$row2['order_create_date'],
+                'order_receipt_date'=>$row2['order_receipt_date'],
+                'delivery_request_time'=>$row2['delivery_request_time'],
+                'delivery_approve_time'=>$row2['delivery_approve_time'],
+                'delivery_departure_time'=>$row2['delivery_departure_time'],
                 'participate_persons'=>$persons,
                 'total_order_price'=>$total_price
             );
+
             array_push($total_store,$store);
          }
          echo json_encode($total_store,JSON_UNESCAPED_UNICODE);
