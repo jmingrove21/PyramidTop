@@ -20,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle("로그인");
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
