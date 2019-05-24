@@ -100,7 +100,8 @@ public class PeopleFragment extends DialogFragment {
 
                                     InputStream is = conn.getInputStream();
                                     bitmap = BitmapFactory.decodeStream(is);
-                                    UtilSet.al_my_order.get(position).getStore().getMenu_al().get(i).getMenu_desc_al().get(j) .setMenu_image(bitmap);                       } catch (MalformedURLException e) {
+                                    UtilSet.al_my_order.get(position).getStore().getMenu_al().get(i).getMenu_desc_al().get(j) .setMenu_image(bitmap);
+                                } catch (MalformedURLException e) {
                                     e.printStackTrace();
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -132,8 +133,6 @@ public class PeopleFragment extends DialogFragment {
             @Override
             public void run() {
                 try {
-                    UtilSet.al_my_order.get(position).getStore().getMenu_al().clear();
-                    UtilSet.al_my_order.get(position).getStore().getMenu_desc_al().clear();
                     URL url = new URL(UtilSet.url);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -144,9 +143,9 @@ public class PeopleFragment extends DialogFragment {
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info", "store_detail");
+                    jsonParam.put("user_info", "ordered_list_detail");
                     jsonParam.put("store_serial", store_serial);
-
+                    jsonParam.put("order_number",UtilSet.al_my_order.get(position).getOrder_number());
                     Log.i("JSON", jsonParam.toString());
                     OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
                     os.write(jsonParam.toString());
@@ -158,34 +157,33 @@ public class PeopleFragment extends DialogFragment {
                         String jsonReply = UtilSet.convertStreamToString(response);
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
-
-
-                            String store_building_name = jobj.get("store_building_name").toString();
-                            String start_time = jobj.get("start_time").toString();
-                            String end_time = jobj.get("end_time").toString();
-                            String store_restday = jobj.get("store_restday").toString();
-                            String store_notice = jobj.get("store_notice").toString();
-                            String store_main_type_name = jobj.get("store_main_type_name").toString();
-                            String store_sub_type_name = jobj.get("store_sub_type_name").toString();
-
-                            UtilSet.al_order.get(position).getStore().set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
-
-                            JSONArray jobj_menu = (JSONArray) jobj.get("menu");
-                            for (int j = 0; j < jobj_menu.length(); j++) {
-                                JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);
-                                String menu_type_code = jobj_menu_spec.get("menu_type_code").toString();
-                                String menu_type_name = jobj_menu_spec.get("menu_type_name").toString();
-                                UtilSet.al_order.get(position).getStore().getMenu_al().add(new com.example.app_user.Menu(menu_type_code, menu_type_name));
-                                JSONArray menu_menu_desc = (JSONArray) jobj_menu_spec.get("menu description");
-                                for (int k = 0; k < menu_menu_desc.length(); k++) {
-                                    JSONObject jobj_menu_desc_spec = (JSONObject) menu_menu_desc.get(k);
-                                    String menu_code = jobj_menu_desc_spec.get("menu_code").toString();
-                                    String menu_name = jobj_menu_desc_spec.get("menu_name").toString();
-                                    int menu_price = Integer.parseInt(jobj_menu_desc_spec.get("menu_price").toString());
-                                    String menu_img = jobj_menu_desc_spec.get("menu_img").toString();
-                                    UtilSet.al_order.get(position).getStore().getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name, menu_price, menu_img));
+                            JSONArray jarray_user=(JSONArray)jobj.get("user_info");
+                            for(int i=0;i<jarray_user.length();i++){
+                                JSONObject jarray_user_info = (JSONObject) jarray_user.get(i);
+                                String user_serial = jarray_user_info.get("user_serial").toString();
+                                String user_id = jarray_user_info.get("user_id").toString();
+                                JSONArray jarray_user_menu=(JSONArray)jarray_user_info.get("user_menu");
+                                for(int j=0;j<jarray_user_menu.length();j++){
+                                    JSONObject jobj_user_menu_info = (JSONObject) jarray_user_menu.get(j);
+                                    String menu_name = jobj_user_menu_info.get("menu_name").toString();
+                                    String menu_count = jobj_user_menu_info.get("menu_count").toString();
+                                    String menu_price = jobj_user_menu_info.get("menu_price").toString();
                                 }
                             }
+
+                            JSONObject jobj_store=new JSONObject(jobj.get("store_info").toString());
+                            String store_serial = jobj_store.get("store_serial").toString();
+                            String store_building_name = jobj_store.get("store_building_name").toString();
+                            String store_phone= jobj_store.get("store_phone").toString();
+                            String start_time = jobj_store.get("start_time").toString();
+                            String end_time = jobj_store.get("end_time").toString();
+                            String store_address= jobj_store.get("store_address").toString();
+                            String store_restday = jobj_store.get("store_restday").toString();
+                            String store_notice = jobj_store.get("store_notice").toString();
+
+                            UtilSet.al_my_order.get(position).getStore().set_store_spec(store_serial,store_building_name, start_time, end_time, store_phone,store_address,store_restday, store_notice);
+
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -222,6 +220,7 @@ public class PeopleFragment extends DialogFragment {
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "ordered_list");
+                    jsonParam.put("order_info",1);
                     jsonParam.put("user_serial",UtilSet.user_serial);
 
                     Log.i("JSON", jsonParam.toString());
@@ -242,9 +241,7 @@ public class PeopleFragment extends DialogFragment {
                                 String order_status = jobj.get("order_status").toString();
                                 String store_serial = jobj.get("store_serial").toString();
                                 String store_name = jobj.get("store_name").toString();
-                                String store_phone = jobj.get("store_phone").toString();
                                 String store_branch_name = jobj.get("store_branch_name").toString();
-                                String store_address=jobj.get("store_address").toString();
                                 String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
 
@@ -253,12 +250,13 @@ public class PeopleFragment extends DialogFragment {
                                 String delivery_request_time = jobj.get("delivery_request_time").toString();
                                 String delivery_approve_time = jobj.get("delivery_approve_time").toString();
                                 String delivery_departure_time = jobj.get("delivery_departure_time").toString();
+
                                 String participate_persons = jobj.get("participate_persons").toString();
                                 String total_order_price = jobj.get("total_order_price").toString();
 
                                 Order o = new Order(order_create_date, participate_persons, total_order_price, order_number,order_status);
-                                o.setDateSpecification(order_receipt_date,delivery_request_time,delivery_approve_time,delivery_departure_time);
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, "0.0", store_profile_img);
+                                o.setDateSpecification(order_create_date,order_receipt_date,delivery_request_time,delivery_approve_time,delivery_departure_time);
+                                Store s = new Store(store_serial, store_name, store_branch_name, minimum_order_price, store_profile_img);
                                 o.setStore(s);
                                 UtilSet.al_my_order.add(o);
                             }

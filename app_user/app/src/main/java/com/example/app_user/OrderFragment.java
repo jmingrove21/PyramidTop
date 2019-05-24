@@ -97,7 +97,8 @@ public class OrderFragment extends DialogFragment {
 
                                     InputStream is = conn.getInputStream();
                                     bitmap = BitmapFactory.decodeStream(is);
-                                    UtilSet.al_order.get(position).getStore().getMenu_al().get(i).getMenu_desc_al().get(j) .setMenu_image(bitmap);                       } catch (MalformedURLException e) {
+                                    UtilSet.al_order.get(position).getStore().getMenu_al().get(i).getMenu_desc_al().get(j) .setMenu_image(bitmap);
+                                } catch (MalformedURLException e) {
                                     e.printStackTrace();
                                 } catch (IOException e) {
                                     e.printStackTrace();
