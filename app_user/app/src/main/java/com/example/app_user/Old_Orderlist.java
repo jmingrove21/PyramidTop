@@ -1,5 +1,6 @@
 package com.example.app_user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,17 +8,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Old_Orderlist extends Fragment {
 
     String[] str = {"test1","test2","test3"};
     ListView listView;
+    int store_ser;
     private OldOrderCustomAdapter oldOrderCustomAdapter;
     public static ArrayList<OldOrderPrduct> oldOrderProducts;
 
@@ -38,6 +38,18 @@ public class Old_Orderlist extends Fragment {
 
         listView.setAdapter(oldOrderCustomAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), OldOrderlistDetailActivity.class);
+
+                intent.putExtra("serial", store_ser);
+                intent.putExtra("index", position);
+
+                startActivityForResult(intent,101);
+            }
+        });
+
         return view;
     }
 
@@ -46,15 +58,8 @@ public class Old_Orderlist extends Fragment {
         for(int i = 0; i < str.length; i++){
             OldOrderPrduct oldOrderPrduct = new OldOrderPrduct();
             oldOrderPrduct.setUser_store_name_input(str[i]);
-            oldOrderPrduct.setUser_store_number_input(str[i]);
-            oldOrderPrduct.setUser_store_address_input(str[i]);
-            oldOrderPrduct.setUser_pay_method_input(str[i]);
             oldOrderPrduct.setUser_order_time_input(str[i]);
             oldOrderPrduct.setUser_order_price_sum_input(str[i]);
-            oldOrderPrduct.setUser_order_complete_time_input(str[i]);
-            oldOrderPrduct.setUser_deliver_start_time_input(str[i]);
-            oldOrderPrduct.setUser_deliver_complete_time_input(str[i]);
-            oldOrderPrduct.setUser_cooking_complete_time_input(str[i]);
             list.add(oldOrderPrduct);
         }
         return list;

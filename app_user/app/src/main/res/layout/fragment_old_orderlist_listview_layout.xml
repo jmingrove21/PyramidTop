@@ -1,305 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="1.0"
-    android:background="@android:color/white">
+    android:weightSum="1"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:weightSum="1"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id = "@+id/user_store_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="ㆍ가게 이름:"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:id = "@+id/user_store_name_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="TextView"
-                android:textSize="10sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id = "@+id/user_store_number"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="ㆍ가게 번호:"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:id = "@+id/user_store_number_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="TextView"
-                android:textSize="10sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id = "@+id/user_store_address"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:text="ㆍ가게 주소:"
-                android:textAlignment="center"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:id = "@+id/user_store_address_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="10sp"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:orientation="horizontal">
-
-        <ListView
-            android:id="@+id/party_detail_layout_listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null"
-            android:listSelector="@android:color/transparent"
-            android:focusable="false"
-            android:clickable="false">
-        </ListView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:weightSum="1"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id = "@+id/user_order_price_sum"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="ㆍ주문 총합:"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:id = "@+id/user_order_price_sum_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="TextView"
-                android:textSize="10sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id = "@+id/user_order_time"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="ㆍ주문 생성 시간:"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:id = "@+id/user_order_time_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="TextView"
-                android:textSize="10sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id = "@+id/user_pay_method"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="ㆍ결제 방법:"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:id = "@+id/user_pay_method_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:textAlignment="center"
-                android:text="TextView"
-                android:textSize="10sp"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.4">
 
         <TextView
-            android:id = "@+id/user_order_complete_time"
+            android:id="@+id/user_store_name_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:textAlignment="center"
-            android:text="ㆍ접수완료시간:"
-            android:textSize="10sp"/>
-
-        <TextView
-            android:id = "@+id/user_order_complete_time_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:textAlignment="center"
             android:text="TextView"
-            android:textSize="10sp"/>
-
+            android:textSize="10sp"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1">
 
         <TextView
-            android:id = "@+id/user_cooking_complete_time"
+            android:id="@+id/user_store_order_time"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:textAlignment="center"
-            android:text="ㆍ음식조리완료시간:"
-            android:textSize="10sp"/>
-
-        <TextView
-            android:id = "@+id/user_cooking_complete_time_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:textAlignment="center"
-            android:text="TextView"
-            android:textSize="10sp"/>
+            android:text="시간:"
+            android:textSize="10sp"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2">
 
         <TextView
-            android:id = "@+id/user_deliver_start_time"
+            android:id="@+id/user_order_time_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:textAlignment="center"
-            android:text="ㆍ배달 출발 시간:"
-            android:textSize="10sp"/>
-
-        <TextView
-            android:id = "@+id/user_deliver_start_time_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:textAlignment="center"
-            android:text="TextView"
-            android:textSize="10sp"/>
+            android:text="Text"
+            android:textSize="10sp"
+            android:textAlignment="center" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2">
 
         <TextView
-            android:id = "@+id/user_deliver_complete_time"
+            android:id="@+id/user_order_price_sum_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:textAlignment="center"
-            android:text="ㆍ배달 완료 시간:"
-            android:textSize="10sp"/>
-
-        <TextView
-            android:id = "@+id/user_deliver_complete_time_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:textAlignment="center"
             android:text="TextView"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            android:textAlignment="textEnd" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1">
+
+        <TextView
+            android:id="@+id/menu_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="원"
+            android:textSize="10sp"
+            android:textAlignment="textStart" />
     </LinearLayout>
 </LinearLayout>
