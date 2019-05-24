@@ -1,12 +1,18 @@
 package com.example.app_user;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.LruCache;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class UtilSet {
@@ -62,5 +68,29 @@ public class UtilSet {
     // 캐쉬된 이미지 가져오기
     public static Bitmap getBitmapFromMemCache( String key){
         return mMemoryCache.get( key);
+    }
+
+    public static HttpURLConnection set_Connect_info(JSONObject jsonParam){
+        try{
+            URL url = new URL(UtilSet.url);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            Log.i("JSON", jsonParam.toString());
+            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+            os.write(jsonParam.toString());
+
+            os.flush();
+            os.close();
+            return conn;
+        }catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }
+
+
     }
 }

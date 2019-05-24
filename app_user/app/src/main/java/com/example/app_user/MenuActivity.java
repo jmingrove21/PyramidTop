@@ -200,15 +200,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void run() {
                 try {
-                    URL url = new URL(UtilSet.url);
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
@@ -262,13 +253,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     }
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
 
-                    Log.i("JSON", jsonParam.toString());
-                    OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-                    os.write(jsonParam.toString());
-
-                    os.flush();
-                    os.close();
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);

@@ -1,14 +1,13 @@
 package com.example.app_user;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +28,26 @@ import java.net.URL;
 public class OrderFragment extends DialogFragment {
     Bitmap bitmap;
     ListView listView;
+    public OrderFragment(){
+        UtilSet.al_order.clear();
 
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        UtilSet.al_order.clear();
-        store_info_specification();
+        get_current_made_order();
         View view = inflater.inflate(R.layout.fragment_orderlist, container, false);
+
+        final SwipeRefreshLayout mSwipeRefreshLayout =(SwipeRefreshLayout) view.findViewById(R.id.swipe_order_list);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                UtilSet.al_order.clear();
+                refresh_fragment();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         listView = (ListView) view.findViewById(R.id.order_list);
         final String[] store_name = new String[UtilSet.al_order.size()];
         for (int i = 0; i < UtilSet.al_order.size(); i++) {
@@ -45,44 +57,13 @@ public class OrderFragment extends DialogFragment {
         OrderAdapter orderAdapter = new OrderAdapter(getActivity(), store_name);
         listView.setAdapter(orderAdapter);
 
-        Thread mThread = new Thread() {
-            @Override
-            public void run() {
-                for (int i = 0; i < UtilSet.al_order.size(); i++) {
-                    try {
-                        if(UtilSet.getBitmapFromMemCache(UtilSet.al_order.get(i).getStore().getStore_profile_img())!=null){
-                            bitmap=UtilSet.getBitmapFromMemCache(UtilSet.al_order.get(i).getStore().getStore_profile_img());
-                            UtilSet.al_order.get(i).getStore().setStore_image(bitmap);
-                        }else {
-                            URL url = new URL(UtilSet.al_order.get(i).getStore().getStore_profile_img());
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            conn.setDoInput(true);
-                            conn.connect();
+        get_order_image();
 
-                            InputStream is = conn.getInputStream();
-                            bitmap = BitmapFactory.decodeStream(is);
-                            UtilSet.al_order.get(i).getStore().setStore_image(bitmap);
-                            UtilSet.addBitmapToMemoryCache(UtilSet.al_order.get(i).getStore().getStore_profile_img(), bitmap);
-                        }
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-        mThread.start();
-        try {
-            mThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, final int position, long id) {
                 int store_ser = UtilSet.al_order.get(position).getStore().getStore_serial();
-                store_info_detail(store_ser,position);
+                get_store_info_detail(store_ser,position);
                 Thread mThread=new Thread(){
                     @Override
                     public void run(){
@@ -125,8 +106,105 @@ public class OrderFragment extends DialogFragment {
         });
         return view;
     }
+    public void refresh_fragment(){
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        transaction.detach(this).attach(this).commit();
+    }
+    public void get_order_image(){
+        Thread mThread = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < UtilSet.al_order.size(); i++) {
+                    try {
+                        if(UtilSet.getBitmapFromMemCache(UtilSet.al_order.get(i).getStore().getStore_profile_img())!=null){
+                            bitmap=UtilSet.getBitmapFromMemCache(UtilSet.al_order.get(i).getStore().getStore_profile_img());
+                            UtilSet.al_order.get(i).getStore().setStore_image(bitmap);
+                        }else {
+                            URL url = new URL(UtilSet.al_order.get(i).getStore().getStore_profile_img());
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setDoInput(true);
+                            conn.connect();
 
-    public void store_info_detail(final int store_serial, final int position) {
+                            InputStream is = conn.getInputStream();
+                            bitmap = BitmapFactory.decodeStream(is);
+                            UtilSet.al_order.get(i).getStore().setStore_image(bitmap);
+                            UtilSet.addBitmapToMemoryCache(UtilSet.al_order.get(i).getStore().getStore_profile_img(), bitmap);
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        mThread.start();
+        try {
+            mThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void get_current_made_order() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("user_info", "lookup_participate");
+                    jsonParam.put("user_lat", 37.277218);
+                    jsonParam.put("user_long", 127.046708);
+                    jsonParam.put("user_count", 4);
+
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
+                    if (conn.getResponseCode() == 200) {
+                        InputStream response = conn.getInputStream();
+                        String jsonReply = UtilSet.convertStreamToString(response);
+                        try {
+                            JSONArray jArray = new JSONArray(jsonReply);
+                            for (int i = 0; i < jArray.length(); i++) {
+                                JSONObject jobj = (JSONObject) jArray.get(i);
+
+                                String store_serial = jobj.get("store_serial").toString();
+                                String store_name = jobj.get("store_name").toString();
+                                String store_branch_name = jobj.get("store_branch_name").toString();
+                                String store_address = jobj.get("store_address").toString();
+                                String store_phone = jobj.get("store_phone").toString();
+                                String minimum_order_price = jobj.get("minimum_order_price").toString();
+                                String distance = jobj.get("distance").toString();
+                                String store_profile_img = jobj.get("store_profile_img").toString();
+                                String order_create_date = jobj.get("order_create_date").toString();
+                                String participate_person = jobj.get("participate_persons").toString();
+                                String total_order_price = jobj.get("total_order_price").toString();
+                                String order_number=jobj.get("order_number").toString();
+                                Order o = new Order(order_create_date, participate_person, total_order_price,order_number);
+
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
+                                o.setStore(s);
+                                UtilSet.al_order.add(o);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d("error", "Connect fail");
+                    }
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void get_store_info_detail(final int store_serial, final int position) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -158,7 +236,6 @@ public class OrderFragment extends DialogFragment {
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
 
-
                             String store_building_name = jobj.get("store_building_name").toString();
                             String start_time = jobj.get("start_time").toString();
                             String end_time = jobj.get("end_time").toString();
@@ -184,78 +261,6 @@ public class OrderFragment extends DialogFragment {
                                     String menu_img = jobj_menu_desc_spec.get("menu_img").toString();
                                     UtilSet.al_order.get(position).getStore().getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name, menu_price, menu_img));
                                 }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        Log.d("error", "Connect fail");
-                    }
-                    conn.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void store_info_specification() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(UtilSet.url);
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
-                    JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info", "lookup_participate");
-                    jsonParam.put("user_lat", 37.277218);
-                    jsonParam.put("user_long", 127.046708);
-                    jsonParam.put("user_count", 4);
-
-                    Log.i("JSON", jsonParam.toString());
-                    OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-                    os.write(jsonParam.toString());
-
-                    os.flush();
-                    os.close();
-                    if (conn.getResponseCode() == 200) {
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-                        try {
-                            JSONArray jArray = new JSONArray(jsonReply);
-                            for (int i = 0; i < jArray.length(); i++) {
-                                JSONObject jobj = (JSONObject) jArray.get(i);
-
-                                String store_serial = jobj.get("store_serial").toString();
-                                String store_name = jobj.get("store_name").toString();
-                                String store_branch_name = jobj.get("store_branch_name").toString();
-                                String store_address = jobj.get("store_address").toString();
-                                String store_phone = jobj.get("store_phone").toString();
-                                String minimum_order_price = jobj.get("minimum_order_price").toString();
-                                String distance = jobj.get("distance").toString();
-                                String store_profile_img = jobj.get("store_profile_img").toString();
-                                String order_create_date = jobj.get("order_create_date").toString();
-                                String participate_person = jobj.get("participate_persons").toString();
-                                String total_order_price = jobj.get("total_order_price").toString();
-                                String order_number=jobj.get("order_number").toString();
-                                Order o = new Order(order_create_date, participate_person, total_order_price,order_number);
-
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
-                                o.setStore(s);
-                                UtilSet.al_order.add(o);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
