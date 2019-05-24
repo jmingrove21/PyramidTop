@@ -75,10 +75,12 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.old_olderlist:
+                getSupportActionBar().setTitle("지난 주문 내역");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
+                getSupportActionBar().setTitle("계정 설정");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Profile()).commit();
                 break;
@@ -102,10 +104,12 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
+                            getSupportActionBar().setTitle("주문 현황");
                             UtilSet.target_store=null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
+                            getSupportActionBar().setTitle("참여 현황");
                             UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;

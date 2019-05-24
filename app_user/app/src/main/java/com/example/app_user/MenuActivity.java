@@ -3,7 +3,6 @@ package com.example.app_user;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Bitmap;
 
 import android.os.Handler;
 import android.os.Message;
@@ -36,7 +35,6 @@ import java.net.URL;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
     private DrawerLayout drawer;
-    private Bitmap bitmap;
     int index;
     int serial;
     boolean flag = false;
@@ -129,10 +127,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.old_olderlist:
+                getSupportActionBar().setTitle("지난 주문 내역");
                 getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                         new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
+                getSupportActionBar().setTitle("계정 설정");
                 getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                         new Profile()).commit();
                 break;
@@ -150,21 +150,21 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            UtilSet.target_store = null;
+                            UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
-                            UtilSet.target_store = null;
+                            getSupportActionBar().setTitle("주문 현황");
+                            UtilSet.target_store=null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
-                            UtilSet.target_store = null;
+                            getSupportActionBar().setTitle("참여 현황");
+                            UtilSet.target_store=null;
                             selectedFragment = new PeopleFragment();
                             break;
-
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                             selectedFragment).commit();
@@ -188,11 +188,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     public void showSelectedItems(View view) {
-
         store_info_specification(view);
-
     }
 
     public void store_info_specification(View view) {
@@ -218,9 +215,9 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("user_serial", UtilSet.user_serial);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
-                    jsonParam.put("destination", "경기도 수원시 팔달구 우만동 아주대학교");
-                    jsonParam.put("destination_lat", 37.277999);
-                    jsonParam.put("destination_long", 127.046799);
+                    jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
+                    jsonParam.put("destination_lat", 37.277298);
+                    jsonParam.put("destination_long", 127.046888);
 
                     int total_price = 0;
                     if (MenuFragment.menuProductItems == null) {

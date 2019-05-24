@@ -1,12 +1,7 @@
 package com.example.app_user;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -16,29 +11,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class OldOrderlistDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int type,index,serial;
     private String str = "Test";
@@ -48,7 +30,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.party_detail_layout);
+        setContentView(R.layout.fragment_old_orderlist_detail_layout);
 
         Intent intent = getIntent();
         //type = intent.getStringExtra("type");
@@ -58,11 +40,9 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        UtilSet.target_store.setMenu_str();
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("참여 현황");
+        getSupportActionBar().setTitle("이전 주문 내역");
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -72,19 +52,10 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView) findViewById(R.id.party_detail_layout_listview);
-        PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
+        ListView listView = (ListView) findViewById(R.id.old_olderlist_detail_layout_listview);
+        OldOrderlistDetailActivity.CustomAdapter customAdapter = new OldOrderlistDetailActivity.CustomAdapter();
         listView.setAdapter(customAdapter);
 
-        TextView text_other_user1 = (TextView) findViewById(R.id.other_user1);
-        TextView text_user1_party_time_input = (TextView) findViewById(R.id.user1_party_time_input);
-        TextView text_user1_order_price_input = (TextView) findViewById(R.id.user1_order_price_input);
-
-        TextView text_other_user2 = (TextView) findViewById(R.id.other_user2);
-        TextView text_user2_party_time_input = (TextView) findViewById(R.id.user2_party_time_input);
-        TextView text_user2_order_price_input = (TextView) findViewById(R.id.user2_order_price_input);
-
-        TextView text_user = (TextView) findViewById(R.id.user);
         TextView text_user_store_name_input = (TextView) findViewById(R.id.user_store_name_input);
         TextView text_user_store_number_input = (TextView) findViewById(R.id.user_store_number_input);
         TextView text_user_store_address_input = (TextView) findViewById(R.id.user_store_address_input);
@@ -98,15 +69,6 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         TextView text_user_deliver_complete_time_input = (TextView) findViewById(R.id.user_deliver_complete_time_input);
 
 
-        text_other_user1.setText(str);
-        text_user1_party_time_input.setText(str);
-        text_user1_order_price_input.setText(str);
-
-        text_other_user2.setText(str);
-        text_user2_party_time_input.setText(str);
-        text_user2_order_price_input.setText(str);
-
-        text_user.setText(str);
         text_user_store_name_input.setText(str);
         text_user_store_number_input.setText(str);
         text_user_store_address_input.setText(str);

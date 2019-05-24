@@ -127,11 +127,13 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.old_olderlist:
-                getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                getSupportActionBar().setTitle("지난 주문 내역");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Old_Orderlist()).commit();
                 break;
             case R.id.menu_idoption:
-                getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                getSupportActionBar().setTitle("계정 설정");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Profile()).commit();
                 break;
             case R.id.menu_logout:
@@ -155,6 +157,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                             startActivityForResult(intent, 101);
                             break;
                         case R.id.nav_orderlist:
+                            getSupportActionBar().setTitle("주문 현황");
                             UtilSet.target_store = null;
                             selectedFragment = new OrderFragment();
                             getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
@@ -162,6 +165,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                             break;
                         case R.id.nav_party:
                             UtilSet.target_store = null;
+                            getSupportActionBar().setTitle("참여 현황");
                             selectedFragment = new PeopleFragment();
                             getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                                     selectedFragment).commit();
@@ -214,9 +218,9 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     jsonParam.put("user_serial", UtilSet.user_serial);
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
-                    jsonParam.put("destination", "경기도 수원시 팔달구 우만동 아주대학교");
-                    jsonParam.put("destination_lat", 37.3333);
-                    jsonParam.put("destination_long", 127.3333);
+                    jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
+                    jsonParam.put("destination_lat", 37.277298);
+                    jsonParam.put("destination_long", 127.046888);
                     int total_price = 0;
                     if (MenuFragment.menuProductItems == null) {
                         SubMenuActivity.this.runOnUiThread(new Runnable() {

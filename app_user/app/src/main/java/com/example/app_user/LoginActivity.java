@@ -16,11 +16,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
+    private BackPressCloseHandler backPressCloseHandler;
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle("로그인");
+
+        backPressCloseHandler = new BackPressCloseHandler(this);
     }
+
+    @Override
+    public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
