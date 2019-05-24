@@ -41,7 +41,7 @@ import java.net.URL;
 public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     int type,index,serial;
-    private String str = "Test";
+ //   private String str = "Test";
     private String[] test = {"1","2","3","4"};
 
     @Override
@@ -97,27 +97,27 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         TextView text_user_deliver_start_time_input = (TextView) findViewById(R.id.user_deliver_start_time_input);
         TextView text_user_deliver_complete_time_input = (TextView) findViewById(R.id.user_deliver_complete_time_input);
 
+        Order o=UtilSet.al_my_order.get(index);
+//        text_other_user1.setText(str);
+//        text_user1_party_time_input.setText(str);
+//        text_user1_order_price_input.setText(str);
+//
+//        text_other_user2.setText(str);
+//        text_user2_party_time_input.setText(str);
+//        text_user2_order_price_input.setText(str);
 
-        text_other_user1.setText(str);
-        text_user1_party_time_input.setText(str);
-        text_user1_order_price_input.setText(str);
+        text_user.setText("유저이름");
+        text_user_store_name_input.setText(o.getStore().getStore_name()+" "+o.getStore().getStore_branch_name());
+        text_user_store_number_input.setText(o.getStore().getStore_phone());
+        text_user_store_address_input.setText(o.getStore().getStore_address());
 
-        text_other_user2.setText(str);
-        text_user2_party_time_input.setText(str);
-        text_user2_order_price_input.setText(str);
-
-        text_user.setText(str);
-        text_user_store_name_input.setText(str);
-        text_user_store_number_input.setText(str);
-        text_user_store_address_input.setText(str);
-
-        text_user_order_price_sum_input.setText(str);
-        text_user_order_time_input.setText(str);
-        text_user_pay_method_input.setText(str);
-        text_user_order_complete_time_input.setText(str);
-        text_user_cooking_complete_time_input.setText(str);
-        text_user_deliver_start_time_input.setText(str);
-        text_user_deliver_complete_time_input.setText(str);
+       // text_user_order_price_sum_input.setText(o.getTotal_order_price());
+        text_user_order_time_input.setText(o.getOrder_create_date());
+        text_user_pay_method_input.setText("pay method input");
+        text_user_order_complete_time_input.setText(o.getOrder_receipt_date());
+        text_user_cooking_complete_time_input.setText(o.getDelivery_request_time());
+        text_user_deliver_start_time_input.setText(o.getDelivery_approve_time());
+        text_user_deliver_complete_time_input .setText(o.getDelivery_departure_time());
     }
 
     @Override
