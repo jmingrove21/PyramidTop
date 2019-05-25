@@ -161,25 +161,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     UtilSet.al_store.get(position).getMenu_al().clear();
                     UtilSet.al_store.get(position).getMenu_desc_al().clear();
 
-                    URL url = new URL(UtilSet.url);
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_detail");
                     jsonParam.put("store_serial", store_serial);
 
-                    Log.i("JSON", jsonParam.toString());
-                    OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-                    os.write(jsonParam.toString());
-
-                    os.flush();
-                    os.close();
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);

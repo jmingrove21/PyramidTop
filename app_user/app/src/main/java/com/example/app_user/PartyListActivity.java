@@ -164,15 +164,6 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
             @Override
             public void run() {
                 try {
-                    URL url = new URL(UtilSet.url);
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_info");
                     jsonParam.put("user_lat", 37.2799);
@@ -180,13 +171,8 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
                     jsonParam.put("store_type","한식");
                     jsonParam.put("count",1);
 
-                    Log.i("JSON", jsonParam.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
-                    os.writeBytes(jsonParam.toString());
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
 
-                    os.flush();
-                    os.close();
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);

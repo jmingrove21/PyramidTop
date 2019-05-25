@@ -1,23 +1,22 @@
 package com.example.app_user;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -31,14 +30,27 @@ public class PeopleFragment extends DialogFragment {
     Bitmap bitmap;
     ListView listView;
 
+    public PeopleFragment(){
+        UtilSet.al_my_order.clear();
+    }
+
     @Nullable
     @Override
-
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        UtilSet.al_my_order.clear();
-        store_info_specification();
+        get_store_info_by_my_order();
         View view = inflater.inflate(R.layout.fragment_people, container, false);
         listView = (ListView) view.findViewById(R.id.people_listview);
+
+        final SwipeRefreshLayout mSwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.swipe_my_party_order_list);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                UtilSet.al_my_order.clear();
+                refresh_fragment();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         final String[] store_name = new String[UtilSet.al_my_order.size()];
         for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
             store_name[i] = UtilSet.al_my_order.get(i).getStore().getStore_name();
@@ -47,45 +59,13 @@ public class PeopleFragment extends DialogFragment {
         PeopleAdapter peopleAdapter = new PeopleAdapter(getActivity(), store_name);
         listView.setAdapter(peopleAdapter);
 
+        get_my_order_list_image();
 
-        Thread mThread = new Thread() {
-            @Override
-            public void run() {
-                for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
-                    try {
-                        if(UtilSet.getBitmapFromMemCache(UtilSet.al_my_order.get(i).getStore().getStore_profile_img())!=null){
-                            bitmap=UtilSet.getBitmapFromMemCache(UtilSet.al_my_order.get(i).getStore().getStore_profile_img());
-                            UtilSet.al_my_order.get(i).getStore().setStore_image(bitmap);
-                        }else {
-                            URL url = new URL(UtilSet.al_my_order.get(i).getStore().getStore_profile_img());
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            conn.setDoInput(true);
-                            conn.connect();
-
-                            InputStream is = conn.getInputStream();
-                            bitmap = BitmapFactory.decodeStream(is);
-                            UtilSet.al_my_order.get(i).getStore().setStore_image(bitmap);
-                            UtilSet.addBitmapToMemoryCache(UtilSet.al_my_order.get(i).getStore().getStore_profile_img(), bitmap);
-                        }
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-        mThread.start();
-        try {
-            mThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, final int position, long id) {
                 int store_ser = UtilSet.al_my_order.get(position).getStore().getStore_serial();
-                store_info_detail(store_ser,position);
+                get_my_order_list(store_ser,position);
                 Thread mThread=new Thread(){
                     @Override
                     public void run(){
@@ -127,31 +107,23 @@ public class PeopleFragment extends DialogFragment {
         });
         return view;
     }
+    public void refresh_fragment(){
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        transaction.detach(this).attach(this).commit();
+    }
 
-    public void store_info_detail(final int store_serial, final int position) {
+    public void get_my_order_list(final int store_serial, final int position) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(UtilSet.url);
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "ordered_list_detail");
                     jsonParam.put("store_serial", store_serial);
                     jsonParam.put("order_number",UtilSet.al_my_order.get(position).getOrder_number());
-                    Log.i("JSON", jsonParam.toString());
-                    OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-                    os.write(jsonParam.toString());
 
-                    os.flush();
-                    os.close();
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
+
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
@@ -182,9 +154,7 @@ public class PeopleFragment extends DialogFragment {
                             String store_notice = jobj_store.get("store_notice").toString();
 
                             UtilSet.al_my_order.get(position).getStore().set_store_spec(store_serial,store_building_name, start_time, end_time, store_phone,store_address,store_restday, store_notice);
-
-
-                        } catch (Exception e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     } else {
@@ -203,32 +173,52 @@ public class PeopleFragment extends DialogFragment {
             e.printStackTrace();
         }
     }
+    public void get_my_order_list_image(){
+        Thread mThread = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
+                    try {
+                        if(UtilSet.getBitmapFromMemCache(UtilSet.al_my_order.get(i).getStore().getStore_profile_img())!=null){
+                            bitmap=UtilSet.getBitmapFromMemCache(UtilSet.al_my_order.get(i).getStore().getStore_profile_img());
+                            UtilSet.al_my_order.get(i).getStore().setStore_image(bitmap);
+                        }else {
+                            URL url = new URL(UtilSet.al_my_order.get(i).getStore().getStore_profile_img());
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setDoInput(true);
+                            conn.connect();
 
-    public void store_info_specification() {
+                            InputStream is = conn.getInputStream();
+                            bitmap = BitmapFactory.decodeStream(is);
+                            UtilSet.al_my_order.get(i).getStore().setStore_image(bitmap);
+                            UtilSet.addBitmapToMemoryCache(UtilSet.al_my_order.get(i).getStore().getStore_profile_img(), bitmap);
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        mThread.start();
+        try {
+            mThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void get_store_info_by_my_order() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(UtilSet.url);
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "ordered_list");
                     jsonParam.put("order_info",1);
                     jsonParam.put("user_serial",UtilSet.user_serial);
 
-                    Log.i("JSON", jsonParam.toString());
-                    OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
-                    os.write(jsonParam.toString());
-
-                    os.flush();
-                    os.close();
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
