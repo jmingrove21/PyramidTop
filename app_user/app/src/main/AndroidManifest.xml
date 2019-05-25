@@ -16,7 +16,7 @@
         >
 
         <activity
-            android:name="com.example.app_user.SplashActivity"
+            android:name="com.example.app_user.util_dir.SplashActivity"
             android:screenOrientation="portrait"
             android:label="배달ONE"
             android:theme="@style/SplashTheme">
@@ -26,21 +26,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.app_user.MainActivity"
+        <activity android:name="com.example.app_user.home_dir.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.app_user.OldOrderlistDetailActivity"
+        <activity android:name="com.example.app_user.draw_dir.OldOrderlistDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.app_user.FirstMainActivity"
+        <activity android:name="com.example.app_user.home_dir.FirstMainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.app_user.MenuActivity"
+        <activity android:name="com.example.app_user.home_dir.MenuActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.app_user.SearchActivity"
+        <activity android:name="com.example.app_user.util_dir.SearchActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.app_user.SubMenuActivity"
+        <activity android:name="com.example.app_user.order_dir.SubMenuActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.app_user.PartyDetailActivity"
+        <activity android:name="com.example.app_user.people_dir.PartyDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.app_user.LoginActivity"/>
+        <activity android:name="com.example.app_user.util_dir.LoginActivity"/>
     </application>
 
 </manifest>
