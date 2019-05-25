@@ -220,7 +220,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLength="20"
-                android:inputType="text"
+                android:inputType="phone"
                 android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
