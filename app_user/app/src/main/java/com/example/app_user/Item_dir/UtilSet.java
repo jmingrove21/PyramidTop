@@ -49,6 +49,10 @@ public class UtilSet {
     public static final String[] MENU_TYPE_ID ={"Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q08","Q09","Q10","Q11","Q12","Q13"};
     public static final String[] MENU_TYPE_TEXT = {"도시락","돈가스,일식","디저트","분식","야식","양식","족발,보쌈","중국음식","치킨","탕,찜","패스트푸드","피자","한식"};
     public static Store target_store;
+    public final static int PERMISSION_REQUEST_CODE=1000;
+    public static double latitude=0;
+    public static double longitude=0;
+
 
     public static String convertStreamToString(InputStream is) {
 
@@ -111,7 +115,7 @@ public class UtilSet {
         int permissionCheck=ContextCompat.checkSelfPermission(con,Manifest.permission.ACCESS_FINE_LOCATION);
         if(permissionCheck!= PackageManager.PERMISSION_GRANTED){
             Toast.makeText(con,"권한 승인이 필요합니다",Toast.LENGTH_LONG).show();
-            showSettingsAlert(con);
+            //showSettingsAlert(con);
          }else{
 
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
@@ -157,14 +161,12 @@ public class UtilSet {
         public void onLocationChanged(Location location) {
 
             String provider = location.getProvider();
-            double longitude = location.getLongitude();
-            double latitude = location.getLatitude();
-            double altitude = location.getAltitude();
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
 
             Log.d("location","위치정보 : " + provider + "\n" +
                     "위도 : " + longitude + "\n" +
-                    "경도 : " + latitude + "\n" +
-                    "고도  : " + altitude);
+                    "경도 : " + latitude );
 
         }
 
