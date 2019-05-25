@@ -88,6 +88,7 @@ public class OrderFragment extends DialogFragment {
                         }
                     }
                 };
+
                 mThread.start();
                 try{
                     mThread.join();
