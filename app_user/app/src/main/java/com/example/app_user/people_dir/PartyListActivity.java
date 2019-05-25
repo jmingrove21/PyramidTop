@@ -174,8 +174,8 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
                 try {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_info");
-                    jsonParam.put("user_lat", 37.2799);
-                    jsonParam.put("user_long", 127.0435);
+                    jsonParam.put("user_lat", UtilSet.latitude);
+                    jsonParam.put("user_long", UtilSet.longitude);
                     jsonParam.put("store_type","한식");
                     jsonParam.put("count",1);
 

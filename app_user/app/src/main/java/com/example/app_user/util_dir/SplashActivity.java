@@ -4,11 +4,20 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.home_dir.FirstMainActivity;
+
+import java.util.ArrayList;
+
 public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -25,7 +34,8 @@ public class SplashActivity extends Activity {
         //finish();
     }
 
-//    public void store_info_init() {
+
+    //    public void store_info_init() {
 //        Thread thread = new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -88,5 +98,4 @@ public class SplashActivity extends Activity {
 //
 //        thread.start();
 //    }
-
 }

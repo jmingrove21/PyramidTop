@@ -1,13 +1,18 @@
 package com.example.app_user.home_dir;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +29,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app_user.util_dir.BackPressCloseHandler;
 import com.example.app_user.util_dir.HomeFragment;
@@ -43,6 +49,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -52,6 +59,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_main);
+        permissionCheck();
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
@@ -83,7 +91,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             }
         });
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        UtilSet.set_GPS_permission(lm,this);
+        UtilSet.set_GPS_permission(lm, this);
     }
 
     @Override
@@ -115,17 +123,17 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
                             getSupportActionBar().setTitle("주문 현황");
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
                             getSupportActionBar().setTitle("참여 현황");
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new PeopleFragment();
                             break;
                     }
@@ -187,14 +195,14 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_info");
-                //    jsonParam.put("user_lat", 37.282690);
-                //    jsonParam.put("user_long", 127.050206);
-                    jsonParam.put("user_lat", 37.267088);
-                    jsonParam.put("user_long", 127.081193);
+                    //    jsonParam.put("user_lat", 37.282690);
+                    //    jsonParam.put("user_long", 127.050206);
+                    jsonParam.put("user_lat", UtilSet.latitude);
+                    jsonParam.put("user_long", UtilSet.longitude);
                     jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
                     jsonParam.put("count", 5);
 
-                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
+                    HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
@@ -206,11 +214,11 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                                 String store_name = jobj.get("store_name").toString();
                                 String store_branch_name = jobj.get("store_branch_name").toString();
                                 String store_address = jobj.get("store_address").toString();
-                                String store_phone=jobj.get("store_phone").toString();
+                                String store_phone = jobj.get("store_phone").toString();
                                 String distance = jobj.get("distance").toString();
-                                String minimum_order_price=jobj.get("minimum_order_price").toString();
+                                String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance,store_profile_img);
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
                                 UtilSet.al_store.add(s);
                             }
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -229,10 +237,52 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             }
         });
         thread.start();
-        try{
+        try {
             thread.join();
-        }catch(InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void permissionCheck() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+            ArrayList<String> arrayPermission = new ArrayList<>();
+
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                arrayPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+            permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                arrayPermission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            }
+            if (arrayPermission.size() > 0) {
+                String strArray[] = new String[arrayPermission.size()];
+                strArray = arrayPermission.toArray(strArray);
+                ActivityCompat.requestPermissions(this, strArray, UtilSet.PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case UtilSet.PERMISSION_REQUEST_CODE: {
+                if (grantResults.length < 1) {
+                    Toast.makeText(this, "Failed get permission", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, "Permission is denied : " + permissions[i], Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                Toast.makeText(this, "Permission is granted", Toast.LENGTH_SHORT).show();
+            }
+            break;
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
