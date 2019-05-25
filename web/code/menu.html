@@ -14,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
+
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -37,7 +38,7 @@
             <img src="../assets/img/로고.jpg">
           </div>
         </a>
-        <a href="#" class="simple-text logo-normal">
+        <a href="#" class="simple-text logo-normal" style="font-weight: bold">
           배달ONE
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
@@ -138,28 +139,41 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
+
                 <h4 class="card-title">
                   가게 메뉴 관리
                 </h4>
+                <div class="row pull-right">
+                  <div class="col-md-2">
+                   <button type='button' class='btn btn-outline-success invisible'> 조회하기 </button>
+                  </div>
+                  <div class="col-md-2">
+                    <button type='button' class='btn btn-outline-success invisible'> 조회하기 </button>
+                  </div>
+                  <div class="col-md-2">
+                    <button type='button' class='btn btn-outline-success invisible'> 조회하기 </button>
+                  </div>
+                  <div class="col-md-6">
+                    <button type='button' class='btn dropdown-btn btn-outline-success'> 메뉴관리 </button>
+                  </div>
 
-                  <style>
-                  </style>
+                </div>
               </div>
               <div class="card-body">
 
 
                   <ul class="nav nav-tabs mr-auto nav-justified" id="myTab" role="tablist">
                     <li class="nav-item active">
-                      <a class="nav-link active text-success" style="font-weight: bold; font-size: medium" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">전체보기</a>
+                      <a class="nav-link active text-success" style="font-weight: bold; font-size: medium" id="entire-tab" data-toggle="tab" href="#entire" role="tab" aria-controls="entire" aria-selected="true">전체보기</a>
                     </li>
                    <li class="nav-item">
-                      <a class="nav-link text-success" style="font-weight: bold; font-size: medium" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">메인메뉴</a>
+                      <a class="nav-link text-success" style="font-weight: bold; font-size: medium" id="mainmenu-tab" data-toggle="tab" href="#mainmenu" role="tab" aria-controls="mainmenu" aria-selected="false">메인메뉴</a>
                    </li>
                    <li class="nav-item">
-                     <a class="nav-link text-success" style="font-weight: bold; font-size: medium" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">사이드메뉴</a>
+                     <a class="nav-link text-success" style="font-weight: bold; font-size: medium" id="sidemenu-tab" data-toggle="tab" href="#sidemenu" role="tab" aria-controls="sidemenu" aria-selected="false">사이드메뉴</a>
                    </li>
                    <li class="nav-item">
-                      <a class="nav-link text-success" style="font-weight: bold; font-size: medium" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">주류</a>
+                      <a class="nav-link text-success" style="font-weight: bold; font-size: medium" id="drinkmenu-tab" data-toggle="tab" href="#drinkmenu" role="tab" aria-controls="drinkmenu" aria-selected="false">음료</a>
                    </li>
                     <li class="nav-item">
                       <a class="nav-link btn-magnify" href="#pablo">
@@ -174,9 +188,36 @@
 
 
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">asdad.</div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">.qweq</div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">zxcc</div>
+
+                <!-------------------------------전체 메뉴 보기------------------------------------------------->
+                <div class="tab-pane fade show active" id="entire" role="tabpanel" aria-labelledby="entire-tab">
+                  <div class="row" id="menu_list_entrire_detail">
+                  </div>
+                </div>
+                <!------------------------------메인 메뉴 보기------------------------------------------------->
+                <div class="tab-pane fade" id="mainmenu" role="tabpanel" aria-labelledby="mainmenu-tab">
+                  <div class="row" id="menu_list_main_detail">
+                  </div>
+
+                </div>
+
+
+
+                <!-------------------------------사이드 메뉴 보기------------------------------------------------->
+                <div class="tab-pane fade" id="sidemenu" role="tabpanel" aria-labelledby="sidemenu-tab">
+                  <div class="row" id="menu_list_side_detail">
+                  </div>
+
+                </div>
+
+
+                <!-------------------------------음료 메뉴 보기 -------------------------------------------------->
+
+                <div class="tab-pane fade" id="drinkmenu" role="tabpanel" aria-labelledby="drinkmenu-tab">
+                  <div class="row" id="menu_list_drink_detail">
+                  </div>
+
+                </div>
               </div>
 
 
