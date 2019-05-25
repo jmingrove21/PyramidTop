@@ -27,13 +27,6 @@ tools:openDrawer="start">
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <!--<ScrollView-->
-        <!--android:id="@+id/party_detail_layout_scrollview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginTop="?attr/actionBarSize"-->
-        <!--android:layout_above="@+id/bottom_navigation">-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -532,8 +525,6 @@ tools:openDrawer="start">
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
-    <!--</ScrollView>-->
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

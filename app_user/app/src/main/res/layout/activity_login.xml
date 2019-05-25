@@ -85,7 +85,8 @@ android:orientation="vertical"
                     android:id="@+id/id_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="아이디"
+                    android:hint="아이디"
+                    android:inputType="text"
                     android:textSize="10sp"/>
             </LinearLayout>
 
@@ -99,7 +100,8 @@ android:orientation="vertical"
                     android:id="@+id/pw_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="비밀번호"
+                    android:inputType="textPassword"
+                    android:hint="비밀번호"
                     android:textSize="10sp"/>
             </LinearLayout>
 

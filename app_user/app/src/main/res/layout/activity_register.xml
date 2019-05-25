@@ -54,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLength="20"
+                android:inputType="text"
                 android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
@@ -94,6 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLength="20"
+                android:inputType="text"
                 android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
@@ -134,6 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLength="20"
+                android:inputType="textPassword"
                 android:password="true"
                 android:textSize="15sp"/>
         </LinearLayout>
@@ -175,6 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="15sp"
+                android:inputType="textPassword"
                 android:maxLength="20"
                 android:password="true"/>
         </LinearLayout>
@@ -216,6 +220,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLength="20"
+                android:inputType="text"
                 android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
