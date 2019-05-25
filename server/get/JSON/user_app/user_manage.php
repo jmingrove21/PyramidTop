@@ -39,9 +39,17 @@ switch($user_info){
         include 'user_lookup_participate.php';
         lookup_participate($json_data);
         break;
-    case 'order_finish':
-        include 'user_order_finish.php';
-        order_finish($json_data);
+    case 'ordered_list':
+        include 'user_ordered_list.php';
+        ordered_list($json_data);
+        break;
+    case 'ordered_list_detail':
+        include 'user_ordered_list_detail.php';
+        ordered_list_detail($json_data);
+        break;
+    case 'store_detail':
+        include 'user_store_detail.php';
+        store_detail($json_data);
         break;
 }
 ?>

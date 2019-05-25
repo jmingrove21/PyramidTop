@@ -13,9 +13,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="11dp"
         app:srcCompat="@drawable/alchon" />
 
     <TextView
@@ -26,10 +26,13 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:layout_toRightOf="@+id/imageView"
         android:text="TextView"
-        android:textSize="25sp" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/textView_phone"
@@ -40,13 +43,13 @@
         android:layout_alignTop="@+id/textView_name"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
+        android:layout_marginStart="-2dp"
+        android:layout_marginLeft="-2dp"
         android:layout_marginTop="37dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
         android:text="TextView"
-        android:textSize="20sp"></TextView>
+        android:textSize="15sp"></TextView>
 
     <TextView
         android:id="@+id/branch_name"
@@ -64,12 +67,12 @@
         android:layout_marginBottom="-26dp"
         android:fontFamily="sans-serif"
         android:text="TextView"
-        android:textSize="18sp"></TextView>
+        android:textSize="15sp"></TextView>
 
     <TextView
         android:id="@+id/address"
         android:layout_width="wrap_content"
-        android:layout_height="51dp"
+        android:layout_height="23dp"
         android:layout_alignStart="@+id/branch_name"
         android:layout_alignTop="@+id/branch_name"
         android:layout_alignBottom="@+id/imageView"
@@ -79,8 +82,8 @@
         android:layout_marginTop="27dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginBottom="-60dp"
+        android:layout_marginBottom="-49dp"
         android:fontFamily="sans-serif"
         android:text="TextView"
-        android:textSize="18sp"></TextView>
+        android:textSize="15sp"></TextView>
 </RelativeLayout>

@@ -48,7 +48,13 @@ public class Store {
         this.distance=Float.parseFloat(distance);
         this.store_profile_img=store_profile_img;
     }
-
+    public Store(String serial, String name, String branch_name, String minimum_price,String store_profile_img){
+        this.store_serial = Integer.parseInt(serial);
+        this.store_name=name;
+        this.store_branch_name=branch_name;
+        this.minimum_order_price=minimum_price;
+        this.store_profile_img=store_profile_img;
+    }
     public String getStore_branch_name() {
         return store_branch_name;
     }
@@ -126,6 +132,16 @@ public class Store {
         this.store_notice=store_notice;
         this.store_main_type_name=store_main_type_name;
         this.store_sub_type_name=store_sub_type_name;
+    }
+    public void set_store_spec(String store_serial, String store_building_name, String start_time, String end_time, String store_phone, String store_address,String store_restday, String store_notice){
+        this.store_building_name=store_building_name;
+        this.start_time=start_time;
+        this.end_time=end_time;
+        this.store_phone=store_phone;
+        this.store_address=store_address;
+        this.store_restday=store_restday;
+        this.store_notice=store_notice;
+
     }
     public void setMenu_str(){
         menu_desc_al.clear();

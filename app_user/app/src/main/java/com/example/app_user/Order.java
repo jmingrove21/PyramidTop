@@ -60,13 +60,46 @@ public class Order {
     public void setOrder_number(int order_number) {
         this.order_number = order_number;
     }
+    public String getOrder_receipt_date() {
+        return order_receipt_date;
+    }
 
-    public void setDateSpecification(String order_receipt_date, String delivery_request_time, String delivery_approve_time, String delivery_departure_time){
+    public String getDelivery_request_time() {
+        return delivery_request_time;
+    }
+
+    public String getDelivery_approve_time() {
+        return delivery_approve_time;
+    }
+
+    public String getDelivery_departure_time() {
+        return delivery_departure_time;
+    }
+
+    public String getParticipate_persons() {
+        return participate_persons;
+    }
+
+    public void setDateSpecification(String order_create_date, String order_receipt_date, String delivery_request_time, String delivery_approve_time, String delivery_departure_time){
+        this.order_create_date=order_create_date;
         this.order_receipt_date=order_receipt_date;
         this.delivery_request_time=delivery_request_time;
-        this.delivery_approve_time=delivery_departure_time;
+        this.delivery_approve_time=delivery_approve_time;
         this.delivery_departure_time=delivery_departure_time;
 
     }
-
+    public String getOrderStatus(){
+        if(order_status==1)
+            return "접수 대기";
+        else if(order_status==3)
+            return "접수 완료";
+        else if(order_status==4||order_status==5)
+            return "배달 준비";
+        else if(order_status==6)
+            return "배달 중";
+        else if(order_status==7)
+            return "배달 완료";
+        else
+            return "";
+    }
 }

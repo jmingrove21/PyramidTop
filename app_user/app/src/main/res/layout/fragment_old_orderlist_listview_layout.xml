@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.4">
+
+        <TextView
+            android:id="@+id/user_store_name_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TextView"
+            android:textSize="10sp"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1">
+
+        <TextView
+            android:id="@+id/user_store_order_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="시간:"
+            android:textSize="10sp"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2">
+
+        <TextView
+            android:id="@+id/user_order_time_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Text"
+            android:textSize="10sp"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2">
+
+        <TextView
+            android:id="@+id/user_order_price_sum_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TextView"
+            android:textSize="10sp"
+            android:textAlignment="textEnd" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1">
+
+        <TextView
+            android:id="@+id/menu_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="원"
+            android:textSize="10sp"
+            android:textAlignment="textStart" />
+    </LinearLayout>
+</LinearLayout>
