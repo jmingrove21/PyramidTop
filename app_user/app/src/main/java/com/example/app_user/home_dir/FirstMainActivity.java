@@ -1,6 +1,8 @@
 package com.example.app_user.home_dir;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -80,6 +82,8 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                 get_store_information(position);
             }
         });
+        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        UtilSet.set_GPS_permission(lm,this);
     }
 
     @Override
