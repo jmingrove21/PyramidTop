@@ -9,115 +9,283 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="100"
     android:orientation="vertical"
     >
-    <TextView
-        android:id="@+id/store_notice"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fontFamily="sans-serif"
-        android:text="TextView"
-        android:layout_weight="10"
-        android:textSize="18sp"></TextView>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:weightSum="1">
 
-    <TextView
-        android:id="@+id/store_address"
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.08"
+            android:src="@drawable/speech_bubble"
+            android:paddingRight="10dp"
+            />
+        <TextView
+            android:id="@+id/store_notice"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:fontFamily="sans-serif"
+            android:text="TextView"
+            android:layout_weight="0.8"
+            android:textSize="18sp"
+            android:gravity="center_vertical"/>
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:fontFamily="sans-serif"
-        android:text="TextView"
-        android:textSize="18sp"></TextView>
-    <TextView
-        android:id="@+id/store_operation"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="0.8">
+            <View
+                android:background="#D8D8D8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@+id/placeholder"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:fontFamily="sans-serif"
-        android:text="운영시간:"
-        android:textSize="18sp"></TextView>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.08"
+            android:src="@drawable/placeholder"
+            android:paddingRight="10dp"
+            />
+        <TextView
+            android:id="@+id/store_address"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:fontFamily="sans-serif"
+            android:text="TextView"
+            android:layout_weight="0.8"
+            android:textSize="18sp"
+            android:gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="0.8">
+            <View
+                android:background="#D8D8D8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@+id/placeholder"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/clock"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.08"
+            android:src="@drawable/clock"
+            android:paddingRight="10dp"/>
+        <TextView
+            android:id="@+id/store_operation"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:fontFamily="sans-serif"
+            android:text="운영시간:"
+            android:textSize="18sp"
+            android:gravity="center_vertical"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1">
+
+        </LinearLayout>
         <TextView
             android:id="@+id/store_operation_start_time"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-
+            android:layout_height="30dp"
+            android:layout_weight="0.35"
+            android:paddingLeft="@+id/clock"
             android:fontFamily="sans-serif"
             android:text="TextView"
-            android:textSize="18sp"></TextView>
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/store_operation_wave"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_height="30dp"
+            android:layout_weight="0.1"
             android:textAlignment="center"
             android:fontFamily="sans-serif"
             android:text="~"
-            android:textSize="18sp"></TextView>
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/store_operation_end_time"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_height="30dp"
+            android:layout_weight="0.35"
             android:fontFamily="sans-serif"
             android:text="TextView"
-            android:textSize="18sp"></TextView>
+            android:textSize="18sp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="0.8">
+            <View
+                android:background="#D8D8D8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@+id/placeholder"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:weightSum="1">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.08"
+            android:src="@drawable/close"
+            android:paddingRight="10dp"/>
+
         <TextView
             android:id="@+id/store_rest"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-
+            android:layout_height="50dp"
+            android:layout_weight="0.2"
             android:text="휴무일: "
-            android:textSize="20sp"></TextView>
+            android:textSize="18sp"
+            android:gravity="center_vertical"/>
 
         <TextView
             android:id="@+id/store_rest_day"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-
+            android:layout_height="50dp"
+            android:layout_weight="0.6"
             android:text="TextView"
-            android:textSize="20sp"></TextView>
+            android:textSize="18sp"
+            android:gravity="center_vertical"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_weight="0.8">
+            <View
+                android:background="#D8D8D8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@+id/placeholder"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="3.4dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:src="@drawable/cash"
+            android:paddingHorizontal="10dp"/>
         <TextView
             android:id="@+id/store_mininum_text"
             android:layout_width="0dp"
-            android:layout_height="109dp"
-            android:layout_weight="3"
-
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
             android:text="최소주문금액: "
-            android:textSize="20sp"></TextView>
+            android:textSize="18sp"
+            android:gravity="center_vertical"/>
 
         <TextView
             android:id="@+id/store_mininum_price"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-
+            android:layout_height="50dp"
+            android:layout_weight="0.5"
             android:text="TextView"
-            android:textSize="20sp"></TextView>
+            android:textSize="18sp"
+            android:gravity="center_vertical"></TextView>
     </LinearLayout>
 </LinearLayout>
 </ScrollView>
