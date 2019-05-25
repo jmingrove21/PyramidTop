@@ -23,7 +23,7 @@
         $insert_stmt3=mysqli_query($connect, $insert_query3);
         }
         #주문에 사용자에 대한 정보 추가
-        $insert_query="INSERT INTO Capstone.user_order (order_number,store_serial,destination,USER_user_serial, destination_lat,destination_long) VALUES(".$order_number.",".$store_serial.",'".$destination."',".$user_serial.",".$destination_lat.",".$destination_long.")";
+        $insert_query="INSERT INTO Capstone.user_order (order_number,store_serial,destination,USER_user_serial, destination_lat,destination_long,make_order_time) VALUES(".$order_number.",".$store_serial.",'".$destination."',".$user_serial.",".$destination_lat.",".$destination_long.",'".$current."')";
         $insert_stmt = mysqli_query($connect,$insert_query);
 
         $query="
@@ -53,17 +53,16 @@
 
         #주문된 가격 확인
         $confirm_query="
-        SELECT menu_price,menu_count
+        SELECT menu_price,tb.*
         FROM Capstone.menu AS m
         INNER JOIN
         (
-			SELECT menu_code
+			SELECT menu_code,menu_count
 			FROM Capstone.order_menu
 			WHERE order_number=".$order_number."
         ) tb
         ON m.menu_code=tb.menu_code
         WHERE store_serial=".$store_serial;
-
         $confirm_stmt = mysqli_query($connect,$confirm_query);
         $total_price=0;
         while($row=mysqli_fetch_assoc($confirm_stmt)){

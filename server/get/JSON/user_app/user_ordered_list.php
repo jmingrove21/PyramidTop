@@ -2,17 +2,21 @@
  function ordered_list($json_data){
         include "../db.php";
         $user_serial=$json_data['user_serial'];
+        $order_info=$json_data['order_info'];
+        if($order_info==1)
+            $sub_query=" NOT BETWEEN 7 AND 8";
+        else if($order_info==0)
+            $sub_query="=7";
 
          $query="
-         SELECT so.store_serial,order_status,store_name, store_phone,store_branch_name,store_address_jibun,store_profile_img,minimum_order_price,order_create_date,order_receipt_date, delivery_request_time, delivery_approve_time, delivery_departure_time, so.order_number
+         SELECT so.store_serial,order_status,store_name, store_phone,store_branch_name,store_address_jibun,store_profile_img,minimum_order_price, if(order_create_date IS NULL, '',order_create_date) AS order_create_date, if(order_receipt_date IS NULL, '',order_receipt_date) AS order_receipt_date, if(delivery_request_time IS NULL, '',delivery_request_time) AS delivery_request_time, if(delivery_approve_time IS NULL, '',delivery_approve_time) AS delivery_approve_time, if(delivery_departure_time IS NULL, '' ,delivery_departure_time) AS delivery_departure_time, so.order_number
          FROM Capstone.store AS s
          INNER JOIN Capstone.store_order AS so
          INNER JOIN Capstone.user_order AS uo
          ON s.store_serial=so.store_serial AND so.order_number=uo.order_number
-         WHERE order_status!=8 AND uo.USER_user_serial=".$user_serial." 
+         WHERE order_status".$sub_query." AND uo.USER_user_serial=".$user_serial."
          ORDER BY store_order_serial DESC
          ";
-
          $stmt = mysqli_query($connect,$query);
          $total_store=[];
 
@@ -48,9 +52,7 @@
                 'order_status'=>$row2['order_status'],
                 'store_serial'=>$row2['store_serial'],
                 'store_name'=>$row2['store_name'],
-                'store_phone'=>$row2['store_phone'],
                 'store_branch_name'=>$row2['store_branch_name'],
-                'store_address'=>$row2['store_address_jibun'],
                 'minimum_order_price'=>$row2['minimum_order_price'],
                 'store_profile_img'=>$row2['store_profile_img'],
                 'order_create_date'=>$row2['order_create_date'],

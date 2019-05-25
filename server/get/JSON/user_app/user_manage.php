@@ -43,6 +43,10 @@ switch($user_info){
         include 'user_ordered_list.php';
         ordered_list($json_data);
         break;
+    case 'ordered_list_detail':
+        include 'user_ordered_list_detail.php';
+        ordered_list_detail($json_data);
+        break;
     case 'store_detail':
         include 'user_store_detail.php';
         store_detail($json_data);
