@@ -10,7 +10,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2">
+        android:layout_weight="0.2"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="배달ONE"
+            android:textSize="25dp"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -23,28 +32,29 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.2"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="20dp"
                 android:text="이름:"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.7"
             >
             <EditText
                 android:id="@+id/register_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="25sp"/>
+                android:maxLength="20"
+                android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -62,28 +72,29 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.2"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
-                android:layout_marginLeft="45dp"
+                android:layout_marginLeft="20dp"
                 android:text="아이디:"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.7"
             >
             <EditText
                 android:id="@+id/register_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="25sp"/>
+                android:maxLength="20"
+                android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -101,7 +112,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.2"
             android:orientation="horizontal">
 
             <TextView
@@ -110,19 +121,21 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
                 android:text="비밀번호:"
-                android:textSize="25sp"
+                android:textSize="10sp"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.7"
             >
             <EditText
                 android:id="@+id/register_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="25sp"/>
+                android:maxLength="20"
+                android:password="true"
+                android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -140,27 +153,30 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.2"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
                 android:text="비밀번호확인:"
-                android:textSize="20sp"
+                android:textSize="10sp"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.7"
             >
             <EditText
                 android:id="@+id/register_repwd"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="25sp"/>
+                android:textSize="15sp"
+                android:maxLength="20"
+                android:password="true"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -178,28 +194,29 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
+            android:layout_weight="0.2"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
-                android:layout_marginLeft="45dp"
+                android:layout_marginLeft="20dp"
                 android:text="폰번호:"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.7"
             >
             <EditText
                 android:id="@+id/register_phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="25sp"/>
+                android:maxLength="20"
+                android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"

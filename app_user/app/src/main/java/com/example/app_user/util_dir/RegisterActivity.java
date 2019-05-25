@@ -55,8 +55,53 @@ public class RegisterActivity extends AppCompatActivity {
                     final EditText repw=(EditText)findViewById(R.id.register_repwd);
                     final EditText phone=(EditText)findViewById(R.id.register_phone);
 
-                    if(!pw.getText().toString().equals(repw.getText().toString())){
-                        Toast.makeText( RegisterActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+
+                    if(name.getText().toString().equals(null)){
+                        RegisterActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( RegisterActivity.this, "이름을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
+                    else if(id.getText().toString().equals(null)){
+                        RegisterActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( RegisterActivity.this, "id를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
+                    else if(phone.getText().toString().equals(null)){
+                        RegisterActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( RegisterActivity.this, "전화번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
+                    else if(pw.getText().toString().equals(null)){
+                        RegisterActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( RegisterActivity.this, "비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
+                    else if(repw.getText().toString().equals(null)){
+                        RegisterActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( RegisterActivity.this, "비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
+                    else if(!pw.getText().toString().equals(repw.getText().toString())){
+                        RegisterActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( RegisterActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         return;
                     }
 
@@ -79,7 +124,11 @@ public class RegisterActivity extends AppCompatActivity {
                         String json_result=jobj.getString("confirm");
                         Log.i("check_state", json_result);
                         if(json_result.equals("1")){
-                            Toast.makeText( RegisterActivity.this, "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show();
+                            RegisterActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText( RegisterActivity.this, "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                             Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
                             startActivityForResult(intent,101);
                         }

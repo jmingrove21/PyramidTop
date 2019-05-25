@@ -70,10 +70,20 @@ public class LoginActivity extends AppCompatActivity {
                         String json_result=jobj.getString("confirm");
                         Log.i("check_state", json_result);
                         if(json_result.equals("1")){
+                            LoginActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText( LoginActivity.this, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                             Intent intent=new Intent(getApplicationContext(), MainActivity.class);
                             startActivityForResult(intent,101);
                         }
                     }else{
+                        LoginActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( LoginActivity.this, "ID/PW가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         Log.d("error","Connect fail");
                     }
                     conn.disconnect();
