@@ -13,7 +13,7 @@ public class SplashActivity extends Activity {
 
         try{
             Thread.sleep(4000);
-            Intent intent=new Intent(getApplicationContext(), FirstMainActivity.class);
+            Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
             startActivityForResult(intent,101);
         }catch(InterruptedException e){
             e.printStackTrace();

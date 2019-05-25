@@ -9,7 +9,7 @@ android:orientation="vertical"
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.4"
+        android:layout_weight="0.3"
         ></LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,70 +21,136 @@ android:orientation="vertical"
             android:layout_height="match_parent"
             android:text = "배달ONE"
             android:textAlignment="center"
-            android:textSize="20sp"
-
-            />
+            android:textSize="30sp"/>
     </LinearLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginLeft="10dp">
-
-    <TextView
-        android:id="@+id/textViewID"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:text="아이디"
-        android:textSize="28dp" />
-
-    <EditText
-        android:id="@+id/eid"
-        android:layout_width="213dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:hint="ID" />
-</LinearLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginLeft="10dp">
-
-    <TextView
-        android:id="@+id/textViewPW"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:text="비밀번호"
-        android:textSize="28dp" />
-
-    <EditText
-        android:id="@+id/epw"
-        android:layout_width="213dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:ems="10"
-        android:hint="password"
-        android:inputType="textPassword" />
-</LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.08"
+        android:layout_weight="0.2"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="아이디"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="비밀번호"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:weightSum="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="10dp">
+
+                <EditText
+                    android:id="@+id/id_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="아이디"
+                    android:textSize="10sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="10dp">
+
+                <EditText
+                    android:id="@+id/pw_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="비밀번호"
+                    android:textSize="10sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal|center_vertical">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
         android:gravity="center_horizontal|center_vertical">
 
         <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
             android:onClick="login"
             android:text="로그인" />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="register"
+            android:text="회원가입"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"></LinearLayout>
 
 </LinearLayout>

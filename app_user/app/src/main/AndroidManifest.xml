@@ -41,6 +41,7 @@
         <activity android:name="com.example.app_user.people_dir.PartyDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.example.app_user.util_dir.LoginActivity"/>
+        <activity android:name="com.example.app_user.util_dir.RegisterActivity"/>
     </application>
 
 </manifest>
