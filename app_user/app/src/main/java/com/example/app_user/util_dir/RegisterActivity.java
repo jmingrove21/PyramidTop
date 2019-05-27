@@ -113,7 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
                     jsonParam.put("user_password", pw.getText().toString());
                     jsonParam.put("user_name",name.getText().toString());
                     jsonParam.put("user_phone",phone.getText().toString());
-                    jsonParam.put("user_sex","m");
 
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
 
