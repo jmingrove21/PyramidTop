@@ -1,5 +1,7 @@
 package com.example.app_user.home_dir;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.app_user.util_dir.HomeFragment;
@@ -36,6 +40,7 @@ import com.example.app_user.people_dir.PeopleFragment;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.UtilSet;
+import com.example.app_user.util_dir.SearchActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -276,8 +281,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             };
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu,menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint("Search....");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(query.length() > 2){
+                    LoadJson();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                LoadJson();
+                return false;
+            }
+        });
+
+        searchMenuItem.getIcon().setVisible(false,false);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     class CustomAdapter extends BaseAdapter {
