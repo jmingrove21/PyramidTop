@@ -3,12 +3,12 @@
         include "../db.php";
          $store_serial=$json_data['store_serial'];
          $order_number=$json_data['order_number'];
+         $user_serial=$json_data['user_serial'];
 
-       $query="
-            SELECT tb1.*,m.menu_name, menu_price,menu_count, USER_user_serial,user_id, user_phone, destination, if(make_order_time IS NULL, '',make_order_time) AS make_order_time
+         $query="SELECT menu_name,menu_price,menu_count, make_order_time,arrival_time
               FROM
               (
- 				 SELECT s.order_number,s.order_create_date
+ 				 SELECT s.order_number
  				 FROM Capstone.store_order AS s
  				 WHERE s.store_serial=".$store_serial." AND s.order_number=".$order_number."
               ) tb1
@@ -20,46 +20,71 @@
               AND o.menu_code=m.menu_code
               AND u.user_order_serial=o.user_order_serial
               AND u.USER_user_serial=user.user_serial
-              WHERE tb1.order_number=o.order_number
-              ORDER BY make_order_time ASC
-             ";
-
-         $stmt = mysqli_query($connect,$query);
-        $user_serial=0;
-        $total=[];
-        $menu=[];
-
-        while ($row = mysqli_fetch_assoc($stmt)) {
-            if($user_serial===0||$user_serial==$row['USER_user_serial']){
-                $user_serial=$row['USER_user_serial'];
-                $user_id=$row['user_id'];
-            }else{
-                $data['user_menu']=$menu;
-                array_push($total,$data);
-                $user_serial=$row['USER_user_serial'];
-                $user_id=$row['user_id'];
-                $menu=[];
-            }
-             $menu_info=array(
+              WHERE tb1.order_number=".$order_number." AND u.USER_user_serial=".$user_serial."
+              ORDER BY USER_user_serial DESC";
+        $stmt = mysqli_query($connect,$query);
+        $menu_info=[];
+        while($row=mysqli_fetch_assoc($stmt)){
+            $menu=array(
                 'menu_name'=>$row['menu_name'],
                 'menu_price'=>$row['menu_price'],
                 'menu_count'=>$row['menu_count']
-             );
-             array_push($menu,$menu_info);
-
-            $data=array(
-                    'user_serial'=>$row['USER_user_serial'],
-                    'user_id'=>$row['user_id'],
-                    'user_menu'=>$menu,
-                    'make_order_time'=>$row['make_order_time']
+            );
+            array_push($menu_info,$menu);
+            $user_info=array(
+                'make_order_time'=>$row['make_order_time'],
+                'arrival_time'=>$row['arrival_time'],
+                'user_menu'=>$menu_info
             );
         }
-        $data['user_menu']=$menu;
+        $query="
+            SELECT tb1.*,menu_price,menu_count, USER_user_serial,user_id,make_order_time 
+              FROM
+              (
+ 				 SELECT s.order_number
+ 				 FROM Capstone.store_order AS s
+ 				 WHERE s.store_serial=".$store_serial." AND s.order_number=".$order_number."
+              ) tb1
+              INNER JOIN Capstone.order_menu AS o
+              INNER JOIN Capstone.menu_info AS m
+              INNER JOIN Capstone.user_order AS u
+              INNER JOIN Capstone.user AS user
+              ON tb1.order_number=o.order_number
+              AND o.menu_code=m.menu_code
+              AND u.user_order_serial=o.user_order_serial
+              AND u.USER_user_serial=user.user_serial
+              WHERE tb1.order_number=".$order_number." AND u.USER_user_serial!=".$user_serial."
+              ORDER BY USER_user_serial DESC
+             ";
+         $stmt = mysqli_query($connect,$query);
+        $user=0;
+        $total=[];
+        $total_price=0;
+
+        while ($row = mysqli_fetch_assoc($stmt)) {
+            if($user===0||$user==$row['USER_user_serial']){
+                $user=$row['USER_user_serial'];
+                $user_id=$row['user_id'];
+            }else{
+                array_push($total,$data);
+                $user_=$row['USER_user_serial'];
+                $user_id=$row['user_id'];
+                $total_price=0;
+            }
+            $total_price+=$row['menu_price']*$row['menu_count'];
+
+            $data=array(
+                    'user_id'=>$row['user_id'],
+                    'make_order_time'=>$row['make_order_time'],
+                    'total_price'=>$total_price
+            );
+        }
         array_push($total,$data);
- $query="
+
+        $query="
          SELECT store_serial,store_phone, store_address_jibun, store_building_name, start_time, end_time, store_restday, store_notice, store_phone, minimum_order_price
          FROM Capstone.store
-         WHERE store_serial=(SELECT store_serial FROM store_order WHERE order_number=".$order_number.")";
+         WHERE store_serial=".$store_serial;
          $stmt = mysqli_query($connect,$query);
          while($row2=mysqli_fetch_assoc($stmt)){
             $store=array(
@@ -75,10 +100,9 @@
             );
          }
 
-
-
         $send_data=array(
-            'user_info'=>$total,
+            'user_info'=>$user_info,
+            'another_info'=>$total,
             'store_info'=>$store
         );
 
