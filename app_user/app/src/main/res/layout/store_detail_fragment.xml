@@ -59,7 +59,29 @@
 
             </LinearLayout>
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:weightSum="1">
 
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.08"
+            android:paddingRight="10dp"
+            android:src="@drawable/call" />
+        <TextView
+            android:id="@+id/store_phone"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textSize="18sp" />
+    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
