@@ -31,31 +31,37 @@
                 android:background="#4AC66D"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    />
+            </android.support.v7.widget.Toolbar>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="?attr/actionBarSize"
                 android:layout_weight="100"
-                android:orientation="vertical"
-                android:paddingLeft="4sp"
-
-                android:paddingTop="4sp"
-                android:paddingRight="4sp"
-                android:paddingBottom="4sp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="30"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:background="#4AC66D">
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="10"
+                        android:layout_weight="6"></LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="18"
                         android:orientation="vertical">
 
                         <de.hdodenhof.circleimageview.CircleImageView
@@ -70,30 +76,15 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="15"
+                        android:layout_weight="6"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/store_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="3sp"
-                            android:layout_weight="15"
-                            android:text="TextView"
-                            android:textSize="20sp" />
 
-                        <TextView
-                            android:id="@+id/store_branch_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="10"
-                            android:text="TextView"
-                            android:textSize="15sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="15"
+                            android:layout_weight="6"
                             android:orientation="horizontal">
 
                             <Button
