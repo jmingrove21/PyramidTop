@@ -22,6 +22,13 @@ var store_minimum_order_price = '';
 
 function init_information_page()
 {
+	var tmptmp = location.href.split("html")[1];
+
+	if(tmptmp.length==0)
+	{
+		alert("로그인이 필요합니다.")
+		location.href = "login.html";
+	}
 	var tmp = location.href.split("?")[1].split("=")[1];
 	store_name_title = decodeURIComponent(tmp.split("&")[0]);
 	store_serial = tmp.split("&")[1]; //시리얼 넘버

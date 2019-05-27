@@ -1,80 +1,83 @@
-<!doctype html>
-<html lang="en-US">
+<!DOCTYPE html>
+<html>
 <head>
-	
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>
-		배달ONE
-	</title>
-	<link href="../assets/css/Login1.css" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-	</script>
-	<script src="http://use.edgefonts.net/source-sans-pro:n2:default.js" type="text/javascript"></script>
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]--><script src="../assets/js/information.js"></script>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>배달ONE</title>
+	<link rel="stylesheet" href="../assets/css/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
-<!-- Main Container -->
-<div class="container"> 
-  <!-- Navigation -->
-  <header> <a href="">
-    <h4 class="logo">LIGHT</h4>
-    </a>
-    <nav>
-      <ul>
-        <li><a href="#about">ABOUT</a></li>
-        <li><a href="#contact">CONTACT</a></li>
-      </ul>
-    </nav>
-  </header>
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-	  <h2 class="hero_header">PyramidTOP's WEB</h2>
-    <p class="tagline">1인 가구를 위한 통합 배달 서비스</p>
-  </section>
-  <!-- About Section -->
-  <!-- Stats Gallery Section -->
-  <div class="gallery">
-    <div class="thumbnail" style="text-align: center">
-      <h1 class="stats">회원이신가요?</h1>
-		<table align="center">
-			<tr>
-				<td>
-					<input id="store_id" type="text" placeholder="id">
-				</td>
-				<td rowspan="2">
-			  <input id="btn_login" type="button" value="login" style="width:60px; height:50px;"></td>
-			</tr>
-			<tr>
-				<td>	
-					<input id="store_password" type="password" placeholder="password">
-				</td>
-			</tr>
-		</table>
-    </div>
-</div>
-  <!-- Parallax Section -->
-  <!-- More Info Section-->
-  <footer> </footer>
-  <!-- Footer Section -->
-  <section class="footer_banner" id="contact">
-    <h2 class="hidden">Footer Banner Section </h2>
-    <p class="hero_footer">아직 PyramidTOP's Web을 이용하지 않나요?</p>
-    <div class="button" id="btn_register"> 가입하기
+
+<body onload="document.init.email.focus();">
+	<div class="lowin lowin-blue">
+		<div class="lowin-brand">
+			<img src="../assets/img/로고2.png" alt="logo">
+		</div>
+		<div class="lowin-wrapper">
+			<div class="lowin-box lowin-login">
+				<div class="lowin-box-inner">
+					<form name="init">
+						<p>배달 ONE</p>
+						<div class="lowin-group">
+							<label>아이디 <a href="#" class="login-back-link">로그인?</a></label>
+							<input type="text" name="email" class="lowin-input" id="store_id" autocomplete="off">
+						</div>
+						<div class="lowin-group password-group">
+							<label>비밀번호 <a href="#" class="forgot-link">비밀번호를 잊으셨나요?</a></label>
+							<input type="password" name="password" class="lowin-input" id="store_password" autocomplete="off">
+						</div>
+						<button class="lowin-btn login-btn" id="btn_login" onclick="login4();">
+							로그인
+						</button>
+
+						<div class="text-foot">
+							계정이 없나요? <a href="" class="register-link">회원가입</a>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="lowin-box lowin-register">
+				<div class="lowin-box-inner">
+					<form>
+						<p>회원가입</p>
+						<div class="lowin-group">
+							<label>아이디</label>
+							<input type="text" name="name" autocomplete="name" class="lowin-input">
+						</div>
+						<div class="lowin-group">
+							<label>이메일</label>
+							<input type="email" autocomplete="email" name="email" class="lowin-input">
+						</div>
+						<div class="lowin-group">
+							<label>비밀번호</label>
+							<input type="password" name="password" autocomplete="current-password" class="lowin-input">
+						</div>
+						<button class="lowin-btn">
+							가입하기
+						</button>
+
+						<div class="text-foot">
+							이미 계정이 있나요? <a href="" class="login-link">로그인</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	
+		<footer class="lowin-footer">
+			Design By <a href="http://fb.me/itskodinger">@PyramidTop</a>
+		</footer>
 	</div>
-	  
-  </section>
-  <!-- Copyrights Section -->
-  <div class="copyright">&copy;2019 - <strong>PyramidTOP</strong></div>
-</div>
-<!-- Main Container Ends -->
-		<script src="../assets/js/login.js"></script>
-		<script src="../assets/js/register.js"></script>
-	</body>
+
+    <script src="../assets/js/login.js"></script>
+
+	<script>
+		Auth.init({
+			login_url: '#login',
+			forgot_url: '#forgot'
+		});
+	</script>
+
+</body>
 </html>
