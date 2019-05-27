@@ -31,9 +31,7 @@ import com.example.app_user.util_dir.LoginActivity;
 
 public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    int type,index,serial;
- //   private String str = "Test";
-    private String[] test = {"1","2","3","4"};
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +40,10 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.party_detail_layout);
 
         Intent intent = getIntent();
-        //type = intent.getStringExtra("type");
         index = intent.getIntExtra("index", 0);
-       // serial = intent.getIntExtra("serial", 0);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-        UtilSet.target_store.setMenu_str();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,17 +57,13 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView) findViewById(R.id.party_detail_layout_listview);
+        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_listview);
+        PartyDetailActivity.UserAdapter userAdapter=new PartyDetailActivity.UserAdapter();
+        listView_user.setAdapter(userAdapter);
+        ListView listView_menu = (ListView) findViewById(R.id.party_detail_layout_menu_listview);
         PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
-        listView.setAdapter(customAdapter);
+        listView_menu.setAdapter(customAdapter);
 
-        TextView text_other_user1 = (TextView) findViewById(R.id.other_user1);
-        TextView text_user1_party_time_input = (TextView) findViewById(R.id.user1_party_time_input);
-        TextView text_user1_order_price_input = (TextView) findViewById(R.id.user1_order_price_input);
-
-        TextView text_other_user2 = (TextView) findViewById(R.id.other_user2);
-        TextView text_user2_party_time_input = (TextView) findViewById(R.id.user2_party_time_input);
-        TextView text_user2_order_price_input = (TextView) findViewById(R.id.user2_order_price_input);
 
         TextView text_user = (TextView) findViewById(R.id.user);
         TextView text_user_store_name_input = (TextView) findViewById(R.id.user_store_name_input);
@@ -84,31 +74,22 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         TextView text_user_order_time_input = (TextView) findViewById(R.id.user_order_time_input);
         TextView text_user_pay_method_input = (TextView) findViewById(R.id.user_pay_method_input);
         TextView text_user_order_complete_time_input = (TextView) findViewById(R.id.user_order_complete_time_input);
-        TextView text_user_cooking_complete_time_input = (TextView) findViewById(R.id.user_cooking_complete_time_input);
         TextView text_user_deliver_start_time_input = (TextView) findViewById(R.id.user_deliver_start_time_input);
         TextView text_user_deliver_complete_time_input = (TextView) findViewById(R.id.user_deliver_complete_time_input);
 
         Order o=UtilSet.al_my_order.get(index);
-//        text_other_user1.setText(str);
-//        text_user1_party_time_input.setText(str);
-//        text_user1_order_price_input.setText(str);
-//
-//        text_other_user2.setText(str);
-//        text_user2_party_time_input.setText(str);
-//        text_user2_order_price_input.setText(str);
 
-        text_user.setText("유저이름");
+        text_user.setText("김창희");
         text_user_store_name_input.setText(o.getStore().getStore_name()+" "+o.getStore().getStore_branch_name());
         text_user_store_number_input.setText(o.getStore().getStore_phone());
         text_user_store_address_input.setText(o.getStore().getStore_address());
 
-       // text_user_order_price_sum_input.setText(o.getTotal_order_price());
+        text_user_order_price_sum_input.setText(String.valueOf(o.getTotal_order_price()));
         text_user_order_time_input.setText(o.getOrder_create_date());
         text_user_pay_method_input.setText("pay method input");
         text_user_order_complete_time_input.setText(o.getOrder_receipt_date());
-        text_user_cooking_complete_time_input.setText(o.getDelivery_request_time());
-        text_user_deliver_start_time_input.setText(o.getDelivery_approve_time());
-        text_user_deliver_complete_time_input .setText(o.getDelivery_departure_time());
+        text_user_deliver_start_time_input.setText(o.getDelivery_departure_time());
+        text_user_deliver_complete_time_input.setText(o.getDelivery_arrival_time());
     }
 
     @Override
@@ -182,7 +163,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         @Override
         public int getCount() {
-            return test.length;
+            return UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().size();
         }
 
         @Override
@@ -205,9 +186,44 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
             TextView text_menu_price_input = (TextView) view.findViewById(R.id.menu_price_input);
 
 
-            text_name.setText(test[i]);
-            text_menu_count_input.setText(test[i]);
-            text_menu_price_input.setText(test[i]);
+            text_name.setText(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_name());
+            text_menu_count_input.setText(String.valueOf(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_count()));
+            text_menu_price_input.setText(String.valueOf(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_price()*UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_count()));
+
+            return view;
+        }
+    }
+
+    class UserAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return UtilSet.al_my_order.get(index).getUser_al().size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            view = getLayoutInflater().inflate(R.layout.party_detail_layout_user_listview, null);
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 100));
+
+            TextView text_name = (TextView) view.findViewById(R.id.party_detail_user_name);
+            TextView text_user_time = (TextView) view.findViewById(R.id.party_detail_user_time);
+            TextView text_user_price = (TextView) view.findViewById(R.id.party_detail_user_price);
+
+
+            text_name.setText(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_id());
+            text_user_time.setText(String.valueOf(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_time()));
+            text_user_price.setText(String.valueOf(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_price()));
 
             return view;
         }
