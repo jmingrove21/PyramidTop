@@ -15,13 +15,6 @@ import java.util.ArrayList;
 public class OldOrderCustomAdapter extends BaseAdapter {
     private Context context;
 
-    int tmp_ordernum;
-    int total = 0;
-    ArrayList<String> selectedItems = new ArrayList<>();
-
-
-    public interface OnArrayList {
-    }
 
     public OldOrderCustomAdapter(Context context) {
 
@@ -72,7 +65,7 @@ public class OldOrderCustomAdapter extends BaseAdapter {
         }
 
         holder.text_user_store_name_input.setText(Old_Orderlist.oldOrderProducts.get(position).getUser_store_name_input());
-        holder.text_user_order_price_sum_input.setText(Old_Orderlist.oldOrderProducts.get(position).getUser_order_price_sum_input());
+        holder.text_user_order_price_sum_input.setText(String.valueOf(Old_Orderlist.oldOrderProducts.get(position).getUser_order_price_sum_input()));
         holder.text_user_order_time_input.setText(Old_Orderlist.oldOrderProducts.get(position).getUser_order_time_input());
 
         return convertView;

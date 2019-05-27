@@ -6,15 +6,14 @@ public class Order {
 
     private Store store;
     private ArrayList<User> user_al=new ArrayList<>();
-    private String order_create_date;
     private int participate_person;
     private int total_order_price;
-    private int order_number=0;
+    private int order_number;
     private int order_status;
+    private String order_create_date;
     private String order_receipt_date;
-    private String delivery_request_time;
-    private String delivery_approve_time;
     private String delivery_departure_time;
+    private String delivery_arrival_time;
     private String participate_persons;
 
     public Order(String order_create_date,String participate_person, String total_order_price, String order_number){
@@ -64,14 +63,6 @@ public class Order {
         return order_receipt_date;
     }
 
-    public String getDelivery_request_time() {
-        return delivery_request_time;
-    }
-
-    public String getDelivery_approve_time() {
-        return delivery_approve_time;
-    }
-
     public String getDelivery_departure_time() {
         return delivery_departure_time;
     }
@@ -80,13 +71,16 @@ public class Order {
         return participate_persons;
     }
 
-    public void setDateSpecification(String order_create_date, String order_receipt_date, String delivery_request_time, String delivery_approve_time, String delivery_departure_time){
+    public String getDelivery_arrival_time() {
+        return delivery_arrival_time;
+    }
+    public void setDelivery_arrival_time(String delivery_arrival_time) {
+        this.delivery_arrival_time = delivery_arrival_time;
+    }
+    public void setDateSpecification(String order_create_date, String order_receipt_date, String delivery_departure_time){
         this.order_create_date=order_create_date;
         this.order_receipt_date=order_receipt_date;
-        this.delivery_request_time=delivery_request_time;
-        this.delivery_approve_time=delivery_approve_time;
         this.delivery_departure_time=delivery_departure_time;
-
     }
     public String getOrderStatus(){
         if(order_status==1)

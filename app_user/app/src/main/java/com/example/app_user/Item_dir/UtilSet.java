@@ -31,10 +31,12 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class UtilSet {
+    public static User my_User;
     public static int user_serial=7;
     public static ArrayList<Store> al_store = new ArrayList<>();
     public static ArrayList<Order> al_order=new ArrayList<>();
     public static ArrayList<Order> al_my_order=new ArrayList<>();
+    public static ArrayList<Order> al_my_old_order=new ArrayList<>();
     public static final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
     public static final int cacheSize=maxMemory/8;
     public static LruCache<String, Bitmap> mMemoryCache=new LruCache<String, Bitmap>(cacheSize){
