@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
+import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.home_dir.MainActivity;
 import com.example.app_user.util_dir.BackPressCloseHandler;
 
@@ -21,6 +24,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
@@ -75,15 +79,16 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText( LoginActivity.this, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                            Intent intent=new Intent(getApplicationContext(), FirstMainActivity.class);
                             startActivityForResult(intent,101);
+                        }else{
+                            LoginActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText( LoginActivity.this, "ID/PW가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }else{
-                        LoginActivity.this.runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( LoginActivity.this, "ID/PW가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
                         Log.d("error","Connect fail");
                     }
                     conn.disconnect();

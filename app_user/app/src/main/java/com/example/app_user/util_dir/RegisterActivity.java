@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_register);
         setTitle("회원가입");
+
     }
 
     @Override
@@ -55,8 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
                     final EditText repw=(EditText)findViewById(R.id.register_repwd);
                     final EditText phone=(EditText)findViewById(R.id.register_phone);
 
-
-                    if(name.getText().toString().equals(null)){
+                    if(name.getText().toString().equals("")){
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText( RegisterActivity.this, "이름을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
@@ -64,23 +66,23 @@ public class RegisterActivity extends AppCompatActivity {
                         });
                         return;
                     }
-                    else if(id.getText().toString().equals(null)){
+                    else if(id.getText().toString().equals("")){
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText( RegisterActivity.this, "id를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText( RegisterActivity.this, "ID를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
                             }
                         });
                         return;
                     }
-                    else if(phone.getText().toString().equals(null)){
+                    else if(phone.getText().toString().equals("")){
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText( RegisterActivity.this, "전화번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText( RegisterActivity.this, "폰번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
                             }
                         });
                         return;
                     }
-                    else if(pw.getText().toString().equals(null)){
+                    else if(pw.getText().toString().equals("")){
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText( RegisterActivity.this, "비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
@@ -88,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                         });
                         return;
                     }
-                    else if(repw.getText().toString().equals(null)){
+                    else if(repw.getText().toString().equals("")){
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText( RegisterActivity.this, "비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
@@ -106,14 +108,11 @@ public class RegisterActivity extends AppCompatActivity {
                     }
 
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info","login");
+                    jsonParam.put("user_info","join");
                     jsonParam.put("user_id", id.getText().toString());
                     jsonParam.put("user_password", pw.getText().toString());
                     jsonParam.put("user_name",name.getText().toString());
                     jsonParam.put("user_phone",phone.getText().toString());
-
-
-                    Log.i("JSON", jsonParam.toString());
 
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
 
@@ -122,7 +121,6 @@ public class RegisterActivity extends AppCompatActivity {
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj=new JSONObject(jsonReply);
                         String json_result=jobj.getString("confirm");
-                        Log.i("check_state", json_result);
                         if(json_result.equals("1")){
                             RegisterActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
