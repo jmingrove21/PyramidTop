@@ -28,22 +28,23 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
-                android:background="@color/colorPrimary"
+                android:background="#4AC66D"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="4sp"
-                android:paddingRight="4sp"
-                android:paddingBottom="4sp"
-                android:paddingTop="4sp"
-
                 android:layout_marginTop="?attr/actionBarSize"
                 android:layout_weight="100"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="4sp"
+
+                android:paddingTop="4sp"
+                android:paddingRight="4sp"
+                android:paddingBottom="4sp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -56,12 +57,16 @@
                         android:layout_height="match_parent"
                         android:layout_weight="10"
                         android:orientation="vertical">
-                        <ImageView
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/store_image"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            />
+                            android:layout_height="match_parent"/>
+
+
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -72,10 +77,11 @@
                             android:id="@+id/store_name"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="15"
                             android:layout_marginTop="3sp"
+                            android:layout_weight="15"
                             android:text="TextView"
                             android:textSize="20sp" />
+
                         <TextView
                             android:id="@+id/store_branch_name"
                             android:layout_width="match_parent"
@@ -83,6 +89,7 @@
                             android:layout_weight="10"
                             android:text="TextView"
                             android:textSize="15sp" />
+
                         <TextView
                             android:id="@+id/store_phone"
                             android:layout_width="match_parent"
@@ -90,6 +97,7 @@
                             android:layout_weight="10"
                             android:text="TextView"
                             android:textSize="15sp" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -141,12 +149,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
-                        android:onClick="showSelectedItems"
-                        android:layout_marginTop="5sp"
-                        android:layout_marginBottom="5sp"
-                        android:layout_marginRight="40sp"
                         android:layout_marginLeft="40sp"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginRight="40sp"
+                        android:layout_marginBottom="5sp"
                         android:layout_weight="5"
+                        android:onClick="showSelectedItems"
                         android:text="주문하기"
                         android:textSize="10sp" />
 
@@ -165,11 +173,11 @@
             app:menu="@menu/bottom_navigation" />
     </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:id="@+id/nav_view"
-    app:headerLayout="@layout/nav_header"
-    app:menu="@menu/drawer_menu"/>
+    <!--<android.support.design.widget.NavigationView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="start"-->
+    <!--android:id="@+id/nav_view"-->
+    <!--app:headerLayout="@layout/nav_header"-->
+    <!--app:menu="@menu/drawer_menu"/>-->
 </android.support.v4.widget.DrawerLayout>

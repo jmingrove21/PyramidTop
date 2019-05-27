@@ -4,6 +4,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -97,6 +99,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
         TextView text_store_branch_name = (TextView) findViewById(R.id.store_branch_name);
         ImageView imageView = (ImageView) findViewById(R.id.store_image);
+        imageView.setBackground(new ShapeDrawable(new OvalShape()));
+        imageView.setClipToOutline(true);
 
         imageView.setImageBitmap(UtilSet.target_store.getStore_image());
         text_store_name.setText(UtilSet.target_store.getStore_name());
