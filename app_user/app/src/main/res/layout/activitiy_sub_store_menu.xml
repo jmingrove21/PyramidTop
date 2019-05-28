@@ -36,11 +36,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="4sp"
-                android:paddingRight="4sp"
-                android:paddingBottom="4sp"
-                android:paddingTop="4sp"
-
                 android:layout_marginTop="?attr/actionBarSize"
                 android:layout_weight="100"
                 android:orientation="vertical">
@@ -49,12 +44,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="30"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="#4AC66D">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="10"
+                        android:layout_weight="6"
                         android:orientation="vertical">
                         <ImageView
                             android:id="@+id/store_image"
@@ -121,7 +117,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="55"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="#ffffff">
 
                     <FrameLayout
                         android:id="@+id/sub_fragment_container"
@@ -140,14 +137,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
-                        android:onClick="showSelectedItems"
+                        android:layout_marginLeft="20sp"
                         android:layout_marginTop="5sp"
+                        android:layout_marginRight="20sp"
                         android:layout_marginBottom="5sp"
-                        android:layout_marginRight="40sp"
-                        android:layout_marginLeft="40sp"
                         android:layout_weight="5"
+                        android:background="#4AC66D"
+                        android:onClick="showSelectedItems"
                         android:text="주문하기"
-                        android:textSize="10sp" />
+                        android:textSize="25dp"
+                        android:textColor="#ffffff"/>
 
                 </LinearLayout>
             </LinearLayout>
