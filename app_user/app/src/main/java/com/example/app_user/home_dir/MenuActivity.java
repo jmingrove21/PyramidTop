@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +53,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     private String type; //order_make, order_participate
 
     String selectedMenu;
-    Button store_inform_button, menu_list_button;
+    ImageButton store_inform_button, menu_list_button;
     FragmentManager fm;
     FragmentTransaction tran;
     MenuFragment menuFragment;
@@ -80,8 +81,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        store_inform_button = (Button) findViewById(R.id.store_inform_button);
-        menu_list_button = (Button) findViewById(R.id.menu_list_button);
+        store_inform_button = (ImageButton) findViewById(R.id.store_inform_button);
+        menu_list_button = (ImageButton) findViewById(R.id.menu_list_button);
 
         storedetailfragment = new StoreDetailFragment();
         storedetailfragment.setIndex(index);
