@@ -28,8 +28,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
-                android:background="@color/colorPrimary"
-                android:elevation="4dp"
+                android:background="#4AC66D"
+                android:elevation="0dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
