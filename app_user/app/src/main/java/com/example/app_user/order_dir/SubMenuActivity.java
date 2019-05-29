@@ -18,7 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +50,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
 
     String selectedMenu;
-    Button store_inform_button, menu_list_button;
+    ImageButton store_inform_button, menu_list_button;
     FragmentManager fm;
     FragmentTransaction tran;
     MenuFragment menuFragment;
@@ -78,8 +78,8 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        store_inform_button = (Button) findViewById(R.id.store_inform_button);
-        menu_list_button = (Button) findViewById(R.id.menu_list_button);
+        store_inform_button = (ImageButton) findViewById(R.id.store_inform_button);
+        menu_list_button = (ImageButton) findViewById(R.id.menu_list_button);
 
         storedetailfragment = new StoreDetailFragment();
         storedetailfragment.setIndex(index);
@@ -93,15 +93,9 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        TextView text_store_name = (TextView) findViewById(R.id.store_name);
-        TextView text_store_phone = (TextView) findViewById(R.id.store_phone);
-        TextView text_store_branch_name = (TextView) findViewById(R.id.store_branch_name);
         ImageView imageView = (ImageView) findViewById(R.id.store_image);
 
         imageView.setImageBitmap(UtilSet.target_store.getStore_image());
-        text_store_name.setText(UtilSet.target_store.getStore_name());
-        text_store_phone.setText(UtilSet.target_store.getStore_phone());
-        text_store_branch_name.setText(UtilSet.target_store.getStore_branch_name());
 
         store_inform_button.setOnClickListener(new View.OnClickListener() {
             @Override
