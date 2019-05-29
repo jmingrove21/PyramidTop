@@ -23,13 +23,14 @@
             android:layout_above="@+id/bottom_navigation">
 
             <android.support.v7.widget.Toolbar
+                app:elevation="0dp"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
                 android:background="#4AC66D"
-                android:elevation="4dp"
+                android:elevation="0dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
                 <TextView
@@ -62,13 +63,28 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="18"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/store_image"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"></LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.6">
+
+                            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/store_image"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"
+                            ></LinearLayout>
 
 
                     </LinearLayout>
@@ -85,23 +101,40 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="6"
-                            android:orientation="horizontal">
-
-                            <Button
-                                android:id="@+id/store_inform_button"
+                            android:orientation="vertical"
+                            android:weightSum="1">
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="5"
-                                android:text="상세보기"
-                                android:textSize="10sp" />
-
-                            <Button
-                                android:id="@+id/menu_list_button"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.75"></LinearLayout>
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="5"
-                                android:text="메뉴보기"
-                                android:textSize="10sp" />
+                                android:layout_height="0dp"
+                                android:layout_weight="0.2">
+                                <ImageButton
+                                    android:id="@+id/store_inform_button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="5"
+                                    android:textSize="10sp"
+                                    android:src="@drawable/information"
+                                    android:background="#4AC66D"
+                                    android:scaleType="fitCenter"/>
+
+                                <ImageButton
+                                    android:id="@+id/menu_list_button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="5"
+                                    android:textSize="10sp"
+                                    android:background="#4AC66D"
+                                    android:src="@drawable/menu"
+                                    android:scaleType="fitCenter"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.05"></LinearLayout>
 
                         </LinearLayout>
 
@@ -112,7 +145,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="55"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="#ffffff">
 
                     <FrameLayout
                         android:id="@+id/sub_fragment_container"
@@ -132,14 +166,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
-                        android:layout_marginLeft="40sp"
+                        android:layout_marginLeft="20sp"
                         android:layout_marginTop="5sp"
-                        android:layout_marginRight="40sp"
+                        android:layout_marginRight="20sp"
                         android:layout_marginBottom="5sp"
                         android:layout_weight="5"
+                        android:background="#4AC66D"
                         android:onClick="showSelectedItems"
                         android:text="주문하기"
-                        android:textSize="10sp" />
+                        android:textSize="25dp"
+                        android:textColor="#ffffff"/>
 
                 </LinearLayout>
             </LinearLayout>
