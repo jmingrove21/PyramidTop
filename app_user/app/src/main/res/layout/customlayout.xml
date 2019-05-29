@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imageView"
         android:layout_width="90dp"
         android:layout_height="90dp"
@@ -16,74 +15,101 @@
         android:layout_marginStart="22dp"
         android:layout_marginLeft="22dp"
         android:layout_marginTop="11dp"
-        app:srcCompat="@drawable/alchon" />
+        app:srcCompat="@drawable/alchon"
+        />
+
 
     <TextView
         android:id="@+id/textView_name"
-        android:layout_width="282dp"
-        android:layout_height="37dp"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_toRightOf="@+id/imageView"
-        android:text="TextView"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/textView_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView_name"
-        android:layout_alignLeft="@+id/textView_name"
-        android:layout_alignTop="@+id/textView_name"
-        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/imageView"
+        android:gravity="right"
+        android:layout_toRightOf="@+id/imageView"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="-2dp"
-        android:layout_marginLeft="-2dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginRight="3dp"
         android:text="TextView"
-        android:textSize="15sp"></TextView>
-
+        android:textStyle="bold"
+        android:textSize="18sp" />
     <TextView
         android:id="@+id/branch_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView_name"
+        android:gravity="right"
+        android:layout_toRightOf="@+id/imageView"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="-1dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="-26dp"
-        android:fontFamily="sans-serif"
         android:text="TextView"
-        android:textSize="15sp"></TextView>
-
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/textView_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/branch_name"
+        android:gravity="right"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_alignParentRight="true"
+        android:text="TextView"
+        android:textSize="15sp" />
     <TextView
         android:id="@+id/address"
         android:layout_width="wrap_content"
-        android:layout_height="23dp"
-        android:layout_alignStart="@+id/branch_name"
-        android:layout_alignTop="@+id/branch_name"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_phone"
+        android:gravity="right"
+        android:layout_toRightOf="@+id/imageView"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="-49dp"
-        android:fontFamily="sans-serif"
         android:text="TextView"
-        android:textSize="15sp"></TextView>
+        android:textSize="15sp" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/branch_name"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignStart="@+id/textView_name"-->
+        <!--android:layout_alignLeft="@+id/textView_name"-->
+        <!--android:layout_alignTop="@+id/textView_name"-->
+        <!--android:gravity="right"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginTop="37dp"-->
+        <!--android:layout_marginEnd="3dp"-->
+        <!--android:layout_marginRight="3dp"-->
+        <!--android:text="TextView"-->
+        <!--android:textSize="15sp"></TextView>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView_phone"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/imageView"-->
+        <!--android:layout_alignStart="@+id/imageView"-->
+        <!--android:layout_alignBottom="@+id/imageView"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:gravity="right"-->
+        <!--android:layout_marginEnd="0dp"-->
+        <!--android:layout_marginRight="0dp"-->
+        <!--android:layout_marginBottom="-26dp"-->
+        <!--android:fontFamily="sans-serif"-->
+        <!--android:text="TextView"-->
+        <!--android:textSize="15sp"></TextView>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/address"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="23dp"-->
+        <!--android:layout_alignStart="@+id/branch_name"-->
+        <!--android:layout_alignTop="@+id/branch_name"-->
+        <!--android:layout_alignBottom="@+id/imageView"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:gravity="right"-->
+        <!--android:layout_marginStart="0dp"-->
+        <!--android:layout_marginTop="27dp"-->
+        <!--android:layout_marginEnd="0dp"-->
+        <!--android:layout_marginRight="0dp"-->
+        <!--android:layout_marginBottom="-49dp"-->
+        <!--android:fontFamily="sans-serif"-->
+        <!--android:text="TextView"-->
+        <!--android:textSize="15sp"></TextView>-->
 </RelativeLayout>
