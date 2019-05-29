@@ -66,6 +66,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         index = intent.getIntExtra("index", 0);
         serial = intent.getIntExtra("serial", 0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         UtilSet.target_store.setMenu_str();
