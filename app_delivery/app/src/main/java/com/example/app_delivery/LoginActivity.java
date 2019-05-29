@@ -5,19 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URL;
+
 import android.content.SharedPreferences;
 
 public class LoginActivity extends AppCompatActivity {
@@ -62,28 +57,12 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 try {
 
-                    URL url = new URL("http://54.180.102.7:80/get/JSON/delivery_app/delivery_manage.php");
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept","application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "login");
                     jsonParam.put("delivery_id", idText.getText().toString());
                     jsonParam.put("delivery_password", pwdText.getText().toString());
 
-
-                    Log.i("JSON", jsonParam.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
-                    os.writeBytes(jsonParam.toString());
-
-                    os.flush();
-                    os.close();
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
                     if(conn.getResponseCode()==200){
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
