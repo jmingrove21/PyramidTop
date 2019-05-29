@@ -156,7 +156,7 @@ public class PartyListActivity extends AppCompatActivity  implements NavigationV
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_first_layout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);
