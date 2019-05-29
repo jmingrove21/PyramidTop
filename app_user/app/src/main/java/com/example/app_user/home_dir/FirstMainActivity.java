@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.util_dir.BackPressCloseHandler;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
@@ -41,6 +42,7 @@ import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
+import com.example.app_user.util_dir.RegisterActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,7 +58,11 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_main);
+        if(LoginLogoutInform.getLogin_flag()==1){
+            setContentView(R.layout.activity_first_main);
+        }else{
+            setContentView(R.layout.logout_activity_first_main);
+        }
         permissionCheck();
 
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -105,6 +111,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Profile()).commit();
                 break;
+
             case R.id.menu_logout:
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivityForResult(intent, 101);
@@ -146,6 +153,11 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         return true;
     }
 
+    public void search_store(View view){
+        Intent intent=new Intent(getApplicationContext(), SearchMainActivity.class);
+        startActivityForResult(intent,101);
+    }
+
     @Override
     public void onBackPressed() {
         backPressCloseHandler.onBackPressed();
@@ -172,7 +184,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_first_layout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 180));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 250));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);
