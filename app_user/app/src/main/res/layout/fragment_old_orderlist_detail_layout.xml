@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
     tools:context=".home_dir.FirstMainActivity"
     tools:openDrawer="start">
-
     <RelativeLayout
-        android:id="@+id/LinearLayout_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id = "@+id/LinearLayout_container">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -22,106 +22,106 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_alignTop="@+id/fragment_container"
             android:layout_marginTop="0dp"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp"
+            android:background="#4AC66D"
+            android:elevation="0dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_navigation"
             android:layout_marginTop="?attr/actionBarSize"
+            android:layout_above="@+id/bottom_navigation"
             android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingRight="10dp"
             android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
             android:weightSum="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
-                android:orientation="vertical"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.3"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:weightSum="1"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/user_store_name"
+                        android:id = "@+id/user_store_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
+                        android:textAlignment="center"
                         android:text="ㆍ가게 이름:"
-                        android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"/>
 
                     <TextView
-                        android:id="@+id/user_store_name_input"
+                        android:id = "@+id/user_store_name_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:text="TextView"
                         android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:text="TextView"
+                        android:textSize="10sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.4"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:weightSum="1"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/user_store_number"
+                        android:id = "@+id/user_store_number"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
+                        android:textAlignment="center"
                         android:text="ㆍ가게 번호:"
-                        android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"/>
 
                     <TextView
-                        android:id="@+id/user_store_number_input"
+                        android:id = "@+id/user_store_number_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:text="TextView"
                         android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:text="TextView"
+                        android:textSize="10sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.3"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:weightSum="1"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/user_store_address"
+                        android:id = "@+id/user_store_address"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:text="ㆍ가게 주소:"
                         android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"/>
 
                     <TextView
-                        android:id="@+id/user_store_address_input"
+                        android:id = "@+id/user_store_address_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:text="TextView"
                         android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -135,10 +135,11 @@
                     android:id="@+id/old_olderlist_detail_layout_listview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:clickable="false"
                     android:divider="@null"
+                    android:listSelector="@android:color/transparent"
                     android:focusable="false"
-                    android:listSelector="@android:color/transparent"></ListView>
+                    android:clickable="false">
+                </ListView>
 
             </LinearLayout>
 
@@ -146,85 +147,85 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
-                android:orientation="vertical"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.3"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:weightSum="1"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/user_order_price_sum"
+                        android:id = "@+id/user_order_price_sum"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
+                        android:textAlignment="center"
                         android:text="ㆍ주문 총합:"
-                        android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"/>
 
                     <TextView
-                        android:id="@+id/user_order_price_sum_input"
+                        android:id = "@+id/user_order_price_sum_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:text="TextView"
                         android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:text="TextView"
+                        android:textSize="10sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.4"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:weightSum="1"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/user_order_time"
+                        android:id = "@+id/user_order_time"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
+                        android:textAlignment="center"
                         android:text="ㆍ주문 생성 시간:"
-                        android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"/>
 
                     <TextView
-                        android:id="@+id/user_order_time_input"
+                        android:id = "@+id/user_order_time_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:text="TextView"
                         android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:text="TextView"
+                        android:textSize="10sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.3"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:weightSum="1"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/user_pay_method"
+                        android:id = "@+id/user_pay_method"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
+                        android:textAlignment="center"
                         android:text="ㆍ결제 방법:"
-                        android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"/>
 
                     <TextView
-                        android:id="@+id/user_pay_method_input"
+                        android:id = "@+id/user_pay_method_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:text="TextView"
                         android:textAlignment="center"
-                        android:textSize="10sp" />
+                        android:text="TextView"
+                        android:textSize="10sp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -236,22 +237,22 @@
                 android:weightSum="1">
 
                 <TextView
-                    android:id="@+id/user_order_complete_time"
+                    android:id = "@+id/user_order_complete_time"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
+                    android:textAlignment="center"
                     android:text="ㆍ접수완료시간:"
-                    android:textAlignment="center"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
                 <TextView
-                    android:id="@+id/user_order_complete_time_input"
+                    android:id = "@+id/user_order_complete_time_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
-                    android:text="TextView"
                     android:textAlignment="center"
-                    android:textSize="10sp" />
+                    android:text="TextView"
+                    android:textSize="10sp"/>
 
             </LinearLayout>
 
@@ -263,22 +264,48 @@
                 android:weightSum="1">
 
                 <TextView
-                    android:id="@+id/user_deliver_start_time"
+                    android:id = "@+id/user_cooking_complete_time"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
+                    android:textAlignment="center"
+                    android:text="ㆍ음식조리완료시간:"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id = "@+id/user_cooking_complete_time_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:textAlignment="center"
+                    android:text="TextView"
+                    android:textSize="10sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id = "@+id/user_deliver_start_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:textAlignment="center"
                     android:text="ㆍ배달 출발 시간:"
-                    android:textAlignment="center"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
                 <TextView
-                    android:id="@+id/user_deliver_start_time_input"
+                    android:id = "@+id/user_deliver_start_time_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
-                    android:text="TextView"
                     android:textAlignment="center"
-                    android:textSize="10sp" />
+                    android:text="TextView"
+                    android:textSize="10sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -289,22 +316,22 @@
                 android:weightSum="1">
 
                 <TextView
-                    android:id="@+id/user_deliver_complete_time"
+                    android:id = "@+id/user_deliver_complete_time"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
-                    android:text="ㆍ배달 완료 시간:"
                     android:textAlignment="center"
-                    android:textSize="10sp" />
+                    android:text="ㆍ배달 완료 시간:"
+                    android:textSize="10sp"/>
 
                 <TextView
-                    android:id="@+id/user_deliver_complete_time_input"
+                    android:id = "@+id/user_deliver_complete_time_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
-                    android:text="TextView"
                     android:textAlignment="center"
-                    android:textSize="10sp" />
+                    android:text="TextView"
+                    android:textSize="10sp"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -314,20 +341,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="?android:attr/windowBackground"
-            app:menu="@menu/bottom_navigation" />
+            app:menu="@menu/bottom_navigation"
+            android:background="?android:attr/windowBackground"/>
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_navigation" />
+            android:layout_above="@+id/bottom_navigation"/>
     </RelativeLayout>
     <android.support.design.widget.NavigationView
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:id="@+id/nav_view"
-    app:headerLayout="@layout/nav_header"
-    app:menu="@menu/drawer_menu"/>
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:id="@+id/nav_view"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu"/>
 </android.support.v4.widget.DrawerLayout>
