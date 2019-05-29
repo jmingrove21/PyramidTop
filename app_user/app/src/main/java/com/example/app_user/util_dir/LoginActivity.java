@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
 import com.example.app_user.home_dir.FirstMainActivity;
@@ -25,16 +26,23 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private BackPressCloseHandler backPressCloseHandler;
+    private LoginLogoutInform loginLogoutInform;
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_login);
         setTitle("로그인");
+        backPressCloseHandler = new BackPressCloseHandler(this);
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if(loginLogoutInform.getLogin_flag()==1){
+            backPressCloseHandler.onBackPressed();
+        }else{
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -79,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText( LoginActivity.this, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                            loginLogoutInform.setLogin_flag(1);
                             Intent intent=new Intent(getApplicationContext(), FirstMainActivity.class);
                             startActivityForResult(intent,101);
                         }else{
@@ -87,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText( LoginActivity.this, "ID/PW가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                            loginLogoutInform.setLogin_flag(0);
                         }
                     }else{
                         Log.d("error","Connect fail");

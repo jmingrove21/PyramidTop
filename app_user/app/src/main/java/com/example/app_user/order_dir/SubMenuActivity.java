@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
@@ -60,12 +61,17 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activitiy_sub_store_menu);
+        if(LoginLogoutInform.getLogin_flag()==1){
+            setContentView(R.layout.activitiy_sub_store_menu);
+        }else{
+            setContentView(R.layout.logout_activitiy_sub_store_menu);
+        }
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         index = intent.getIntExtra("index", 0);
         serial = intent.getIntExtra("serial", 0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         UtilSet.target_store.setMenu_str();

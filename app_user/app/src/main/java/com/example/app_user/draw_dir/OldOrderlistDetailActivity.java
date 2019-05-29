@@ -21,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
@@ -49,7 +50,11 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_old_orderlist_detail_layout);
+        if(LoginLogoutInform.getLogin_flag()==1){
+            setContentView(R.layout.fragment_old_orderlist_detail_layout);
+        }else{
+            setContentView(R.layout.logout_fragment_old_orderlist_detail_layout);
+        }
 
         Intent intent = getIntent();
         //type = intent.getStringExtra("type");
