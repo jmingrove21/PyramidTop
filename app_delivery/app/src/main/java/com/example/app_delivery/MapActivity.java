@@ -27,11 +27,8 @@ import com.skt.Tmap.TMapView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -124,7 +121,7 @@ public class MapActivity extends AppCompatActivity {
         // 마커 아이콘 지정
         markerItem1.setIcon(bitmap_1);// 마커 아이콘 지정
         // 마커의 좌표 지정
-        markerItem1.setTMapPoint(new TMapPoint(37.279548, 127.043791));
+        markerItem1.setTMapPoint(new TMapPoint(UtilSet.latitude, UtilSet.longitude));
         //지도에 마커 추가
         tMapView.addMarkerItem("markerItem0", markerItem1);
 
@@ -142,10 +139,10 @@ public class MapActivity extends AppCompatActivity {
             tMapView.addMarkerItem("markerItem" + (i + 1), markerItem1);
 
         }
-        tMapView.setCenterPoint(127.043840, 37.278307);
+        tMapView.setCenterPoint(UtilSet.longitude, UtilSet.latitude);
 
         if (alTmapPoint.size() == 1) {
-            tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(37.279548, 127.043791), (TMapPoint) alTmapPoint.get(alTmapPoint.size() - 1), new TMapData.FindPathDataListenerCallback() {
+            tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), (TMapPoint) alTmapPoint.get(alTmapPoint.size() - 1), new TMapData.FindPathDataListenerCallback() {
                 @Override
                 public void onFindPathData(TMapPolyLine polyLine) {
                     polyLine.setLineColor(Color.BLUE);
@@ -156,7 +153,7 @@ public class MapActivity extends AppCompatActivity {
         } else {
             TMapPoint t_end = (TMapPoint) alTmapPoint.get(0);
             alTmapPoint.remove(0);
-            tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(37.279548, 127.043791), t_end, alTmapPoint, 0,
+            tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), t_end, alTmapPoint, 0,
                     new TMapData.FindPathDataListenerCallback() {
                         @Override
                         public void onFindPathData(TMapPolyLine polyLine) {
@@ -187,14 +184,6 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://54.180.102.7:80/get/JSON/delivery_app/delivery_manage.php");
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "complete");
 
@@ -208,13 +197,9 @@ public class MapActivity extends AppCompatActivity {
                         jsonParam.put("delivery_status", 1);//한 user complete
                     jsonParam.put("order_number", oData.get(position).order_number);
                     jsonParam.put("user_serial", oData.get(position).user_serial);
-                    Log.i("JSON", jsonParam.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
-                    os.writeBytes(jsonParam.toString());
 
-                    os.flush();
-                    os.close();
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
+
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
