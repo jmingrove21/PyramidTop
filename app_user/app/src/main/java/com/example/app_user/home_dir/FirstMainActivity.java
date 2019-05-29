@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.util_dir.BackPressCloseHandler;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
@@ -59,7 +60,11 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_main);
+        if(LoginLogoutInform.getLogin_flag()==1){
+            setContentView(R.layout.activity_first_main);
+        }else{
+            setContentView(R.layout.logout_activity_first_main);
+        }
         permissionCheck();
 
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -108,6 +113,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Profile()).commit();
                 break;
+
             case R.id.menu_logout:
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivityForResult(intent, 101);

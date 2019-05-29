@@ -29,6 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
@@ -64,7 +65,12 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_layout);
+        super.onCreate(savedInstanceState);
+        if(LoginLogoutInform.getLogin_flag()==1){
+            setContentView(R.layout.activity_search_layout);
+        }else{
+            setContentView(R.layout.logout_activity_search_layout);
+        }
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
