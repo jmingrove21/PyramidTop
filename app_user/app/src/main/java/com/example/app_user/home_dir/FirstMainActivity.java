@@ -41,6 +41,7 @@ import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
+import com.example.app_user.util_dir.RegisterActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -146,6 +147,11 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
+    }
+
+    public void search_store(View view){
+        Intent intent=new Intent(getApplicationContext(), SearchMainActivity.class);
+        startActivityForResult(intent,101);
     }
 
     @Override
