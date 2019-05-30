@@ -42,7 +42,6 @@ import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
-import com.example.app_user.util_dir.RegisterActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,7 +65,6 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         permissionCheck();
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);

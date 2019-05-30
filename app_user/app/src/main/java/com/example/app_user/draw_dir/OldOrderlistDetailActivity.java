@@ -25,7 +25,6 @@ import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
-import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.people_dir.PeopleFragment;
@@ -53,7 +52,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         if(LoginLogoutInform.getLogin_flag()==1){
             setContentView(R.layout.fragment_old_orderlist_detail_layout);
         }else{
-            setContentView(R.layout.logout_fragment_old_orderlist_detail_layout);
+            setContentView(R.layout.fragment_old_orderlist_detail_layout);
         }
 
         Intent intent = getIntent();
@@ -95,8 +94,11 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         text_user_store_name_input.setText(s.getStore_name());
         text_user_store_number_input.setText(s.getStore_phone());
         text_user_store_address_input.setText(s.getStore_address());
+        for (int i = 0; i < o.getStore().getMenu_desc_al().size(); i++) {
+            o.setMy_order_total_price(o.getStore().getMenu_desc_al().get(i).getMenu_price() * o.getStore().getMenu_desc_al().get(i).getMenu_count());
+        }
 
-        text_user_order_price_sum_input.setText(String.valueOf(o.getTotal_order_price()));
+        text_user_order_price_sum_input.setText(String.valueOf(o.getMy_order_total_price())+"원");
         text_user_order_time_input.setText(o.getOrder_create_date());
         text_user_pay_method_input.setText("Card~");
         text_user_order_complete_time_input.setText(o.getOrder_receipt_date());
@@ -190,8 +192,9 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.party_detail_layout_menu_listview, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 30));
+            view = getLayoutInflater().inflate(R.layout.detail_layout_menu_listview, null);
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 70));
+
 
             TextView text_name = (TextView) view.findViewById(R.id.menu_name);
             TextView text_menu_count_input = (TextView) view.findViewById(R.id.menu_count_input);
