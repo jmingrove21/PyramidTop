@@ -20,6 +20,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.Profile;
@@ -37,7 +38,11 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.party_detail_layout);
+        if(LoginLogoutInform.getLogin_flag()==1){
+            setContentView(R.layout.party_detail_layout);
+        }else{
+            setContentView(R.layout.logout_party_detail_layout);
+        }
 
         Intent intent = getIntent();
         index = intent.getIntExtra("index", 0);

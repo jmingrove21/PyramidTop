@@ -1,7 +1,14 @@
 package com.example.app_delivery;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,25 +20,26 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<Delivery_list> order_list=new ArrayList<>();
     private BackPressCloseHandler backPressCloseHandler;
     private ListView m_oListView=null;
-
+    public Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
+        permissionCheck();
         backPressCloseHandler=new BackPressCloseHandler(this);
 
         ArrayList<ItemData> oData=new ArrayList<>();
@@ -54,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("hihi");
             }
         });
-
+        UtilSet.lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        UtilSet.set_GPS_value(UtilSet.lm, this);
     }
     public void get_delivery_order_list() {
         Thread thread = new Thread(new Runnable() {
@@ -62,27 +71,12 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     order_list.clear();
-                    URL url = new URL("http://54.180.102.7:80/get/JSON/delivery_app/delivery_manage.php");
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept","application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "request");
-                    jsonParam.put("delivery_lat", 37.276391);
-                    jsonParam.put("delivery_long", 127.044021);
+                    jsonParam.put("delivery_lat", UtilSet.latitude);
+                    jsonParam.put("delivery_long", UtilSet.longitude);
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
 
-                    Log.i("JSON", jsonParam.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
-                    os.writeBytes(jsonParam.toString());
-
-                    os.flush();
-                    os.close();
                     if(conn.getResponseCode()==200){
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
@@ -178,27 +172,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://54.180.102.7:80/get/JSON/delivery_app/delivery_manage.php");
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept","application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "approve");
                     jsonParam.put("order_number", MainActivity.order_list.get(position).getOrder_number());
                     jsonParam.put("store_serial", MainActivity.order_list.get(position).getStore_serial());
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
 
-                    Log.i("JSON", jsonParam.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
-                    os.writeBytes(jsonParam.toString());
-
-                    os.flush();
-                    os.close();
                     if(conn.getResponseCode()==200){
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
@@ -228,5 +207,45 @@ public class MainActivity extends AppCompatActivity {
         }catch(InterruptedException e){
             e.printStackTrace();
         }
+    } public void permissionCheck() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+            ArrayList<String> arrayPermission = new ArrayList<>();
+
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                arrayPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+            permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                arrayPermission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            }
+            if (arrayPermission.size() > 0) {
+                String strArray[] = new String[arrayPermission.size()];
+                strArray = arrayPermission.toArray(strArray);
+                ActivityCompat.requestPermissions(this, strArray, UtilSet.PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case UtilSet.PERMISSION_REQUEST_CODE: {
+                if (grantResults.length < 1) {
+                    Toast.makeText(this, "Failed get permission", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, "Permission is denied : " + permissions[i], Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                Toast.makeText(this, "Permission is granted", Toast.LENGTH_SHORT).show();
+            }
+            break;
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

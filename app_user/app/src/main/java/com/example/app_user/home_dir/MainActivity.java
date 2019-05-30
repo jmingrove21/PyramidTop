@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.Item_dir.MenuDesc;
@@ -60,7 +61,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
+        if(LoginLogoutInform.getLogin_flag()==1){
+            setContentView(R.layout.activity_main);
+        }else{
+            setContentView(R.layout.logout_activity_main);
+        }
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         drawer = findViewById(R.id.drawer_layout);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 

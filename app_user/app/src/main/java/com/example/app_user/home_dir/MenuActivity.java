@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.MenuCustomAdapter;
@@ -63,7 +64,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activitiy_store_menu);
+        super.onCreate(savedInstanceState);
+        if(LoginLogoutInform.getLogin_flag()==1){
+            setContentView(R.layout.activitiy_store_menu);
+        }else{
+            setContentView(R.layout.logout_activitiy_store_menu);
+        }
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         index = intent.getIntExtra("index", 0);
