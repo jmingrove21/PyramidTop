@@ -41,7 +41,7 @@ import com.example.app_user.people_dir.PeopleFragment;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.UtilSet;
-import com.example.app_user.util_dir.SearchActivity;
+//import com.example.app_user.util_dir.SearchActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
         if(LoginLogoutInform.getLogin_flag()==1){
             setContentView(R.layout.activity_main);

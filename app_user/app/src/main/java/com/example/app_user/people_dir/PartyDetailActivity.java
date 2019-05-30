@@ -41,7 +41,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         if(LoginLogoutInform.getLogin_flag()==1){
             setContentView(R.layout.party_detail_layout);
         }else{
-            setContentView(R.layout.logout_party_detail_layout);
+            setContentView(R.layout.party_detail_layout);
         }
 
         Intent intent = getIntent();
