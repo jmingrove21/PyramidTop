@@ -18,7 +18,6 @@ import android.util.LruCache;
 import android.widget.Toast;
 
 import com.example.app_user.R;
-
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -129,8 +128,6 @@ public class UtilSet {
                     1000,
                     1,
                     gpsLocationListener);
-
-
         }
     }
 
@@ -149,7 +146,7 @@ public class UtilSet {
                         con.startActivity(intent);
                     }
                 });
-        // Cancle 하면 종료 합니다.
+        // Cancel 하면 종료 합니다.
         alertDialog.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -174,12 +171,15 @@ public class UtilSet {
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
+
         }
 
         public void onProviderEnabled(String provider) {
+
         }
 
         public void onProviderDisabled(String provider) {
+
         }
     };
 }

@@ -100,11 +100,7 @@ public class MapActivity extends AppCompatActivity {
                     Menu m=new Menu(menu_name,menu_count,menu_price);
                     iu.al_menu.add(m);
                 }
-
                 oData.add(iu);
-                //  String price=((JSONObject)json_result_al.get(i)).get("user_name").toString();
-
-                // String u
             }
         } catch (JSONException e) {
             e.printStackTrace();

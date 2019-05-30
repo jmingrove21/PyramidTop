@@ -14,8 +14,7 @@ public class Order {
     private String order_receipt_date;
     private String delivery_departure_time;
     private String delivery_arrival_time;
-    private String participate_persons;
-
+    private int my_order_total_price=0;
     public Order(String order_create_date,String participate_person, String total_order_price, String order_number){
         this.order_create_date=order_create_date;
         this.participate_person=Integer.parseInt(participate_person);
@@ -67,15 +66,18 @@ public class Order {
         return delivery_departure_time;
     }
 
-    public String getParticipate_persons() {
-        return participate_persons;
-    }
-
     public String getDelivery_arrival_time() {
         return delivery_arrival_time;
     }
     public void setDelivery_arrival_time(String delivery_arrival_time) {
         this.delivery_arrival_time = delivery_arrival_time;
+    }
+    public int getMy_order_total_price() {
+        return my_order_total_price;
+    }
+
+    public void setMy_order_total_price(int my_order_total_price) {
+        this.my_order_total_price += my_order_total_price;
     }
     public void setDateSpecification(String order_create_date, String order_receipt_date, String delivery_departure_time){
         this.order_create_date=order_create_date;

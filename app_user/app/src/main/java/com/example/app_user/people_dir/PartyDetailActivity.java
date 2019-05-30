@@ -38,9 +38,9 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if(LoginLogoutInform.getLogin_flag()==1){
+        if (LoginLogoutInform.getLogin_flag() == 1) {
             setContentView(R.layout.party_detail_layout);
-        }else{
+        } else {
             setContentView(R.layout.party_detail_layout);
         }
 
@@ -82,14 +82,17 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         TextView text_user_deliver_start_time_input = (TextView) findViewById(R.id.user_deliver_start_time_input);
         TextView text_user_deliver_complete_time_input = (TextView) findViewById(R.id.user_deliver_complete_time_input);
 
-        Order o=UtilSet.al_my_order.get(index);
+        Order o = UtilSet.al_my_order.get(index);
 
-//        text_user.setText("김창희");
-        text_user_store_name_input.setText(o.getStore().getStore_name()+" "+o.getStore().getStore_branch_name());
+        text_user_store_name_input.setText(o.getStore().getStore_name() + " " + o.getStore().getStore_branch_name());
         text_user_store_number_input.setText(o.getStore().getStore_phone());
         text_user_store_address_input.setText(o.getStore().getStore_address());
 
-        text_user_order_price_sum_input.setText(String.valueOf(o.getTotal_order_price()));
+        for (int i = 0; i < o.getStore().getMenu_desc_al().size(); i++) {
+           o.setMy_order_total_price(o.getStore().getMenu_desc_al().get(i).getMenu_price() * o.getStore().getMenu_desc_al().get(i).getMenu_count());
+        }
+
+        text_user_order_price_sum_input.setText(String.valueOf(o.getMy_order_total_price()) + "원");
         text_user_order_time_input.setText(o.getOrder_create_date());
         text_user_pay_method_input.setText("pay method input");
         text_user_order_complete_time_input.setText(o.getOrder_receipt_date());
@@ -183,7 +186,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.party_detail_layout_menu_listview, null);
+            view = getLayoutInflater().inflate(R.layout.detail_layout_menu_listview, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 70));
 
             TextView text_name = (TextView) view.findViewById(R.id.menu_name);
@@ -193,7 +196,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
             text_name.setText(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_name());
             text_menu_count_input.setText(String.valueOf(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_count()));
-            text_menu_price_input.setText(String.valueOf(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_price()*UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_count()));
+            text_menu_price_input.setText(String.valueOf(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_price() * UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_count()));
 
             return view;
         }
