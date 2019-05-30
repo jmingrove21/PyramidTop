@@ -57,15 +57,15 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_listview);
-        PartyDetailActivity.UserAdapter userAdapter=new PartyDetailActivity.UserAdapter();
-        listView_user.setAdapter(userAdapter);
+//        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_listview);
+//        PartyDetailActivity.UserAdapter userAdapter=new PartyDetailActivity.UserAdapter();
+//        listView_user.setAdapter(userAdapter);
         ListView listView_menu = (ListView) findViewById(R.id.party_detail_layout_menu_listview);
         PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
         listView_menu.setAdapter(customAdapter);
 
 
-        TextView text_user = (TextView) findViewById(R.id.user);
+//        TextView text_user = (TextView) findViewById(R.id.user);
         TextView text_user_store_name_input = (TextView) findViewById(R.id.user_store_name_input);
         TextView text_user_store_number_input = (TextView) findViewById(R.id.user_store_number_input);
         TextView text_user_store_address_input = (TextView) findViewById(R.id.user_store_address_input);
@@ -79,7 +79,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         Order o=UtilSet.al_my_order.get(index);
 
-        text_user.setText("김창희");
+//        text_user.setText("김창희");
         text_user_store_name_input.setText(o.getStore().getStore_name()+" "+o.getStore().getStore_branch_name());
         text_user_store_number_input.setText(o.getStore().getStore_phone());
         text_user_store_address_input.setText(o.getStore().getStore_address());
@@ -179,7 +179,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.party_detail_layout_menu_listview, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 30));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 70));
 
             TextView text_name = (TextView) view.findViewById(R.id.menu_name);
             TextView text_menu_count_input = (TextView) view.findViewById(R.id.menu_count_input);

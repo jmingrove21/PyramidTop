@@ -186,7 +186,8 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.party_detail_layout_menu_listview, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 30));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 2));
+
 
             TextView text_name = (TextView) view.findViewById(R.id.menu_name);
             TextView text_menu_count_input = (TextView) view.findViewById(R.id.menu_count_input);
