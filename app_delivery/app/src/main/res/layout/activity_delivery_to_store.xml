@@ -29,13 +29,14 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textSize="10sp"
             android:layout_gravity="right"
-            /><Button
-        android:id="@+id/delivery_start_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="배달 시작"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        />
+            />
+
+        <Button
+            android:id="@+id/delivery_start_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="배달 시작"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
     </LinearLayout>
 
 

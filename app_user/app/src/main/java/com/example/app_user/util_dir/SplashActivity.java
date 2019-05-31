@@ -26,6 +26,7 @@ public class SplashActivity extends Activity {
         try{
             Thread.sleep(3000);
             Intent intent=new Intent(getApplicationContext(), FirstMainActivity.class);
+            intent.putExtra("login_key", 0);
             startActivityForResult(intent,101);
         }catch(InterruptedException e){
             e.printStackTrace();
