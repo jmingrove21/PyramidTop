@@ -43,6 +43,7 @@ import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
+import com.example.app_user.util_dir.RegisterActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -64,58 +65,59 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
         startService(intent_alert);
 
-        if(LoginLogoutInform.getLogin_flag()==1){
-        Intent intent = getIntent();
-        int index = intent.getIntExtra("login_key", 0);
+        if (LoginLogoutInform.getLogin_flag() == 1) {
+            Intent intent = getIntent();
+            int index = intent.getIntExtra("login_key", 0);
 
-        if(index==1){
-            UtilSet.loginLogoutInform.setLogin_flag(1);
-        }else{
-            UtilSet.loginLogoutInform.setLogin_flag(0);
-        }
-
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
-            setContentView(R.layout.activity_first_main);
-        }else{
-            setContentView(R.layout.logout_activity_first_main);
-        }
-        permissionCheck();
-
-        backPressCloseHandler = new BackPressCloseHandler(this);
-
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("음식 목록");
-
-        drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        ListView listView = (ListView) findViewById(R.id.first_listView);
-        CustomAdapter customAdapter = new CustomAdapter();
-        listView.setAdapter(customAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                get_store_information(position);
+            if (index == 1) {
+                UtilSet.loginLogoutInform.setLogin_flag(1);
+            } else {
+                UtilSet.loginLogoutInform.setLogin_flag(0);
             }
-        });
-        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        UtilSet.set_GPS_permission(lm, this);
+
+            if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+                setContentView(R.layout.activity_first_main);
+            } else {
+                setContentView(R.layout.logout_activity_first_main);
+            }
+            permissionCheck();
+
+            backPressCloseHandler = new BackPressCloseHandler(this);
+
+            BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+            bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("음식 목록");
+
+            drawer = findViewById(R.id.drawer_layout);
+            NavigationView navigationView = findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                    R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+
+            ListView listView = (ListView) findViewById(R.id.first_listView);
+            CustomAdapter customAdapter = new CustomAdapter();
+            listView.setAdapter(customAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    get_store_information(position);
+                }
+            });
+            final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            UtilSet.set_GPS_permission(lm, this);
+        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -133,7 +135,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     startActivityForResult(intent, 101);
                     break;
             }
-        }else{
+        } else {
             switch (menuItem.getItemId()) {
                 case R.id.menu_register:
                     Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
@@ -182,9 +184,9 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         return true;
     }
 
-    public void search_store(View view){
-        Intent intent=new Intent(getApplicationContext(), SearchMainActivity.class);
-        startActivityForResult(intent,101);
+    public void search_store(View view) {
+        Intent intent = new Intent(getApplicationContext(), SearchMainActivity.class);
+        startActivityForResult(intent, 101);
     }
 
     @Override
@@ -304,7 +306,8 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case UtilSet.PERMISSION_REQUEST_CODE: {
                 if (grantResults.length < 1) {
