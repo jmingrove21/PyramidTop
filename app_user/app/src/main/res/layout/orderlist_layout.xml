@@ -2,22 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="#F2F2F2">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="20"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="@drawable/orderlist_button_top">
 
         <TextView
             android:id="@+id/date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:layout_weight="1"
-            android:text="시간" />
+            android:text="시간"
+            android:gravity="center_vertical"
+            android:padding="10dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -25,12 +30,14 @@
         android:layout_height="0dp"
         android:layout_weight="80"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="@drawable/orderlist_button_botton">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3">
+            android:layout_weight="0.3"
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -49,15 +56,36 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.33">
+                android:layout_weight="0.33"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.15"
+                    android:padding="10dp">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right"
+                        android:src="@drawable/shop1"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.85"
+                    android:orientation="vertical">
                 <TextView
                     android:id="@+id/store_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="TextView"
-                    android:textSize="17sp"
-                    android:textStyle="bold"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -65,12 +93,13 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.33"
                 android:orientation="horizontal"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.3"
                     android:orientation="vertical">
 
                     <TextView
@@ -78,13 +107,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="참여인원:"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.75"
+                    android:layout_weight="0.7"
                     android:orientation="vertical">
 
                     <TextView
@@ -92,7 +122,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="TextView"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -103,22 +134,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.34"
                 android:orientation="horizontal"
-                android:weightSum="1">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.4"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/current"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="sans-serif"
-                        android:text="현재 금액 / 최소 금액 :"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                android:weightSum="1"
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -127,12 +144,29 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/current"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif"
+                        android:text="현재 금액 / 최소 금액 :"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:orientation="vertical">
+
+                    <TextView
                         android:id="@+id/price"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="sans-serif"
                         android:text="TextView"
-                        android:textSize="12sp" />
+                        android:textSize="15sp"
+                        android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
 
