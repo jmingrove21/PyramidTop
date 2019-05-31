@@ -24,21 +24,25 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
 public class LoginActivity extends AppCompatActivity {
 
     private BackPressCloseHandler backPressCloseHandler;
-    private LoginLogoutInform loginLogoutInform;
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_login);
         setTitle("로그인");
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            UtilSet.loginLogoutInform.setLogin_flag(0);
+
+        }
         backPressCloseHandler = new BackPressCloseHandler(this);
     }
 
     @Override
     public void onBackPressed() {
-        if(loginLogoutInform.getLogin_flag()==1){
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
             backPressCloseHandler.onBackPressed();
         }else{
             super.onBackPressed();
@@ -87,8 +91,8 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText( LoginActivity.this, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            loginLogoutInform.setLogin_flag(1);
                             Intent intent=new Intent(getApplicationContext(), FirstMainActivity.class);
+                            intent.putExtra("login_key", 1);
                             startActivityForResult(intent,101);
                         }else{
                             LoginActivity.this.runOnUiThread(new Runnable() {
@@ -96,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText( LoginActivity.this, "ID/PW가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            loginLogoutInform.setLogin_flag(0);
+                            UtilSet.loginLogoutInform.setLogin_flag(0);
                         }
                     }else{
                         Log.d("error","Connect fail");

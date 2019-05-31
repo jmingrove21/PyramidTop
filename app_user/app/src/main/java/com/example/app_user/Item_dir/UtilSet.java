@@ -55,6 +55,7 @@ public class UtilSet {
     public final static int PERMISSION_REQUEST_CODE=1000;
     public static double latitude=0;
     public static double longitude=0;
+    public static LoginLogoutInform loginLogoutInform = new LoginLogoutInform();
 
 
     public static String convertStreamToString(InputStream is) {
