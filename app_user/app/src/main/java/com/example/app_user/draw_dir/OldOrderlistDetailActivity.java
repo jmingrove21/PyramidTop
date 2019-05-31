@@ -32,6 +32,7 @@ import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.util_dir.LoginActivity;
+import com.example.app_user.util_dir.RegisterActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +50,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if(LoginLogoutInform.getLogin_flag()==1){
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
             setContentView(R.layout.fragment_old_orderlist_detail_layout);
         }else{
             setContentView(R.layout.fragment_old_orderlist_detail_layout);
@@ -110,21 +111,36 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.old_olderlist:
-                getSupportActionBar().setTitle("지난 주문 내역");
-                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                        new Old_Orderlist()).commit();
-                break;
-            case R.id.menu_idoption:
-                getSupportActionBar().setTitle("계정 설정");
-                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                        new Profile()).commit();
-                break;
-            case R.id.menu_logout:
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivityForResult(intent, 101);
-                break;
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Profile()).commit();
+                    break;
+
+                case R.id.menu_logout:
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(intent, 101);
+                    break;
+            }
+        }else{
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -155,7 +171,6 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
                             getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
                                     selectedFragment).commit();
                             break;
-
                     }
                     return true;
                 }

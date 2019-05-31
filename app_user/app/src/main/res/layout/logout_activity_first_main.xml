@@ -13,13 +13,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/relative_container"
         android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/relativelayout_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_navigation">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_alignTop="@+id/fragment_container"
+            android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
             android:background="#4AC66D"
             android:gravity="center"
@@ -40,9 +46,9 @@
             android:id="@+id/first_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignTop="@+id/fragment_container"
-            android:layout_marginTop="110dp"
-            android:layout_above="@+id/bottom_navigation"/>
+            android:layout_alignTop="@+id/search_store"
+            android:layout_marginTop="60dp"/>
+    </RelativeLayout>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation"
