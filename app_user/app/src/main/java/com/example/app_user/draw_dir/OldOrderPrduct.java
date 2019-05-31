@@ -1,8 +1,5 @@
 package com.example.app_user.draw_dir;
 
-import android.graphics.Bitmap;
-import android.widget.Button;
-
 public class OldOrderPrduct {
 
     private String user_store_name_input;

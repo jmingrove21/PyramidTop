@@ -89,8 +89,10 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         TextView text_user_order_complete_time_input = (TextView) findViewById(R.id.user_order_complete_time_input);
         TextView text_user_deliver_start_time_input = (TextView) findViewById(R.id.user_deliver_start_time_input);
         TextView text_user_deliver_complete_time_input = (TextView) findViewById(R.id.user_deliver_complete_time_input);
+
         Order o = UtilSet.al_my_old_order.get(index);
         Store s = o.getStore();
+
         text_user_store_name_input.setText(s.getStore_name());
         text_user_store_number_input.setText(s.getStore_phone());
         text_user_store_address_input.setText(s.getStore_address());

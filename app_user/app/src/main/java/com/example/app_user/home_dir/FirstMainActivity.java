@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
+import com.example.app_user.MyService;
 import com.example.app_user.util_dir.BackPressCloseHandler;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
@@ -50,6 +51,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
+
+//idea supported by jaehoon pae
 public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
@@ -57,6 +60,9 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = new Intent(FirstMainActivity.this, MyService.class);
+        startService(intent);
+
         if(LoginLogoutInform.getLogin_flag()==1){
             setContentView(R.layout.activity_first_main);
         }else{

@@ -46,6 +46,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 
+
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
     private DrawerLayout drawer;
     int index;
@@ -63,7 +64,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
         if(LoginLogoutInform.getLogin_flag()==1){
             setContentView(R.layout.activitiy_store_menu);
