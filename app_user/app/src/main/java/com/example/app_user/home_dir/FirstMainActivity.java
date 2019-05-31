@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.app_user.Item_dir.LoginLogoutInform;
+import com.example.app_user.Item_dir.User;
 import com.example.app_user.MyService;
 import com.example.app_user.util_dir.BackPressCloseHandler;
 import com.example.app_user.util_dir.HomeFragment;
@@ -52,7 +53,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
-
 //idea supported by jaehoon pae
 public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -65,54 +65,59 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
         startService(intent_alert);
 
-        if (LoginLogoutInform.getLogin_flag() == 1) {
-            Intent intent = getIntent();
-            int index = intent.getIntExtra("login_key", 0);
+        setContentView(R.layout.activity_first_main);
 
-            if (index == 1) {
-                UtilSet.loginLogoutInform.setLogin_flag(1);
-            } else {
-                UtilSet.loginLogoutInform.setLogin_flag(0);
-            }
+        permissionCheck();
 
-            if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
-                setContentView(R.layout.activity_first_main);
-            } else {
-                setContentView(R.layout.logout_activity_first_main);
-            }
-            permissionCheck();
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
-            backPressCloseHandler = new BackPressCloseHandler(this);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-            BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-            bottomNav.setOnNavigationItemSelectedListener(navListener);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("음식 목록");
 
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("음식 목록");
-
-            drawer = findViewById(R.id.drawer_layout);
-            NavigationView navigationView = findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
-
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                    R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
-
-            ListView listView = (ListView) findViewById(R.id.first_listView);
-            CustomAdapter customAdapter = new CustomAdapter();
-            listView.setAdapter(customAdapter);
-
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    get_store_information(position);
-                }
-            });
-            final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            UtilSet.set_GPS_permission(lm, this);
+        drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_id());
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText("수원시주소~");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
         }
+        navigationView.setNavigationItemSelectedListener(this);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        ListView listView = (ListView) findViewById(R.id.first_listView);
+        CustomAdapter customAdapter = new CustomAdapter();
+        listView.setAdapter(customAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                get_store_information(position);
+            }
+        });
+        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        UtilSet.set_GPS_permission(lm, this);
     }
 
     @Override
@@ -129,10 +134,12 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     getSupportFragmentManager().beginTransaction().replace(R.id.relative_container,
                             new Profile()).commit();
                     break;
-
                 case R.id.menu_logout:
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(intent, 101);
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(FirstMainActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                     break;
             }
         } else {
@@ -141,7 +148,6 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
                     startActivityForResult(register_intent, 101);
                     break;
-
                 case R.id.menu_login:
                     Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivityForResult(login_intent, 101);
@@ -192,7 +198,6 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     @Override
     public void onBackPressed() {
         backPressCloseHandler.onBackPressed();
-
     }
 
     class CustomAdapter extends BaseAdapter {
@@ -264,7 +269,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                             }
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivityForResult(intent, 101);
-                            finish();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -297,6 +302,14 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 arrayPermission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
             }
+            permissionCheck=ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+                arrayPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+            permissionCheck=ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE);
+            if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+                arrayPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
             if (arrayPermission.size() > 0) {
                 String strArray[] = new String[arrayPermission.size()];
                 strArray = arrayPermission.toArray(strArray);
@@ -324,7 +337,6 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             }
             break;
         }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

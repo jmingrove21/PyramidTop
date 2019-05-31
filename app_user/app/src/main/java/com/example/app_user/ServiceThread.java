@@ -16,6 +16,7 @@ public class ServiceThread extends Thread {
     boolean isRun = true;
     static int result_output=-1;
     static ArrayList<String> alert_info_al=new ArrayList<>();
+
     public ServiceThread(Handler handler){
         this.handler = handler;
     }
@@ -30,7 +31,7 @@ public class ServiceThread extends Thread {
         //반복적으로 수행할 작업을 한다.
         while(isRun){
             get_user_status_change();
-            if(result_output==1){
+            if(result_output==1&&UtilSet.loginLogoutInform.getLogin_flag()==1){
                 handler.sendEmptyMessage(0);//쓰레드에 있는 핸들러에게 메세지를 보냄
             }else{
 
@@ -81,4 +82,3 @@ public class ServiceThread extends Thread {
     }
 
 }
-f

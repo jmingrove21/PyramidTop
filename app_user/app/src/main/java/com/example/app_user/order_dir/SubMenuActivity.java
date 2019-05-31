@@ -62,11 +62,8 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
-            setContentView(R.layout.activitiy_sub_store_menu);
-        }else{
-            setContentView(R.layout.logout_activitiy_sub_store_menu);
-        }
+        setContentView(R.layout.activitiy_sub_store_menu);
+
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         index = intent.getIntExtra("index", 0);
@@ -83,6 +80,27 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_id());
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText("수원시주소~");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         store_inform_button = (ImageButton) findViewById(R.id.store_inform_button);
@@ -147,10 +165,12 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                             new Profile()).commit();
                     break;
-
                 case R.id.menu_logout:
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(intent, 101);
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(SubMenuActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                     break;
             }
         }else{
