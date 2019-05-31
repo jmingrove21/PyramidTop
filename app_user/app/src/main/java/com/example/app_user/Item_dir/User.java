@@ -1,10 +1,17 @@
 package com.example.app_user.Item_dir;
 
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String user_id;
-    private String user_time;
-    int user_price;
+    private transient String user_time;
+    transient int user_price;
+    private String user_password;
+    public User(String user_id, String user_password){
+        this.user_id=user_id;
+        this.user_password=user_password;
+    }
     public User(String user_id){
         this.user_id=user_id;
     }

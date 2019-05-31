@@ -61,11 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
-            setContentView(R.layout.activity_main);
-        }else{
-            setContentView(R.layout.logout_activity_main);
-        }
+        setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -78,6 +74,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_id());
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText("수원시주소~");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -250,10 +267,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new Profile()).commit();
                     break;
-
                 case R.id.menu_logout:
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(intent, 101);
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(MainActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                     break;
             }
         }else{

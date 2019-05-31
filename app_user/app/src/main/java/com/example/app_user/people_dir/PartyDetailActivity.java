@@ -39,15 +39,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-        if (LoginLogoutInform.getLogin_flag() == 1) {
-            setContentView(R.layout.party_detail_layout);
-        } else {
-=======
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
->>>>>>> 345ca8e3dfc4b5b696320ed921a2ea62d0692746
-            setContentView(R.layout.party_detail_layout);
-        }
+
 
         Intent intent = getIntent();
         index = intent.getIntExtra("index", 0);
@@ -61,6 +53,27 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_id());
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText("수원시주소~");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -119,10 +132,12 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
                     getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
                             new Profile()).commit();
                     break;
-
                 case R.id.menu_logout:
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(intent, 101);
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(PartyDetailActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                     break;
             }
         }else{
