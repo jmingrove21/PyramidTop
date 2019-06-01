@@ -2,15 +2,19 @@ package com.example.app_user.draw_dir;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.GravityCompat;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
+import com.example.app_user.home_dir.FirstMainActivity;
+import com.example.app_user.home_dir.MenuActivity;
 import com.example.app_user.util_dir.LoginActivity;
 import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapView;
@@ -62,6 +66,7 @@ public class GpsActivity extends Activity {
                 GpsActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(GpsActivity.this, address, Toast.LENGTH_SHORT).show();
+                        UtilSet.my_user.setUser_address(address);
                     }
                 });
 
@@ -70,5 +75,12 @@ public class GpsActivity extends Activity {
             }
             return null;
         }
+    } @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(GpsActivity.this, FirstMainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
+
 }

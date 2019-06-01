@@ -19,19 +19,19 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textSize="15sp"
-            android:layout_weight="0.6"
+            android:layout_weight="0.4"
             android:text="시간"
             android:gravity="center_vertical"
             android:padding="10dp"/>
-        <TextView
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"></LinearLayout>
+        <ImageView
             android:id="@+id/order_status"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:textSize="14sp"
-            android:text="상태"
-            android:gravity="center_vertical"
-            android:padding="10dp"/>
+            android:layout_weight="0.3"/>
     </LinearLayout>
 
     <LinearLayout
