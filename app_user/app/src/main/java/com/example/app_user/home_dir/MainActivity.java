@@ -42,7 +42,7 @@ import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.UtilSet;
 //import com.example.app_user.util_dir.SearchActivity;
-
+import com.example.app_user.util_dir.RegisterActivity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -61,11 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if(LoginLogoutInform.getLogin_flag()==1){
-            setContentView(R.layout.activity_main);
-        }else{
-            setContentView(R.layout.logout_activity_main);
-        }
+        setContentView(R.layout.activity_main);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -78,6 +74,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_id());
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText("수원시주소~");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -147,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).setMenu_image(bitmap);
                                         UtilSet.addBitmapToMemoryCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img(), bitmap);
                                     }
-
                                 } catch (MalformedURLException e) {
                                     e.printStackTrace();
                                 } catch (IOException e) {
@@ -239,21 +255,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.old_olderlist:
-                getSupportActionBar().setTitle("지난 주문 내역");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new Old_Orderlist()).commit();
-                break;
-            case R.id.menu_idoption:
-                getSupportActionBar().setTitle("계정 설정");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new Profile()).commit();
-                break;
-            case R.id.menu_logout:
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivityForResult(intent, 101);
-                break;
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new Profile()).commit();
+                    break;
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(MainActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }else{
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

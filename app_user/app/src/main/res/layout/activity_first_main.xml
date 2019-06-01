@@ -13,13 +13,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id = "@+id/relative_container"
         android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/relativelayout_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_navigation">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_alignTop="@+id/fragment_container"
+            android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
             android:background="#4AC66D"
             android:gravity="center"
@@ -27,7 +33,6 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             tools:ignore="HardcodedText"/>
-
         <Button
             android:id="@+id/search_store"
             android:onClick="search_store"
@@ -36,14 +41,13 @@
             android:text="식당 검색"
             android:layout_marginTop="?attr/actionBarSize"/>
 
-        <ListView
-            android:id="@+id/first_listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignTop="@+id/fragment_container"
-            android:layout_marginTop="110dp"
-            android:layout_above="@+id/bottom_navigation"/>
-
+            <ListView
+                android:id="@+id/first_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/search_store"
+                android:layout_marginTop="60dp"/>
+        </RelativeLayout>
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
@@ -63,6 +67,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:id="@+id/nav_view"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu"/>
+        />
 </android.support.v4.widget.DrawerLayout>

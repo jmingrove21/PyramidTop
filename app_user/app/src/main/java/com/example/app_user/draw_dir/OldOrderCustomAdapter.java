@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.example.app_user.R;
 
-import java.util.ArrayList;
-
 public class OldOrderCustomAdapter extends BaseAdapter {
     private Context context;
 

@@ -22,13 +22,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.MenuCustomAdapter;
@@ -37,6 +35,7 @@ import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.people_dir.PeopleFragment;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
+import com.example.app_user.util_dir.RegisterActivity;
 import com.example.app_user.util_dir.StoreDetailFragment;
 import com.example.app_user.Item_dir.UtilSet;
 
@@ -45,6 +44,7 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
     private DrawerLayout drawer;
@@ -64,12 +64,9 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
-        if(LoginLogoutInform.getLogin_flag()==1){
-            setContentView(R.layout.activitiy_store_menu);
-        }else{
-            setContentView(R.layout.logout_activitiy_store_menu);
-        }
+        setContentView(R.layout.activitiy_store_menu);
+
+
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
         index = intent.getIntExtra("index", 0);
@@ -85,6 +82,29 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_id());
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText("수원시주소~");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
+        }
+
+
         navigationView.setNavigationItemSelectedListener(this);
 
         store_inform_button = (ImageButton) findViewById(R.id.store_inform_button);
@@ -139,21 +159,37 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.old_olderlist:
-                getSupportActionBar().setTitle("지난 주문 내역");
-                getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-                        new Old_Orderlist()).commit();
-                break;
-            case R.id.menu_idoption:
-                getSupportActionBar().setTitle("계정 설정");
-                getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-                        new Profile()).commit();
-                break;
-            case R.id.menu_logout:
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivityForResult(intent, 101);
-                break;
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                            new Profile()).commit();
+                    break;
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(MenuActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }else{
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

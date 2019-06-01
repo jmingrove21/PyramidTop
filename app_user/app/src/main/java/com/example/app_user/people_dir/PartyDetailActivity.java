@@ -29,6 +29,7 @@ import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.util_dir.LoginActivity;
+import com.example.app_user.util_dir.RegisterActivity;
 
 public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -38,11 +39,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if (LoginLogoutInform.getLogin_flag() == 1) {
-            setContentView(R.layout.party_detail_layout);
-        } else {
-            setContentView(R.layout.party_detail_layout);
-        }
+
 
         Intent intent = getIntent();
         index = intent.getIntExtra("index", 0);
@@ -56,6 +53,27 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_id());
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText("수원시주소~");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -102,21 +120,38 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.old_olderlist:
-                getSupportActionBar().setTitle("지난 주문 내역");
-                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                        new Old_Orderlist()).commit();
-                break;
-            case R.id.menu_idoption:
-                getSupportActionBar().setTitle("계정 설정");
-                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                        new Profile()).commit();
-                break;
-            case R.id.menu_logout:
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivityForResult(intent, 101);
-                break;
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Profile()).commit();
+                    break;
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(PartyDetailActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }else{
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

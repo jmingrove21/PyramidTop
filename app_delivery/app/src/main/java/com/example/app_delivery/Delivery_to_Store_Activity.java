@@ -32,7 +32,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
     double store_longtite;
     int order_number;
     static TMapView tMapView;
-
+    static boolean refresh_status=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +70,8 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 boolean isTmapApp = tMapTapi.isTmapApplicationInstalled();
                 if (isTmapApp == true) {
-                    tMapTapi.invokeNavigate("T타워", new Float(store_longtite), new Float(store_latitude), 0, true);
+                    Delivery_to_Store_Activity.refresh_status=false;
+                    tMapTapi.invokeNavigate("destination", new Float(store_longtite), new Float(store_latitude), 0, true);
                 } else {
                     Toast.makeText(Delivery_to_Store_Activity.this, "TMap이 설치되어 있지 않습니다.", Toast.LENGTH_LONG);
                 }
@@ -81,6 +82,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 delivery_start_event();
+                Delivery_to_Store_Activity.refresh_status=false;
             }
         });
 
@@ -168,6 +170,8 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     Delivery_to_Store_Activity.tMapView.addTMapPolyLine("Line1", tMapPolyLine);
                     UtilSet.set_GPS_value(UtilSet.lm, Delivery_to_Store_Activity.this);
                     Thread.sleep(5000);
+                    if(Delivery_to_Store_Activity.refresh_status==false)
+                        break;
                 } catch (Exception e) {
                     e.printStackTrace();
                     break;
