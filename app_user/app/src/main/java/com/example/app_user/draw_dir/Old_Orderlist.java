@@ -45,6 +45,10 @@ public class Old_Orderlist extends Fragment {
         get_store_info_by_my_order();
         oldOrderProducts = getOldOderProduct();
         oldOrderCustomAdapter = new OldOrderCustomAdapter(getActivity());
+
+        if(UtilSet.al_my_old_order.size()==0){
+            return view;
+        }
         listView.setAdapter(oldOrderCustomAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,7 +86,7 @@ public class Old_Orderlist extends Fragment {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "ordered_list");
                     jsonParam.put("order_info",0);
-                    jsonParam.put("user_serial",UtilSet.user_serial);
+                    jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
 
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
                     if (conn.getResponseCode() == 200) {

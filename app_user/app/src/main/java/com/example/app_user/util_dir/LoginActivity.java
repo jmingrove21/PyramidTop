@@ -23,7 +23,8 @@ import java.net.HttpURLConnection;
 
 
 public class LoginActivity extends AppCompatActivity {
-
+    int user_serial;
+    String user_name;
     private BackPressCloseHandler backPressCloseHandler;
     @Override
     protected void onCreate(Bundle saveInstanceState){
@@ -82,10 +83,14 @@ public class LoginActivity extends AppCompatActivity {
                         String json_result=jobj.getString("confirm");
                         Log.i("check_state", json_result);
                         if(json_result.equals("1")){
+                            user_name = jobj.getString("user_name");
+                            user_serial = jobj.getInt("user_serial");
+
                             LoginActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText( LoginActivity.this, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
-                                    UtilSet.my_user=new User(id.getText().toString(),pw.getText().toString());
+
+                                    UtilSet.my_user=new User(id.getText().toString(),pw.getText().toString(),user_serial,user_name);
                                     UtilSet.write_user_data();
                                 }
                             });
