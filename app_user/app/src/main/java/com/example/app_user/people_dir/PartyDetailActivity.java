@@ -40,6 +40,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.party_detail_layout);
 
         Intent intent = getIntent();
         index = intent.getIntExtra("index", 0);
