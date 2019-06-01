@@ -3,6 +3,7 @@ package com.example.app_user.util_dir;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -40,11 +41,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
-            backPressCloseHandler.onBackPressed();
-        }else{
-            super.onBackPressed();
-        }
+        Intent intent=new Intent(getApplicationContext(), FirstMainActivity.class);
+        startActivityForResult(intent,101);
+        finish();
     }
 
     @Override
