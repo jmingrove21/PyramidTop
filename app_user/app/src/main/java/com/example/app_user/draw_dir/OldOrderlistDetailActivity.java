@@ -312,4 +312,8 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
             e.printStackTrace();
         }
     }
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
+    }
 }

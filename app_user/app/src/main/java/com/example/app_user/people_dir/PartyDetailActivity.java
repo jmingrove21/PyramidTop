@@ -26,6 +26,7 @@ import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
+import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.order_dir.OrderFragment;
@@ -276,5 +277,9 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
             return view;
         }
+    }
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }

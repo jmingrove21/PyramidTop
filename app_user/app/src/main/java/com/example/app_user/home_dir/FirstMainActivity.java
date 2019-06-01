@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.example.app_user.Item_dir.User;
 import com.example.app_user.MyService;
+import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.BackPressCloseHandler;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
@@ -346,6 +347,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     }
 
     public void GPSonClick(View view){
-
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }

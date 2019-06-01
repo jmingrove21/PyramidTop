@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.MenuCustomAdapter;
@@ -345,5 +346,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
             startActivityForResult(intent, 101);
         }
+    }
+
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }
