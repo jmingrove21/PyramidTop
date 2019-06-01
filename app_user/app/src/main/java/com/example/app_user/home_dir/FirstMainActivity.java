@@ -370,8 +370,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         @Override
         protected String doInBackground(Integer... integers) {
             try {
-                String address = new TMapData().convertGpsToAddress(UtilSet.latitude,UtilSet.longitude);
-                UtilSet.my_user.setUser_address(address);
+                UtilSet.my_user.setUser_address(new TMapData().convertGpsToAddress(UtilSet.latitude,UtilSet.longitude));
 
             }catch(Exception e) {
                 e.printStackTrace();
