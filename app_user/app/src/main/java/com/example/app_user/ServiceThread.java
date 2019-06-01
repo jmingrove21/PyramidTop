@@ -30,9 +30,9 @@ public class ServiceThread extends Thread {
     public void run(){
         //반복적으로 수행할 작업을 한다.
         while(isRun){
-            get_user_status_change();
+           // get_user_status_change();
             if(result_output==1&&UtilSet.loginLogoutInform.getLogin_flag()==1){
-                handler.sendEmptyMessage(0);//쓰레드에 있는 핸들러에게 메세지를 보냄
+               // handler.sendEmptyMessage(0);//쓰레드에 있는 핸들러에게 메세지를 보냄
             }else{
 
             }
