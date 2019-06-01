@@ -2,11 +2,20 @@ package com.example.app_user.draw_dir;
 
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.example.app_user.Item_dir.User;
+import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
+import com.example.app_user.util_dir.LoginActivity;
+import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapView;
+
+import javax.crypto.spec.GCMParameterSpec;
 
 public class GpsActivity extends Activity {
 
@@ -17,18 +26,49 @@ public class GpsActivity extends Activity {
 
         RelativeLayout relativeLayout = new RelativeLayout(this);
         TMapView tmapView = new TMapView(this);
-
-        tmapView.setSKTMapApiKey("31a0c8ab-6880-42ba-b6f2-18080fbe6070");
+        tmapView.setSKTMapApiKey(UtilSet.key);
 
         tmapView.setCompassMode(true);
         tmapView.setIconVisibility(true);
         tmapView.setZoomLevel(15);
         tmapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tmapView.setLanguage(TMapView.LANGUAGE_KOREAN);
+        tmapView.setLocationPoint(UtilSet.longitude,UtilSet.latitude);
+        tmapView.setCenterPoint(UtilSet.longitude,UtilSet.latitude);
         tmapView.setTrackingMode(true);
         tmapView.setSightVisible(true);
         relativeLayout.addView(tmapView);
         setContentView(relativeLayout);
+
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                Tmap_async t_async = new Tmap_async();
+                t_async.execute();
+
+            }
+        });
+        thread.start();
     }
 
+    private class Tmap_async extends AsyncTask<Integer, Integer, String>{
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+            try {
+                final String address = new TMapData().convertGpsToAddress(UtilSet.latitude,UtilSet.longitude);
+
+                GpsActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(GpsActivity.this, address, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
 }

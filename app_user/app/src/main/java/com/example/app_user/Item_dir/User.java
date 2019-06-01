@@ -9,6 +9,9 @@ public class User implements Serializable {
     private String user_name;
     private int user_serial;
     private transient String user_time;
+
+
+    private transient String user_address;
     transient int user_price;
     public User(String user_id, String user_password, int user_serial, String user_name){
         this.user_id=user_id;
@@ -33,6 +36,15 @@ public class User implements Serializable {
     public String getUser_name() {
         return user_name;
     }
+
+    public String getUser_address() {
+        return user_address;
+    }
+
+    public void setUser_address(String user_address) {
+        this.user_address = user_address;
+    }
+
 
     public String getUser_id() {
         return user_id;

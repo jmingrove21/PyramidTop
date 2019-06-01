@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,6 +48,8 @@ import com.example.app_user.R;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.util_dir.RegisterActivity;
+import com.skt.Tmap.TMapData;
+import com.skt.Tmap.TMapView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -63,6 +66,9 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TMapView tmapView = new TMapView(this);
+        tmapView.setSKTMapApiKey(UtilSet.key);
 
         Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
         startService(intent_alert);
@@ -83,12 +89,25 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    FirstMainActivity.Tmap_async t_async = new Tmap_async();
+                    t_async.execute();
+                }
+            });
+            thread.start();
+            try{
+                thread.join();
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            user_address.setText("수원시주소~");
+            user_address.setText(UtilSet.my_user.getUser_address());
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
             hello_msg.setText(" ");
             navigationView.addHeaderView(view);
@@ -344,6 +363,21 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             break;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private class Tmap_async extends AsyncTask<Integer, Integer, String> {
+
+        @Override
+        protected String doInBackground(Integer... integers) {
+            try {
+                String address = new TMapData().convertGpsToAddress(UtilSet.latitude,UtilSet.longitude);
+                UtilSet.my_user.setUser_address(address);
+
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     public void GPSonClick(View view){
