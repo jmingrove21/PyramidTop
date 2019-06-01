@@ -69,7 +69,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_id());
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
             user_address.setText("수원시주소~");
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
@@ -256,7 +256,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
                     jsonParam.put("order_info",0);
                     jsonParam.put("store_serial", UtilSet.al_my_old_order.get(position).getStore().getStore_serial());
                     jsonParam.put("order_number", UtilSet.al_my_old_order.get(position).getOrder_number());
-                    jsonParam.put("user_serial",UtilSet.user_serial);
+                    jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
                     HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
 
                     if (conn.getResponseCode() == 200) {

@@ -86,7 +86,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_id());
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
             user_address.setText("수원시주소~");
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
@@ -253,7 +253,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
-                    jsonParam.put("user_serial", UtilSet.user_serial);
+                    jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
                     jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");

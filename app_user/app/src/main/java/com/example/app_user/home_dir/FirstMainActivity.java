@@ -84,7 +84,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_id());
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
             user_address.setText("수원시주소~");
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
