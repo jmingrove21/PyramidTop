@@ -71,6 +71,7 @@ public class Old_Orderlist extends Fragment {
         for(int i = 0; i < UtilSet.al_my_old_order.size(); i++){
             OldOrderPrduct oldOrderPrduct = new OldOrderPrduct();
             oldOrderPrduct.setUser_store_name_input(UtilSet.al_my_old_order.get(i).getStore().getStore_name());
+            oldOrderPrduct.setUser_store_branch_name_input(UtilSet.al_my_old_order.get(i).getStore().getStore_branch_name());
             oldOrderPrduct.setUser_order_time_input(UtilSet.al_my_old_order.get(i).getOrder_create_date());
             oldOrderPrduct.setUser_order_price_sum_input(UtilSet.al_my_old_order.get(i).getTotal_order_price());
             list.add(oldOrderPrduct);
