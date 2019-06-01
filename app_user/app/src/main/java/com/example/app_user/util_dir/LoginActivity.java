@@ -3,6 +3,7 @@ package com.example.app_user.util_dir;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +23,8 @@ import java.net.HttpURLConnection;
 
 
 public class LoginActivity extends AppCompatActivity {
-
+    int user_serial;
+    String user_name;
     private BackPressCloseHandler backPressCloseHandler;
     @Override
     protected void onCreate(Bundle saveInstanceState){
@@ -40,11 +42,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
-            backPressCloseHandler.onBackPressed();
-        }else{
-            super.onBackPressed();
-        }
+        Intent intent=new Intent(getApplicationContext(), FirstMainActivity.class);
+        startActivityForResult(intent,101);
+        finish();
     }
 
     @Override
@@ -83,10 +83,14 @@ public class LoginActivity extends AppCompatActivity {
                         String json_result=jobj.getString("confirm");
                         Log.i("check_state", json_result);
                         if(json_result.equals("1")){
+                            user_name = jobj.getString("user_name");
+                            user_serial = jobj.getInt("user_serial");
+
                             LoginActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText( LoginActivity.this, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
-                                    UtilSet.my_user=new User(id.getText().toString(),pw.getText().toString());
+
+                                    UtilSet.my_user=new User(id.getText().toString(),pw.getText().toString(),user_serial,user_name);
                                     UtilSet.write_user_data();
                                 }
                             });

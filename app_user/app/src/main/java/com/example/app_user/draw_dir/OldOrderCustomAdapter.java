@@ -51,7 +51,7 @@ public class OldOrderCustomAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.fragment_old_orderlist_listview_layout,null,true);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,200));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,400));
 
             holder.text_user_store_name_input = (TextView) convertView.findViewById(R.id.user_store_name_input);
             holder.text_user_order_price_sum_input = (TextView) convertView.findViewById(R.id.user_order_price_sum_input);
@@ -62,7 +62,7 @@ public class OldOrderCustomAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.text_user_store_name_input.setText(Old_Orderlist.oldOrderProducts.get(position).getUser_store_name_input());
+        holder.text_user_store_name_input.setText(Old_Orderlist.oldOrderProducts.get(position).getUser_store_name_input()+"  "+Old_Orderlist.oldOrderProducts.get(position).getUser_store_branch_name_input());
         holder.text_user_order_price_sum_input.setText(String.valueOf(Old_Orderlist.oldOrderProducts.get(position).getUser_order_price_sum_input()));
         holder.text_user_order_time_input.setText(Old_Orderlist.oldOrderProducts.get(position).getUser_order_time_input());
 

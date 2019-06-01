@@ -26,12 +26,15 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
+import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.Item_dir.MenuDesc;
@@ -68,25 +71,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("가게 목록");
-
 
         drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
         if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            getSupportActionBar().setTitle("가게 목록");
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_id());
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            user_address.setText("수원시주소~");
+            if(UtilSet.my_user.getUser_address()==null)
+                user_address.setText("배달주소를 선택해주세요!");
+            else
+                user_address.setText(UtilSet.my_user.getUser_address());
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
             hello_msg.setText(" ");
             navigationView.addHeaderView(view);
         } else {
+            getSupportActionBar().setTitle("로그인 필요");
             navigationView.inflateMenu(R.menu.logout_drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+
+            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            gps_btn.setVisibility(View.INVISIBLE);
+
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(" ");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
@@ -94,13 +110,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
             hello_msg.setText("배달ONE과 함께하세요!");
             navigationView.addHeaderView(view);
-        }
-        navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+            MainActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText( MainActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return;
+        }
 
         ListView listView = (ListView) findViewById(R.id.listView);
         CustomAdapter customAdapter = new CustomAdapter();
@@ -370,5 +388,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivityForResult(intent, 101);
             finish();
         }
+    }
+
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }
