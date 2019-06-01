@@ -22,6 +22,8 @@ import android.util.LruCache;
 import android.widget.Toast;
 
 import com.example.app_user.R;
+import com.skt.Tmap.TMapView;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -39,6 +41,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class UtilSet {
+    public static String key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
     public static User my_user;
     public static ArrayList<Store> search_store = new ArrayList<>();
     public static ArrayList<Store> al_store = new ArrayList<>();

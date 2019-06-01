@@ -48,9 +48,6 @@
             android:name=".home_dir.MenuActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".util_dir.SearchActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".order_dir.SubMenuActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -61,6 +58,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".util_dir.LoginActivity" />
         <activity android:name=".util_dir.RegisterActivity" />
+
+        <activity android:name=".draw_dir.GpsActivity" />
     </application>
 
 </manifest>
