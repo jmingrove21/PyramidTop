@@ -62,20 +62,18 @@ import java.util.ArrayList;
 public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
-
+    String address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        TMapView tmapView = new TMapView(this);
-        tmapView.setSKTMapApiKey(UtilSet.key);
-
-        Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
-        startService(intent_alert);
-
         setContentView(R.layout.activity_first_main);
 
         permissionCheck();
+        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        UtilSet.set_GPS_permission(lm, this);//GPS
+
+        Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
+        startService(intent_alert);//알림
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
@@ -89,25 +87,15 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    FirstMainActivity.Tmap_async t_async = new Tmap_async();
-                    t_async.execute();
-                }
-            });
-            thread.start();
-            try{
-                thread.join();
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            }
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            user_address.setText(UtilSet.my_user.getUser_address());
+            if(UtilSet.my_user.getUser_address()==null)
+                user_address.setText("배달주소를 선택해주세요!");
+            else
+                user_address.setText(UtilSet.my_user.getUser_address());
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
             hello_msg.setText(" ");
             navigationView.addHeaderView(view);
@@ -141,8 +129,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                 get_store_information(position);
             }
         });
-        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        UtilSet.set_GPS_permission(lm, this);
+
     }
 
     @Override
@@ -363,21 +350,6 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             break;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    private class Tmap_async extends AsyncTask<Integer, Integer, String> {
-
-        @Override
-        protected String doInBackground(Integer... integers) {
-            try {
-                String address = new TMapData().convertGpsToAddress(UtilSet.latitude,UtilSet.longitude);
-                UtilSet.my_user.setUser_address(address);
-
-            }catch(Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
     }
 
     public void GPSonClick(View view){

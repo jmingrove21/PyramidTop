@@ -60,7 +60,8 @@ public class ServiceThread extends Thread {
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "check_status");
-                    jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
+                    if(UtilSet.my_user!=null)
+                        jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
                     HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
