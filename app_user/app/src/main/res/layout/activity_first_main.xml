@@ -46,7 +46,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignTop="@+id/search_store"
-                android:layout_marginTop="60dp"/>
+                android:layout_marginTop="60dp"
+                android:dividerHeight="0px"
+                android:divider="#ffffff"/>
         </RelativeLayout>
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation"
