@@ -94,6 +94,10 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         } else {
             navigationView.inflateMenu(R.menu.logout_drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+
+            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            gps_btn.setVisibility(View.INVISIBLE);
+
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(" ");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);

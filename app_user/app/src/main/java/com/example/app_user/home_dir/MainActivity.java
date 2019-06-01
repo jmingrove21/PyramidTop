@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -94,6 +95,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setTitle("로그인 필요");
             navigationView.inflateMenu(R.menu.logout_drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+
+            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            gps_btn.setVisibility(View.INVISIBLE);
+
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(" ");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);

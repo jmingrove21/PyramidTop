@@ -34,20 +34,42 @@
                         android:layout_height="120sp"
                         android:src="@drawable/icon" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.7"
-                    android:paddingLeft="15dp"
-                    android:gravity="center_vertical">
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp">
+
+
                     <TextView
                         android:id="@+id/please_login_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:paddingTop="8dp"
+                        android:paddingTop="5dp"
                         android:text="배달ONE과 함께하세요!"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp">
+
+                    <ImageButton
+                        android:id="@+id/GPS_imageBtn"
+                        android:layout_width="36dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_gps"
+                        android:background="#4AC66D"
+                        android:onClick="GPSonClick"/>
+
                 </LinearLayout>
             </LinearLayout>
 
