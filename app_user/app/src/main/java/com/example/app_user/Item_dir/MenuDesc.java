@@ -8,12 +8,17 @@ public class MenuDesc {
     private String menu_name;
     private int menu_price;
     private String menu_img;
-
+    private int menu_count;
     public MenuDesc(String menu_code, String menu_name, int menu_price, String menu_img){
         this.menu_code=menu_code;
         this.menu_name=menu_name;
         this.menu_price=menu_price;
         this.menu_img=menu_img;
+    }
+    public MenuDesc(String menu_name, int menu_count, int menu_price){
+        this.menu_name=menu_name;
+        this.menu_count=menu_count;
+        this.menu_price=menu_price;
     }
 
     public String getMenu_code() {
@@ -44,6 +49,10 @@ public class MenuDesc {
 
     public void setMenu_image(Bitmap menu_image) {
         this.menu_image = menu_image;
+    }
+
+    public int getMenu_count() {
+        return menu_count;
     }
 
 }

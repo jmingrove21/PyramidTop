@@ -2,39 +2,49 @@ package com.example.app_user.util_dir;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
 import com.example.app_user.home_dir.FirstMainActivity;
-import com.example.app_user.home_dir.MainActivity;
-import com.example.app_user.util_dir.BackPressCloseHandler;
-
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+
 
 public class LoginActivity extends AppCompatActivity {
 
+    private BackPressCloseHandler backPressCloseHandler;
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_login);
         setTitle("로그인");
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            UtilSet.loginLogoutInform.setLogin_flag(0);
+            File deleteFIle=new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/user_ser.ser");
+            if(deleteFIle!=null)
+                UtilSet.delete_user_data();
+        }
+        backPressCloseHandler = new BackPressCloseHandler(this);
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            backPressCloseHandler.onBackPressed();
+        }else{
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -44,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
             if (resultCode == 200) {
                 String menu = data.getExtras().getString("menu");
                 Toast.makeText(getApplicationContext(), "하잇!", Toast.LENGTH_LONG).show();
-
             }
         }
     }
@@ -77,14 +86,20 @@ public class LoginActivity extends AppCompatActivity {
                             LoginActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText( LoginActivity.this, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
+                                    UtilSet.my_user=new User(id.getText().toString(),pw.getText().toString());
+                                    UtilSet.write_user_data();
                                 }
                             });
-                            Intent intent=new Intent(getApplicationContext(), FirstMainActivity.class);
-                            startActivityForResult(intent,101);
+
+                            Intent intent=new Intent(LoginActivity.this, FirstMainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
                         }else{
                             LoginActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText( LoginActivity.this, "ID/PW가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                    UtilSet.my_user=null;
                                 }
                             });
                         }

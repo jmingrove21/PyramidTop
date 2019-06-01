@@ -16,36 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="TextView"
-            android:textSize="10sp"
-            android:textAlignment="center" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1">
-
-        <TextView
-            android:id="@+id/menu_count"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="X"
-            android:textSize="10sp"
-            android:textAlignment="textEnd" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1">
-
-        <TextView
-            android:id="@+id/menu_count_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Text"
-            android:textSize="10sp"
-            android:textAlignment="textStart" />
+            android:textAlignment="center"
+            android:textSize="13sp"
+            android:textColor="#000000"/>
     </LinearLayout>
 
     <LinearLayout
@@ -54,25 +27,40 @@
         android:layout_weight="0.2">
 
         <TextView
-            android:id="@+id/menu_price_input"
+            android:id="@+id/menu_count_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="TextView"
-            android:textSize="10sp"
-            android:textAlignment="textEnd" />
+            android:text="Text"
+            android:textAlignment="center"
+            android:textSize="13sp"
+            android:textColor="#000000"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.1">
+        android:layout_weight="0.3"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/menu_price_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:text="TextView"
+            android:textAlignment="textEnd"
+            android:textSize="13sp"
+            android:textColor="#000000"/>
 
         <TextView
             android:id="@+id/menu_price"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="0.2"
             android:text="원"
-            android:textSize="10sp"
-            android:textAlignment="textStart" />
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>

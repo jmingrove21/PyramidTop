@@ -9,8 +9,10 @@
         $destination_lat=$json_data['destination_lat'];
         $destination_long=$json_data['destination_long'];
         $menu=$json_data['menu'];
+        date_default_timezone_set("Asia/Seoul");
+        $current=date("Y-m-d H:i:s");
 
-        $insert_query = "INSERT INTO user_order(order_number,store_serial,destination,USER_user_serial, destination_lat,destination_long) VALUES(".$order_number.",".$store_serial.",'".$destination."',".$user_serial.",".$destination_lat.",".$destination_long.")";
+        $insert_query = "INSERT INTO user_order(order_number,store_serial,destination,USER_user_serial, destination_lat,destination_long,make_order_time) VALUES(".$order_number.",".$store_serial.",'".$destination."',".$user_serial.",".$destination_lat.",".$destination_long.",'".$current."')";
         $insert_stmt = mysqli_query($connect,$insert_query);
 
         $query = "SELECT MAX(user_order_serial) AS u FROM Capstone.user_order";

@@ -25,15 +25,32 @@
                 android:elevation="0dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            
+            <EditText
+                android:id="@+id/search_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_marginRight="80dp"
+                android:inputType="text"
+                android:hint="검색"/>
 
+            <ImageButton
+                android:layout_width="89dp"
+                android:layout_height="58dp"
+                android:layout_alignLeft="@+id/search_input"
+                android:layout_marginLeft="312dp"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:onClick="searchButton"
+                android:src="@drawable/ic_search" />
 
             <ListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignTop="@+id/fragment_container"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:layout_above="@+id/bottom_navigation"/>
+                android:layout_above="@+id/bottom_navigation"
+                android:layout_alignTop="@+id/search_input"
+                android:layout_marginTop="65dp" />
 
             <android.support.design.widget.BottomNavigationView
                 android:id="@+id/bottom_navigation"
@@ -47,7 +64,8 @@
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/bottom_navigation"/>
+                android:layout_above="@+id/bottom_navigation"
+                android:layout_marginBottom="-4dp" />
         </RelativeLayout>
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"

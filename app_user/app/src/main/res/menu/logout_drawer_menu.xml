@@ -4,20 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/old_olderlist"
-            android:icon="@drawable/ic_orderlist"
-            android:title="지난 주문내역" />
-    </group>
 
     <item android:title="계정관리">
         <menu>
-            <item
-                android:id="@+id/menu_idoption"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="계정설정" />
-
             <item
                 android:id="@+id/menu_login"
                 android:icon="@drawable/ic_logout"

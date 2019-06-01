@@ -1,6 +1,7 @@
 package com.example.app_user.Item_dir;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,32 +12,43 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.LruCache;
 import android.widget.Toast;
 
 import com.example.app_user.R;
-
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class UtilSet {
+    public static User my_user;
     public static int user_serial=7;
+    public static ArrayList<Store> search_store = new ArrayList<>();
     public static ArrayList<Store> al_store = new ArrayList<>();
     public static ArrayList<Order> al_order=new ArrayList<>();
     public static ArrayList<Order> al_my_order=new ArrayList<>();
+    public static ArrayList<Order> al_my_old_order=new ArrayList<>();
     public static final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
     public static final int cacheSize=maxMemory/8;
+
     public static LruCache<String, Bitmap> mMemoryCache=new LruCache<String, Bitmap>(cacheSize){
         @Override
         protected int sizeOf( String key, Bitmap bitmap){
@@ -44,6 +56,7 @@ public class UtilSet {
         }
 
     };
+
     public final static String url="http://54.180.102.7/get/JSON/user_app/user_manage.php";
     public static final int[] MENU_TYPE_IMAGE = {R.drawable.q01_image,R.drawable.q02_image,R.drawable.q03_image,R.drawable.q04_image,R.drawable.q05_image,R.drawable.q06_image,R.drawable.q07_image,R.drawable.q08_image,R.drawable.q09_image,R.drawable.q10_image,R.drawable.q11_image,R.drawable.q12_image,R.drawable.q13_image};
     public static final String[] MENU_TYPE_ID ={"Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q08","Q09","Q10","Q11","Q12","Q13"};
@@ -52,6 +65,7 @@ public class UtilSet {
     public final static int PERMISSION_REQUEST_CODE=1000;
     public static double latitude=0;
     public static double longitude=0;
+    public static LoginLogoutInform loginLogoutInform = new LoginLogoutInform();
 
 
     public static String convertStreamToString(InputStream is) {
@@ -126,8 +140,6 @@ public class UtilSet {
                     1000,
                     1,
                     gpsLocationListener);
-
-
         }
     }
 
@@ -146,7 +158,7 @@ public class UtilSet {
                         con.startActivity(intent);
                     }
                 });
-        // Cancle 하면 종료 합니다.
+        // Cancel 하면 종료 합니다.
         alertDialog.setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -171,12 +183,54 @@ public class UtilSet {
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
+
         }
 
         public void onProviderEnabled(String provider) {
+
         }
 
         public void onProviderDisabled(String provider) {
+
         }
     };
+
+    public static void load_user_data(){
+        try{
+            File loadFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/user_ser.ser");
+            FileInputStream fis = new FileInputStream(loadFile);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            UtilSet.my_user=(User)ois.readObject();
+            if(my_user==null){
+                loginLogoutInform.setLogin_flag(0);
+            }else
+            loginLogoutInform.setLogin_flag(1);
+            ois.close();
+        }catch(Exception e){
+            e.printStackTrace();
+            loginLogoutInform.setLogin_flag(0);
+        }
+    }
+    public static void write_user_data(){
+        try{
+            File saveFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/user_ser.ser");
+            FileOutputStream fos=new FileOutputStream(saveFile);
+            ObjectOutputStream oos=new ObjectOutputStream(fos);
+
+            oos.writeObject(my_user);
+            loginLogoutInform.setLogin_flag(1);
+            oos.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void delete_user_data(){
+        try{
+            File deleteFile=new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/user_ser.ser");
+            deleteFile.delete();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
