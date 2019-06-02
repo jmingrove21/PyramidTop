@@ -3,14 +3,50 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:layout_gravity="center"
-android:orientation="vertical"
-    android:weightSum = "1">
+    android:paddingHorizontal="40sp"
+    android:paddingVertical="20sp"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.3"
-        ></LinearLayout>
+        android:layout_weight="0.2"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"></LinearLayout>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:src="@drawable/login_logo"
+            android:scaleType="centerCrop"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"></LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"></LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:background="@drawable/login"
+    android:layout_weight="0.75"
+    android:orientation="vertical"
+    android:weightSum = "1"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"></LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -21,57 +57,33 @@ android:orientation="vertical"
             android:layout_height="match_parent"
             android:text = "배달ONE"
             android:textAlignment="center"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            android:textColor="#000000"/>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2"
+        android:layout_weight="0.1"
+        ></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
         android:weightSum="1"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:orientation="vertical"
-            android:weightSum="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="아이디"
-                    android:textSize="15sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="비밀번호"
-                    android:textSize="15sp"/>
-            </LinearLayout>
+            android:layout_weight="0.1"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal|center_vertical">
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.7"
+            android:layout_weight="0.8"
             android:weightSum="1"
             android:orientation="vertical">
 
@@ -79,30 +91,34 @@ android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+                android:paddingVertical="10sp">
 
                 <EditText
                     android:id="@+id/id_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="아이디"
+                    android:hint="    아이디"
                     android:inputType="text"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp"
+                    android:background="@drawable/login_input"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+                android:paddingVertical="10sp">
 
                 <EditText
                     android:id="@+id/pw_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
-                    android:hint="비밀번호"
-                    android:textSize="10sp"/>
+                    android:hint="    비밀번호"
+                    android:textSize="10sp"
+                    android:background="@drawable/login_input"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -117,22 +133,37 @@ android:orientation="vertical"
         </LinearLayout>
 
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"
+        ></LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
         android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:gravity="center_horizontal|center_vertical">
-
+        android:gravity="center_horizontal|center_vertical"
+        android:weightSum="1">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            ></LinearLayout>
         <Button
             android:id="@+id/login_button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.8"
             android:onClick="login"
-            android:text="로그인" />
-
+            android:text="로그인"
+            android:background="@drawable/login_button"
+            android:textColor="#ffffff"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            ></LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -143,16 +174,18 @@ android:orientation="vertical"
         android:gravity="center_horizontal">
         <Button
             android:id="@+id/register"
+            android:background="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="register"
-            android:text="회원가입"/>
+            android:text="회원이 아니신가요?"
+            android:textColor="#4AC66D"
+            />
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.2"></LinearLayout>
-
+        android:layout_weight="0.15"></LinearLayout>
+</LinearLayout>
 </LinearLayout>
