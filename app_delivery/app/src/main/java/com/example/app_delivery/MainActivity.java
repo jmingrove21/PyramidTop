@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         permissionCheck();
         backPressCloseHandler=new BackPressCloseHandler(this);
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("배달 요청 목록");
         ArrayList<ItemData> oData=new ArrayList<>();
         get_delivery_order_list();
         for(int i=0;i<order_list.size();i++){
@@ -181,13 +184,13 @@ public class MainActivity extends AppCompatActivity {
                     if(conn.getResponseCode()==200){
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
-                       // JSONArray json_result_al=new JSONArray(jsonReply);
                         JSONObject jobj=new JSONObject(jsonReply);
                         Intent intent=new Intent(getApplicationContext(),Delivery_to_Store_Activity.class);
-                        intent.putExtra("store_address", jobj.get("store_address").toString());
-                        intent.putExtra("store_phone", jobj.get("store_phone").toString());
-                        intent.putExtra("store_latitude",  Double.parseDouble(jobj.get("store_latitude").toString()));
-                        intent.putExtra("store_longitude", Double.parseDouble( jobj.get("store_longitude").toString()));
+                        intent.putExtra("store_name",MainActivity.order_list.get(position).getStore_name());
+                        intent.putExtra("store_address", jobj.getString("store_address"));
+                        intent.putExtra("store_phone", jobj.getString("store_phone"));
+                        intent.putExtra("store_latitude",  Double.parseDouble(jobj.getString("store_latitude")));
+                        intent.putExtra("store_longitude", Double.parseDouble( jobj.getString("store_longitude")));
                         intent.putExtra("order_number",  MainActivity.order_list.get(position).getOrder_number());
 
                         startActivityForResult(intent,101);
@@ -218,6 +221,14 @@ public class MainActivity extends AppCompatActivity {
             permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 arrayPermission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            }
+            permissionCheck=ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+                arrayPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+            permissionCheck=ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE);
+            if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+                arrayPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
             if (arrayPermission.size() > 0) {
                 String strArray[] = new String[arrayPermission.size()];

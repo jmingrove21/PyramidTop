@@ -1,16 +1,13 @@
 package com.example.app_delivery;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,9 +15,14 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -96,31 +98,6 @@ public class UtilSet {
         }
     }
 
-    public static void showSettingsAlert(final Context con){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(con);
-
-        alertDialog.setTitle("GPS 사용유무셋팅");
-        alertDialog.setMessage("GPS 사용 승인이 필요합니다. \n 설정창으로 가시겠습니까?");
-
-        // OK 를 누르게 되면 설정창으로 이동합니다.
-        alertDialog.setPositiveButton("Settings",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int which) {
-                        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        intent.setData(Uri.fromParts("package", "com.example.app_user", null));
-                        con.startActivity(intent);
-                    }
-                });
-        // Cancle 하면 종료 합니다.
-        alertDialog.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-        alertDialog.show();
-    }
 
     public final static LocationListener gpsLocationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
@@ -144,4 +121,37 @@ public class UtilSet {
         public void onProviderDisabled(String provider) {
         }
     };
+
+    public static void load_user_data(){
+        try{
+            File loadFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/user_ser.ser");
+            FileInputStream fis = new FileInputStream(loadFile);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+//            if(my_user==null){
+//            }else
+            ois.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void write_user_data(){
+        try{
+            File saveFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/user_ser.ser");
+            FileOutputStream fos=new FileOutputStream(saveFile);
+            ObjectOutputStream oos=new ObjectOutputStream(fos);
+
+//            oos.writeObject(my_user);
+            oos.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void delete_user_data(){
+        try{
+            File deleteFile=new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/user_ser.ser");
+            deleteFile.delete();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
