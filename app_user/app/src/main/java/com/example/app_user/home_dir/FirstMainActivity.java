@@ -57,7 +57,7 @@ import java.util.ArrayList;
 public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
-    String address;
+    public static int store_type=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -275,6 +275,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                                 UtilSet.al_store.add(s);
                             }
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            store_type=position;
                             startActivityForResult(intent, 101);
 
                         } catch (Exception e) {

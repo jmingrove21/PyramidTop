@@ -63,7 +63,6 @@ public class PeopleFragment extends DialogFragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-
         final String[] store_name = new String[UtilSet.al_my_order.size()];
         for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
             store_name[i] = UtilSet.al_my_order.get(i).getStore().getStore_name();
