@@ -51,13 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="배달 시작"
-                android:layout_gravity="center_vertical||center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
         </LinearLayout>
-
-
-
     </LinearLayout>
-
-
 </LinearLayout>

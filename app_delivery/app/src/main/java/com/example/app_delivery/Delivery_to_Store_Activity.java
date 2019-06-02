@@ -25,6 +25,8 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Delivery_to_Store_Activity extends AppCompatActivity {
     String store_address;
     String store_phone;
@@ -61,7 +63,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         });
         thread.start();
 
-        Button tmap_button = (Button) findViewById(R.id.go_to_tmap);
+        CircleImageView tmap_button = (CircleImageView) findViewById(R.id.go_to_tmap);
         Button start_button = (Button) findViewById(R.id.delivery_start_btn);
         final TMapTapi tMapTapi = new TMapTapi(this);
 
