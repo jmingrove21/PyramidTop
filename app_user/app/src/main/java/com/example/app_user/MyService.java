@@ -73,12 +73,11 @@ public class MyService extends Service {
                     .setContentText(ServiceThread.alert_info_al.get(msg.what).get(1))
                     .setTicker("알림")
                     .setSmallIcon(R.drawable.logo)
+                    .setVibrate(new long[]{1000,2000,1000,2000})
                     .setChannelId(CHANNEL_ID)
                     .build();
             Log.d("notification",noti.tickerText.toString());
             //소리추가
-            noti.defaults = Notification.DEFAULT_VIBRATE;
-            //알림 소리를 한번만 내도록
             noti.flags = Notification.FLAG_ONLY_ALERT_ONCE;
             //확인하면 자동으로 알림이 제거 되도록
             noti.flags = Notification.FLAG_AUTO_CANCEL;
