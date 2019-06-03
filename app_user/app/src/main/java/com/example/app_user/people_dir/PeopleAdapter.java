@@ -31,14 +31,14 @@ public class PeopleAdapter extends ArrayAdapter<String> {
         }
 
         TextView text_date=(TextView)convertView.findViewById(R.id.date);
-        TextView text_order_status=(TextView)convertView.findViewById(R.id.order_status);
+        ImageView text_order_status=(ImageView) convertView.findViewById(R.id.order_status);
         TextView text_store_name = (TextView) convertView.findViewById(R.id.store_name);
         ImageView img = (ImageView) convertView.findViewById(R.id.imageView);
         TextView text_party_number = (TextView) convertView.findViewById(R.id.party_number);
         TextView text_price = (TextView) convertView.findViewById(R.id.price);
 
         text_date.setText(UtilSet.al_my_order.get(position).getOrder_create_date());
-        text_order_status.setText(UtilSet.al_my_order.get(position).getOrderStatus());
+        text_order_status.setImageResource(UtilSet.al_my_order.get(position).getOrderStatus());
         text_store_name.setText(UtilSet.al_my_order.get(position).getStore().getStore_name());
         img.setImageBitmap(UtilSet.al_my_order.get(position).getStore().getStore_image());
         text_party_number.setText(String.valueOf(UtilSet.al_my_order.get(position).getParticipate_person()));

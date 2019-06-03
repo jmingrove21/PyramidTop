@@ -33,20 +33,38 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             tools:ignore="HardcodedText"/>
-        <Button
-            android:id="@+id/search_store"
-            android:onClick="search_store"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="식당 검색"
-            android:layout_marginTop="?attr/actionBarSize"/>
-
-            <ListView
-                android:id="@+id/first_listView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignTop="@+id/search_store"
-                android:layout_marginTop="60dp"/>
+                android:orientation="vertical"
+                android:weightSum="1"
+                android:layout_marginTop="?attr/actionBarSize">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.1"
+                    android:padding="10sp">
+                <Button
+                    android:id="@+id/search_store"
+                    android:onClick="search_store"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="search"
+                    android:background="@drawable/login"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.9">
+                    <ListView
+                        android:id="@+id/first_listView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:dividerHeight="0px"
+                        android:divider="#ffffff"/>
+                </LinearLayout>
+            </LinearLayout>
         </RelativeLayout>
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation"

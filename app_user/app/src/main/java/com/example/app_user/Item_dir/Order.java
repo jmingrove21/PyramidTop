@@ -1,5 +1,7 @@
 package com.example.app_user.Item_dir;
 
+import com.example.app_user.R;
+
 import java.util.ArrayList;
 
 public class Order {
@@ -84,18 +86,19 @@ public class Order {
         this.order_receipt_date=order_receipt_date;
         this.delivery_departure_time=delivery_departure_time;
     }
-    public String getOrderStatus(){
+    public int getOrderStatus(){
         if(order_status==1)
-            return "접수 대기";
+            return R.drawable.wait;
         else if(order_status==3)
-            return "접수 완료";
+            return R.drawable.receipt;
         else if(order_status==4||order_status==5)
-            return "배달 준비";
+            //return "배달 준비";
+            return R.drawable.delivery_ready;
         else if(order_status==6)
-            return "배달 중";
+            return R.drawable.deliverying;
         else if(order_status==7)
-            return "배달 완료";
+            return R.drawable.delivery_ready;
         else
-            return "";
+            return 0;
     }
 }

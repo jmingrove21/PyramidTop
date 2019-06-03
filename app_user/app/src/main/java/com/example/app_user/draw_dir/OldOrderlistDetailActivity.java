@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -69,15 +70,22 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_id());
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            user_address.setText("수원시주소~");
+            if(UtilSet.my_user.getUser_address()==null)
+                user_address.setText("배달주소를 선택해주세요!");
+            else
+                user_address.setText(UtilSet.my_user.getUser_address());
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
             hello_msg.setText(" ");
             navigationView.addHeaderView(view);
         } else {
             navigationView.inflateMenu(R.menu.logout_drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+
+            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            gps_btn.setVisibility(View.INVISIBLE);
+
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(" ");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
@@ -256,7 +264,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
                     jsonParam.put("order_info",0);
                     jsonParam.put("store_serial", UtilSet.al_my_old_order.get(position).getStore().getStore_serial());
                     jsonParam.put("order_number", UtilSet.al_my_old_order.get(position).getOrder_number());
-                    jsonParam.put("user_serial",UtilSet.user_serial);
+                    jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
                     HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
 
                     if (conn.getResponseCode() == 200) {
@@ -306,5 +314,9 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }

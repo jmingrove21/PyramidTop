@@ -27,8 +27,10 @@ import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
+import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.home_dir.FirstMainActivity;
+import com.example.app_user.home_dir.MainActivity;
 import com.example.app_user.people_dir.PeopleFragment;
 import com.example.app_user.util_dir.MenuCustomAdapter;
 import com.example.app_user.util_dir.LoginActivity;
@@ -84,15 +86,22 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_id());
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            user_address.setText("수원시주소~");
+            if(UtilSet.my_user.getUser_address()==null)
+                user_address.setText("배달주소를 선택해주세요!");
+            else
+                user_address.setText(UtilSet.my_user.getUser_address());
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
             hello_msg.setText(" ");
             navigationView.addHeaderView(view);
         } else {
             navigationView.inflateMenu(R.menu.logout_drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+
+            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            gps_btn.setVisibility(View.INVISIBLE);
+
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(" ");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
@@ -237,9 +246,16 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
 
     public void showSelectedItems(View view) {
-
-        store_info_specification(view);
-
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            store_info_specification(view);
+        }else{
+            SubMenuActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText( SubMenuActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
     }
 
     public void store_info_specification(View v) {
@@ -251,7 +267,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
-                    jsonParam.put("user_serial", UtilSet.user_serial);
+                    jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
                     jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
@@ -340,5 +356,10 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
             Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
             startActivityForResult(intent, 101);
         }
+    }
+
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }

@@ -19,7 +19,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,13 +26,14 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.app_user.Item_dir.User;
 import com.example.app_user.MyService;
+import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.BackPressCloseHandler;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
@@ -57,17 +57,18 @@ import java.util.ArrayList;
 public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
-
+    public static int store_type=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
-        startService(intent_alert);
-
         setContentView(R.layout.activity_first_main);
 
         permissionCheck();
+        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        UtilSet.set_GPS_permission(lm, this);//GPS
+
+        Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
+        startService(intent_alert);//알림
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
@@ -84,15 +85,22 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_id());
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            user_address.setText("수원시주소~");
+            if(UtilSet.my_user.getUser_address()==null)
+                user_address.setText("배달주소를 선택해주세요!");
+            else
+                user_address.setText(UtilSet.my_user.getUser_address());
             TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
             hello_msg.setText(" ");
             navigationView.addHeaderView(view);
         } else {
             navigationView.inflateMenu(R.menu.logout_drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+
+            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            gps_btn.setVisibility(View.INVISIBLE);
+
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(" ");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
@@ -116,8 +124,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                 get_store_information(position);
             }
         });
-        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        UtilSet.set_GPS_permission(lm, this);
+
     }
 
     @Override
@@ -268,6 +275,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                                 UtilSet.al_store.add(s);
                             }
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            store_type=position;
                             startActivityForResult(intent, 101);
 
                         } catch (Exception e) {
@@ -338,5 +346,10 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             break;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+    
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }

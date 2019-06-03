@@ -69,27 +69,19 @@ public class MyService extends Service {
             String CHANNEL_ID = "my_channel_01";
 
             noti = new Notification.Builder(getApplicationContext())
-                    .setContentTitle("Content Title")
-                    .setContentText("Content Text")
+                    .setContentTitle(ServiceThread.alert_info_al.get(msg.what).get(0))
+                    .setContentText(ServiceThread.alert_info_al.get(msg.what).get(1))
                     .setTicker("알림")
                     .setSmallIcon(R.drawable.logo)
+                    .setVibrate(new long[]{1000,2000,1000,2000})
                     .setChannelId(CHANNEL_ID)
                     .build();
             Log.d("notification",noti.tickerText.toString());
             //소리추가
-            noti.defaults = Notification.DEFAULT_VIBRATE;
-
-            //알림 소리를 한번만 내도록
             noti.flags = Notification.FLAG_ONLY_ALERT_ONCE;
-
             //확인하면 자동으로 알림이 제거 되도록
             noti.flags = Notification.FLAG_AUTO_CANCEL;
-
-
             noti_M.notify(notifyID, noti);
-
-            //토스트 띄우기
-            Toast.makeText(MyService.this, "뜸?", Toast.LENGTH_LONG).show();
         }
     };
 

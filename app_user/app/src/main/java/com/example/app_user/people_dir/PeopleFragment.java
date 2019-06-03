@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
@@ -21,6 +22,7 @@ import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
+import com.example.app_user.home_dir.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +49,11 @@ public class PeopleFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_people, container, false);
         listView = (ListView) view.findViewById(R.id.people_listview);
 
+        if(UtilSet.loginLogoutInform.getLogin_flag()==0){
+            Toast.makeText( getActivity(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+            return view;
+        }
+
         final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_my_party_order_list);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -56,7 +63,6 @@ public class PeopleFragment extends DialogFragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-
         final String[] store_name = new String[UtilSet.al_my_order.size()];
         for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
             store_name[i] = UtilSet.al_my_order.get(i).getStore().getStore_name();
@@ -129,7 +135,7 @@ public class PeopleFragment extends DialogFragment {
                     jsonParam.put("user_info", "ordered_list_detail");
                     jsonParam.put("store_serial", store_serial);
                     jsonParam.put("order_info", 1);
-                    jsonParam.put("user_serial", UtilSet.user_serial);
+                    jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
                     jsonParam.put("order_number", UtilSet.al_my_order.get(position).getOrder_number());
 
                     HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
@@ -237,7 +243,7 @@ public class PeopleFragment extends DialogFragment {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "ordered_list");
                     jsonParam.put("order_info", 1);
-                    jsonParam.put("user_serial", UtilSet.user_serial);
+                    jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
 
                     HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
                     if (conn.getResponseCode() == 200) {
