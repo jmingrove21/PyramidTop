@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PointF;
 import android.location.Address;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -64,6 +65,9 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
     private Thread thread;
 
+    private TMapPoint first_TMapPoint;
+    Bitmap mark_bitmap;
+
     TextView address_text;
     EditText detail_address_input;
 
@@ -99,7 +103,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
         //tMapView.setCompassMode(true);
         tMapView.setIconVisibility(true);
-        tMapView.setZoomLevel(15);
+        tMapView.setZoomLevel(30);
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
         tMapView.setLocationPoint(UtilSet.longitude,UtilSet.latitude);
@@ -127,6 +131,39 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                     }
                 });
                 Toast.makeText(GpsActivity.this,"주소 : "+address,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mark_bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.gps_pin);
+        tMapView.setOnClickListenerCallBack(new TMapView.OnClickListenerCallback() {
+            @Override
+            public boolean onPressEvent(ArrayList<TMapMarkerItem> arrayList, ArrayList<TMapPOIItem> arrayList1, TMapPoint tMapPoint, PointF pointF) {
+                first_TMapPoint = new TMapPoint(tMapPoint.getLatitude(),tMapPoint.getLongitude());
+                return false;
+            }
+
+            @Override
+            public boolean onPressUpEvent(ArrayList<TMapMarkerItem> arrayList, ArrayList<TMapPOIItem> arrayList1, TMapPoint tMapPoint, PointF pointF) {
+                if((first_TMapPoint.getLatitude()==tMapPoint.getLatitude()) && (first_TMapPoint.getLongitude()==tMapPoint.getLongitude())){
+                    TMapMarkerItem markerItem = new TMapMarkerItem();
+                    markerItem.setIcon(mark_bitmap);
+                    markerItem.setTMapPoint(tMapPoint);
+
+                    tMapView.setCenterPoint(tMapPoint.getLongitude(),tMapPoint.getLatitude());
+                    tMapView.addMarkerItem("markerItem",markerItem);
+                    UtilSet.latitude = tMapPoint.getLatitude();
+                    UtilSet.longitude = tMapPoint.getLongitude();
+
+                    thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Tmap_async t_async = new Tmap_async();
+                            t_async.execute();
+                        }
+                    });
+                    thread.start();
+                }
+                return false;
             }
         });
 
