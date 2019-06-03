@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.MapPoint;
@@ -55,13 +56,17 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     private ArrayList<TMapPoint> m_tmapPoint = new ArrayList<TMapPoint>();
     private ArrayList<String> mArrayMarkerID = new ArrayList<String>();
     private ArrayList<MapPoint> m_mapPoint = new ArrayList<MapPoint>();
-    private ArrayList<Bitmap> m_bitMap = new ArrayList<Bitmap>();
-    //Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.gps_pin);
     private String address;
     private Double lat = null;
     private Double lon = null;
+    boolean gps_flag = true;
 
     private Button gps_button;
+
+    private Thread thread;
+
+    TextView address_text;
+    EditText detail_address_input;
 
     @Override
     public void onLocationChange(Location location){
@@ -75,6 +80,9 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
 
+        address_text = (TextView) findViewById(R.id.address_text);
+        detail_address_input = (EditText) findViewById(R.id.detail_address_input);
+
         mContext = this;
 
         gps_button = (Button) findViewById(R.id.GPS_button);
@@ -86,9 +94,11 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         linearLayout.addView(tMapView);
         tMapView.setSKTMapApiKey(UtilSet.key);
 
+        tMapView.setSightVisible(true);
+
         showMarkerPoint();
 
-        tMapView.setCompassMode(true);
+        //tMapView.setCompassMode(true);
         tMapView.setIconVisibility(true);
         tMapView.setZoomLevel(15);
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
@@ -96,15 +106,14 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         tMapView.setLocationPoint(UtilSet.longitude,UtilSet.latitude);
         tMapView.setCenterPoint(UtilSet.longitude,UtilSet.latitude);
 
-        tMapGpsManager = new TMapGpsManager(GpsActivity.this);
-        tMapGpsManager.setMinTime(1000);
-        tMapGpsManager.setMinDistance(5);
-        tMapGpsManager.setProvider(tMapGpsManager.NETWORK_PROVIDER);
+//        tMapGpsManager = new TMapGpsManager(GpsActivity.this);
+//        tMapGpsManager.setMinTime(1000);
+//        tMapGpsManager.setMinDistance(5);
+//        tMapGpsManager.setProvider(tMapGpsManager.NETWORK_PROVIDER);
+//
+//        tMapGpsManager.OpenGps();
 
-        tMapGpsManager.OpenGps();
-
-        tMapView.setTrackingMode(true);
-        tMapView.setSightVisible(true);
+//        tMapView.setTrackingMode(true);
 
         tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
             @Override
@@ -122,10 +131,10 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             }
         });
 
-        Thread thread = new Thread(new Runnable() {
-
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                gps_flag = false;
                 Tmap_async t_async = new Tmap_async();
                 t_async.execute();
 
@@ -143,6 +152,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
                 GpsActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
+                        tMapView.setCenterPoint(UtilSet.longitude,UtilSet.latitude);
                         Toast.makeText(GpsActivity.this, address, Toast.LENGTH_SHORT).show();
                         UtilSet.my_user.setUser_address(address);
                     }
@@ -195,6 +205,18 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         }
     }
 
+    public void GPS_current_position_track(View view){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Tmap_async t_async = new Tmap_async();
+                t_async.execute();
+            }
+        });
+        thread.start();
+    }
+
+
     public void GPS_search_address(View view){
         convertToAddress();
     }
@@ -213,47 +235,47 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 final String strData = input.getText().toString();
+                final Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.gps_pin);
 
 
                 TMapData tMapData = new TMapData();
+
                 tMapData.findAllPOI(strData, new TMapData.FindAllPOIListenerCallback() {
                     @Override
                     public void onFindAllPOI(ArrayList<TMapPOIItem> arrayList) {
                         for(int i=0;i<arrayList.size();i++) {
                             TMapPOIItem item = (TMapPOIItem)arrayList.get(i);
                             TMapPoint tmp_TMapPoint = new TMapPoint(item.getPOIPoint().getLatitude(),item.getPOIPoint().getLongitude());
-                            m_tmapPoint.add(tmp_TMapPoint);
-                            tMapMarkerItems.add(new TMapMarkerItem());
-                            //m_tmapPoint.set(i,new TMapPoint(item.getPOIPoint().getLatitude(),item.getPOIPoint().getLongitude()));
-                            m_bitMap.add(BitmapFactory.decodeResource(mContext.getResources(),R.drawable.gps_pin));
+                            TMapMarkerItem markerItem = new TMapMarkerItem();
+                            markerItem.setIcon(bitmap);
+                            markerItem.setTMapPoint(tmp_TMapPoint);
+
+                            tMapView.setCenterPoint(tmp_TMapPoint.getLongitude(),tmp_TMapPoint.getLatitude());
+                            tMapView.addMarkerItem("markerItem"+i,markerItem);
+
                             Log.d("주소로 찾기", "POI Name: " +
                                     item.getPOIName().toString() + ", " +
                                     "Address: " + item.getPOIAddress().replace("null", "") +
                                     ", " + "Point: " + item.getPOIPoint().toString());
-                        }
-
-                        //Make Marker
-                        //m_tmapPoint.size()
-                        for(int i=0;i< m_tmapPoint.size();i++) {
-
-                            tMapMarkerItems.get(i).setIcon(m_bitMap.get(i)); // 마커 아이콘 지정
-                            tMapMarkerItems.get(i).setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
-                            tMapMarkerItems.get(i).setTMapPoint( m_tmapPoint.get(i) ); // 마커의 좌표 지정
-                            tMapMarkerItems.get(i).setName("아주대"); // 마커의 타이틀 지정
-                            tMapView.addMarkerItem("1" +  i, tMapMarkerItems.get(i)); // 지도에 마커 추가
-                            tMapView.setCenterPoint( m_tmapPoint.get(i).getLongitude(),m_tmapPoint.get(i).getLatitude());
                         }
                     }
                 });
             }
         });
 
-        builder.setNegativeButton("취소",     new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
         builder.show();
+    }
+
+    public void GPS_ID_Complete(View view){
+
+
+
+        return;
     }
 }
