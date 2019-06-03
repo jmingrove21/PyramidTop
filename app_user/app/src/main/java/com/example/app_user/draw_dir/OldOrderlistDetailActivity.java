@@ -18,13 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
-import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.people_dir.PeopleFragment;
@@ -32,6 +33,7 @@ import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.util_dir.LoginActivity;
+import com.example.app_user.util_dir.RegisterActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +52,6 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_old_orderlist_detail_layout);
-
         Intent intent = getIntent();
         //type = intent.getStringExtra("type");
         index = intent.getIntExtra("index", 0);
@@ -65,6 +66,34 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         getSupportActionBar().setTitle("이전 주문 내역");
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            if(UtilSet.my_user.getUser_address()==null)
+                user_address.setText("배달주소를 선택해주세요!");
+            else
+                user_address.setText(UtilSet.my_user.getUser_address());
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+
+            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            gps_btn.setVisibility(View.INVISIBLE);
+
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -85,13 +114,18 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         TextView text_user_order_complete_time_input = (TextView) findViewById(R.id.user_order_complete_time_input);
         TextView text_user_deliver_start_time_input = (TextView) findViewById(R.id.user_deliver_start_time_input);
         TextView text_user_deliver_complete_time_input = (TextView) findViewById(R.id.user_deliver_complete_time_input);
+
         Order o = UtilSet.al_my_old_order.get(index);
         Store s = o.getStore();
+
         text_user_store_name_input.setText(s.getStore_name());
         text_user_store_number_input.setText(s.getStore_phone());
         text_user_store_address_input.setText(s.getStore_address());
+        for (int i = 0; i < o.getStore().getMenu_desc_al().size(); i++) {
+            o.setMy_order_total_price(o.getStore().getMenu_desc_al().get(i).getMenu_price() * o.getStore().getMenu_desc_al().get(i).getMenu_count());
+        }
 
-        text_user_order_price_sum_input.setText(String.valueOf(o.getTotal_order_price()));
+        text_user_order_price_sum_input.setText(String.valueOf(o.getMy_order_total_price())+"원");
         text_user_order_time_input.setText(o.getOrder_create_date());
         text_user_pay_method_input.setText("Card~");
         text_user_order_complete_time_input.setText(o.getOrder_receipt_date());
@@ -101,21 +135,39 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.old_olderlist:
-                getSupportActionBar().setTitle("지난 주문 내역");
-                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                        new Old_Orderlist()).commit();
-                break;
-            case R.id.menu_idoption:
-                getSupportActionBar().setTitle("계정 설정");
-                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                        new Profile()).commit();
-                break;
-            case R.id.menu_logout:
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivityForResult(intent, 101);
-                break;
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Profile()).commit();
+                    break;
+
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(OldOrderlistDetailActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }else{
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -146,7 +198,6 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
                             getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
                                     selectedFragment).commit();
                             break;
-
                     }
                     return true;
                 }
@@ -185,8 +236,9 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.party_detail_layout_menu_listview, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 30));
+            view = getLayoutInflater().inflate(R.layout.detail_layout_menu_listview, null);
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 70));
+
 
             TextView text_name = (TextView) view.findViewById(R.id.menu_name);
             TextView text_menu_count_input = (TextView) view.findViewById(R.id.menu_count_input);
@@ -212,7 +264,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
                     jsonParam.put("order_info",0);
                     jsonParam.put("store_serial", UtilSet.al_my_old_order.get(position).getStore().getStore_serial());
                     jsonParam.put("order_number", UtilSet.al_my_old_order.get(position).getOrder_number());
-                    jsonParam.put("user_serial",UtilSet.user_serial);
+                    jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
                     HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
 
                     if (conn.getResponseCode() == 200) {
@@ -262,5 +314,9 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }

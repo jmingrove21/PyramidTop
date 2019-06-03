@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
@@ -46,6 +45,10 @@ public class Old_Orderlist extends Fragment {
         get_store_info_by_my_order();
         oldOrderProducts = getOldOderProduct();
         oldOrderCustomAdapter = new OldOrderCustomAdapter(getActivity());
+
+        if(UtilSet.al_my_old_order.size()==0){
+            return view;
+        }
         listView.setAdapter(oldOrderCustomAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,6 +71,7 @@ public class Old_Orderlist extends Fragment {
         for(int i = 0; i < UtilSet.al_my_old_order.size(); i++){
             OldOrderPrduct oldOrderPrduct = new OldOrderPrduct();
             oldOrderPrduct.setUser_store_name_input(UtilSet.al_my_old_order.get(i).getStore().getStore_name());
+            oldOrderPrduct.setUser_store_branch_name_input(UtilSet.al_my_old_order.get(i).getStore().getStore_branch_name());
             oldOrderPrduct.setUser_order_time_input(UtilSet.al_my_old_order.get(i).getOrder_create_date());
             oldOrderPrduct.setUser_order_price_sum_input(UtilSet.al_my_old_order.get(i).getTotal_order_price());
             list.add(oldOrderPrduct);
@@ -83,7 +87,7 @@ public class Old_Orderlist extends Fragment {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "ordered_list");
                     jsonParam.put("order_info",0);
-                    jsonParam.put("user_serial",UtilSet.user_serial);
+                    jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
 
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
                     if (conn.getResponseCode() == 200) {

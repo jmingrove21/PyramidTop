@@ -27,7 +27,7 @@ public class OrderAdapter extends ArrayAdapter<String> {
         if(convertView == null){
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.orderlist_layout,null);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,300));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,500));
         }
 
         TextView text_date=(TextView)convertView.findViewById(R.id.date);

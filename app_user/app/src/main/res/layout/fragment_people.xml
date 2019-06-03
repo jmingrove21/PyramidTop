@@ -13,6 +13,8 @@
         <ListView
             android:id="@+id/people_listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:dividerHeight="0px"
+            android:divider="#ffffff"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

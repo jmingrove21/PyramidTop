@@ -17,17 +17,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
+import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.util_dir.LoginActivity;
+import com.example.app_user.util_dir.RegisterActivity;
 
 public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -37,6 +41,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.party_detail_layout);
 
         Intent intent = getIntent();
@@ -51,21 +56,49 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            if(UtilSet.my_user.getUser_address()==null)
+                user_address.setText("배달주소를 선택해주세요!");
+            else
+                user_address.setText(UtilSet.my_user.getUser_address());
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+
+            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            gps_btn.setVisibility(View.INVISIBLE);
+
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_listview);
-        PartyDetailActivity.UserAdapter userAdapter=new PartyDetailActivity.UserAdapter();
-        listView_user.setAdapter(userAdapter);
+//        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_listview);
+//        PartyDetailActivity.UserAdapter userAdapter=new PartyDetailActivity.UserAdapter();
+//        listView_user.setAdapter(userAdapter);
         ListView listView_menu = (ListView) findViewById(R.id.party_detail_layout_menu_listview);
         PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
         listView_menu.setAdapter(customAdapter);
 
 
-        TextView text_user = (TextView) findViewById(R.id.user);
+//        TextView text_user = (TextView) findViewById(R.id.user);
         TextView text_user_store_name_input = (TextView) findViewById(R.id.user_store_name_input);
         TextView text_user_store_number_input = (TextView) findViewById(R.id.user_store_number_input);
         TextView text_user_store_address_input = (TextView) findViewById(R.id.user_store_address_input);
@@ -77,14 +110,17 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         TextView text_user_deliver_start_time_input = (TextView) findViewById(R.id.user_deliver_start_time_input);
         TextView text_user_deliver_complete_time_input = (TextView) findViewById(R.id.user_deliver_complete_time_input);
 
-        Order o=UtilSet.al_my_order.get(index);
+        Order o = UtilSet.al_my_order.get(index);
 
-        text_user.setText("김창희");
-        text_user_store_name_input.setText(o.getStore().getStore_name()+" "+o.getStore().getStore_branch_name());
+        text_user_store_name_input.setText(o.getStore().getStore_name() + " " + o.getStore().getStore_branch_name());
         text_user_store_number_input.setText(o.getStore().getStore_phone());
         text_user_store_address_input.setText(o.getStore().getStore_address());
 
-        text_user_order_price_sum_input.setText(String.valueOf(o.getTotal_order_price()));
+        for (int i = 0; i < o.getStore().getMenu_desc_al().size(); i++) {
+           o.setMy_order_total_price(o.getStore().getMenu_desc_al().get(i).getMenu_price() * o.getStore().getMenu_desc_al().get(i).getMenu_count());
+        }
+
+        text_user_order_price_sum_input.setText(String.valueOf(o.getMy_order_total_price()) + "원");
         text_user_order_time_input.setText(o.getOrder_create_date());
         text_user_pay_method_input.setText("pay method input");
         text_user_order_complete_time_input.setText(o.getOrder_receipt_date());
@@ -94,21 +130,38 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.old_olderlist:
-                getSupportActionBar().setTitle("지난 주문 내역");
-                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                        new Old_Orderlist()).commit();
-                break;
-            case R.id.menu_idoption:
-                getSupportActionBar().setTitle("계정 설정");
-                getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                        new Profile()).commit();
-                break;
-            case R.id.menu_logout:
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivityForResult(intent, 101);
-                break;
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Profile()).commit();
+                    break;
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(PartyDetailActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }else{
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -178,8 +231,8 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.party_detail_layout_menu_listview, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 30));
+            view = getLayoutInflater().inflate(R.layout.detail_layout_menu_listview, null);
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 70));
 
             TextView text_name = (TextView) view.findViewById(R.id.menu_name);
             TextView text_menu_count_input = (TextView) view.findViewById(R.id.menu_count_input);
@@ -188,7 +241,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
             text_name.setText(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_name());
             text_menu_count_input.setText(String.valueOf(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_count()));
-            text_menu_price_input.setText(String.valueOf(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_price()*UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_count()));
+            text_menu_price_input.setText(String.valueOf(UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_price() * UtilSet.al_my_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_count()));
 
             return view;
         }
@@ -227,5 +280,9 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
             return view;
         }
+    }
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }

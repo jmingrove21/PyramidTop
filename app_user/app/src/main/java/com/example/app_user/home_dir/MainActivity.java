@@ -1,5 +1,8 @@
 package com.example.app_user.home_dir;
 
+import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,16 +20,21 @@ import android.support.v7.widget.Toolbar;
 
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.app_user.Item_dir.Store;
+import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.Item_dir.MenuDesc;
@@ -36,7 +44,7 @@ import com.example.app_user.people_dir.PeopleFragment;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.UtilSet;
-
+import com.example.app_user.util_dir.RegisterActivity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -50,22 +58,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     Bitmap bitmap;
     int store_ser;
-
+    int position_storetype;
+    boolean lastitemVisibleFlag = false;        //화면에 리스트의 마지막 아이템이 보여지는지 체크
+    CustomAdapter customAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Intent intent=new Intent();
+        position_storetype=intent.getIntExtra("type",0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("가게 목록");
-
 
         drawer = findViewById(R.id.drawer_layout);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -73,10 +83,130 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            getSupportActionBar().setTitle("가게 목록");
+            navigationView.inflateMenu(R.menu.drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            if(UtilSet.my_user.getUser_address()==null)
+                user_address.setText("배달주소를 선택해주세요!");
+            else
+                user_address.setText(UtilSet.my_user.getUser_address());
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText(" ");
+            navigationView.addHeaderView(view);
+        } else {
+            getSupportActionBar().setTitle("로그인 필요");
+            navigationView.inflateMenu(R.menu.logout_drawer_menu);
+            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+
+            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            gps_btn.setVisibility(View.INVISIBLE);
+
+            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            user_id.setText(" ");
+            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            user_address.setText(" ");
+            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            hello_msg.setText("배달ONE과 함께하세요!");
+            navigationView.addHeaderView(view);
+
+            MainActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText( MainActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return;
+        }
 
         ListView listView = (ListView) findViewById(R.id.listView);
-        CustomAdapter customAdapter = new CustomAdapter();
+        customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
+        set_store_image();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                store_ser = UtilSet.al_store.get(position).getStore_serial();
+                store_info_detail(store_ser, position);
+                Thread mThread = new Thread() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < UtilSet.al_store.get(position).getMenu_al().size(); i++) {
+                            for (int j = 0; j < UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().size(); j++) {
+                                try {
+                                    if (UtilSet.getBitmapFromMemCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img()) != null) {
+                                        bitmap = UtilSet.getBitmapFromMemCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
+                                        UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).setMenu_image(bitmap);
+                                    } else {
+                                        URL url = new URL(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
+                                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                        conn.setDoInput(true);
+                                        conn.connect();
+
+                                        InputStream is = conn.getInputStream();
+                                        bitmap = BitmapFactory.decodeStream(is);
+                                        UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).setMenu_image(bitmap);
+                                        UtilSet.addBitmapToMemoryCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img(), bitmap);
+                                    }
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                };
+                mThread.start();
+                try {
+                    mThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                UtilSet.target_store = UtilSet.al_store.get(position);
+                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                intent.putExtra("serial", store_ser);
+                intent.putExtra("index", position);
+                startActivityForResult(intent, 101);
+            }
+        });
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //현재 화면에 보이는 첫번째 리스트 아이템의 번호(firstVisibleItem) + 현재 화면에 보이는 리스트 아이템의 갯수(visibleItemCount)가 리스트 전체의 갯수(totalItemCount) -1 보다 크거나 같을때
+                lastitemVisibleFlag = (totalItemCount > 0) && (firstVisibleItem + visibleItemCount >= totalItemCount);
+            }
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                //OnScrollListener.SCROLL_STATE_IDLE은 스크롤이 이동하다가 멈추었을때 발생되는 스크롤 상태입니다.
+                //즉 스크롤이 바닦에 닿아 멈춘 상태에 처리를 하겠다는 뜻
+                if(scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastitemVisibleFlag) {
+                    //TODO 화면이 바닥에 닿을때 처리
+                    Log.d("event occur", "scroll 맨 밑으로 이동했음~");
+                    get_store_information(FirstMainActivity.store_type);
+                    set_store_image();
+                    customAdapter.notifyDataSetChanged();
+                    Log.d("store item count", String.valueOf(UtilSet.al_store.size()));
+
+                }
+            }
+
+        });
+
+    }
+//    public void refresh_fragment(){
+//        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+//        android.app.Fragment selectedFragment = new HomeFragment();
+//
+//        transaction.detach(selectedFragment).attach(selectedFragment).commit();
+//    }
+    public void set_store_image(){
         Thread mThread = new Thread() {
             @Override
             public void run() {
@@ -105,63 +235,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         mThread.start();
-        try {
+        try{
             mThread.join();
-        } catch (InterruptedException e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                store_ser = UtilSet.al_store.get(position).getStore_serial();
-                store_info_detail(store_ser, position);
-                Thread mThread = new Thread() {
-                    @Override
-                    public void run() {
-                        for (int i = 0; i < UtilSet.al_store.get(position).getMenu_al().size(); i++) {
-                            for (int j = 0; j < UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().size(); j++) {
-                                try {
-                                    if (UtilSet.getBitmapFromMemCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img()) != null) {
-                                        bitmap = UtilSet.getBitmapFromMemCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
-                                        UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).setMenu_image(bitmap);
-                                    } else {
-                                        URL url = new URL(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
-                                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                        conn.setDoInput(true);
-                                        conn.connect();
-
-                                        InputStream is = conn.getInputStream();
-                                        bitmap = BitmapFactory.decodeStream(is);
-                                        UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).setMenu_image(bitmap);
-                                        UtilSet.addBitmapToMemoryCache(UtilSet.al_store.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img(), bitmap);
-                                    }
-
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    }
-                };
-                mThread.start();
-                try {
-                    mThread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                UtilSet.target_store = UtilSet.al_store.get(position);
-                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                intent.putExtra("serial", store_ser);
-                intent.putExtra("index", position);
-                startActivityForResult(intent, 101);
-            }
-        });
     }
-
     public void store_info_detail(final int store_serial, final int position) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -174,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("user_info", "store_detail");
                     jsonParam.put("store_serial", store_serial);
 
-                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
+                    HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
@@ -225,24 +304,90 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             e.printStackTrace();
         }
     }
-
+    public void get_store_information(final int position) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("user_info", "store_info");
+                    jsonParam.put("user_lat", UtilSet.latitude);
+                    jsonParam.put("user_long", UtilSet.longitude);
+                    jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
+                    jsonParam.put("count", UtilSet.al_store.size());
+                    Log.d("jsonobject", jsonParam.toString());
+                    HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
+                    if (conn.getResponseCode() == 200) {
+                        InputStream response = conn.getInputStream();
+                        String jsonReply = UtilSet.convertStreamToString(response);
+                        try {
+                            JSONArray jArray = new JSONArray(jsonReply);
+                            for (int i = 0; i < jArray.length(); i++) {
+                                JSONObject jobj = (JSONObject) jArray.get(i);
+                                String store_serial = jobj.get("store_serial").toString();
+                                String store_name = jobj.get("store_name").toString();
+                                String store_branch_name = jobj.get("store_branch_name").toString();
+                                String store_address = jobj.get("store_address").toString();
+                                String store_phone = jobj.get("store_phone").toString();
+                                String distance = jobj.get("distance").toString();
+                                String minimum_order_price = jobj.get("minimum_order_price").toString();
+                                String store_profile_img = jobj.get("store_profile_img").toString();
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
+                                UtilSet.al_store.add(s);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d("error", "Connect fail");
+                    }
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.old_olderlist:
-                getSupportActionBar().setTitle("지난 주문 내역");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new Old_Orderlist()).commit();
-                break;
-            case R.id.menu_idoption:
-                getSupportActionBar().setTitle("계정 설정");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new Profile()).commit();
-                break;
-            case R.id.menu_logout:
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivityForResult(intent, 101);
-                break;
+        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new Profile()).commit();
+                    break;
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    Intent intent=new Intent(MainActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }else{
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -255,17 +400,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
                             getSupportActionBar().setTitle("주문 현황");
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
                             getSupportActionBar().setTitle("참여 현황");
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new PeopleFragment();
                             break;
                     }
@@ -300,7 +445,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 300));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 350));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
@@ -326,5 +471,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivityForResult(intent, 101);
             finish();
         }
+    }
+
+    public void GPSonClick(View view){
+        Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
+        startActivityForResult(intent, 101);
     }
 }

@@ -4,75 +4,128 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:orientation="horizontal">
-
+    android:orientation="horizontal"
+    android:padding="5dp">
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.4">
-
-        <TextView
-            android:id="@+id/user_store_name_input"
+        android:background="@drawable/old_ordered_list_button">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="TextView"
-            android:textSize="10sp"
-            android:textAlignment="center" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:background="@drawable/ordered_list_detail_top"
+                android:weightSum="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:src="@drawable/shop_white"
+                    android:padding="10sp"/>
+                <TextView
+                    android:id="@+id/user_store_name_input"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:text="TextView"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:padding="5sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.35"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1">
+                    <TextView
+                        android:id="@+id/user_store_order_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="주문한 시간:"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textColor="#000000"/>
+                </LinearLayout>
 
-        <TextView
-            android:id="@+id/user_store_order_time"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="시간:"
-            android:textSize="10sp"
-            android:textAlignment="center" />
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:padding="5sp">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2">
+                    <TextView
+                        android:id="@+id/user_order_time_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Text"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textAlignment="textStart"
+                        android:textColor="#000000"/>
+                </LinearLayout>
 
-        <TextView
-            android:id="@+id/user_order_time_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Text"
-            android:textSize="10sp"
-            android:textAlignment="center" />
-    </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.35"
+                android:weightSum="1">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="결제금액:"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textColor="#000000"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2">
 
-        <TextView
-            android:id="@+id/user_order_price_sum_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="TextView"
-            android:textSize="10sp"
-            android:textAlignment="textEnd" />
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/user_order_price_sum_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="TextView"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"
+                        android:textAlignment="textEnd"
+                        android:textColor="#000000"/>
+                </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4">
 
-        <TextView
-            android:id="@+id/menu_price"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="원"
-            android:textSize="10sp"
-            android:textAlignment="textStart" />
+                    <TextView
+                        android:id="@+id/menu_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="원"
+                        android:textSize="15sp"
+                        android:gravity="center_vertical"
+                        android:textColor="#000000"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

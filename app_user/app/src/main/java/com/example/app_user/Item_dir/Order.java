@@ -1,5 +1,7 @@
 package com.example.app_user.Item_dir;
 
+import com.example.app_user.R;
+
 import java.util.ArrayList;
 
 public class Order {
@@ -14,8 +16,7 @@ public class Order {
     private String order_receipt_date;
     private String delivery_departure_time;
     private String delivery_arrival_time;
-    private String participate_persons;
-
+    private int my_order_total_price=0;
     public Order(String order_create_date,String participate_person, String total_order_price, String order_number){
         this.order_create_date=order_create_date;
         this.participate_person=Integer.parseInt(participate_person);
@@ -67,33 +68,37 @@ public class Order {
         return delivery_departure_time;
     }
 
-    public String getParticipate_persons() {
-        return participate_persons;
-    }
-
     public String getDelivery_arrival_time() {
         return delivery_arrival_time;
     }
     public void setDelivery_arrival_time(String delivery_arrival_time) {
         this.delivery_arrival_time = delivery_arrival_time;
     }
+    public int getMy_order_total_price() {
+        return my_order_total_price;
+    }
+
+    public void setMy_order_total_price(int my_order_total_price) {
+        this.my_order_total_price += my_order_total_price;
+    }
     public void setDateSpecification(String order_create_date, String order_receipt_date, String delivery_departure_time){
         this.order_create_date=order_create_date;
         this.order_receipt_date=order_receipt_date;
         this.delivery_departure_time=delivery_departure_time;
     }
-    public String getOrderStatus(){
+    public int getOrderStatus(){
         if(order_status==1)
-            return "접수 대기";
+            return R.drawable.wait;
         else if(order_status==3)
-            return "접수 완료";
+            return R.drawable.receipt;
         else if(order_status==4||order_status==5)
-            return "배달 준비";
+            //return "배달 준비";
+            return R.drawable.delivery_ready;
         else if(order_status==6)
-            return "배달 중";
+            return R.drawable.deliverying;
         else if(order_status==7)
-            return "배달 완료";
+            return R.drawable.delivery_ready;
         else
-            return "";
+            return 0;
     }
 }
