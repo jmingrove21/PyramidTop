@@ -1,9 +1,11 @@
 package com.example.app_delivery;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +37,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
     String store_phone;
     double store_latitude;
     double store_longtite;
+    Delivery_list delivery_list;
     int order_number;
     static TMapView tMapView;
     static boolean refresh_status=true;
@@ -50,12 +53,13 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         store_latitude = intent.getDoubleExtra("store_latitude", 0.0);
         store_longtite = intent.getDoubleExtra("store_longitude", 0.0);
         order_number = intent.getIntExtra("order_number", 0);
-        tMapView = new TMapView(this);
 
+        tMapView = new TMapView(this);
         tMapView.setSKTMapApiKey(UtilSet.tmap_key);
         set_Tmap_Init();
 
-        UtilSet.set_GPS_value(UtilSet.lm, this);
+        Log.d("좌표",String.valueOf(UtilSet.latitude));
+        Log.d("좌표",String.valueOf(UtilSet.longitude));
         Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -106,7 +110,8 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "departure");
                     jsonParam.put("order_number", order_number);
-
+                    jsonParam.put("delivery_id", UtilSet.delivery_id);
+                    Log.d("json",jsonParam.toString());
                     HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
 
                     if (conn.getResponseCode() == 200) {

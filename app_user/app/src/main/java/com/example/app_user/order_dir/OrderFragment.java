@@ -172,18 +172,18 @@ public class OrderFragment extends DialogFragment {
                             for (int i = 0; i < jArray.length(); i++) {
                                 JSONObject jobj = (JSONObject) jArray.get(i);
 
-                                String store_serial = jobj.get("store_serial").toString();
-                                String store_name = jobj.get("store_name").toString();
-                                String store_branch_name = jobj.get("store_branch_name").toString();
-                                String store_address = jobj.get("store_address").toString();
-                                String store_phone = jobj.get("store_phone").toString();
-                                String minimum_order_price = jobj.get("minimum_order_price").toString();
-                                String distance = jobj.get("distance").toString();
-                                String store_profile_img = jobj.get("store_profile_img").toString();
-                                String order_create_date = jobj.get("order_create_date").toString();
-                                String participate_person = jobj.get("participate_persons").toString();
-                                String total_order_price = jobj.get("total_order_price").toString();
-                                String order_number=jobj.get("order_number").toString();
+                                String store_serial = jobj.getString("store_serial");
+                                String store_name = jobj.getString("store_name");
+                                String store_branch_name = jobj.getString("store_branch_name");
+                                String store_address = jobj.getString("store_address");
+                                String store_phone = jobj.getString("store_phone");
+                                String minimum_order_price = jobj.getString("minimum_order_price");
+                                String distance = jobj.getString("distance");
+                                String store_profile_img = jobj.getString("store_profile_img");
+                                String order_create_date = jobj.getString("order_create_date");
+                                String participate_person = jobj.getString("participate_persons");
+                                String total_order_price = jobj.getString("total_order_price");
+                                String order_number=jobj.getString("order_number");
                                 Order o = new Order(order_create_date, participate_person, total_order_price,order_number);
 
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
