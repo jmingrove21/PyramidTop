@@ -35,6 +35,14 @@ switch($store_info){
         include 'store_menu.php';
         store_menu($json_data);
         break;
+    case 'one_menu_info':
+        include 'store_one_menu_info.php';
+        one_menu_info($json_data);
+        break;
+    case 'menu_delete':
+        include 'store_menu_delete.php';
+        menu_delete($json_data);
+        break;
 
 }
 ?>

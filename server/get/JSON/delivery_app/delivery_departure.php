@@ -4,6 +4,7 @@
         date_default_timezone_set("Asia/Seoul");
         $current=date("Y-m-d H:i:s");
 
+        $delivery_id=$json_data['delivery_id'];
         $order_number=$json_data['order_number'];
         $departure_query="UPDATE store_order SET order_status=6, delivery_departure_time='".$current."' WHERE order_number=".$order_number;
         $departure_stmt = mysqli_query($connect,$departure_query);
@@ -99,6 +100,9 @@
          array_push($user_order,$user_menu);
          $data['user_order']=$user_order;
 
+
+        $status="UPDATE delivery SET delivery_status=2 WHERE delivery_id='".$delivery_id."'";
+        $stmt=mysqli_query($connect, $status);
 
         echo json_encode($data,JSON_UNESCAPED_UNICODE);
 }

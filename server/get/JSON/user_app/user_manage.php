@@ -51,5 +51,9 @@ switch($user_info){
         include 'user_store_detail.php';
         store_detail($json_data);
         break;
+    case 'check_status':
+        include 'user_alarm_check.php';
+        alarm_check($json_data);
+        break;
 }
 ?>

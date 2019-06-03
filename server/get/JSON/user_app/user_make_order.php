@@ -12,71 +12,83 @@
         $current=date("Y-m-d H:i:s");
 
         if($order_number==0){
-        $query="
-        SELECT MAX(order_number) AS m FROM user_order
-        ";
-        $stmt = mysqli_query($connect,$query);
-        $row=mysqli_fetch_assoc($stmt);
-        $order_number=$row['m']+1;
-        #주문 자체 생성
-        $insert_query3="INSERT INTO store_order (order_number,order_status,order_create_date,store_serial) VALUES(".$order_number.",1,'".$current."',".$store_serial.")";
-        $insert_stmt3=mysqli_query($connect, $insert_query3);
-        }
-        #주문에 사용자에 대한 정보 추가
-        $insert_query="INSERT INTO Capstone.user_order (order_number,store_serial,destination,USER_user_serial, destination_lat,destination_long,make_order_time) VALUES(".$order_number.",".$store_serial.",'".$destination."',".$user_serial.",".$destination_lat.",".$destination_long.",'".$current."')";
-        $insert_stmt = mysqli_query($connect,$insert_query);
-
-        $query="
-        SELECT MAX(user_order_serial) AS u FROM user_order
-        ";
-        $stmt = mysqli_query($connect,$query);
-        $row=mysqli_fetch_assoc($stmt);
-        $order_serial=$row['u'];
-
-        foreach($menu as $m){
-        #주문된 메뉴 추가
-            $insert_query2="INSERT INTO Capstone.order_menu (user_order_serial, order_number, menu_code,menu_count) VALUES(".$order_serial.",".$order_number.",'".$m['menu_code']."',".$m['menu_count'].")";
-            $insert_stmt2=mysqli_query($connect, $insert_query2);
+            $query="
+            SELECT MAX(order_number) AS m FROM user_order
+            ";
+            $stmt = mysqli_query($connect,$query);
+            $row=mysqli_fetch_assoc($stmt);
+            $order_number=$row['m']+1;
+            #주문 자체 생성
+            $insert_query3="INSERT INTO store_order (order_number,order_status,order_create_date,store_serial) VALUES(".$order_number.",1,'".$current."',".$store_serial.")";
+            $insert_stmt3=mysqli_query($connect, $insert_query3);
         }
 
-        $confirm=-1;
-        if($insert_stmt&$insert_stmt2&$insert_stmt3)
-            $confirm=1;
-        else
-            $confirm=0;
+        $check="SELECT COUNT(*) AS c FROM user_order WHERE order_number=".$order_number." AND USER_user_serial=".$user_serial;
+        $stmt = mysqli_query($connect,$check);
+        $row2=mysqli_fetch_assoc($stmt);
 
-        #최소주문금액 넘었는지 확인
-        $query="SELECT minimum_order_price FROM store WHERE store_serial=".$store_serial;
-        $stmt = mysqli_query($connect,$query);
-        $row = mysqli_fetch_assoc($stmt);
-        $min=$row['minimum_order_price'];
+        $user_check=0;
+        if($row2['c']!=0){
+            $user_check=1;
+        }else{
 
-        #주문된 가격 확인
-        $confirm_query="
-        SELECT menu_price,tb.*
-        FROM Capstone.menu AS m
-        INNER JOIN
-        (
-			SELECT menu_code,menu_count
-			FROM Capstone.order_menu
-			WHERE order_number=".$order_number."
-        ) tb
-        ON m.menu_code=tb.menu_code
-        WHERE store_serial=".$store_serial;
-        $confirm_stmt = mysqli_query($connect,$confirm_query);
-        $total_price=0;
-        while($row=mysqli_fetch_assoc($confirm_stmt)){
-            $total_price+=$row['menu_price']*$row['menu_count'];
-        }
-        if($total_price<$min)
-            $confirm=1;
-        else{
-            $confirm=2;
-            $query="UPDATE store_order SET order_status=3,order_receipt_date='".$current."' WHERE order_number=".$order_number;
-            $stmt=mysqli_query($connect,$query);
+            #주문에 사용자에 대한 정보 추가
+            $insert_query="INSERT INTO Capstone.user_order (order_number,store_serial,destination,USER_user_serial, destination_lat,destination_long,make_order_time) VALUES(".$order_number.",".$store_serial.",'".$destination."',".$user_serial.",".$destination_lat.",".$destination_long.",'".$current."')";
+            $insert_stmt = mysqli_query($connect,$insert_query);
+
+            $query="
+            SELECT MAX(user_order_serial) AS u FROM user_order
+            ";
+            $stmt = mysqli_query($connect,$query);
+            $row=mysqli_fetch_assoc($stmt);
+            $order_serial=$row['u'];
+
+            foreach($menu as $m){
+            #주문된 메뉴 추가
+                $insert_query2="INSERT INTO Capstone.order_menu (user_order_serial, order_number, menu_code,menu_count) VALUES(".$order_serial.",".$order_number.",'".$m['menu_code']."',".$m['menu_count'].")";
+                $insert_stmt2=mysqli_query($connect, $insert_query2);
+            }
+
+            $confirm=-1;
+            if($insert_stmt&$insert_stmt2&$insert_stmt3)
+                $confirm=1;
+            else
+                $confirm=0;
+
+            #최소주문금액 넘었는지 확인
+            $query="SELECT minimum_order_price FROM store WHERE store_serial=".$store_serial;
+            $stmt = mysqli_query($connect,$query);
+            $row = mysqli_fetch_assoc($stmt);
+            $min=$row['minimum_order_price'];
+
+            #주문된 가격 확인
+            $confirm_query="
+            SELECT menu_price,tb.*
+            FROM Capstone.menu AS m
+            INNER JOIN
+            (
+                SELECT menu_code,menu_count
+                FROM Capstone.order_menu
+                WHERE order_number=".$order_number."
+            ) tb
+            ON m.menu_code=tb.menu_code
+            WHERE store_serial=".$store_serial;
+            $confirm_stmt = mysqli_query($connect,$confirm_query);
+            $total_price=0;
+            while($row=mysqli_fetch_assoc($confirm_stmt)){
+                $total_price+=$row['menu_price']*$row['menu_count'];
+            }
+            if($total_price<$min)
+                $confirm=1;
+            else{
+                $confirm=2;
+                $query="UPDATE store_order SET order_status=3,order_receipt_date='".$current."' WHERE order_number=".$order_number;
+                $stmt=mysqli_query($connect,$query);
+            }
         }
 
         $send_data=array(
+            'user_check'=>$user_check,
             'confirm'=>$confirm
         );
         echo json_encode($send_data);
