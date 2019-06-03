@@ -109,6 +109,9 @@ function modifyData() {
     //alert(store_serial);
 
     JSON.stringify(newObject);
+
+    //alert(Store_profile_img);
+
     var formdata = new FormData();
     formdata.append('image_file', Store_profile_img);
     formdata.append('store_serial', store_serial);
