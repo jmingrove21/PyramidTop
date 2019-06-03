@@ -309,6 +309,7 @@ function change_deli_status(number) {
 
 function detail_deliver_list(number)
 {
+
 	var data = {
 		"store_info": "detail_main",
 		"store_serial": store_serial,
