@@ -59,7 +59,6 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     private String address;
     private Double lat = null;
     private Double lon = null;
-    boolean gps_flag = true;
 
     private Button gps_button;
 
@@ -134,10 +133,8 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                gps_flag = false;
                 Tmap_async t_async = new Tmap_async();
                 t_async.execute();
-
             }
         });
         thread.start();
@@ -155,6 +152,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                         tMapView.setCenterPoint(UtilSet.longitude,UtilSet.latitude);
                         Toast.makeText(GpsActivity.this, address, Toast.LENGTH_SHORT).show();
                         UtilSet.my_user.setUser_address(address);
+                        address_text.setText(address);
                     }
                 });
 
@@ -274,7 +272,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
     public void GPS_ID_Complete(View view){
 
-
+        UtilSet.my_user.setUser_address(address_text.getText().toString());
 
         return;
     }
