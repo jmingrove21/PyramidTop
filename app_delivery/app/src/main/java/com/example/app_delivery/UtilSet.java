@@ -34,6 +34,8 @@ public class UtilSet {
     public final static int PERMISSION_REQUEST_CODE=1000;
     public static double latitude=0;
     public static double longitude=0;
+    public static String delivery_id;
+    public static String deliver_password;
     public static String convertStreamToString(InputStream is) {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));

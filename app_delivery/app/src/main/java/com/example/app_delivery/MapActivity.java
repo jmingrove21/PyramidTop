@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -46,11 +47,16 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        order_number = getIntent().getIntExtra("order_number", 0);
+
         this.tMapView = new TMapView(this);
-        this.alTmapPoint = new ArrayList();
+
         tMapView.setSKTMapApiKey(UtilSet.tmap_key);
         set_MapView();
-        order_number = getIntent().getIntExtra("order_number", 0);
+
+        this.alTmapPoint = new ArrayList();
+        Log.d("좌표",String.valueOf(UtilSet.latitude));
+        Log.d("좌표",String.valueOf(UtilSet.longitude));
         if (getIntent().hasExtra("json")) {
             try {
                 JSONObject mJsonObject = new JSONObject(getIntent().getStringExtra("json"));
@@ -60,6 +66,7 @@ public class MapActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        int direct_check=getIntent().getIntExtra("direct",0);
 
         m_oListView = (ListView) findViewById(R.id.user_delivery_list);
         ListAdapter_user oAdapter = new ListAdapter_user(oData);
@@ -193,7 +200,7 @@ public class MapActivity extends AppCompatActivity {
                         jsonParam.put("delivery_status", 1);//한 user complete
                     jsonParam.put("order_number", oData.get(position).order_number);
                     jsonParam.put("user_serial", oData.get(position).user_serial);
-
+                    jsonParam.put("delivery_id",UtilSet.delivery_id);
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
 
                     if (conn.getResponseCode() == 200) {
@@ -236,7 +243,6 @@ public class MapActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            Log.i("Tag", "getCount");
             return nListCnt;
         }
 
