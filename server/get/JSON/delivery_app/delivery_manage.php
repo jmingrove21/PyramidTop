@@ -26,5 +26,9 @@ switch($delivery_info){
         include 'delivery_complete.php';
         delivery_complete($json_data);
         break;
+    case 'status':
+        include 'delivery_status.php';
+        delivery_status($json_data);
+        break;
 }
 ?>

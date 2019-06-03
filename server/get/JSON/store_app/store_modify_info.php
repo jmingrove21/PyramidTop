@@ -17,7 +17,7 @@
         $store_profile_img=$_FILES["image_file"];
         $minimum_order_price=$_POST['minimum_order_price'];
         $upload=$_FILES['image_file']['name'];
-
+        print_r($upload);
         $store_query="SELECT store_id FROM store WHERE store_serial=".$store_serial;
         $stmt=mysqli_query($connect,$store_query);
         $row=mysqli_fetch_assoc($stmt);
