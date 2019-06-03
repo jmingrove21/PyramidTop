@@ -34,6 +34,7 @@
         android:layout_height="match_parent"
         android:text="선택"
         android:id="@+id/btn"
+        android:background="@drawable/start"
         android:layout_weight="20"
         />
     <View

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skt.Tmap.TMapData;
@@ -21,6 +22,7 @@ import com.skt.Tmap.TMapTapi;
 import com.skt.Tmap.TMapView;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -28,6 +30,7 @@ import java.net.HttpURLConnection;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Delivery_to_Store_Activity extends AppCompatActivity {
+    String store_name;
     String store_address;
     String store_phone;
     double store_latitude;
@@ -41,6 +44,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_delivery_to_store);
         Intent intent = getIntent();
 
+        store_name = intent.getStringExtra("store_name");
         store_address = intent.getStringExtra("store_address");
         store_phone = intent.getStringExtra("store_phone");
         store_latitude = intent.getDoubleExtra("store_latitude", 0.0);
@@ -64,7 +68,11 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         thread.start();
 
         CircleImageView tmap_button = (CircleImageView) findViewById(R.id.go_to_tmap);
+        TextView store_name_tx=(TextView) findViewById(R.id.store_name);
+        TextView store_address_tx=(TextView) findViewById(R.id.store_address);
         Button start_button = (Button) findViewById(R.id.delivery_start_btn);
+        store_name_tx.setText(store_name);
+        store_address_tx.setText(store_address);
         final TMapTapi tMapTapi = new TMapTapi(this);
 
         tmap_button.setOnClickListener(new Button.OnClickListener() {
