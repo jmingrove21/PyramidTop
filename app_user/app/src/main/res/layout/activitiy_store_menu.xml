@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MenuActivity"
+    tools:context=".home_dir.MenuActivity"
     tools:openDrawer="start">
 
     <RelativeLayout
@@ -23,24 +23,28 @@
             android:layout_above="@+id/bottom_navigation">
 
             <android.support.v7.widget.Toolbar
+                app:elevation="0dp"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
-                android:background="@color/colorPrimary"
-                android:elevation="4dp"
+                android:background="#4AC66D"
+                android:elevation="0dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    />
+            </android.support.v7.widget.Toolbar>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="4sp"
-                android:paddingRight="4sp"
-                android:paddingBottom="4sp"
-                android:paddingTop="4sp"
-
                 android:layout_marginTop="?attr/actionBarSize"
                 android:layout_weight="100"
                 android:orientation="vertical">
@@ -49,68 +53,88 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="30"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:background="#4AC66D">
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="10"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:id="@+id/store_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            />
-                    </LinearLayout>
+                        android:layout_weight="6"></LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="15"
-                        android:orientation="vertical">
+                        android:layout_weight="18"
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
-                        <TextView
-                            android:id="@+id/store_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="15"
-                            android:layout_marginTop="3sp"
-                            android:text="TextView"
-                            android:textSize="20sp" />
-                        <TextView
-                            android:id="@+id/store_branch_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="10"
-                            android:text="TextView"
-                            android:textSize="15sp" />
-                        <TextView
-                            android:id="@+id/store_phone"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="10"
-                            android:text="TextView"
-                            android:textSize="15sp" />
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="15"
-                            android:orientation="horizontal">
+                            android:layout_weight="0.2"></LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.6">
 
-                            <Button
-                                android:id="@+id/store_inform_button"
+                            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/store_image"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="5"
-                                android:text="상세보기"
-                                android:textSize="10sp" />
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.2"
+                            ></LinearLayout>
 
-                            <Button
-                                android:id="@+id/menu_list_button"
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="6"
+                        android:orientation="vertical">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="6"
+                            android:orientation="vertical"
+                            android:weightSum="1">
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="5"
-                                android:text="메뉴보기"
-                                android:textSize="10sp" />
+                                android:layout_height="0dp"
+                                android:layout_weight="0.75"></LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.2">
+                                <ImageButton
+                                    android:id="@+id/store_inform_button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="5"
+                                    android:textSize="10sp"
+                                    android:src="@drawable/information"
+                                    android:background="#4AC66D"
+                                    android:scaleType="fitCenter"/>
+
+                                <ImageButton
+                                    android:id="@+id/menu_list_button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="5"
+                                    android:textSize="10sp"
+                                    android:background="#4AC66D"
+                                    android:src="@drawable/menu"
+                                    android:scaleType="fitCenter"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.05"></LinearLayout>
 
                         </LinearLayout>
 
@@ -121,7 +145,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="55"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="#ffffff">
 
                     <FrameLayout
                         android:id="@+id/sub_fragment_container"
@@ -141,14 +166,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
-                        android:onClick="showSelectedItems"
+                        android:layout_marginLeft="20sp"
                         android:layout_marginTop="5sp"
+                        android:layout_marginRight="20sp"
                         android:layout_marginBottom="5sp"
-                        android:layout_marginRight="40sp"
-                        android:layout_marginLeft="40sp"
                         android:layout_weight="5"
+                        android:background="#4AC66D"
+                        android:onClick="showSelectedItems"
                         android:text="주문하기"
-                        android:textSize="10sp" />
+                        android:textSize="25dp"
+                        android:textColor="#ffffff"/>
 
                 </LinearLayout>
             </LinearLayout>

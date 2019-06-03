@@ -10,5 +10,4 @@
         android:text="계정설정칸"
         android:textSize="30sp"
         android:layout_centerInParent="true"/>
-
 </RelativeLayout>
