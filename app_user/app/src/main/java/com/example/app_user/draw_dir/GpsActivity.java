@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PointF;
 import android.location.Address;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -42,7 +43,7 @@ import java.util.ArrayList;
 
 import javax.crypto.spec.GCMParameterSpec;
 
-public class GpsActivity extends Activity implements TMapGpsManager.onLocationChangedCallback{
+public class GpsActivity extends Activity implements TMapGpsManager.onLocationChangedCallback, TMapView.OnLongClickListenerCallback {
     private EditText GPS_editText;
     private Context mContext = null;
     private boolean m_bTrackingMode = true;
@@ -63,6 +64,9 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     private Button gps_button;
 
     private Thread thread;
+
+    private TMapPoint first_TMapPoint;
+    Bitmap mark_bitmap;
 
     TextView address_text;
     EditText detail_address_input;
@@ -99,13 +103,13 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
         //tMapView.setCompassMode(true);
         tMapView.setIconVisibility(true);
-        tMapView.setZoomLevel(15);
+        tMapView.setZoomLevel(30);
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
         tMapView.setLocationPoint(UtilSet.longitude,UtilSet.latitude);
         tMapView.setCenterPoint(UtilSet.longitude,UtilSet.latitude);
 
-//        tMapGpsManager = new TMapGpsManager(GpsActivity.this);
+        //        tMapGpsManager = new TMapGpsManager(GpsActivity.this);
 //        tMapGpsManager.setMinTime(1000);
 //        tMapGpsManager.setMinDistance(5);
 //        tMapGpsManager.setProvider(tMapGpsManager.NETWORK_PROVIDER);
@@ -127,6 +131,39 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                     }
                 });
                 Toast.makeText(GpsActivity.this,"주소 : "+address,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mark_bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.gps_pin);
+        tMapView.setOnClickListenerCallBack(new TMapView.OnClickListenerCallback() {
+            @Override
+            public boolean onPressEvent(ArrayList<TMapMarkerItem> arrayList, ArrayList<TMapPOIItem> arrayList1, TMapPoint tMapPoint, PointF pointF) {
+                first_TMapPoint = new TMapPoint(tMapPoint.getLatitude(),tMapPoint.getLongitude());
+                return false;
+            }
+
+            @Override
+            public boolean onPressUpEvent(ArrayList<TMapMarkerItem> arrayList, ArrayList<TMapPOIItem> arrayList1, TMapPoint tMapPoint, PointF pointF) {
+                if((first_TMapPoint.getLatitude()==tMapPoint.getLatitude()) && (first_TMapPoint.getLongitude()==tMapPoint.getLongitude())){
+                    TMapMarkerItem markerItem = new TMapMarkerItem();
+                    markerItem.setIcon(mark_bitmap);
+                    markerItem.setTMapPoint(tMapPoint);
+
+                    tMapView.setCenterPoint(tMapPoint.getLongitude(),tMapPoint.getLatitude());
+                    tMapView.addMarkerItem("markerItem",markerItem);
+                    UtilSet.latitude = tMapPoint.getLatitude();
+                    UtilSet.longitude = tMapPoint.getLongitude();
+
+                    thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Tmap_async t_async = new Tmap_async();
+                            t_async.execute();
+                        }
+                    });
+                    thread.start();
+                }
+                return false;
             }
         });
 
@@ -223,9 +260,6 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("주소 설정하기");
 
-// 마커 아이콘
-
-
         final EditText input = new EditText(this);
         builder.setView(input);
 
@@ -244,12 +278,12 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                         for(int i=0;i<arrayList.size();i++) {
                             TMapPOIItem item = (TMapPOIItem)arrayList.get(i);
                             TMapPoint tmp_TMapPoint = new TMapPoint(item.getPOIPoint().getLatitude(),item.getPOIPoint().getLongitude());
-                            TMapMarkerItem markerItem = new TMapMarkerItem();
-                            markerItem.setIcon(bitmap);
-                            markerItem.setTMapPoint(tmp_TMapPoint);
+//                            TMapMarkerItem markerItem = new TMapMarkerItem();
+//                            markerItem.setIcon(bitmap);
+//                            markerItem.setTMapPoint(tmp_TMapPoint);
 
                             tMapView.setCenterPoint(tmp_TMapPoint.getLongitude(),tmp_TMapPoint.getLatitude());
-                            tMapView.addMarkerItem("markerItem"+i,markerItem);
+                            //tMapView.addMarkerItem("markerItem"+i,markerItem);
 
                             Log.d("주소로 찾기", "POI Name: " +
                                     item.getPOIName().toString() + ", " +
@@ -270,10 +304,22 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         builder.show();
     }
 
+    @Override
+    public void onLongPressEvent(ArrayList markerlist,
+                                 ArrayList poilist, TMapPoint point) {
+        Toast.makeText(GpsActivity.this,""+point.getLatitude(),Toast.LENGTH_SHORT);
+    }
+
     public void GPS_ID_Complete(View view){
-
-        UtilSet.my_user.setUser_address(address_text.getText().toString());
-
+        if(detail_address_input.getText().toString().length()>0){
+            UtilSet.my_user.setUser_address(address_text.getText().toString()+" "+detail_address_input.getText().toString());
+            Intent intent=new Intent(GpsActivity.this, FirstMainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }else{
+            Toast.makeText(GpsActivity.this,"상세 주소를 입력하시지 않았습니다.",Toast.LENGTH_SHORT).show();
+        }
         return;
     }
 }
