@@ -1,9 +1,11 @@
 package com.example.app_delivery;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skt.Tmap.TMapData;
@@ -21,15 +24,20 @@ import com.skt.Tmap.TMapTapi;
 import com.skt.Tmap.TMapView;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Delivery_to_Store_Activity extends AppCompatActivity {
+    String store_name;
     String store_address;
     String store_phone;
     double store_latitude;
     double store_longtite;
+    Delivery_list delivery_list;
     int order_number;
     static TMapView tMapView;
     static boolean refresh_status=true;
@@ -39,17 +47,19 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_delivery_to_store);
         Intent intent = getIntent();
 
+        store_name = intent.getStringExtra("store_name");
         store_address = intent.getStringExtra("store_address");
         store_phone = intent.getStringExtra("store_phone");
         store_latitude = intent.getDoubleExtra("store_latitude", 0.0);
         store_longtite = intent.getDoubleExtra("store_longitude", 0.0);
         order_number = intent.getIntExtra("order_number", 0);
-        tMapView = new TMapView(this);
 
+        tMapView = new TMapView(this);
         tMapView.setSKTMapApiKey(UtilSet.tmap_key);
         set_Tmap_Init();
 
-        UtilSet.set_GPS_value(UtilSet.lm, this);
+        Log.d("좌표",String.valueOf(UtilSet.latitude));
+        Log.d("좌표",String.valueOf(UtilSet.longitude));
         Thread thread = new Thread(new Runnable() {
 
             @Override
@@ -61,8 +71,12 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         });
         thread.start();
 
-        Button tmap_button = (Button) findViewById(R.id.go_to_tmap);
+        CircleImageView tmap_button = (CircleImageView) findViewById(R.id.go_to_tmap);
+        TextView store_name_tx=(TextView) findViewById(R.id.store_name);
+        TextView store_address_tx=(TextView) findViewById(R.id.store_address);
         Button start_button = (Button) findViewById(R.id.delivery_start_btn);
+        store_name_tx.setText(store_name);
+        store_address_tx.setText(store_address);
         final TMapTapi tMapTapi = new TMapTapi(this);
 
         tmap_button.setOnClickListener(new Button.OnClickListener() {
@@ -96,7 +110,8 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "departure");
                     jsonParam.put("order_number", order_number);
-
+                    jsonParam.put("delivery_id", UtilSet.delivery_id);
+                    Log.d("json",jsonParam.toString());
                     HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
 
                     if (conn.getResponseCode() == 200) {

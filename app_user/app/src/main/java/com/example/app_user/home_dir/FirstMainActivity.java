@@ -347,7 +347,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-    
+
     public void GPSonClick(View view){
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);

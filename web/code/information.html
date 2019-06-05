@@ -20,6 +20,7 @@
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
+    <link href="../assets/css/menu.css" rel="stylesheet"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../assets/js/information.js"></script>
 	<script src="../assets/js/information_modify.js"></script>
@@ -28,14 +29,14 @@
 <body class="" onLoad="init_information_page();">
 	
   <div class="wrapper ">
-    <div class="sidebar" data-color="white" data-active-color="danger">
+    <div class="sidebar" data-color="white" data-active-color="info">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
         <a href="#" class="simple-text logo-mini">
           <div class="logo-image-small">
-            <img src="../assets/img/로고.jpg">
+            <img src="../assets/img/로고2.png">
           </div>
         </a>
         <a href="#" class="simple-text logo-normal" style="font-weight: bold">
@@ -48,25 +49,25 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li>
-            <a id="information_main_href_id">
+            <a id="information_main_href_id" style="font-weight: bold">
               <i class="nc-icon nc-delivery-fast"></i>
               <p>주문현황</p>
             </a>
           </li>
 		  <li>
-            <a id="information_list_href_id">
+            <a id="information_list_href_id" style="font-weight: bold">
               <i class="nc-icon nc-bullet-list-67"></i>
               <p>주문내역조회</p>
             </a>
           </li>
 		  <li class="active">
-            <a id="information_information_href_id">
+            <a id="information_information_href_id" style="font-weight: bold">
               <i class="nc-icon nc-badge"></i>
               <p>가게정보</p>
             </a>
           </li>
 		  <li>
-            <a id="information_menu_href_id">
+            <a id="information_menu_href_id" style="font-weight: bold">
               <i class="nc-icon nc-shop"></i>
               <p>메뉴관리</p>
             </a>
@@ -134,6 +135,9 @@
   
   
 </div> -->
+
+
+
       <div class="content">
         <div class="row">
           <div class="col-md-4">
@@ -198,7 +202,7 @@
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">대표자명</label>
+                        <label>대표자명</label>
                         <input id="storemaster_name" type="text" class="form-control" disabled="">
                       </div>
                     </div>
