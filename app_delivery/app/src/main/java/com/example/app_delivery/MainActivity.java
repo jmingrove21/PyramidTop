@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<Delivery_list> order_list=new ArrayList<>();
+    public static ArrayList<ItemData> oData=new ArrayList<>();
+
     private BackPressCloseHandler backPressCloseHandler;
     private ListView m_oListView=null;
     public Context context;
@@ -45,15 +49,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("배달 요청 목록");
-        ArrayList<ItemData> oData=new ArrayList<>();
         get_delivery_order_list();
-        for(int i=0;i<order_list.size();i++){
-            ItemData oItem=new ItemData();
-            oItem.strTitle=order_list.get(i).getStore_name();
-            oItem.strDate=order_list.get(i).getDelivery_request_time();
 
-            oData.add(oItem);
-        }
+
 
         // ListView, Adapter 생성 및 연결 ------------------------
         m_oListView=(ListView)findViewById(R.id.listView);
@@ -65,8 +63,17 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("hihi");
             }
         });
-        UtilSet.lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        UtilSet.set_GPS_value(UtilSet.lm, this);
+        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.list_swipe);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                get_delivery_order_list();
+                m_oListView.setAdapter(oAdapter);
+                mSwipeRefreshLayout.setRefreshing(false);
+                oAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
     public void get_delivery_order_list() {
         Thread thread = new Thread(new Runnable() {
@@ -74,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     order_list.clear();
+                    oData.clear();
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "request");
                     jsonParam.put("delivery_lat", UtilSet.latitude);
@@ -84,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONArray json_result_al=new JSONArray(jsonReply);
+                        Log.d("count",String.valueOf(json_result_al.length()));
                         for (int i = 0; i < json_result_al.length(); i++) {
                             int order_number=Integer.parseInt(((JSONObject) json_result_al.get(i)).get("order_number").toString());
                             int store_serial=Integer.parseInt(((JSONObject) json_result_al.get(i)).get("store_serial").toString());
@@ -93,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
                             float distance=Float.parseFloat(((JSONObject) json_result_al.get(i)).get("distance").toString());
 
                             order_list.add(new Delivery_list(order_number,store_serial,delivery_request_time,store_name,store_branch_name,distance));
+                            ItemData oItem=new ItemData();
+                            oItem.strTitle=order_list.get(i).getStore_name();
+                            oItem.strDate=order_list.get(i).getDelivery_request_time();
+
+                            oData.add(oItem);
+
                         }
                     }else{
                         Log.d("error","Connect fail");
@@ -128,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            Log.i("Tag","getCount");
             return nListCnt;
         }
 
@@ -179,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                     jsonParam.put("delivery_info", "approve");
                     jsonParam.put("order_number", MainActivity.order_list.get(position).getOrder_number());
                     jsonParam.put("store_serial", MainActivity.order_list.get(position).getStore_serial());
+                    jsonParam.put("delivery_id",UtilSet.delivery_id);
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
 
                     if(conn.getResponseCode()==200){
@@ -210,7 +225,8 @@ public class MainActivity extends AppCompatActivity {
         }catch(InterruptedException e){
             e.printStackTrace();
         }
-    } public void permissionCheck() {
+    }
+    public void permissionCheck() {
         if (Build.VERSION.SDK_INT >= 23) {
             int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
             ArrayList<String> arrayPermission = new ArrayList<>();

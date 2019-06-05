@@ -10,7 +10,7 @@
         $result = mysqli_fetch_assoc($stmt);
 
 
-        $query1 = "SELECT u.user_serial FROM user AS u WHERE u.user_id='".$id."' AND u.user_pw='".$pw."'";
+        $query1 = "SELECT u.user_serial,u.user_name FROM user AS u WHERE u.user_id='".$id."' AND u.user_pw='".$pw."'";
         $stmt1 = mysqli_query($connect,$query1);
         $result1 = mysqli_fetch_assoc($stmt1);
 
@@ -23,10 +23,11 @@
 
         $send_data=array(
             'confirm'=>$confirm,
-            'user_serial'=>$result1['user_serial']
+            'user_serial'=>$result1['user_serial'],
+            'user_name'=>$result1['user_name']
         );
 
-        echo json_encode($send_data);
+        echo json_encode($send_data,JSON_UNESCAPED_UNICODE);
 	}
 
 

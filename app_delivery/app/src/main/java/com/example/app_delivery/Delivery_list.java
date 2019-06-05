@@ -20,6 +20,14 @@ public class Delivery_list {
         this.store_serial=store_serial;
 
     }
+    public Delivery_list(int order_number, String store_name, String store_branch_name){
+        this.order_number=order_number;
+        this.store_name=store_name;
+        this.store_branch_name=store_branch_name;
+        if(!this.store_branch_name.equals(""))
+            this.store_name=store_name.concat("-"+this.store_branch_name);
+
+    }
     public int getStore_serial() {
         return store_serial;
     }
