@@ -1,5 +1,6 @@
 package com.example.app_user.home_dir;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -19,6 +21,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int position_storetype;
     boolean lastitemVisibleFlag = false;        //화면에 리스트의 마지막 아이템이 보여지는지 체크
     CustomAdapter customAdapter;
+    Point point;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -74,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        point = getScreenSize(MainActivity.this);
+
         drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -85,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
             getSupportActionBar().setTitle("가게 목록");
+            UtilSet.toolbarInform.setToolbar_inform("가게 목록");
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
@@ -393,6 +401,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    public Point getScreenSize(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return  size;
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -400,6 +415,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
+                            getSupportActionBar().setTitle(UtilSet.toolbarInform.getToolbar_inform().toString());
                             UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
@@ -445,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 350));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, point.y/5));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.textView_name);

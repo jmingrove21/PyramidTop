@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.LruCache;
+import android.view.Display;
 import android.widget.Toast;
 
 import com.example.app_user.R;
@@ -43,7 +45,7 @@ import java.util.ArrayList;
 public class UtilSet {
     public static String key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
     public static User my_user;
-    public static ArrayList<Store> search_store = new ArrayList<>();
+    public static ArrayList<Store> al_searchstore = new ArrayList<>();
     public static ArrayList<Store> al_store = new ArrayList<>();
     public static ArrayList<Order> al_order=new ArrayList<>();
     public static ArrayList<Order> al_my_order=new ArrayList<>();
@@ -68,7 +70,7 @@ public class UtilSet {
     public static double latitude=0;
     public static double longitude=0;
     public static LoginLogoutInform loginLogoutInform = new LoginLogoutInform();
-
+    public static ToolbarInform toolbarInform = new ToolbarInform();
 
     public static String convertStreamToString(InputStream is) {
 
@@ -138,10 +140,10 @@ public class UtilSet {
                     1000,
                     1,
                     gpsLocationListener);
-//            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-//                    1000,
-//                    1,
-//                    gpsLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
         }
     }
 

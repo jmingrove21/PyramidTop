@@ -3,7 +3,6 @@ package com.example.app_user.draw_dir;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -58,14 +57,13 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         serial = intent.getIntExtra("serial", 0);
         get_my_order_list(UtilSet.al_my_old_order.get(index).getStore().getStore_serial(), index);
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("이전 주문 내역");
+
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
@@ -172,36 +170,6 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-
-                    switch (item.getItemId()) {
-                        case R.id.nav_home:
-                            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
-                            startActivityForResult(intent, 101);
-                            break;
-                        case R.id.nav_orderlist:
-                            getSupportActionBar().setTitle("주문 현황");
-                            UtilSet.target_store = null;
-                            selectedFragment = new OrderFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                                    selectedFragment).commit();
-                            break;
-                        case R.id.nav_party:
-                            getSupportActionBar().setTitle("참여 현황");
-                            UtilSet.target_store = null;
-                            selectedFragment = new PeopleFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                                    selectedFragment).commit();
-                            break;
-                    }
-                    return true;
-                }
-            };
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);

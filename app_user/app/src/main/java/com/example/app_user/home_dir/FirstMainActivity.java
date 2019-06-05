@@ -1,9 +1,11 @@
 package com.example.app_user.home_dir;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +61,8 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
     public static int store_type=-1;
+    Point point;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +83,9 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("음식 목록");
+        UtilSet.toolbarInform.setToolbar_inform("음식 목록");
+
+        point = getScreenSize(FirstMainActivity.this);
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -172,6 +180,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
+                            getSupportActionBar().setTitle(UtilSet.toolbarInform.getToolbar_inform().toString());
                             UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
@@ -207,6 +216,13 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         backPressCloseHandler.onBackPressed();
     }
 
+    public Point getScreenSize(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return  size;
+    }
+
     class CustomAdapter extends BaseAdapter {
 
         @Override
@@ -224,10 +240,11 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             return 0;
         }
 
+
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_first_layout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 250));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, point.y/8));
 
             ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
             TextView textView_name = (TextView) view.findViewById(R.id.first_name);
