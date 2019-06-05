@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
+            TextView user_mil=(TextView)view.findViewById(R.id.user_mileage);
+            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
             if(UtilSet.my_user.getUser_address()==null)
                 user_address.setText("배달주소를 선택해주세요!");
@@ -104,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
             gps_btn.setVisibility(View.INVISIBLE);
-
+            TextView user_mil=(TextView)view.findViewById(R.id.user_mileage);
+            user_mil.setText(" ");
             TextView user_id=(TextView)view.findViewById(R.id.user_id);
             user_id.setText(" ");
             TextView user_address=(TextView)view.findViewById(R.id.user_address);
