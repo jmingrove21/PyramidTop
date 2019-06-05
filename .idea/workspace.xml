@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1e1b70f9-e088-4f36-94d8-dc90f726ea77" name="Default Changelist" comment="사용자 주문 완료후 접수 처리">
+    <list default="true" id="1e1b70f9-e088-4f36-94d8-dc90f726ea77" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -81,41 +81,41 @@
     <session id="944407648">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.4" value="3" />
-          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.5" value="2" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="605" />
-          <entry key="php" value="6755" />
-          <entry key="txt" value="39" />
+          <entry key="html" value="765" />
+          <entry key="php" value="8446" />
+          <entry key="txt" value="50" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="605" />
-          <entry key="PLAIN_TEXT" value="39" />
-          <entry key="Perl" value="6755" />
+          <entry key="HTML" value="765" />
+          <entry key="PLAIN_TEXT" value="50" />
+          <entry key="Perl" value="8446" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="6" />
+          <entry key="html" value="9" />
           <entry key="jpg" value="1" />
-          <entry key="php" value="54" />
+          <entry key="php" value="63" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="6" />
+          <entry key="HTML" value="9" />
           <entry key="Image" value="1" />
-          <entry key="Perl" value="54" />
+          <entry key="Perl" value="63" />
         </counts>
       </usages-collector>
     </session>
@@ -125,47 +125,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/get/JSON/store_app/store_add_menu.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="6" column="45" lean-forward="true" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="true" current-in-tab="true">
         <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_complete.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="false">
-        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_alarm_check.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4446">
-              <caret line="234" column="77" lean-forward="true" selection-start-line="234" selection-start-column="77" selection-end-line="234" selection-end-column="77" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="false">
-        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_approve.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="16" selection-start-line="16" selection-end-line="17" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="false">
-        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_departure.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1862">
-              <caret line="98" column="10" lean-forward="true" selection-start-line="98" selection-start-column="10" selection-end-line="98" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="true" current-in-tab="false">
-        <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_status.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" column="54" lean-forward="true" selection-start-line="14" selection-start-column="54" selection-end-line="14" selection-end-column="54" />
+            <state relative-caret-position="95">
+              <caret line="23" column="27" lean-forward="true" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -173,8 +146,17 @@
       <file pinned="true" current-in-tab="false">
         <entry file="remoteDeploymentFS://&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="23" column="35" lean-forward="true" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+            <state relative-caret-position="874">
+              <caret line="46" column="29" lean-forward="true" selection-start-line="46" selection-start-column="29" selection-end-line="46" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_manage.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -201,6 +183,8 @@
       <find>count</find>
       <find>$order_num</find>
       <find>$store_serial</find>
+      <find>cost</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -247,10 +231,11 @@
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_manage.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/user_app/user_alarm_check.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_approve.php" />
-        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/test.html" />
-        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/test.html" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_status.php" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_departure.php" />
+        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/store_app/store_add_menu.php" />
+        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/test.html" />
+        <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/test.html" />
         <option value="&lt;8d377784-331d-4a6e-9144-78b52f77a287&gt;/var/www/html/get/JSON/delivery_app/delivery_complete.php" />
       </list>
     </option>
@@ -262,9 +247,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="width" value="978" />
-    <option name="height" value="1039" />
+    <option name="x" value="-10" />
+    <option name="width" value="979" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -272,109 +257,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="example" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="java" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="com" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="example" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="res" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="app_user" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="main" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="res" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="layout" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -454,6 +336,64 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="get" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="get" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="JSON" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="get" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="JSON" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="delivery_app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="get" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="JSON" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="store_app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="PyramidTop" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="server" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="get" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="JSON" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="user_app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -507,7 +447,8 @@
       <workItem from="1558964989764" duration="7497000" />
       <workItem from="1559369086510" duration="10909000" />
       <workItem from="1559456746769" duration="10450000" />
-      <workItem from="1559541718811" duration="12527000" />
+      <workItem from="1559541718811" duration="15893000" />
+      <workItem from="1559715346943" duration="2741000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/jmingrove21/PyramidTop into haram&#10;&#10;# Conflicts:&#10;#&#9;.idea/PyramidTop.iml">
       <created>1557130383434</created>
@@ -544,11 +485,25 @@
       <option name="project" value="LOCAL" />
       <updated>1558763799579</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="배달 상태 처리">
+      <created>1559564706600</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1559564706600</updated>
+    </task>
+    <task id="LOCAL-00007" summary="배달 상태 처리">
+      <created>1559564724828</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1559564724829</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="135645000" />
+    <option name="totallyTimeSpent" value="141752000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -556,7 +511,31 @@
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
       <window_info id="Capture Tool" order="1" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49550897" weight="0.040268455" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49550897" visible="true" weight="0.14899328" />
+      <window_info id="Structure" order="3" sideWeight="0.50449103" side_tool="true" weight="0.040268455" />
+      <window_info id="Image Layers" order="4" />
+      <window_info id="Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Resources Explorer" order="7" />
+      <window_info anchor="bottom" id="Debug" order="0" />
+      <window_info anchor="bottom" id="Run" order="1" />
+      <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.10144927" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5026846" side_tool="true" weight="0.33333334" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49731544" weight="0.33333334" />
+      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49932885" visible="true" weight="0.03188406" />
+      <window_info anchor="bottom" id="Find" order="8" />
+      <window_info active="true" anchor="right" id="Remote Host" order="0" visible="true" weight="0.2295302" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Preview" order="4" visible="true" weight="0.3295302" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Captures" order="0" weight="0.25" />
+      <window_info id="Capture Tool" order="1" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49550897" weight="0.18590604" />
       <window_info id="Structure" order="3" sideWeight="0.50449103" side_tool="true" weight="0.040268455" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Designer" order="5" />
@@ -571,31 +550,7 @@
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49731544" weight="0.33333334" />
       <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49932885" weight="0.03188406" />
       <window_info anchor="bottom" id="Find" order="8" />
-      <window_info active="true" anchor="right" id="Remote Host" order="0" visible="true" weight="0.31073827" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Preview" order="4" visible="true" weight="0.3295302" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Captures" order="0" weight="0.25" />
-      <window_info id="Capture Tool" order="1" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49550897" visible="true" weight="0.040268455" />
-      <window_info id="Structure" order="3" sideWeight="0.50449103" side_tool="true" visible="true" weight="0.040268455" />
-      <window_info id="Image Layers" order="4" />
-      <window_info id="Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Resources Explorer" order="7" />
-      <window_info anchor="bottom" id="Debug" order="0" />
-      <window_info anchor="bottom" id="Run" order="1" />
-      <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="TODO" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.10144927" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5026846" side_tool="true" weight="0.33333334" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49731544" weight="0.33333334" />
-      <window_info anchor="bottom" id="File Transfer" order="7" sideWeight="0.49932885" visible="true" weight="0.03188406" />
-      <window_info anchor="bottom" id="Find" order="8" />
-      <window_info active="true" anchor="right" id="Remote Host" order="0" visible="true" weight="0.31073827" />
+      <window_info active="true" anchor="right" id="Remote Host" order="0" visible="true" weight="0.2295302" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
@@ -617,7 +572,8 @@
     <MESSAGE value="배달원 요청&amp;승인 완료 &amp;가게와 배달원 주문접수 배달처리 연동 완료" />
     <MESSAGE value="사용자 주문 완료후 접수 처리" />
     <MESSAGE value="사용자 주문 현황 수정 및 사용자 주문 현황 detail 생성" />
-    <option name="LAST_COMMIT_MESSAGE" value="사용자 주문 현황 수정 및 사용자 주문 현황 detail 생성" />
+    <MESSAGE value="배달 상태 처리" />
+    <option name="LAST_COMMIT_MESSAGE" value="배달 상태 처리" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app_user/app/src/main/java/com/example/app_user/MainActivity.java" />
@@ -655,6 +611,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/get/JSON/delivery_app/delivery_manage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/get/JSON/store_app/store_add_menu.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="45" lean-forward="true" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
         </state>
       </provider>
     </entry>
