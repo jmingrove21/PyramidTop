@@ -18,6 +18,7 @@ var store_phone = '';
 var Store_profile_img = '';
 var store_serial='';
 var minimum_cost='';
+var delivery_cost='';
 
 
 $(document).on("click", "#btn_modify", function (a) {
@@ -28,14 +29,20 @@ $(document).on("click", "#btn_modify", function (a) {
     Store_name = $("#store_name").val(); //가게 상호명
     Store_phone = $("#store_phone").val(); //가게 번호
     Store_address = $("#store_address").val(); //가게 주소
-    Start_time = $("#start_time").val(); // 오픈시간
-    End_time = $("#end_time").val(); //마감시간
+    Start_time = $("#start_work_time").val(); // 오픈시간
+    End_time = $("#end_work_time").val(); //마감시간
     Storemaster_name = $("#storemaster_name").val(); //가게주인
     Storemaster_phone = $("#storemaster_phone").val(); //가게주인핸드폰번호
     Storemaster_rrn = $("#storemaster_rrn").val(); //가게주 주민번호
     Storemaster_num = $("#storemaster_num").val(); //사업자번호
     Store_notice = $("#store_notice").val();
     Store_restday = $("#store_restday").val();
+    delivery_cost = $("#delivery_cost").val();
+    delivery_cost = delivery_cost*1;
+
+    //alert(Start_time);
+    //alert(End_time);
+    //alert(typeof(Start_time));
     modifyData();
 
 });
@@ -127,6 +134,7 @@ function modifyData() {
     formdata.append('storemaster_num', Storemaster_num);
     formdata.append('store_notice', Store_notice);
     formdata.append('store_restday', Store_restday);
+    formdata.append('delivery_cost',delivery_cost);
 
     var data2 =
         {

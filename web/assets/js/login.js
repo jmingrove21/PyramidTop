@@ -5,6 +5,13 @@ var store_serial = '';
 
 
 
+function initial(){
+	history.pushState(null, null, "login.html");
+
+	window.onpopstate = function(event) {
+		history.go(1);
+	};
+	}
 
 
 var Auth = {
