@@ -28,12 +28,13 @@ import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
+import com.example.app_user.draw_dir.PopupActivity;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.RegisterActivity;
 
-public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
     private DrawerLayout drawer;
     int index;
 
@@ -43,7 +44,9 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.party_detail_layout);
-
+        /////
+        findViewById(R.id.btnAlert).setOnClickListener(this);
+        ////
         Intent intent = getIntent();
         index = intent.getIntExtra("index", 0);
 
@@ -64,19 +67,17 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-//        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_listview);
-//        PartyDetailActivity.UserAdapter userAdapter=new PartyDetailActivity.UserAdapter();
-//        listView_user.setAdapter(userAdapter);
-        ListView listView_menu = (ListView) findViewById(R.id.party_detail_layout_menu_listview);
-        PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
-        listView_menu.setAdapter(customAdapter);
+
+//        ListView listView_menu = (ListView) findViewById(R.id.party_detail_layout_menu_listview);
+//        PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
+//        listView_menu.setAdapter(customAdapter);
 
 
 //        TextView text_user = (TextView) findViewById(R.id.user);
         TextView text_user_store_name_input = (TextView) findViewById(R.id.user_store_name_input);
         TextView text_user_store_number_input = (TextView) findViewById(R.id.user_store_number_input);
         TextView text_user_store_address_input = (TextView) findViewById(R.id.user_store_address_input);
-
+        TextView text_user_store_delivery_cost=(TextView)findViewById(R.id.user_deilvery_cost);
         TextView text_user_order_price_sum_input = (TextView) findViewById(R.id.user_order_price_sum_input);
         TextView text_user_order_time_input = (TextView) findViewById(R.id.user_order_time_input);
         TextView text_user_pay_method_input = (TextView) findViewById(R.id.user_pay_method_input);
@@ -89,7 +90,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         text_user_store_name_input.setText(o.getStore().getStore_name() + " " + o.getStore().getStore_branch_name());
         text_user_store_number_input.setText(o.getStore().getStore_phone());
         text_user_store_address_input.setText(o.getStore().getStore_address());
-
+        text_user_store_delivery_cost.setText(String.valueOf(o.getStore().getDelivery_cost())+"원");
         for (int i = 0; i < o.getStore().getMenu_desc_al().size(); i++) {
            o.setMy_order_total_price(o.getStore().getMenu_desc_al().get(i).getMenu_price() * o.getStore().getMenu_desc_al().get(i).getMenu_count());
         }
@@ -118,6 +119,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.delete_user_data();
                     Intent intent=new Intent(PartyDetailActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -186,6 +188,17 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.btnAlert:
+                Intent intent=new Intent(this, PopupActivity.class);
+                intent.putExtra("index",index);
+                startActivity(intent);
+                break;
+        }
+    }
+
     class CustomAdapter extends BaseAdapter {
 
         @Override
@@ -221,40 +234,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         }
     }
 
-    class UserAdapter extends BaseAdapter {
 
-        @Override
-        public int getCount() {
-            return UtilSet.al_my_order.get(index).getUser_al().size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.party_detail_layout_user_listview, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 100));
-
-            TextView text_name = (TextView) view.findViewById(R.id.party_detail_user_name);
-            TextView text_user_time = (TextView) view.findViewById(R.id.party_detail_user_time);
-            TextView text_user_price = (TextView) view.findViewById(R.id.party_detail_user_price);
-
-
-            text_name.setText(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_id());
-            text_user_time.setText(String.valueOf(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_time()));
-            text_user_price.setText(String.valueOf(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_price()));
-
-            return view;
-        }
-    }
     public void GPSonClick(View view){
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);

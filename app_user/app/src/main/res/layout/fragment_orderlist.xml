@@ -7,15 +7,14 @@
     android:layout_marginTop="?attr/actionBarSize"
     android:layout_above="@+id/bottom_navigation">
     <LinearLayout
+        android:id="@+id/orderlist_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1"
-        android:orientation="vertical"
-       >
+        android:orientation="vertical">
         <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:id="@+id/swipe_order_list">
             <ListView
                 android:id="@+id/order_list"
@@ -23,7 +22,7 @@
                 android:layout_height="match_parent"
                 android:dividerHeight="0px"
                 android:divider="#ffffff"
-                />
+               />
 
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>

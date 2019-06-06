@@ -126,6 +126,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.delete_user_data();
                     Intent intent = new Intent(FirstMainActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -240,8 +241,6 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_info");
-                    //    jsonParam.put("user_lat", 37.282690);
-                    //    jsonParam.put("user_long", 127.050206);
                     jsonParam.put("user_lat", UtilSet.latitude);
                     jsonParam.put("user_long", UtilSet.longitude);
                     jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
