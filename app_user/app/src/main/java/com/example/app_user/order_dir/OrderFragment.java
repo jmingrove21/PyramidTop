@@ -3,10 +3,12 @@ package com.example.app_user.order_dir;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.FrameLayout;
 
@@ -56,23 +59,16 @@ public class OrderFragment extends DialogFragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-        FrameLayout frame = (FrameLayout) view.findViewById(R.id.frame) ;
+        LinearLayout frame = (LinearLayout) view.findViewById(R.id.orderlist_linear);
         listView = (ListView) view.findViewById(R.id.order_list);
-        status_img = (ImageView) view.findViewById(R.id.status);
         final String[] store_name = new String[UtilSet.al_order.size()];
         if(UtilSet.al_order.size()==0){
-            frame.removeView(listView);
-            frame.setVisibility(View.VISIBLE);
+            frame.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.no_participate));
+        }else {
+            for (int i = 0; i < UtilSet.al_order.size(); i++) {
+                store_name[i] = UtilSet.al_order.get(i).getStore().getStore_name();
+            }
         }
-        for (int i = 0; i < UtilSet.al_order.size(); i++) {
-            store_name[i] = UtilSet.al_order.get(i).getStore().getStore_name();
-        }
-
-
-
-
-
-
         OrderAdapter orderAdapter = new OrderAdapter(getActivity(), store_name);
         listView.setAdapter(orderAdapter);
 
