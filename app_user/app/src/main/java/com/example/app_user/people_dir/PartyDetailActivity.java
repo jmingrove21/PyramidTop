@@ -77,7 +77,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         TextView text_user_store_name_input = (TextView) findViewById(R.id.user_store_name_input);
         TextView text_user_store_number_input = (TextView) findViewById(R.id.user_store_number_input);
         TextView text_user_store_address_input = (TextView) findViewById(R.id.user_store_address_input);
-
+        TextView text_user_store_delivery_cost=(TextView)findViewById(R.id.user_deilvery_cost);
         TextView text_user_order_price_sum_input = (TextView) findViewById(R.id.user_order_price_sum_input);
         TextView text_user_order_time_input = (TextView) findViewById(R.id.user_order_time_input);
         TextView text_user_pay_method_input = (TextView) findViewById(R.id.user_pay_method_input);
@@ -90,7 +90,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         text_user_store_name_input.setText(o.getStore().getStore_name() + " " + o.getStore().getStore_branch_name());
         text_user_store_number_input.setText(o.getStore().getStore_phone());
         text_user_store_address_input.setText(o.getStore().getStore_address());
-
+        text_user_store_delivery_cost.setText(String.valueOf(o.getStore().getDelivery_cost())+"원");
         for (int i = 0; i < o.getStore().getMenu_desc_al().size(); i++) {
            o.setMy_order_total_price(o.getStore().getMenu_desc_al().get(i).getMenu_price() * o.getStore().getMenu_desc_al().get(i).getMenu_count());
         }

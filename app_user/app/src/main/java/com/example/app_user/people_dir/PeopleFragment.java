@@ -186,8 +186,9 @@ public class PeopleFragment extends DialogFragment {
                             String store_address = jobj_store.get("store_address").toString();
                             String store_restday = jobj_store.get("store_restday").toString();
                             String store_notice = jobj_store.get("store_notice").toString();
-
+                            String delivery_cost=jobj_store.get("delivery_cost").toString();
                             UtilSet.al_my_order.get(position).getStore().set_store_spec(store_serial, store_building_name, start_time, end_time, store_phone, store_address, store_restday, store_notice);
+                            UtilSet.al_my_order.get(position).getStore().setDelivery_cost(Integer.parseInt(delivery_cost));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -270,7 +271,6 @@ public class PeopleFragment extends DialogFragment {
                                 String store_branch_name = jobj.get("store_branch_name").toString();
                                 String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-
                                 String order_create_date = jobj.get("order_create_date").toString();
                                 String order_receipt_date = jobj.get("order_receipt_date").toString();
                                 String delivery_departure_time = jobj.get("delivery_departure_time").toString();

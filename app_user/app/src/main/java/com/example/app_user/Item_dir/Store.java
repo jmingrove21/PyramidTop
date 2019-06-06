@@ -32,7 +32,7 @@ public class Store {
     private String store_address;
     private float distance;
     private int order_number;
-
+    private int delivery_cost;
     public Store(String serial, String name, String branch_name, String address, String phone, String distance){
         this.store_address = address;
         this.store_name  = name;
@@ -124,6 +124,14 @@ public class Store {
 
     public void setOrder_number(int order_number) {
         this.order_number = order_number;
+    }
+
+    public int getDelivery_cost() {
+        return delivery_cost;
+    }
+
+    public void setDelivery_cost(int delivery_cost) {
+        this.delivery_cost = delivery_cost;
     }
 
 
