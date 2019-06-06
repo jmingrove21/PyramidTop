@@ -70,7 +70,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
 
         Intent intent = getIntent();
-        type = intent.getStringExtra("type");
+        type = intent.getStringExtra("order_make");
         index = intent.getIntExtra("index", 0);
         serial = intent.getIntExtra("serial", 0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -289,7 +289,14 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
-
+                    if(UtilSet.my_user.getUser_address()==null){
+                        MenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( MenuActivity.this, "배달받을 주소를 설정해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
@@ -297,12 +304,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                         String json_result = jobj.getString("confirm");
                         Log.d("json_Result", json_result);
                         if (json_result.equals("1")) {
-                            System.out.println("Success order make-not finished");
+                            System.out.println("Success order make - not finished");
                             Log.d("totalPrice", String.valueOf(total_price));
                             total_price_send=total_price;
 
                         }else if(json_result.equals("2")){
-                            System.out.println("Success order make-finished");
+                            System.out.println("Success order make - finished");
                             Log.d("totalPrice", String.valueOf(total_price));
                             total_price_send=total_price;
                         } else {

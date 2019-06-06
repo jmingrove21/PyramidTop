@@ -31,6 +31,7 @@ import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.home_dir.MainActivity;
+import com.example.app_user.home_dir.MenuActivity;
 import com.example.app_user.people_dir.PeopleFragment;
 import com.example.app_user.util_dir.MenuCustomAdapter;
 import com.example.app_user.util_dir.LoginActivity;
@@ -290,7 +291,14 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                         });
                         flag = true;
                     }
-
+                    if(UtilSet.my_user.getUser_address()==null){
+                        SubMenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( SubMenuActivity.this, "배달받을 주소를 설정해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
 
@@ -300,16 +308,22 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(jsonReply);
-                        String json_result = jobj.getString("confirm");
-                        if (json_result.equals("1")) {
-                            System.out.println("Success order make - minimum not yet");
+                        String json_result_check=jobj.getString("user_check");
+                        String json_result_confirm = jobj.getString("confirm");
+                        if(json_result_check.equals("1")){
+                            Toast.makeText(SubMenuActivity.this,"자신이 생성한 주문에는 참여할 수 없습니다!",Toast.LENGTH_SHORT).show();
+                        }else{
+                            if (json_result_confirm.equals("1")) {
+                                System.out.println("Success order make - minimum not yet");
 
-                        }else if (json_result.equals("2")) {
-                            System.out.println("Success order make - minimum success");
+                            }else if (json_result_confirm.equals("2")) {
+                                System.out.println("Success order make - minimum success");
 
-                        } else {
-                            Log.d("error", "Responce code : 0 - fail make order");
+                            } else {
+                                Log.d("error", "Responce code : 0 - fail make order");
+                            }
                         }
+
                     } else {
                         Log.d("error", "Connect fail");
                     }
