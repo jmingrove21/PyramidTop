@@ -116,7 +116,7 @@ public class OrderFragment extends DialogFragment {
 
                 intent.putExtra("serial", store_ser);
                 intent.putExtra("index", position);
-
+                intent.putExtra("type","order_make");
                 startActivityForResult(intent, 101);
             }
         });
