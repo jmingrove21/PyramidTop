@@ -188,13 +188,33 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
         search.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
-                    get_store_information();
-                    listView.findViewById(R.id.listView);
-                    customAdapter = new CustomAdapter();
-                    listView.setAdapter(customAdapter);
+                    if (search.getText().toString().length() < 2) {
+                        SearchMainActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(SearchMainActivity.this, "두 글자 이상 입력하세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return true;
+                    }else{
+                        get_store_information();
+                        set_store_image();
+                        listView.findViewById(R.id.listView);
+                        customAdapter = new CustomAdapter();
+                        listView.setAdapter(customAdapter);
+                        return false;
+                    }
+
+                }else if(keyCode==KeyEvent.KEYCODE_BACK){
+                    search.setText("");
                     return false;
                 }
                 return true;
+            }
+        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search.setText("");
             }
         });
 
@@ -210,6 +230,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
             });
         } else {
             get_store_information();
+            set_store_image();
             listView.findViewById(R.id.listView);
             customAdapter = new CustomAdapter();
             listView.setAdapter(customAdapter);
@@ -463,5 +484,41 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
     public void GPSonClick(View view) {
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
+    }
+
+    public void set_store_image(){
+        Thread mThread = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < UtilSet.al_searchstore.size(); i++) {
+                    try {
+                        if (UtilSet.getBitmapFromMemCache(UtilSet.al_searchstore.get(i).getStore_profile_img()) != null) {
+                            bitmap = UtilSet.getBitmapFromMemCache(UtilSet.al_searchstore.get(i).getStore_profile_img());
+                            UtilSet.al_searchstore.get(i).setStore_image(bitmap);
+                        } else {
+                            URL url = new URL(UtilSet.al_searchstore.get(i).getStore_profile_img());
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setDoInput(true);
+                            conn.connect();
+
+                            InputStream is = conn.getInputStream();
+                            bitmap = BitmapFactory.decodeStream(is);
+                            UtilSet.al_searchstore.get(i).setStore_image(bitmap);
+                            UtilSet.addBitmapToMemoryCache(UtilSet.al_searchstore.get(i).getStore_profile_img(), bitmap);
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        mThread.start();
+        try{
+            mThread.join();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
