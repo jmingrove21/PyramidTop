@@ -81,6 +81,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(UtilSet.target_store.getStore_name()+" "+UtilSet.target_store.getStore_branch_name());
+        UtilSet.toolbarInform.setToolbar_inform(UtilSet.target_store.getStore_name()+" "+UtilSet.target_store.getStore_branch_name());
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -185,6 +186,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
+                            getSupportActionBar().setTitle(UtilSet.toolbarInform.getToolbar_inform().toString());
                             UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;

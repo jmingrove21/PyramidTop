@@ -4,6 +4,12 @@ var store_name='';
 var deli_time='';
 var deli_list='';
 
+function logout()
+{
+	location.replace("login.html");
+}
+
+
 
 function main_list()
 {
@@ -69,7 +75,13 @@ function main_list()
 							//$("#now_menu").append("<td class='text-center'><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal' onclick='detail_deliver_list();'>상세보기</button></td>");
 							string = "<td class='text-center'><button type='button' class='btn btn-primary btn-sm' onclick='change_deli_status(";
 							string = string + order_num;
-							string = string + ");'>배송출발</button></td>";
+							string = string + ");'>출발</button></td>";
+							string = string + "<td class='text-center'><button type='button' class='btn btn-danger btn-sm' onclick='delete_delivery(";
+							string = string + order_num;
+							string = string + ");'>X</button></td>";
+							//alert(string);
+							//$("#now_menu").append(string);
+
 							//alert(string);
 							$("#now_menu").append(string);
 							//$("#now_menu").append("<td class='text-center for_change_status'><button type='button' class='btn btn-primary btn-sm' onclick='change_deli_status();'>배송출발</button></td>");
@@ -216,7 +228,7 @@ function main_list()
 					});
 
 					if(count_cooking==0)
-						$("#now_menu").append("<tr><td colspan='4' class='text-gray text-center' style='font-weight: bold; font-size: x-large'><br>주문이 존재하지 않습니다</td></tr>");
+						$("#now_menu").append("<tr><td colspan='5' class='text-gray text-center' style='font-weight: bold; font-size: x-large'><br>주문이 존재하지 않습니다</td></tr>");
 					if(count_delivery==0)
 						$("#now_delivery").append("<tr><td colspan='4' class='text-gray text-center' style='font-weight: bold; font-size: x-large'><br>주문이 존재하지 않습니다</td></tr>")
 
@@ -280,6 +292,35 @@ function init_main_page(){
 	    event.preventDefault();
 	
 }
+
+function delete_delivery(number)
+{
+	var data = {
+		"store_info" : "delete_order",
+		"store_serial" : store_serial,
+		"order_number" : number
+	};
+
+	$.ajax({
+		url: "http://54.180.102.7:80/get/JSON/store_app/store_manage.php",
+		type: "POST",
+		data: JSON.stringify(data),
+		success: function (result) {
+			if (result) {
+				var result1 = JSON.parse(result);
+				//alert(result1.confirm);
+				if (result1.confirm == 1) {
+					alert("해당 주문을 취소했습니다.");
+					location.reload();
+				}
+				else
+					alert("실패");
+			}
+		}
+	})
+}
+
+
 
 function change_deli_status(number) {
 	var data = {
