@@ -67,9 +67,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-//        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_listview);
-//        PartyDetailActivity.UserAdapter userAdapter=new PartyDetailActivity.UserAdapter();
-//        listView_user.setAdapter(userAdapter);
+
 //        ListView listView_menu = (ListView) findViewById(R.id.party_detail_layout_menu_listview);
 //        PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
 //        listView_menu.setAdapter(customAdapter);
@@ -194,7 +192,9 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btnAlert:
-                startActivity(new Intent(this, PopupActivity.class));
+                Intent intent=new Intent(this, PopupActivity.class);
+                intent.putExtra("index",index);
+                startActivity(intent);
                 break;
         }
     }
@@ -234,40 +234,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         }
     }
 
-    class UserAdapter extends BaseAdapter {
 
-        @Override
-        public int getCount() {
-            return UtilSet.al_my_order.get(index).getUser_al().size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.party_detail_layout_user_listview, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 100));
-
-            TextView text_name = (TextView) view.findViewById(R.id.party_detail_user_name);
-            TextView text_user_time = (TextView) view.findViewById(R.id.party_detail_user_time);
-            TextView text_user_price = (TextView) view.findViewById(R.id.party_detail_user_price);
-
-
-            text_name.setText(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_id());
-            text_user_time.setText(String.valueOf(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_time()));
-            text_user_price.setText(String.valueOf(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_price()));
-
-            return view;
-        }
-    }
     public void GPSonClick(View view){
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);

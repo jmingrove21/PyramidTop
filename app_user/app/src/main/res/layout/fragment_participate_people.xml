@@ -33,11 +33,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="1">
-            <!--<ListView-->
-                <!--android:id="@+id/party_detail_layout_user_listview"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--&gt;</ListView>-->
+            <ListView
+                android:id="@+id/party_detail_layout_user_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                ></ListView>
 
         </LinearLayout>
     </LinearLayout>
