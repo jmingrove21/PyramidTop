@@ -266,7 +266,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                                 String store_phone = jobj.get("store_phone").toString();
                                 String distance = jobj.get("distance").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-                                String minimum_price= jobj.get("store_profile_img").toString();
+                                String minimum_price= jobj.get("store_mininum_price").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_price, distance, store_profile_img);
                                 UtilSet.al_searchstore.add(s);
                             }
@@ -370,6 +370,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.delete_user_data();
                     Intent intent = new Intent(SearchMainActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
