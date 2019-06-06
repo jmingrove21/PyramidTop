@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.support.v4.content.ContextCompat;
+import android.widget.LinearLayout;
 
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
@@ -46,7 +48,9 @@ public class PeopleFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         get_store_info_by_my_order();
+
         View view = inflater.inflate(R.layout.fragment_people, container, false);
+        LinearLayout frame = (LinearLayout) view.findViewById(R.id.recent_orderlist_linear);
         listView = (ListView) view.findViewById(R.id.people_listview);
 
         if(UtilSet.loginLogoutInform.getLogin_flag()==0){
@@ -64,8 +68,13 @@ public class PeopleFragment extends DialogFragment {
             }
         });
         final String[] store_name = new String[UtilSet.al_my_order.size()];
-        for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
-            store_name[i] = UtilSet.al_my_order.get(i).getStore().getStore_name();
+        if(UtilSet.al_my_order.size()==0){
+            frame.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.no_order));
+
+        }else {
+            for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
+                store_name[i] = UtilSet.al_my_order.get(i).getStore().getStore_name();
+            }
         }
 
         PeopleAdapter peopleAdapter = new PeopleAdapter(getActivity(), store_name);
