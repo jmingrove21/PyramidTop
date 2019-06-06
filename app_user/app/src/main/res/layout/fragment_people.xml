@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_marginTop="?attr/actionBarSize"
     android:layout_above="@+id/bottom_navigation">
-    <LinearLayout
+<LinearLayout
         android:id="@+id/recent_orderlist_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
