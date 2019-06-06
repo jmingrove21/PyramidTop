@@ -68,9 +68,9 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         toggle.syncState();
 
 
-//        ListView listView_menu = (ListView) findViewById(R.id.party_detail_layout_menu_listview);
-//        PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
-//        listView_menu.setAdapter(customAdapter);
+        ListView listView_menu = (ListView) findViewById(R.id.party_detail_layout_menu_listview);
+        PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
+        listView_menu.setAdapter(customAdapter);
 
 
 //        TextView text_user = (TextView) findViewById(R.id.user);
