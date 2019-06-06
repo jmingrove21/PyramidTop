@@ -1,13 +1,33 @@
 package com.example.app_user.util_dir;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.UtilSet;
@@ -17,16 +37,39 @@ import com.example.app_user.home_dir.MenuActivity;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 
 public class RegisterActivity extends AppCompatActivity {
-
+    ImageView imageView;
+    String trans_bitmap;
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_register);
         setTitle("회원가입");
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE)){
+
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+            }
+        }
+
+        imageView = (ImageView) findViewById(R.id.register_profile_img);
+        imageView.setBackground(new ShapeDrawable(new OvalShape()));
+        imageView.setClipToOutline(true);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent img_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(img_intent,1);
+            }
+        });
 
     }
 
@@ -38,13 +81,63 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101) {
-            if (resultCode == 200) {
-                String menu = data.getExtras().getString("menu");
-                Toast.makeText(getApplicationContext(), "하잇!", Toast.LENGTH_LONG).show();
 
+        Uri image = data.getData();
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image);
+            Bitmap out_bitmap = convertRoundedBitmap(bitmap);
+            trans_bitmap = getBase64String(out_bitmap);
+            imageView.setImageBitmap(out_bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Bitmap convertRoundedBitmap(Bitmap bitmap){
+        final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
+
+        final int color = Color.GRAY;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawOval(rectF,paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        bitmap.recycle();
+        return output;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+
+                }
+                return;
             }
         }
+    }
+
+    public String getBase64String(Bitmap bitmap)
+    {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+
+        return Base64.encodeToString(imageBytes, Base64.NO_WRAP);
     }
 
     public void register(View v) {
@@ -61,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if(name.getText().toString().equals("")){
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText( RegisterActivity.this, "이름을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText( RegisterActivity.this, "닉네임을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
                             }
                         });
                         return;
@@ -109,12 +202,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info","join");
+                    jsonParam.put("user_img",trans_bitmap);
                     jsonParam.put("user_id", id.getText().toString());
                     jsonParam.put("user_password", pw.getText().toString());
                     jsonParam.put("user_name",name.getText().toString());
                     jsonParam.put("user_phone",phone.getText().toString());
 
-                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
+                    HttpURLConnection conn=UtilSet.user_info_set_Connect_info(jsonParam);
 
                     if(conn.getResponseCode()==200){
                         InputStream response = conn.getInputStream();

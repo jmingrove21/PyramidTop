@@ -110,6 +110,50 @@ public class UtilSet {
         return mMemoryCache.get( key);
     }
 
+    public static HttpURLConnection user_modify_set_Connect_info(JSONObject jsonParam){
+        try{
+            URL url = new URL("http://54.180.102.7:80/get/JSON/user_app/user_modify_info.php");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            Log.i("JSON", jsonParam.toString());
+            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+            os.write(jsonParam.toString());
+
+            os.flush();
+            os.close();
+            return conn;
+        }catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static HttpURLConnection user_info_set_Connect_info(JSONObject jsonParam){
+        try{
+            URL url = new URL("http://ec2-54-180-102-7.ap-northeast-2.compute.amazonaws.com/get/JSON/user_app/user_join.php");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            Log.i("JSON", jsonParam.toString());
+            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+            os.write(jsonParam.toString());
+
+            os.flush();
+            os.close();
+            return conn;
+        }catch(IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static HttpURLConnection set_Connect_info(JSONObject jsonParam){
         try{
             URL url = new URL(UtilSet.url);

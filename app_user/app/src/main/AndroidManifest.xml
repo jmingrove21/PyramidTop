@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/playstore_icon"
@@ -35,28 +34,37 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".home_dir.MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".draw_dir.OldOrderlistDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".home_dir.FirstMainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".home_dir.MenuActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".order_dir.SubMenuActivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".people_dir.PartyDetailActivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".home_dir.SearchMainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".util_dir.LoginActivity" />
+
+        <activity
+            android:name=".util_dir.LoginActivity" />
         <activity android:name=".util_dir.RegisterActivity" />
         <activity android:name=".util_dir.CreditActivity" />
 
