@@ -4,6 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="50sp"
+    android:id="@+id/linear_container"
+    android:background="@android:color/white"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:layout_above="@+id/bottom_navigation"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,7 +85,7 @@
                 android:paddingVertical="10sp"
                 >
                 <EditText
-                    android:id="@+id/register_name"
+                    android:id="@+id/profile_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLength="20"
@@ -124,7 +128,7 @@
                     android:maxLength="20"
                     android:hint="    비밀번호 입력"
                     android:paddingLeft="30px"
-                    android:inputType="text"
+                    android:inputType="textPassword"
                     android:textSize="15sp"
                     android:background="@drawable/login_input"/>
             </LinearLayout>
