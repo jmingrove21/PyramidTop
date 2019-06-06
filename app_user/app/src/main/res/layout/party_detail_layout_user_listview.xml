@@ -15,7 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
@@ -36,7 +38,7 @@
                 android:layout_height="0dp"
                 android:text="참가 시간"
                 android:layout_weight="0.5"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:textColor="#000000"
                 android:gravity="center"/>
 
@@ -46,8 +48,8 @@
                 android:layout_height="0dp"
                 android:text="TextView"
                 android:layout_weight="0.5"
-                android:textSize="15sp"
-                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textColor="#767171"
                 android:gravity="center"/>
         </LinearLayout>
 
@@ -63,7 +65,7 @@
                 android:layout_height="0dp"
                 android:text="주문 금액"
                 android:layout_weight="0.5"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:textColor="#000000"
                 android:gravity="center"/>
 
@@ -73,8 +75,8 @@
                 android:layout_height="0dp"
                 android:text="TextView"
                 android:layout_weight="0.5"
-                android:textSize="15sp"
-                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textColor="#767171"
                 android:gravity="center"/>
         </LinearLayout>
     </LinearLayout>
