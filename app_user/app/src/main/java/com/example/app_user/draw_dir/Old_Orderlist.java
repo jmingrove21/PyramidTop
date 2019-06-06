@@ -11,8 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+<<<<<<< HEAD
 import android.widget.LinearLayout;
 
+=======
+import android.widget.RelativeLayout;
+>>>>>>> 6280ee9284b7bd5836b1d9b6990aba8c37d1d1f6
 
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
@@ -44,8 +48,15 @@ public class Old_Orderlist extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_old_orderlist,container,false);
         LinearLayout frame = (LinearLayout) view.findViewById(R.id.old_orderlist_linear);
         listView = (ListView) view.findViewById(R.id.old_olderlist_listview);
+        RelativeLayout parentLayout = (RelativeLayout)view.findViewById(R.id.oldolderlist_relative_container);
+        Log.d("listsize",""+parentLayout.getRootView().getHeight());
         get_store_info_by_my_order();
         oldOrderProducts = getOldOderProduct();
+<<<<<<< HEAD
+=======
+
+        oldOrderCustomAdapter = new OldOrderCustomAdapter(getActivity(),listView.getHeight());
+>>>>>>> 6280ee9284b7bd5836b1d9b6990aba8c37d1d1f6
 
         if(UtilSet.al_my_old_order.size()==0){
             frame.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.no_old_order));
@@ -53,7 +64,12 @@ public class Old_Orderlist extends Fragment {
             oldOrderCustomAdapter = new OldOrderCustomAdapter(getActivity());
             listView.setAdapter(oldOrderCustomAdapter);
         }
+<<<<<<< HEAD
 
+=======
+        listView.setAdapter(oldOrderCustomAdapter);
+        Log.d("listsize 1",""+listView.getHeight());
+>>>>>>> 6280ee9284b7bd5836b1d9b6990aba8c37d1d1f6
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

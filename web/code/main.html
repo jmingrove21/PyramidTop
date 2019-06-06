@@ -3,9 +3,6 @@
 
 <head>
   <meta charset="utf-8" />
-  <link href="../assets/css/Modal_Style..css" rel="stylesheet"/>
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     배달ONE
@@ -21,6 +18,7 @@
 
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <!---<link href="../assets/demo/demo.css" rel="stylesheet" />-->
+  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="../assets/js/login.js"></script>
   <script src="../assets/js/main.js"></script>
@@ -29,9 +27,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 -->
-	<script>
-	
-	</script>
+
 </head>
 
 <body class="" onLoad="init_main_page();">
@@ -94,7 +90,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a id="main_title_id" class="navbar-brand">
+            <a id="main_title_id" class="navbar-brand" style="font-weight: bold">
 			</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,7 +101,7 @@
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             
             <ul class="navbar-nav">
-              <li class="nav-item">
+              <li class="nav-item d-none">
                 <a class="nav-link btn-magnify" href="#pablo">
                   <i class="nc-icon nc-layout-11"></i>
                   <p>
@@ -113,7 +109,7 @@
                   </p>
                 </a>
               </li>
-              <li class="nav-item btn-rotate dropdown">
+              <li class="nav-item btn-rotate dropdown d-none">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-bell-55"></i>
                   <p>
@@ -126,9 +122,11 @@
                   <a class="dropdown-item" href="#">Something else here</a>
                 </div>
               </li>
+
               <li class="nav-item">
-                <a class="nav-link btn-rotate" href="#pablo">
-                  <i class="nc-icon nc-settings-gear-65"></i>
+                <a class="nav-link btn-rotate" href="javascript:void(0)" onclick="logout(); return false;" style="font-weight: bold">
+                  로그아웃&nbsp;
+                  <i class="fa fa-sign-out"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
                   </p>
@@ -147,7 +145,7 @@
 </div> -->
       <div id="list_source" class="content">
         <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-md-6">
             <div class="card card-stats">
               <div class="card-body ">
                 <div class="row">
@@ -172,7 +170,8 @@
                       <th> &nbsp;주문시간 </th>
                       <th> &nbsp;메뉴 </th>
                       <th style="text-align: center"> 상세보기 </th>
-                      <th style="text-align: center"> 배송출발 </th>
+                      <th style="text-align: center"> 출발 </th>
+                      <th style="text-align: center">취소</th>
                     </thead>
                     <tbody id="now_menu">
 
@@ -210,7 +209,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-md-6">
             <div class="card card-stats">
               <div class="card-body ">
                 <div class="row">
@@ -232,8 +231,8 @@
 				  <div class="table-responsive">
                   <table class="table">
                     <thead class="text-primary">
-                      <th> 승인/출발 시간</th>
-                      <th> 메뉴</th>
+                      <th> &nbsp;승인/출발 시간</th>
+                      <th> &nbsp;&nbsp;메뉴</th>
                       <th style="text-align:center"> 상세보기 </th>
                       <th style="text-align:center"> 배송상태</th>
                     </thead>
@@ -262,13 +261,7 @@
             <nav class="footer-nav">
               <ul>
                 <li>
-                  <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
-                </li>
-                <li>
-                  <a href="http://blog.creative-tim.com/" target="_blank">Blog</a>
-                </li>
-                <li>
-                  <a href="https://www.creative-tim.com/license" target="_blank">Licenses</a>
+                  <a href="https://github.com/jmingrove21/PyramidTop/" target="_blank">PyramidTop's GitHub</a>
                 </li>
               </ul>
             </nav>
@@ -277,7 +270,7 @@
                 ©
                 <script>
                   document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by pyramidTop
+                </script>, made with <i class="fa fa-star"></i> by pyramidTop
               </span>
             </div>
           </div>
@@ -291,24 +284,9 @@
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/detail_window.js"></script>
 
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!--  Google Maps Plugin
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>-->
-  <!-- Chart JS
-  <script src="../assets/js/plugins/chartjs.min.js"></script>-->
-  <!--  Notifications Plugin    -->
+
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
-  <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-  <!--<script src="../assets/demo/demo.js"></script>
-  -->
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-      demo.initChartsPages();
-    });
-  </script>
 
 </body>
 

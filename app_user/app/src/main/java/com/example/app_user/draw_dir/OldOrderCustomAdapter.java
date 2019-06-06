@@ -12,11 +12,12 @@ import com.example.app_user.R;
 
 public class OldOrderCustomAdapter extends BaseAdapter {
     private Context context;
+    private int Height;
 
-
-    public OldOrderCustomAdapter(Context context) {
+    public OldOrderCustomAdapter(Context context, int Height) {
 
         this.context = context;
+        this.Height = Height;
     }
 
     @Override

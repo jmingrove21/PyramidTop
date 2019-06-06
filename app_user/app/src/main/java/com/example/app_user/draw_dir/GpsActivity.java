@@ -312,6 +312,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
     public void GPS_ID_Complete(View view){
         if(detail_address_input.getText().toString().length()>0){
+            Toast.makeText(GpsActivity.this,address_text.getText().toString()+" "+detail_address_input.getText().toString()+"\n주소 설정 완료",Toast.LENGTH_SHORT).show();
             UtilSet.my_user.setUser_address(address_text.getText().toString()+" "+detail_address_input.getText().toString());
             Intent intent=new Intent(GpsActivity.this, FirstMainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
