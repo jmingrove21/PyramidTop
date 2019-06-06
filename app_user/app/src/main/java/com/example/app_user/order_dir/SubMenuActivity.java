@@ -248,7 +248,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     jsonParam.put("destination_lat", UtilSet.latitude);
                     jsonParam.put("destination_long", UtilSet.longitude);
                     int total_price = 0;
-                    if (MenuFragment.menuProductItems == null) {
+                    if (menuFragment.menuProductItems == null) {
                         SubMenuActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText( SubMenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
@@ -258,15 +258,15 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                         return;
                     }
 
-                    for (int idx = 0; idx < MenuFragment.menuProductItems.size(); idx++) {
-                        if (MenuFragment.menuProductItems.get(idx).getOrder_number() != 0) {
+                    for (int idx = 0; idx < menuFragment.menuProductItems.size(); idx++) {
+                        if (menuFragment.menuProductItems.get(idx).getOrder_number() != 0) {
                             JSONObject jobj_temp = new JSONObject();
-                            jobj_temp.put("menu_code", MenuFragment.menuProductItems.get(idx).getMenu_code());
-                            jobj_temp.put("menu_name", MenuFragment.menuProductItems.get(idx).getMenu_inform());
-                            selectedMenu = "" + MenuFragment.menuProductItems.get(idx).getMenu_inform() + "\n";
-                            jobj_temp.put("menu_count", MenuFragment.menuProductItems.get(idx).getOrder_number());
-                            jobj_temp.put("menu_price", MenuFragment.menuProductItems.get(idx).getPrice_inform());
-                            int menu_total_price = Integer.parseInt(MenuFragment.menuProductItems.get(idx).getPrice_inform()) * MenuFragment.menuProductItems.get(idx).getOrder_number();
+                            jobj_temp.put("menu_code", menuFragment.menuProductItems.get(idx).getMenu_code());
+                            jobj_temp.put("menu_name", menuFragment.menuProductItems.get(idx).getMenu_inform());
+                            selectedMenu = "" + menuFragment.menuProductItems.get(idx).getMenu_inform() + "\n";
+                            jobj_temp.put("menu_count", menuFragment.menuProductItems.get(idx).getOrder_number());
+                            jobj_temp.put("menu_price", menuFragment.menuProductItems.get(idx).getPrice_inform());
+                            int menu_total_price = Integer.parseInt(menuFragment.menuProductItems.get(idx).getPrice_inform()) * menuFragment.menuProductItems.get(idx).getOrder_number();
                             total_price += menu_total_price;
                             jobj_temp.put("menu_total_price", menu_total_price);
                             jArry.put(jobj_temp);
