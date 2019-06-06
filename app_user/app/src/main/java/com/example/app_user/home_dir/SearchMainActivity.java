@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,7 +71,6 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
         setContentView(R.layout.activity_search_layout);
 
 
-
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
@@ -81,13 +81,14 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View view = getLayoutInflater().inflate(R.layout.nav_header, null);
-        UtilSet.set_Drawer(navigationView,view);
+        UtilSet.set_Drawer(navigationView, view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
         listView = (ListView) findViewById(R.id.listView);
         customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
@@ -172,23 +173,40 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                 Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                 intent.putExtra("serial", store_ser);
                 intent.putExtra("index", position);
-                intent.putExtra("type","order_make");
+                intent.putExtra("type", "order_make");
                 startActivityForResult(intent, 101);
             }
         });
 
         search = (EditText) findViewById(R.id.search_input);
+        search.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    get_store_information();
+                    listView.findViewById(R.id.listView);
+                    customAdapter = new CustomAdapter();
+                    listView.setAdapter(customAdapter);
+                    return false;
+                }
+                return true;
+            }
+        });
+
     }
 
-    public void searchButton(View view){
-        if(search.getText().toString().length()<2){
+
+    public void searchButton(View view) {
+        if (search.getText().toString().length() < 2) {
             SearchMainActivity.this.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText( SearchMainActivity.this, "두 글자 이상 입력하세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchMainActivity.this, "두 글자 이상 입력하세요.", Toast.LENGTH_SHORT).show();
                 }
             });
-        }else{
+        } else {
             get_store_information();
+            listView.findViewById(R.id.listView);
+            customAdapter = new CustomAdapter();
+            listView.setAdapter(customAdapter);
         }
     }
 
@@ -201,7 +219,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "search_store");
-                    jsonParam.put("search",search.getText().toString());
+                    jsonParam.put("search", search.getText().toString());
                     jsonParam.put("user_lat", UtilSet.latitude);
                     jsonParam.put("user_long", UtilSet.longitude);
 
@@ -225,9 +243,6 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, "", distance, store_profile_img);
                                 UtilSet.al_store.add(s);
                             }
-                            listView.findViewById(R.id.listView);
-                            customAdapter = new CustomAdapter();
-                            listView.setAdapter(customAdapter);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -248,6 +263,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
             e.printStackTrace();
         }
     }
+
     public void store_info_detail(final int store_serial, final int position) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -314,7 +330,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -328,13 +344,13 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
-                    Intent intent=new Intent(SearchMainActivity.this, FirstMainActivity.class);
+                    Intent intent = new Intent(SearchMainActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
                     break;
             }
-        }else{
+        } else {
             switch (menuItem.getItemId()) {
                 case R.id.menu_register:
                     Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
@@ -431,7 +447,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
         }
     }
 
-    public void GPSonClick(View view){
+    public void GPSonClick(View view) {
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
     }
