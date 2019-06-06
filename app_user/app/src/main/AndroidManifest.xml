@@ -57,6 +57,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".util_dir.LoginActivity" />
         <activity android:name=".util_dir.RegisterActivity" />
+        <activity android:name=".util_dir.CreditActivity" />
 
         <activity android:name=".draw_dir.GpsActivity" />
     </application>

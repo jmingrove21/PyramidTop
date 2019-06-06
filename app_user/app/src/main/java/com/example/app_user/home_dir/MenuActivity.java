@@ -24,10 +24,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_user.draw_dir.GpsActivity;
+import com.example.app_user.util_dir.CreditActivity;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.MenuCustomAdapter;
@@ -52,6 +52,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     int index;
     int serial;
     boolean flag = false;
+    int total_price_send=0;
     private String type; //order_make, order_participate
 
     String selectedMenu;
@@ -69,7 +70,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
 
         Intent intent = getIntent();
-        type = intent.getStringExtra("type");
+        type = intent.getStringExtra("order_make");
         index = intent.getIntExtra("index", 0);
         serial = intent.getIntExtra("serial", 0);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -223,10 +224,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void showSelectedItems(View view) {
-        store_info_specification(view);
+        make_order(view);
     }
 
-    public void store_info_specification(View view) {
+    public void make_order(View view) {
 
         flag = false;
 
@@ -245,7 +246,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("destination_long", UtilSet.longitude);
 
                     int total_price = 0;
-                    if (MenuFragment.menuProductItems == null) {
+                    if (menuFragment.menuProductItems == null) {
                         MenuActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText( MenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
@@ -255,15 +256,15 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                         return;
                     }
 
-                    for (int idx = 0; idx < MenuFragment.menuProductItems.size(); idx++) {
-                        if (MenuFragment.menuProductItems.get(idx).getOrder_number() != 0) {
+                    for (int idx = 0; idx < menuFragment.menuProductItems.size(); idx++) {
+                        if (menuFragment.menuProductItems.get(idx).getOrder_number() != 0) {
                             JSONObject jobj_temp = new JSONObject();
-                            jobj_temp.put("menu_code", MenuFragment.menuProductItems.get(idx).getMenu_code());
-                            jobj_temp.put("menu_name", MenuFragment.menuProductItems.get(idx).getMenu_inform());
-                            selectedMenu = "" + MenuFragment.menuProductItems.get(idx).getMenu_inform() + "\n";
-                            jobj_temp.put("menu_count", MenuFragment.menuProductItems.get(idx).getOrder_number());
-                            jobj_temp.put("menu_price", MenuFragment.menuProductItems.get(idx).getPrice_inform());
-                            int menu_total_price = Integer.parseInt(MenuFragment.menuProductItems.get(idx).getPrice_inform()) * MenuFragment.menuProductItems.get(idx).getOrder_number();
+                            jobj_temp.put("menu_code", menuFragment.menuProductItems.get(idx).getMenu_code());
+                            jobj_temp.put("menu_name", menuFragment.menuProductItems.get(idx).getMenu_inform());
+                            selectedMenu = "" + menuFragment.menuProductItems.get(idx).getMenu_inform() + "\n";
+                            jobj_temp.put("menu_count", menuFragment.menuProductItems.get(idx).getOrder_number());
+                            jobj_temp.put("menu_price", menuFragment.menuProductItems.get(idx).getPrice_inform());
+                            int menu_total_price = Integer.parseInt(menuFragment.menuProductItems.get(idx).getPrice_inform()) * menuFragment.menuProductItems.get(idx).getOrder_number();
                             total_price += menu_total_price;
                             jobj_temp.put("menu_total_price", menu_total_price);
                             jArry.put(jobj_temp);
@@ -273,8 +274,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                         MenuActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText( MenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                                return;
                             }
                         });
+                        return;
                     }
                     final String str = Integer.toString(total_price);
                     if(total_price!=0) {
@@ -288,15 +291,29 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
-
+                    if(UtilSet.my_user.getUser_address()==null){
+                        MenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( MenuActivity.this, "배달받을 주소를 설정해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(jsonReply);
                         String json_result = jobj.getString("confirm");
+                        Log.d("json_Result", json_result);
                         if (json_result.equals("1")) {
-                            System.out.println("Success order make");
+                            System.out.println("Success order make - not finished");
+                            Log.d("totalPrice", String.valueOf(total_price));
+                            total_price_send=total_price;
 
+                        }else if(json_result.equals("2")){
+                            System.out.println("Success order make - finished");
+                            Log.d("totalPrice", String.valueOf(total_price));
+                            total_price_send=total_price;
                         } else {
                             Log.d("error", "Responce code : 0 - fail make order");
                         }
@@ -322,8 +339,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             e.printStackTrace();
         }
         if(flag){
-            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), CreditActivity.class);
+            intent.putExtra("total_price", total_price_send);
+            intent.putExtra("mileage",UtilSet.my_user.getUser_mileage());
+            Log.d("totalPriceSend", String.valueOf(total_price_send));
             startActivityForResult(intent, 101);
+           // total_price_send=0;
         }
     }
 

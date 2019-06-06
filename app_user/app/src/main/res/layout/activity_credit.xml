@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".util_dir.CreditActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="PG 회사 선택"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/spinner_pg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:entries="@array/pg"/>
+
+            <TextView
+                android:text="결제수단 선택"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/spinner_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:entries="@array/method"/>
+
+            <TextView
+                android:text="주문 금액"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/price_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:gravity="center_vertical"
+                android:paddingLeft="10sp"
+                android:minHeight="40dp"/>
+
+            <TextView
+                android:id="@+id/mileage_info"
+                android:text="마일리지"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <EditText
+                    android:id="@+id/mileage_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="0"
+                    android:layout_marginLeft="10sp"
+                    android:inputType="numberDecimal"
+                    android:minHeight="40dp"/>
+                <TextView
+                    android:text="원"
+                    android:paddingLeft="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"/>
+                <Button
+                    android:id="@+id/mileage_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:background="#4529e5"
+                    android:textColor="#fff"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="5dp"
+                    android:text="적용"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/total_price_credit_info"
+                    android:text="총 결제 금액"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/total_price_credit"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10sp"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:minHeight="40dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_pg"
+                    android:text="결제시작"
+                    android:layout_weight="1"
+                    android:background="#4529e5"
+                    android:textColor="#fff"
+                    android:layout_marginRight="5dp"
+                    android:onClick="goRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+                <Button
+                    android:id="@+id/btn_bootpay"
+                    android:text="부트페이 통합결제창"
+                    android:layout_weight="1"
+                    android:onClick="goBootpayWindow"
+                    android:layout_marginLeft="5dp"
+                    android:background="#4529e5"
+                    android:textColor="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

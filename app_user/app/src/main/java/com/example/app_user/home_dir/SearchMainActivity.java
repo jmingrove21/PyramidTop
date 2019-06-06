@@ -177,6 +177,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                 Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                 intent.putExtra("serial", store_ser);
                 intent.putExtra("index", position);
+                intent.putExtra("type","order_make");
                 startActivityForResult(intent, 101);
             }
         });
