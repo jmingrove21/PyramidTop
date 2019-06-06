@@ -280,14 +280,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                         return;
                     }
                     final String str = Integer.toString(total_price);
-                    if(total_price!=0) {
-                        MenuActivity.this.runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( MenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        flag = true;
-                    }
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
@@ -298,6 +290,14 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                             }
                         });
                         return;
+                    }
+                    if(total_price!=0) {
+                        MenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( MenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        flag = true;
                     }
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
