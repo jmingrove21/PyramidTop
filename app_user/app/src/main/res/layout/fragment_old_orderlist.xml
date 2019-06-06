@@ -5,7 +5,12 @@
     android:layout_marginTop="?attr/actionBarSize"
     android:layout_above="@+id/bottom_navigation"
     android:background="@android:color/white">
-
+    <LinearLayout
+        android:id="@+id/old_orderlist_linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:orientation="vertical">
     <ListView
         android:id="@+id/old_olderlist_listview"
         android:focusable="false"
@@ -15,4 +20,5 @@
 
         android:dividerHeight="0px"
         android:divider="#ffffff"></ListView>
+    </LinearLayout>
 </RelativeLayout>

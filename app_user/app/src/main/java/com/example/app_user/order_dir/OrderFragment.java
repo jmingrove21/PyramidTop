@@ -64,6 +64,7 @@ public class OrderFragment extends DialogFragment {
         final String[] store_name = new String[UtilSet.al_order.size()];
         if(UtilSet.al_order.size()==0){
             frame.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.no_participate));
+            
         }else {
             for (int i = 0; i < UtilSet.al_order.size(); i++) {
                 store_name[i] = UtilSet.al_order.get(i).getStore().getStore_name();
