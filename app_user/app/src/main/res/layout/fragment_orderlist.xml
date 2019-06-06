@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:layout_marginTop="?attr/actionBarSize"
     android:layout_above="@+id/bottom_navigation">
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1"
@@ -17,6 +18,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:id="@+id/swipe_order_list">
+
             <ListView
                 android:id="@+id/order_list"
                 android:layout_width="match_parent"
@@ -24,7 +26,15 @@
                 android:dividerHeight="0px"
                 android:divider="#ffffff"
                 />
+            <ImageView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/no_participate"
+                />
+
 
         </android.support.v4.widget.SwipeRefreshLayout>
-    </LinearLayout>
+    </FrameLayout>
 </RelativeLayout>
