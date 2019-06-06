@@ -28,12 +28,13 @@ import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
+import com.example.app_user.draw_dir.PopupActivity;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.RegisterActivity;
 
-public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
     private DrawerLayout drawer;
     int index;
 
@@ -43,7 +44,9 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.party_detail_layout);
-
+        /////
+        findViewById(R.id.btnAlert).setOnClickListener(this);
+        ////
         Intent intent = getIntent();
         index = intent.getIntExtra("index", 0);
 
@@ -64,9 +67,9 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-//        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_listview);
-//        PartyDetailActivity.UserAdapter userAdapter=new PartyDetailActivity.UserAdapter();
-//        listView_user.setAdapter(userAdapter);
+        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_listview);
+        PartyDetailActivity.UserAdapter userAdapter=new PartyDetailActivity.UserAdapter();
+        listView_user.setAdapter(userAdapter);
         ListView listView_menu = (ListView) findViewById(R.id.party_detail_layout_menu_listview);
         PartyDetailActivity.CustomAdapter customAdapter = new PartyDetailActivity.CustomAdapter();
         listView_menu.setAdapter(customAdapter);
@@ -183,6 +186,15 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.btnAlert:
+                startActivity(new Intent(this, PopupActivity.class));
+                break;
         }
     }
 

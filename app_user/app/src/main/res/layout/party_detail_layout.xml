@@ -666,6 +666,7 @@
                     android:layout_weight="0.05">
 
                     <Button
+                        android:id="@+id/btnAlert"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#4AC66D"

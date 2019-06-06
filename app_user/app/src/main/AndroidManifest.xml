@@ -61,6 +61,8 @@
         <activity android:name=".util_dir.CreditActivity" />
 
         <activity android:name=".draw_dir.GpsActivity" />
+        <activity android:name=".draw_dir.PopupActivity"
+            android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>
