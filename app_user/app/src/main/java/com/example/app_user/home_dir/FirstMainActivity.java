@@ -241,8 +241,6 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_info");
-                    //    jsonParam.put("user_lat", 37.282690);
-                    //    jsonParam.put("user_long", 127.050206);
                     jsonParam.put("user_lat", UtilSet.latitude);
                     jsonParam.put("user_long", UtilSet.longitude);
                     jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
