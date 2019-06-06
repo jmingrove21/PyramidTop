@@ -59,16 +59,16 @@ function menu_list()
 					string = string + "<div class=\"image\">" + "<img class='embed-responsive' src = \"" + menu_img + "\"" + "alt='...'></div></div>";
 					//alert(string);
 					//$("#menu_list_detail").append(string);
-					string = string + "<div class=\"card-body\">" + "<div class='row'>" + "<div class='col-md-12'>";
-					string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold;'>메뉴이름</label>";
+					string = string + "<div class=\"card-body\">" + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+					string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold;'>&nbsp;&nbsp;메뉴이름</label>";
 					string = string + "<input id='"+ menu_code+ "_name" +"' " + "type='text' class='form-control'>" + "</div>" + "</div>" + "</div>";
 
-					string = string + "<div class='row'>" + "<div class='col-md-12'>";
-					string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴가격</label>";
+					string = string + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+					string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴가격</label>";
 					string = string + "<input id='" + menu_code+ "_price" +"' " + "type='text' class='form-control'>" + "</div>" + "</div>" + "</div>";
 
-					string = string + "<div class='row'>" + "<div class='col-md-12'>";
-					string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴코드</label>";
+					string = string + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+					string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴코드</label>";
 					string = string + "<input id='" + menu_code+ "_code" +"' " + "type='text' class='form-control' disabled=''>" + "</div></div>" + "</div></div></div>";
 
 					string = string + "<div class='box-content'>" + "<div class='inner-content'>" + "<h3 class='title' style='font-weight: bold'>메뉴관리</h3><br>";
@@ -96,16 +96,16 @@ function menu_list()
 						string = string + "<div class=\"image\">" + "<img class='embed-responsive' src = \"" + menu_img + "\"" + "alt='...'></div></div>";
 						//alert(string);
 						//$("#menu_list_detail").append(string);
-						string = string + "<div class=\"card-body\">" + "<div class='row'>" + "<div class='col-md-12'>";
-						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴이름</label>";
+						string = string + "<div class=\"card-body\">" + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴이름</label>";
 						string = string + "<input id='"+ menu_code+ "_name_in_main_menu_tab" +"' " + "type='text' class='form-control'>" + "</div>" + "</div>" + "</div>";
 
-						string = string + "<div class='row'>" + "<div class='col-md-12'>";
-						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴가격</label>";
+						string = string + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴가격</label>";
 						string = string + "<input id='" + menu_code+ "_price_in_main_menu_tab" +"' " + "type='text' class='form-control'>" + "</div>" + "</div>" + "</div>";
 
-						string = string + "<div class='row'>" + "<div class='col-md-12'>";
-						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴코드</label>";
+						string = string + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴코드</label>";
 						string = string + "<input id='" + menu_code+ "_code_in_main_menu_tab" +"' " + "type='text' class='form-control' disabled=''>" + "</div></div>" + "</div></div></div>";
 
 						string = string + "<div class='box-content'>" + "<div class='inner-content'>" + "<h3 class='title' style='font-weight: bold'>메뉴관리</h3><br>";
@@ -135,16 +135,16 @@ function menu_list()
 						string = string + "<div class=\"image\">" + "<img class='embed-responsive' src = \"" + menu_img + "\"" + "alt='...'></div></div>";
 						//alert(string);
 						//$("#menu_list_detail").append(string);
-						string = string + "<div class=\"card-body\">" + "<div class='row'>" + "<div class='col-md-12'>";
-						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴이름</label>";
+						string = string + "<div class=\"card-body\">" + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴이름</label>";
 						string = string + "<input id='"+ menu_code+ "_name_in_side_menu_tab" +"' " + "type='text' class='form-control'>" + "</div>" + "</div>" + "</div>";
 
-						string = string + "<div class='row'>" + "<div class='col-md-12'>";
-						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴가격</label>";
+						string = string + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴가격</label>";
 						string = string + "<input id='" + menu_code+ "_price_in_side_menu_tab" +"' " + "type='text' class='form-control'>" + "</div>" + "</div>" + "</div>";
 
-						string = string + "<div class='row'>" + "<div class='col-md-12'>";
-						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴코드</label>";
+						string = string + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴코드</label>";
 						string = string + "<input id='" + menu_code+ "_code_in_side_menu_tab" +"' " + "type='text' class='form-control' disabled=''>" + "</div></div>" + "</div></div></div>";
 
 						string = string + "<div class='box-content'>" + "<div class='inner-content'>" + "<h3 class='title' style='font-weight: bold'>메뉴관리</h3><br>";
@@ -172,16 +172,16 @@ function menu_list()
 						string = string + "<div class=\"image\">" + "<img class='embed-responsive' src = \"" + menu_img + "\"" + "alt='...'></div></div>";
 						//alert(string);
 						//$("#menu_list_detail").append(string);
-						string = string + "<div class=\"card-body\">" + "<div class='row'>" + "<div class='col-md-12'>";
-						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴이름</label>";
+						string = string + "<div class=\"card-body\">" + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴이름</label>";
 						string = string + "<input id='"+ menu_code+ "_name_in_drink_menu_tab" +"' " + "type='text' class='form-control'>" + "</div>" + "</div>" + "</div>";
 
-						string = string + "<div class='row'>" + "<div class='col-md-12'>";
-						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴가격</label>";
+						string = string + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴가격</label>";
 						string = string + "<input id='" + menu_code+ "_price_in_drink_menu_tab" +"' " + "type='text' class='form-control'>" + "</div>" + "</div>" + "</div>";
 
-						string = string + "<div class='row'>" + "<div class='col-md-12'>";
-						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>메뉴코드</label>";
+						string = string + "<div class='row'>" + "<div class='col-md-12 text-left'>";
+						string = string + "<div class='form-group'>" + "<label class='text-primary' style='font-weight: bold'>&nbsp;&nbsp;메뉴코드</label>";
 						string = string + "<input id='" + menu_code+ "_code_in_drink_menu_tab" +"' " + "type='text' class='form-control' disabled=''>" + "</div></div>" + "</div></div></div>";
 
 						string = string + "<div class='box-content'>" + "<div class='inner-content'>" + "<h3 class='title' style='font-weight: bold'>메뉴관리</h3><br>";
@@ -259,17 +259,58 @@ function menu_create()
     var menu_name = "";
     var menu_price = "";
     var menu_picture = "";
-    menu_name = $("#modal_create_menu_name");
-    menu_price = $("#modal_create_menu_price");
-
+    menu_name = $("#modal_create_menu_name").val();
+    menu_price = $("#modal_create_menu_price").val();
+	var menu_kind = "";
+	menu_kind = $("#modal_create_menu_kind").val();
+	if(menu_kind == "메인메뉴")
+		menu_kind = "Q09A01B01";
+	else if(menu_kind == "사이드메뉴")
+		menu_kind = "Q09A01B02";
+	else if(menu_kind == "음료")
+		menu_kind = "Q09A01B03";
     var formdata = new FormData();
+    formdata.append('store_info',"add_menu");
     formdata.append('menu_img', menu_img_create);
     formdata.append('store_serial', store_serial);
-    formdata.append('menu_price', menu_price);
     formdata.append('menu_name', menu_name);
-    formdata.append('menu_kind', menu_kind);
+    formdata.append('menu_price', menu_price);
+    formdata.append('menu_type_code', menu_kind);
+	$("#Menu_create_Modal").modal('hide');
+	$("#modal_create_menu_price").val("");
+	$("#modal_create_menu_name").val("");
+	$("#modal_create_menu_picture").attr("src","../assets/img/noimg.gif");
 
 
+	$.ajax({
+		url: "http://54.180.102.7:80/get/JSON/store_app/store_add_menu.php",
+		data: formdata,
+		dataType:'text',
+		encrypt:"multipart/form-data",
+		processData: false,
+		contentType: false,
+		type: "POST",
+		//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success: function (data) {
+			if (data) {
+				var result3 = JSON.parse(data);
+				if(result3.confirm==1)
+				{
+					menu_list();
+					alert("해당 메뉴가 생성되었습니다!");
+					location.reload();
+				}
+			} else {
+				//alert(menu_name);
+				alert("수정하기 실패");
+			}
+		},
+		error: function (error)
+		{
+			alert(error);
+		}
+
+	});
 
 
 
@@ -366,7 +407,11 @@ function menu_modify_submit()
 	var menu_name = $("#modal_menu_name").val();
 	var menu_price = $("#modal_menu_price").val();
 
-	//alert(menu_img)
+	var temp_src = $("#modal_menu_picture").attr('src');
+
+
+	//alert(temp_src);
+	var len = menu_img.length;
 
 	var formdata = new FormData();
 	formdata.append('menu_img', menu_img);
@@ -389,6 +434,7 @@ function menu_modify_submit()
 				var result = JSON.parse(data);
 				if(result.confirm==1)
 				{
+
 					$("#Menu_Modal").modal('hide');
 					menu_list();
 					alert("메뉴 수정 성공");
