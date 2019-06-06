@@ -279,6 +279,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                                 Toast.makeText( SubMenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        return;
                     }
 
                     final String str = Integer.toString(total_price);

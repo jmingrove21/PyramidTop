@@ -59,6 +59,7 @@
                             android:layout_weight="0.2"
                             android:background="@drawable/login"
                             android:layout_margin="10sp"
+                            android:onClick="searchButton"
                             android:src="@drawable/ic_search" />
                     </LinearLayout>
 
