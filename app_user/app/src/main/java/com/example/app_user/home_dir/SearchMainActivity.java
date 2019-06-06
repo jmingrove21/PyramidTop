@@ -266,7 +266,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                                 String store_phone = jobj.get("store_phone").toString();
                                 String distance = jobj.get("distance").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-                                String minimum_price= jobj.get("store_mininum_price").toString();
+                                String minimum_price= jobj.get("minimum_order_price").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_price, distance, store_profile_img);
                                 UtilSet.al_searchstore.add(s);
                             }
@@ -315,8 +315,10 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                             String store_notice = jobj.get("store_notice").toString();
                             String store_main_type_name = jobj.get("store_main_type_name").toString();
                             String store_sub_type_name = jobj.get("store_sub_type_name").toString();
+                            String delivery_cost=jobj.get("delivery_cost").toString();
 
                             UtilSet.al_searchstore.get(position).set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
+                            UtilSet.al_searchstore.get(position).setDelivery_cost(Integer.parseInt(delivery_cost));
 
                             JSONArray jobj_menu = (JSONArray) jobj.get("menu");
                             for (int j = 0; j < jobj_menu.length(); j++) {
