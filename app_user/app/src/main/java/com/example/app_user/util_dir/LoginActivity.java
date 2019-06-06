@@ -85,12 +85,12 @@ public class LoginActivity extends AppCompatActivity {
                         if(json_result.equals("1")){
                             user_name = jobj.getString("user_name");
                             user_serial = jobj.getInt("user_serial");
-
+                            final int user_mileage=jobj.getInt("user_mileage");
                             LoginActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText( LoginActivity.this, "로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
 
-                                    UtilSet.my_user=new User(id.getText().toString(),pw.getText().toString(),user_serial,user_name);
+                                    UtilSet.my_user=new User(id.getText().toString(),pw.getText().toString(),user_serial,user_name,user_mileage);
                                     UtilSet.write_user_data();
                                 }
                             });

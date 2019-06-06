@@ -63,6 +63,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     public static int store_type=-1;
     Point point;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,34 +90,8 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
-            navigationView.inflateMenu(R.menu.drawer_menu);
-            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            if(UtilSet.my_user.getUser_address()==null)
-                user_address.setText("배달주소를 선택해주세요!");
-            else
-                user_address.setText(UtilSet.my_user.getUser_address());
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
-            hello_msg.setText(" ");
-            navigationView.addHeaderView(view);
-        } else {
-            navigationView.inflateMenu(R.menu.logout_drawer_menu);
-            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
-
-            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
-            gps_btn.setVisibility(View.INVISIBLE);
-
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(" ");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            user_address.setText(" ");
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
-            hello_msg.setText("배달ONE과 함께하세요!");
-            navigationView.addHeaderView(view);
-        }
+        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        UtilSet.set_Drawer(navigationView,view);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -151,7 +126,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
-                    Intent intent=new Intent(FirstMainActivity.this, FirstMainActivity.class);
+                    Intent intent = new Intent(FirstMainActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
@@ -292,7 +267,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                                 UtilSet.al_store.add(s);
                             }
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            store_type=position;
+                            store_type = position;
                             startActivityForResult(intent, 101);
 
                         } catch (Exception e) {
@@ -327,12 +302,12 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 arrayPermission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
             }
-            permissionCheck=ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+            permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 arrayPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             }
-            permissionCheck=ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE);
-            if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+            permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 arrayPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
             if (arrayPermission.size() > 0) {
@@ -365,7 +340,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void GPSonClick(View view){
+    public void GPSonClick(View view) {
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
     }

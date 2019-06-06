@@ -92,6 +92,9 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
             hello_msg.setText("배달ONE과 함께하세요!");
             navigationView.addHeaderView(view);
         }
+        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        UtilSet.set_Drawer(navigationView,view);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

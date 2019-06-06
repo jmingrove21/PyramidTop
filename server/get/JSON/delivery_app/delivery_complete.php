@@ -23,6 +23,40 @@
             if($stmt1&&$stmt2){
                 $confirm=2;
             }
+            ##마일리지 처리
+            $count_query="SELECT COUNT(*) AS c,store_serial FROM user_order WHERE order_number=".$order_number." GROUP BY store_serial";
+            $stmt_count = mysqli_query($connect,$count_query);
+            $count_row=mysqli_fetch_assoc($stmt_count);
+            $count=$count_row['c'];
+
+
+            $cost_query="SELECT delivery_cost FROM store WHERE store_serial=".$count_row['store_serial'];
+            $stmt_cost = mysqli_query($connect,$cost_query);
+            $cost_row=mysqli_fetch_assoc($stmt_cost);
+            $cost=$cost_row['delivery_cost'];
+
+            $percent=1;
+            if($count==1){
+                $percent=1;
+            }else if($count==2){
+                $percent=0.1;
+            }else if($count==3){
+                $percent=0.2;
+            }else{
+                $percent=0.25;
+            }
+
+            $mileage=$cost*$percent;
+
+            $user_query="SELECT USER_user_serial FROM user_order WHERE order_number=".$order_number;
+            $user_count = mysqli_query($connect,$user_query);
+            while($user_row=mysqli_fetch_assoc($user_count)){
+                $mileage_query="UPDATE user SET user_mileage=".$mileage." WHERE user_serial=".$user_row['USER_user_serial'];
+                $mileage_stmt = mysqli_query($connect,$mileage_query);
+            }
+
+
+
         }
         else{
             $confirm=0;
