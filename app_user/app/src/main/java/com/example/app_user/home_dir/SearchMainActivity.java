@@ -203,7 +203,6 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                         listView.setAdapter(customAdapter);
                         return false;
                     }
-
                 }else if(keyCode==KeyEvent.KEYCODE_BACK){
                     search.setText("");
                     return false;
@@ -267,7 +266,8 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                                 String store_phone = jobj.get("store_phone").toString();
                                 String distance = jobj.get("distance").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, "", distance, store_profile_img);
+                                String minimum_price= jobj.get("store_profile_img").toString();
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_price, distance, store_profile_img);
                                 UtilSet.al_searchstore.add(s);
                             }
                         } catch (Exception e) {
