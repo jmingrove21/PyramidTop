@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.FrameLayout;
 
 import com.example.app_user.Item_dir.Menu;
 import com.example.app_user.Item_dir.MenuDesc;
@@ -34,6 +36,7 @@ import java.net.URL;
 public class OrderFragment extends DialogFragment {
     Bitmap bitmap;
     ListView listView;
+    ImageView status_img;
     public OrderFragment(){
         UtilSet.al_order.clear();
 
@@ -53,12 +56,22 @@ public class OrderFragment extends DialogFragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-
+        FrameLayout frame = (FrameLayout) view.findViewById(R.id.frame) ;
         listView = (ListView) view.findViewById(R.id.order_list);
+        status_img = (ImageView) view.findViewById(R.id.status);
         final String[] store_name = new String[UtilSet.al_order.size()];
+        if(UtilSet.al_order.size()==0){
+            frame.removeView(listView);
+            frame.setVisibility(View.VISIBLE);
+        }
         for (int i = 0; i < UtilSet.al_order.size(); i++) {
             store_name[i] = UtilSet.al_order.get(i).getStore().getStore_name();
         }
+
+
+
+
+
 
         OrderAdapter orderAdapter = new OrderAdapter(getActivity(), store_name);
         listView.setAdapter(orderAdapter);
