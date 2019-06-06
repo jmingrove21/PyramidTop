@@ -161,25 +161,6 @@ public class Profile extends Fragment {
             @Override
             public void run() {
                 try{
-
-                    JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info","check_state");
-                    jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
-
-                    HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
-
-                    if(conn.getResponseCode()==200){
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-
-                        try{
-                            JSONObject jobj = new JSONObject(jsonReply);
-                            user_pw = jobj.get("user_pw").toString();
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-
                     name = (EditText) pub_view.findViewById(R.id.profile_name);
                     cur_pw = (EditText) pub_view.findViewById(R.id.profile_current_pw);
                     change_pw = (EditText) pub_view.findViewById(R.id.profile_change_pw);
@@ -224,21 +205,14 @@ public class Profile extends Fragment {
                             }
                         });
                         return;
-                    }else if(!cur_pw.getText().toString().equals(user_pw)){
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( getActivity(), "현재 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return;
                     }
 
-                    jsonParam = new JSONObject();
+                    JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_img",trans_bitmap);
                     jsonParam.put("user_name", name.getText().toString());
                     jsonParam.put("user_password", change_pw.getText().toString());
 
-                    conn= UtilSet.user_modify_set_Connect_info(jsonParam);
+                    HttpURLConnection conn= UtilSet.user_modify_set_Connect_info(jsonParam);
 
                     if(conn.getResponseCode()==200){
                         InputStream response = conn.getInputStream();
@@ -248,11 +222,18 @@ public class Profile extends Fragment {
                         if(json_result.equals("1")){
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
-                                    Toast.makeText( getActivity(), "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText( getActivity(), "변경 완료", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             Intent intent=new Intent(getContext(), LoginActivity.class);
                             startActivityForResult(intent,101);
+                        }else{
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText( getActivity(), "현재 패스워드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            return;
                         }
                     }else{
                         Log.d("error","Connect fail");
