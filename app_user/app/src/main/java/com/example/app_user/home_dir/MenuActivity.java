@@ -80,37 +80,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(UtilSet.target_store.getStore_name()+" "+UtilSet.target_store.getStore_branch_name());
+        UtilSet.toolbarInform.setToolbar_inform(UtilSet.target_store.getStore_name()+" "+UtilSet.target_store.getStore_branch_name());
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
-            navigationView.inflateMenu(R.menu.drawer_menu);
-            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            if(UtilSet.my_user.getUser_address()==null)
-                user_address.setText("배달주소를 선택해주세요!");
-            else
-                user_address.setText(UtilSet.my_user.getUser_address());
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
-            hello_msg.setText(" ");
-            navigationView.addHeaderView(view);
-        } else {
-            navigationView.inflateMenu(R.menu.logout_drawer_menu);
-            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
-
-            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
-            gps_btn.setVisibility(View.INVISIBLE);
-
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(" ");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            user_address.setText(" ");
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
-            hello_msg.setText("배달ONE과 함께하세요!");
-            navigationView.addHeaderView(view);
-        }
+        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        UtilSet.set_Drawer(navigationView,view);
 
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -210,6 +185,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
+                            getSupportActionBar().setTitle(UtilSet.toolbarInform.getToolbar_inform().toString());
                             UtilSet.target_store=null;
                             selectedFragment = new HomeFragment();
                             break;
@@ -264,7 +240,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
-                    jsonParam.put("destination", "경기도 수원시 영통구 원천동 35 원천주공아파트");
+                    jsonParam.put("destination", UtilSet.my_user.getUser_address());
                     jsonParam.put("destination_lat", UtilSet.latitude);
                     jsonParam.put("destination_long", UtilSet.longitude);
 

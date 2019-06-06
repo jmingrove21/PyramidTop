@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
@@ -42,14 +43,18 @@ public class Old_Orderlist extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_old_orderlist,container,false);
 
         listView = (ListView) view.findViewById(R.id.old_olderlist_listview);
+        RelativeLayout parentLayout = (RelativeLayout)view.findViewById(R.id.oldolderlist_relative_container);
+        Log.d("listsize",""+parentLayout.getRootView().getHeight());
         get_store_info_by_my_order();
         oldOrderProducts = getOldOderProduct();
-        oldOrderCustomAdapter = new OldOrderCustomAdapter(getActivity());
+
+        oldOrderCustomAdapter = new OldOrderCustomAdapter(getActivity(),listView.getHeight());
 
         if(UtilSet.al_my_old_order.size()==0){
             return view;
         }
         listView.setAdapter(oldOrderCustomAdapter);
+        Log.d("listsize 1",""+listView.getHeight());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

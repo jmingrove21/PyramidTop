@@ -12,11 +12,12 @@ import com.example.app_user.R;
 
 public class OldOrderCustomAdapter extends BaseAdapter {
     private Context context;
+    private int Height;
 
-
-    public OldOrderCustomAdapter(Context context) {
+    public OldOrderCustomAdapter(Context context, int Height) {
 
         this.context = context;
+        this.Height = Height;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class OldOrderCustomAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.fragment_old_orderlist_listview_layout,null,true);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,400));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,600));
 
             holder.text_user_store_name_input = (TextView) convertView.findViewById(R.id.user_store_name_input);
             holder.text_user_order_price_sum_input = (TextView) convertView.findViewById(R.id.user_order_price_sum_input);

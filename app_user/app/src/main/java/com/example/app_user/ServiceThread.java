@@ -117,6 +117,8 @@ public class ServiceThread extends Thread {
 
         }else if(status==7){
             result+="에서 요청한 음식이 배달완료되었습니다.";
+        }else if(status==8){
+            result+="에서 주문이 취소되었습니다.";
         }else{
 
         }

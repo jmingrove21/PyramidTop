@@ -1,23 +1,17 @@
 <?php
-        include '../db.php';
+ include '../db.php';
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET,POST,PUT');
         header('Access-Control-Allow-Headers: X-Requested-With,Content-Type');
         header('Content-Type: text/html; charset=utf-8');
 
         $store_serial=$_POST['store_serial'];
-        $store_name=$_POST['store_name'];
-        $storemaster_name=$_POST['storemaster_name'];
-        $store_address=$_POST['store_address'];
-        $start_time=$_POST['start_time'];
-        $end_time=$_POST['end_time'];
-        $store_restday=$_POST['store_restday'];
-        $store_notice=$_POST['store_notice'];
-        $store_phone=$_POST['store_phone'];
-        $store_profile_img=$_FILES["image_file"];
-        $minimum_order_price=$_POST['minimum_order_price'];
-        $upload=$_FILES['image_file']['name'];
-        print_r($upload);
+        $menu_code=$_POST['menu_code'];
+        $menu_img=$_FILES['menu_img'];
+        $menu_name=$_POST['menu_name'];
+        $menu_price=$_POST['menu_price'];
+        $upload=$_FILES['menu_img']['name'];
+
         $store_query="SELECT store_id FROM store WHERE store_serial=".$store_serial;
         $stmt=mysqli_query($connect,$store_query);
         $row=mysqli_fetch_assoc($stmt);
@@ -27,11 +21,9 @@
 
         $path='http://ec2-54-180-102-7.ap-northeast-2.compute.amazonaws.com/get/JSON/image/'.$row['store_id'].'/'.$upload;
 
-        $query="UPDATE Capstone.store SET store_name='".$store_name."', store_address_jibun='".$store_address."', start_time='".$start_time."', end_time='".$end_time."', store_restday='".$store_restday."', store_notice='".$store_notice."', store_profile_img='".$path."', store_phone='".$store_phone."', minimum_order_price=".$minimum_order_price." WHERE store_serial=".$store_serial;
+        $query="UPDATE menu SET menu_img='".$path."', menu_name='".$menu_name."', menu_price=".$menu_price." WHERE store_serial=".$store_serial." AND menu_code='".$menu_code."'";
 
         $stmt=mysqli_query($connect,$query);
-
-
 
         $confirm=-1;
         if($stmt)
