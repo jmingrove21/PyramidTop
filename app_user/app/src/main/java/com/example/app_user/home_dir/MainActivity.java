@@ -279,9 +279,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String store_notice = jobj.get("store_notice").toString();
                             String store_main_type_name = jobj.get("store_main_type_name").toString();
                             String store_sub_type_name = jobj.get("store_sub_type_name").toString();
+                            String delivery_cost=jobj.get("delivery_cost").toString();
 
                             UtilSet.al_store.get(position).set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
-
+                            UtilSet.al_store.get(position).setDelivery_cost(Integer.parseInt(delivery_cost));
                             JSONArray jobj_menu = (JSONArray) jobj.get("menu");
                             for (int j = 0; j < jobj_menu.length(); j++) {
                                 JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);
@@ -345,7 +346,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 String distance = jobj.get("distance").toString();
                                 String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
+                                String delivery_cost=jobj.get("delivery_cost").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
+                                s.setDelivery_cost(Integer.parseInt(delivery_cost));
                                 UtilSet.al_store.add(s);
                             }
                         } catch (Exception e) {
@@ -383,6 +386,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.delete_user_data();
                     Intent intent=new Intent(MainActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

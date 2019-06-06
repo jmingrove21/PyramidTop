@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.support.v4.content.ContextCompat;
+import android.widget.LinearLayout;
 
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
@@ -46,7 +48,9 @@ public class PeopleFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         get_store_info_by_my_order();
+
         View view = inflater.inflate(R.layout.fragment_people, container, false);
+        LinearLayout frame = (LinearLayout) view.findViewById(R.id.recent_orderlist_linear);
         listView = (ListView) view.findViewById(R.id.people_listview);
 
         if(UtilSet.loginLogoutInform.getLogin_flag()==0){
@@ -64,8 +68,13 @@ public class PeopleFragment extends DialogFragment {
             }
         });
         final String[] store_name = new String[UtilSet.al_my_order.size()];
-        for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
-            store_name[i] = UtilSet.al_my_order.get(i).getStore().getStore_name();
+        if(UtilSet.al_my_order.size()==0){
+            frame.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.no_order));
+
+        }else {
+            for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
+                store_name[i] = UtilSet.al_my_order.get(i).getStore().getStore_name();
+            }
         }
 
         PeopleAdapter peopleAdapter = new PeopleAdapter(getActivity(), store_name);
@@ -177,8 +186,9 @@ public class PeopleFragment extends DialogFragment {
                             String store_address = jobj_store.get("store_address").toString();
                             String store_restday = jobj_store.get("store_restday").toString();
                             String store_notice = jobj_store.get("store_notice").toString();
-
+                            String delivery_cost=jobj_store.get("delivery_cost").toString();
                             UtilSet.al_my_order.get(position).getStore().set_store_spec(store_serial, store_building_name, start_time, end_time, store_phone, store_address, store_restday, store_notice);
+                            UtilSet.al_my_order.get(position).getStore().setDelivery_cost(Integer.parseInt(delivery_cost));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -261,7 +271,6 @@ public class PeopleFragment extends DialogFragment {
                                 String store_branch_name = jobj.get("store_branch_name").toString();
                                 String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-
                                 String order_create_date = jobj.get("order_create_date").toString();
                                 String order_receipt_date = jobj.get("order_receipt_date").toString();
                                 String delivery_departure_time = jobj.get("delivery_departure_time").toString();

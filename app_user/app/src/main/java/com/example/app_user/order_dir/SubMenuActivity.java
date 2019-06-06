@@ -151,6 +151,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.delete_user_data();
                     Intent intent=new Intent(SubMenuActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -279,18 +280,12 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                                 Toast.makeText( SubMenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        return;
                     }
 
                     final String str = Integer.toString(total_price);
 
-                    if(total_price!=0) {
-                        SubMenuActivity.this.runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( SubMenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        flag = true;
-                    }
+
                     if(UtilSet.my_user.getUser_address()==null){
                         SubMenuActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
@@ -298,6 +293,14 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                             }
                         });
                         return;
+                    }
+                    if(total_price!=0) {
+                        SubMenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText( SubMenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        flag = true;
                     }
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
