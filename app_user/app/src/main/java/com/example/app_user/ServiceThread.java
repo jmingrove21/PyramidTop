@@ -69,6 +69,7 @@ public class ServiceThread extends Thread {
                         JSONObject jobj = new JSONObject(result);
                         if (jobj.get("confirm").toString().equals("1")) {
                             JSONArray jarray = (JSONArray) jobj.get("data");
+                            Log.d("check_status",jobj.toString());
                             for (int i = 0; i < jarray.length(); i++) {
                                 JSONObject jobj_store = (JSONObject) jarray.get(i);
                                 JSONArray jobj_store_alert = (JSONArray) jobj_store.get("alarm_check");
