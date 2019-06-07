@@ -68,6 +68,9 @@ public class ServiceThread extends Thread {
                         InputStream response = conn.getInputStream();
                         String result = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(result);
+                        Log.d("check_status",jobj.toString());
+                        if(UtilSet.my_user!=null)
+                            UtilSet.my_user.setUser_mileage(Integer.parseInt(jobj.get("mileage").toString()));
                         if (jobj.get("confirm").toString().equals("1")) {
                             JSONArray jarray = (JSONArray) jobj.get("data");
                             Log.d("check_status",jobj.toString());

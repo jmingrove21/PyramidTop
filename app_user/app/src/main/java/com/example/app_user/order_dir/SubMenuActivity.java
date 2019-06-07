@@ -30,9 +30,9 @@ import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.home_dir.FirstMainActivity;
-import com.example.app_user.home_dir.MainActivity;
 import com.example.app_user.home_dir.MenuActivity;
 import com.example.app_user.people_dir.PeopleFragment;
+import com.example.app_user.util_dir.CreditActivity;
 import com.example.app_user.util_dir.MenuCustomAdapter;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.home_dir.MenuFragment;
@@ -52,7 +52,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     int serial;
     private String type; //order_make, order_participate
     boolean flag = false;
-
+    View view;
 
     String selectedMenu;
     ImageButton store_inform_button, menu_list_button;
@@ -83,7 +83,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView,view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -98,7 +98,13 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
         setFrag(0);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                resfresh_mileage(view);
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -119,7 +125,10 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
             }
         });
     }
-
+    public void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
     public void setFrag(int n) {
         fm = getFragmentManager();
         tran = fm.beginTransaction();
@@ -151,6 +160,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
                     UtilSet.delete_user_data();
                     Intent intent=new Intent(SubMenuActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -223,7 +233,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
     public void showSelectedItems(View view) {
         if(LoginLogoutInform.getLogin_flag()==1){
-            store_info_specification(view);
+            participate_order(view);
         }else{
             SubMenuActivity.this.runOnUiThread(new Runnable() {
                 public void run() {
@@ -234,12 +244,21 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         }
     }
 
-    public void store_info_specification(View v) {
+    public void participate_order(View v) {
         flag = false;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    if(LoginLogoutInform.getLogin_flag()==0||UtilSet.my_user==null){
+                        SubMenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(SubMenuActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        });
+                        return;
+                    }
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
@@ -249,6 +268,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     jsonParam.put("destination", UtilSet.my_user.getUser_address());
                     jsonParam.put("destination_lat", UtilSet.latitude);
                     jsonParam.put("destination_long", UtilSet.longitude);
+
                     int total_price = 0;
                     if (menuFragment.menuProductItems == null) {
                         SubMenuActivity.this.runOnUiThread(new Runnable() {
@@ -283,8 +303,8 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                         return;
                     }
 
-                    final String str = Integer.toString(total_price);
-
+                    jsonParam.put("total_price", total_price);
+                    jsonParam.put("menu", jArry);
 
                     if(UtilSet.my_user.getUser_address()==null){
                         SubMenuActivity.this.runOnUiThread(new Runnable() {
@@ -294,59 +314,20 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                         });
                         return;
                     }
-                    if(total_price!=0) {
-                        SubMenuActivity.this.runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( SubMenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        flag = true;
-                    }
-                    jsonParam.put("total_price", total_price);
-                    jsonParam.put("menu", jArry);
 
-                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
+                    Intent intent = new Intent(getApplicationContext(), CreditActivity.class);
+                    intent.putExtra("total_price", total_price);
+                    intent.putExtra("mileage", UtilSet.my_user.getUser_mileage());
+                    intent.putExtra("delivery_cost", UtilSet.target_store.getDelivery_cost());
+                    intent.putExtra("json", jsonParam.toString());
+                    startActivityForResult(intent, 101);
 
-                   if (conn.getResponseCode() == 200) {
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-                        JSONObject jobj = new JSONObject(jsonReply);
-                        String json_result_check=jobj.getString("user_check");
-                        String json_result_confirm = jobj.getString("confirm");
-                        if(json_result_check.equals("1")){
-                            Toast.makeText(SubMenuActivity.this,"자신이 생성한 주문에는 참여할 수 없습니다!",Toast.LENGTH_SHORT).show();
-                        }else{
-                            if (json_result_confirm.equals("1")) {
-                                System.out.println("Success order make - minimum not yet");
-
-                            }else if (json_result_confirm.equals("2")) {
-                                System.out.println("Success order make - minimum success");
-
-                            } else {
-                                Log.d("error", "Responce code : 0 - fail make order");
-                            }
-                        }
-
-                    } else {
-                        Log.d("error", "Connect fail");
-                    }
-                    conn.disconnect();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        if(flag){
-            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
-            startActivityForResult(intent, 101);
-        }
     }
 
     public void GPSonClick(View view){
