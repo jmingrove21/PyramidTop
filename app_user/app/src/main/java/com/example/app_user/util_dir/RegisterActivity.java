@@ -12,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -44,7 +45,8 @@ import java.net.HttpURLConnection;
 
 public class RegisterActivity extends AppCompatActivity {
     ImageView imageView;
-    String trans_bitmap;
+    Bitmap trans_bitmap;
+    byte[] byteArray;
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
@@ -86,8 +88,12 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image);
             Bitmap out_bitmap = convertRoundedBitmap(bitmap);
-            trans_bitmap = getBase64String(out_bitmap);
             imageView.setImageBitmap(out_bitmap);
+            trans_bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            trans_bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+            byteArray = byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -202,7 +208,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info","join");
-                    jsonParam.put("user_img",trans_bitmap);
+                    jsonParam.put("user_img",byteArray);
                     jsonParam.put("user_id", id.getText().toString());
                     jsonParam.put("user_password", pw.getText().toString());
                     jsonParam.put("user_name",name.getText().toString());

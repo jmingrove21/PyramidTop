@@ -11,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -54,7 +55,8 @@ public class Profile extends Fragment {
     EditText change_repw;
     Button profile_changh_btn;
 
-    String trans_bitmap;
+    Bitmap trans_bitmap;
+    byte[] byteArray;
 
     @Nullable
     @Override
@@ -136,19 +138,20 @@ public class Profile extends Fragment {
                                 return;
                             }
 
+
                             JSONObject jsonParam = new JSONObject();
                             jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
-                            jsonParam.put("user_img",trans_bitmap);
+                            jsonParam.put("user_img",byteArray);
                             jsonParam.put("user_name", name.getText().toString());
                             jsonParam.put("original_pw", cur_pw.getText().toString());
                             jsonParam.put("change_pw",change_pw.getText().toString());
 
-                            HttpURLConnection conn= UtilSet.user_modify_set_Connect_info(jsonParam);
+                            HttpURLConnection conn= UtilSet.set_Connect_info(jsonParam);
 
                             if(conn.getResponseCode()==200){
                                 InputStream response = conn.getInputStream();
                                 String jsonReply = UtilSet.convertStreamToString(response);
-                                JSONObject jobj=new JSONObject(jsonReply);
+                                  JSONObject jobj=new JSONObject(jsonReply);
                                 String json_result=jobj.getString("confirm");
                                 if(json_result.equals("1")){
                                     getActivity().runOnUiThread(new Runnable() {
@@ -200,8 +203,12 @@ public class Profile extends Fragment {
             Uri image = data.getData();
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image);
             Bitmap out_bitmap = convertRoundedBitmap(bitmap);
-            trans_bitmap = getBase64String(out_bitmap);
             imageView.setImageBitmap(out_bitmap);
+            trans_bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            trans_bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+            byteArray = byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
         }

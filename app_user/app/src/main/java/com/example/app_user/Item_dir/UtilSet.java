@@ -47,6 +47,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UtilSet {
     public static String key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
     public static User my_user;
@@ -289,6 +291,7 @@ public class UtilSet {
     public static void set_Drawer(NavigationView navigationView,View view){
         if (LoginLogoutInform.getLogin_flag() == 1) {
             navigationView.inflateMenu(R.menu.drawer_menu);
+            CircleImageView circleImageView = view.findViewById(R.id.nav_header_image);
             TextView user_id= view.findViewById(R.id.user_id);
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_mil= view.findViewById(R.id.user_mileage);

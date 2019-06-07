@@ -7,6 +7,7 @@ public class User implements Serializable {
     private String user_id;
     private String user_password;
     private String user_name;
+
     private int user_serial;
     private transient String user_time;
     private int user_mileage;
