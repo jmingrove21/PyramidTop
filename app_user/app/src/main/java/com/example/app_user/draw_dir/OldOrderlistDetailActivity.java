@@ -123,6 +123,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
 
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
                     UtilSet.delete_user_data();
                     Intent intent=new Intent(OldOrderlistDetailActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
