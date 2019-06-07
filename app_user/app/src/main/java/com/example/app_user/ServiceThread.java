@@ -3,6 +3,7 @@ package com.example.app_user;
 import android.os.Handler;
 import android.util.Log;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.UtilSet;
 
 import org.json.JSONArray;
@@ -32,7 +33,7 @@ public class ServiceThread extends Thread {
         //반복적으로 수행할 작업을 한다.
         while (isRun) {
             get_user_status_change();
-            if (result_output == 1 && UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            if (result_output == 1 && LoginLogoutInform.getLogin_flag() == 1) {
                 for (int i = 0; i < alert_info_al.size(); i++) {
                     handler.sendEmptyMessage(i);//쓰레드에 있는 핸들러에게 메세지를 보냄
                     try {

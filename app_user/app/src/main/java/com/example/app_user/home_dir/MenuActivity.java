@@ -26,6 +26,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
+import com.example.app_user.Item_dir.ToolbarInform;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.CreditActivity;
 import com.example.app_user.util_dir.HomeFragment;
@@ -52,7 +54,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     int index;
     int serial;
     boolean flag = false;
-    int total_price_send=0;
+    int total_price_send = 0;
     private String type; //order_make, order_participate
 
     String selectedMenu;
@@ -80,19 +82,19 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(UtilSet.target_store.getStore_name()+" "+UtilSet.target_store.getStore_branch_name());
-        UtilSet.toolbarInform.setToolbar_inform(UtilSet.target_store.getStore_name()+" "+UtilSet.target_store.getStore_branch_name());
+        getSupportActionBar().setTitle(UtilSet.target_store.getStore_name() + " " + UtilSet.target_store.getStore_branch_name());
+        ToolbarInform.setToolbar_inform(UtilSet.target_store.getStore_name() + " " + UtilSet.target_store.getStore_branch_name());
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View view = getLayoutInflater().inflate(R.layout.nav_header, null);
-        UtilSet.set_Drawer(navigationView,view);
+        UtilSet.set_Drawer(navigationView, view);
 
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        store_inform_button = (ImageButton) findViewById(R.id.store_inform_button);
-        menu_list_button = (ImageButton) findViewById(R.id.menu_list_button);
+        store_inform_button = findViewById(R.id.store_inform_button);
+        menu_list_button = findViewById(R.id.menu_list_button);
 
         storedetailfragment = new StoreDetailFragment();
         storedetailfragment.setIndex(index);
@@ -106,7 +108,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ImageView imageView = (ImageView) findViewById(R.id.store_image);
+        ImageView imageView = findViewById(R.id.store_image);
         imageView.setBackground(new ShapeDrawable(new OvalShape()));
         imageView.setClipToOutline(true);
 
@@ -143,7 +145,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+        if (LoginLogoutInform.getLogin_flag() == 1) {
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -158,13 +160,13 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
                     UtilSet.delete_user_data();
-                    Intent intent=new Intent(MenuActivity.this, FirstMainActivity.class);
+                    Intent intent = new Intent(MenuActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
                     break;
             }
-        }else{
+        } else {
             switch (menuItem.getItemId()) {
                 case R.id.menu_register:
                     Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
@@ -187,18 +189,18 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            getSupportActionBar().setTitle(UtilSet.toolbarInform.getToolbar_inform().toString());
-                            UtilSet.target_store=null;
+                            getSupportActionBar().setTitle(ToolbarInform.getToolbar_inform());
+                            UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_orderlist:
                             getSupportActionBar().setTitle("주문 현황");
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new OrderFragment();
                             break;
                         case R.id.nav_party:
                             getSupportActionBar().setTitle("참여 현황");
-                            UtilSet.target_store=null;
+                            UtilSet.target_store = null;
                             selectedFragment = new PeopleFragment();
                             break;
                     }
@@ -218,8 +220,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Intent intent=new Intent(getApplicationContext(), FirstMainActivity.class);
-            startActivityForResult(intent,101);
+            Intent intent = new Intent(getApplicationContext(), FirstMainActivity.class);
+            startActivityForResult(intent, 101);
             finish();
         }
     }
@@ -229,10 +231,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void make_order(View view) {
-
         flag = false;
-
-        Thread thread = new Thread(new Runnable() {
+        Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -241,7 +241,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     jsonParam.put("user_info", "make_order");
                     jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
-                    jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
+                    jsonParam.put("order_number", UtilSet.target_store.getOrder_number());
                     jsonParam.put("destination", UtilSet.my_user.getUser_address());
                     jsonParam.put("destination_lat", UtilSet.latitude);
                     jsonParam.put("destination_long", UtilSet.longitude);
@@ -250,7 +250,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     if (menuFragment.menuProductItems == null) {
                         MenuActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText( MenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         });
@@ -271,10 +271,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                             jArry.put(jobj_temp);
                         }
                     }
-                    if(total_price==0) {
+                    if (total_price == 0) {
                         MenuActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText( MenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MenuActivity.this, "선택메뉴가 없습니다.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         });
@@ -283,73 +283,29 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     final String str = Integer.toString(total_price);
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
-                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
-                    if(UtilSet.my_user.getUser_address()==null){
+                    if (UtilSet.my_user.getUser_address() == null) {
                         MenuActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText( MenuActivity.this, "배달받을 주소를 설정해주세요.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MenuActivity.this, "배달받을 주소를 설정해주세요.", Toast.LENGTH_SHORT).show();
                             }
                         });
                         return;
                     }
-                    if(total_price!=0) {
-                        MenuActivity.this.runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( MenuActivity.this, str+"원 주문생성", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        flag = true;
-                    }
-                    if (conn.getResponseCode() == 200) {
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-                        JSONObject jobj = new JSONObject(jsonReply);
-                        String json_result = jobj.getString("confirm");
-                        Log.d("json_Result", json_result);
-                        if (json_result.equals("1")) {
-                            System.out.println("Success order make - not finished");
-                            Log.d("totalPrice", String.valueOf(total_price));
-                            total_price_send=total_price;
 
-                        }else if(json_result.equals("2")){
-                            System.out.println("Success order make - finished");
-                            Log.d("totalPrice", String.valueOf(total_price));
-                            total_price_send=total_price;
-                        } else {
-                            Log.d("error", "Responce code : 0 - fail make order");
-                        }
-                    } else {
-                        Log.d("error", "Connect fail");
-                    }
-                    conn.disconnect();
+                    Intent intent = new Intent(getApplicationContext(), CreditActivity.class);
+                    intent.putExtra("total_price", total_price);
+                    intent.putExtra("mileage", UtilSet.my_user.getUser_mileage());
+                    intent.putExtra("delivery_cost", UtilSet.target_store.getDelivery_cost());
+                    intent.putExtra("json", jsonParam.toString());
+                    startActivityForResult(intent, 101);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            private Handler handler = new Handler() {
-                public void handleMessage(Message msg) {
-                    Toast.makeText(getApplicationContext(), "You Don't have any selected\n", Toast.LENGTH_LONG).show();
-                    super.handleMessage(msg);
-                }
-            };
-        });
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if(flag){
-            Intent intent = new Intent(getApplicationContext(), CreditActivity.class);
-            intent.putExtra("total_price", total_price_send);
-            intent.putExtra("mileage",UtilSet.my_user.getUser_mileage());
-            Log.d("totalPriceSend", String.valueOf(total_price_send));
-            startActivityForResult(intent, 101);
-           // total_price_send=0;
-        }
-    }
+        });thread.start();
 
-    public void GPSonClick(View view){
+    }
+    public void GPSonClick(View view) {
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
     }

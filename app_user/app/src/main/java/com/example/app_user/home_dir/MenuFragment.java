@@ -37,7 +37,7 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.menu_fragment,container,false);
 
-        listView = (ListView) view.findViewById(R.id.menu_choice_list);
+        listView = view.findViewById(R.id.menu_choice_list);
         menuCustomAdapter = new MenuCustomAdapter(getActivity(),menuProductItems);
 
         listView.setAdapter(menuCustomAdapter);
