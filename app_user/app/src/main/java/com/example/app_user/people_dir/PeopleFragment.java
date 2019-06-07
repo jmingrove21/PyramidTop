@@ -49,7 +49,6 @@ public class PeopleFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        get_store_info_by_my_order();
 
         View view = inflater.inflate(R.layout.fragment_people, container, false);
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -63,6 +62,7 @@ public class PeopleFragment extends DialogFragment {
             Toast.makeText( getActivity(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
             return view;
         }
+        get_store_info_by_my_order();
 
         final SwipeRefreshLayout mSwipeRefreshLayout = view.findViewById(R.id.swipe_my_party_order_list);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

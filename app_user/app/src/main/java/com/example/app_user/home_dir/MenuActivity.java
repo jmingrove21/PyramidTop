@@ -159,6 +159,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
                     UtilSet.delete_user_data();
                     Intent intent = new Intent(MenuActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -236,6 +237,15 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void run() {
                 try {
+                    if(LoginLogoutInform.getLogin_flag()==0||UtilSet.my_user==null){
+                        MenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(MenuActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        });
+                        return;
+                    }
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
@@ -280,7 +290,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                         });
                         return;
                     }
-                    final String str = Integer.toString(total_price);
+
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
                     if (UtilSet.my_user.getUser_address() == null) {
