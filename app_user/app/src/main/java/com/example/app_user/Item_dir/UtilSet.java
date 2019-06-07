@@ -112,7 +112,6 @@ public class UtilSet {
     public static Bitmap getBitmapFromMemCache( String key){
         return mMemoryCache.get( key);
     }
-
     public static HttpURLConnection user_modify_set_Connect_info(JSONObject jsonParam){
         try{
             URL url = new URL("http://54.180.102.7:80/get/JSON/user_app/user_modify_info.php");

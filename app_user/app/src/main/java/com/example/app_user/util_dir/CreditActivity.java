@@ -94,7 +94,7 @@ public class CreditActivity extends AppCompatActivity {
                 try{
                 if(Integer.valueOf(mileage_edit.getText().toString())<=mileage){
                     if(Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=1000)
-                        total_price_credit.setText(String.valueOf(total_price-Integer.parseInt(mileage_edit.getText().toString())));
+                        total_price_credit.setText(String.valueOf(total_price-Integer.parseInt(mileage_edit.getText().toString())+delivery_cost));
                     else if((Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())<1000)&&(Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=0)){
                         if(spinner_method.getSelectedItem().toString().equals("현장결제")){
                             Toast.makeText(CreditActivity.this,"1000원 이상 결제가 가능합니다!",Toast.LENGTH_SHORT).show();
@@ -210,6 +210,7 @@ public class CreditActivity extends AppCompatActivity {
             public void run() {
                 try {
                     jobj.put("pay_status",type);
+                    jobj.put("mileage",Integer.parseInt(mileage_edit.getText().toString()));
                     HttpURLConnection conn = UtilSet.set_Connect_info(jobj);
 
                     if (conn.getResponseCode() == 200) {
@@ -222,7 +223,7 @@ public class CreditActivity extends AppCompatActivity {
                             System.out.println("Success order make - not finished");
                             CreditActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    Toast.makeText( CreditActivity.this, Integer.parseInt(total_price_credit.getText().toString())+"원 주문생성", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText( CreditActivity.this, Integer.parseInt(price_text.getText().toString())+"원 주문생성", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             Intent intent=new Intent(CreditActivity.this, FirstMainActivity.class);
@@ -233,7 +234,7 @@ public class CreditActivity extends AppCompatActivity {
                             System.out.println("Success order make - finished");
                             CreditActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    Toast.makeText( CreditActivity.this, Integer.parseInt(total_price_credit.getText().toString())+"원 주문생성", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText( CreditActivity.this, Integer.parseInt(price_text.getText().toString())+"원 주문생성", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             Intent intent=new Intent(CreditActivity.this, FirstMainActivity.class);
