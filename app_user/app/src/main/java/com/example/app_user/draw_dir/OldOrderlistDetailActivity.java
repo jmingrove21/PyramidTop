@@ -45,7 +45,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
     private DrawerLayout drawer;
     int index;
     int serial;
-
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -64,11 +64,17 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
-        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView,view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                resfresh_mileage(view);
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -105,7 +111,10 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         text_user_deliver_start_time_input.setText(o.getDelivery_departure_time());
         text_user_deliver_complete_time_input.setText(o.getDelivery_arrival_time());
     }
-
+    public void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if(LoginLogoutInform.getLogin_flag()==1){
