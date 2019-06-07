@@ -11,12 +11,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            >
             <TextView
                 android:text="PG 회사 선택"
                 android:layout_marginTop="20dp"
@@ -60,7 +61,21 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="10sp"
                 android:minHeight="40dp"/>
+            <TextView
+                android:text="배달료"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/delivery_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:gravity="center_vertical"
+                android:paddingLeft="10sp"
+                android:minHeight="40dp"/>
             <TextView
                 android:id="@+id/mileage_info"
                 android:text="마일리지"
@@ -113,10 +128,9 @@
                 <TextView
                     android:id="@+id/total_price_credit"
                     android:layout_marginTop="20dp"
-                    android:paddingLeft="5dp"
+                    android:paddingLeft="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10sp"
                     android:textColor="#000000"
                     android:gravity="center_vertical"
                     android:minHeight="40dp"/>
@@ -136,16 +150,6 @@
                     android:textColor="#fff"
                     android:layout_marginRight="5dp"
                     android:onClick="goRequest"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <Button
-                    android:id="@+id/btn_bootpay"
-                    android:text="부트페이 통합결제창"
-                    android:layout_weight="1"
-                    android:onClick="goBootpayWindow"
-                    android:layout_marginLeft="5dp"
-                    android:background="#4529e5"
-                    android:textColor="#fff"
                     android:layout_width="match_parent"
                     android:layout_height="40dp" />
             </LinearLayout>

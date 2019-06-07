@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_login);
         setTitle("로그인");
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+        if(LoginLogoutInform.getLogin_flag()==1){
             UtilSet.loginLogoutInform.setLogin_flag(0);
             File deleteFIle=new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/user_ser.ser");
             if(deleteFIle!=null)
@@ -63,8 +64,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    final EditText id=(EditText)findViewById(R.id.id_input);
-                    final EditText pw=(EditText)findViewById(R.id.pw_input);
+                    final EditText id= findViewById(R.id.id_input);
+                    final EditText pw= findViewById(R.id.pw_input);
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info","login");

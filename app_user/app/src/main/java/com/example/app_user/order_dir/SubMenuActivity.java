@@ -87,8 +87,8 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         UtilSet.set_Drawer(navigationView,view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        store_inform_button = (ImageButton) findViewById(R.id.store_inform_button);
-        menu_list_button = (ImageButton) findViewById(R.id.menu_list_button);
+        store_inform_button = findViewById(R.id.store_inform_button);
+        menu_list_button = findViewById(R.id.menu_list_button);
 
         storedetailfragment = new StoreDetailFragment();
         storedetailfragment.setIndex(index);
@@ -102,7 +102,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ImageView imageView = (ImageView) findViewById(R.id.store_image);
+        ImageView imageView = findViewById(R.id.store_image);
 
         imageView.setImageBitmap(UtilSet.target_store.getStore_image());
 
@@ -137,7 +137,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+        if(LoginLogoutInform.getLogin_flag()==1){
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -222,7 +222,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
 
     public void showSelectedItems(View view) {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+        if(LoginLogoutInform.getLogin_flag()==1){
             store_info_specification(view);
         }else{
             SubMenuActivity.this.runOnUiThread(new Runnable() {

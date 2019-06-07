@@ -36,7 +36,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.Store;
+import com.example.app_user.Item_dir.ToolbarInform;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
@@ -90,21 +92,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+        if (LoginLogoutInform.getLogin_flag() == 1) {
             getSupportActionBar().setTitle("가게 목록");
-            UtilSet.toolbarInform.setToolbar_inform("가게 목록");
+            ToolbarInform.setToolbar_inform("가게 목록");
             navigationView.inflateMenu(R.menu.drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            TextView user_id= view.findViewById(R.id.user_id);
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
-            TextView user_mil=(TextView)view.findViewById(R.id.user_mileage);
+            TextView user_mil= view.findViewById(R.id.user_mileage);
             user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            TextView user_address= view.findViewById(R.id.user_address);
             if(UtilSet.my_user.getUser_address()==null)
                 user_address.setText("배달주소를 선택해주세요!");
             else
                 user_address.setText(UtilSet.my_user.getUser_address());
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            TextView hello_msg= view.findViewById(R.id.please_login_text);
             hello_msg.setText(" ");
             navigationView.addHeaderView(view);
         } else {
@@ -112,15 +114,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.inflateMenu(R.menu.logout_drawer_menu);
             View view=getLayoutInflater().inflate(R.layout.nav_header,null);
 
-            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            ImageButton gps_btn = view.findViewById(R.id.GPS_imageBtn);
             gps_btn.setVisibility(View.INVISIBLE);
-            TextView user_mil=(TextView)view.findViewById(R.id.user_mileage);
+            TextView user_mil= view.findViewById(R.id.user_mileage);
             user_mil.setText(" ");
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            TextView user_id= view.findViewById(R.id.user_id);
             user_id.setText(" ");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            TextView user_address= view.findViewById(R.id.user_address);
             user_address.setText(" ");
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            TextView hello_msg= view.findViewById(R.id.please_login_text);
             hello_msg.setText("배달ONE과 함께하세요!");
             navigationView.addHeaderView(view);
 
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
 
-        ListView listView = (ListView) findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
         set_store_image();
@@ -372,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+        if(LoginLogoutInform.getLogin_flag()==1){
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -424,7 +426,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            getSupportActionBar().setTitle(UtilSet.toolbarInform.getToolbar_inform().toString());
+                            getSupportActionBar().setTitle(ToolbarInform.getToolbar_inform());
                             UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
@@ -472,11 +474,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, point.y/5));
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
-            TextView textView_phone = (TextView) view.findViewById(R.id.textView_phone);
-            TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
-            TextView textView_address = (TextView) view.findViewById(R.id.address);
+            ImageView imageView = view.findViewById(R.id.imageView);
+            TextView textView_name = view.findViewById(R.id.textView_name);
+            TextView textView_phone = view.findViewById(R.id.textView_phone);
+            TextView textView_branch_name = view.findViewById(R.id.branch_name);
+            TextView textView_address = view.findViewById(R.id.address);
 
             imageView.setImageBitmap(UtilSet.al_store.get(i).getStore_image());
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());

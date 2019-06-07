@@ -83,6 +83,6 @@ public class MyService extends Service {
             noti.flags = Notification.FLAG_AUTO_CANCEL;
             noti_M.notify(notifyID, noti);
         }
-    };
+    }
 
 }

@@ -1,6 +1,12 @@
 package com.example.app_user.order_dir;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,14 +33,13 @@ public class OrderAdapter extends ArrayAdapter<String> {
         if(convertView == null){
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.orderlist_layout,null);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,800));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,UtilSet.height/4));
         }
-
-        TextView text_date=(TextView)convertView.findViewById(R.id.date);
-        TextView text_store_name = (TextView) convertView.findViewById(R.id.store_name);
-        ImageView img = (ImageView) convertView.findViewById(R.id.imageView);
-        TextView text_party_number = (TextView) convertView.findViewById(R.id.party_number);
-        TextView text_price = (TextView) convertView.findViewById(R.id.price);
+        TextView text_date= convertView.findViewById(R.id.date);
+        TextView text_store_name = convertView.findViewById(R.id.store_name);
+        ImageView img = convertView.findViewById(R.id.imageView);
+        TextView text_party_number = convertView.findViewById(R.id.party_number);
+        TextView text_price = convertView.findViewById(R.id.price);
 
         text_date.setText(UtilSet.al_order.get(position).getOrder_create_date());
         text_store_name.setText(UtilSet.al_order.get(position).getStore().getStore_name());

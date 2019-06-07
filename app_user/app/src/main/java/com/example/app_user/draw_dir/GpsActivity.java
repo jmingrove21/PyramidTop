@@ -85,15 +85,15 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
 
-        address_text = (TextView) findViewById(R.id.address_text);
-        detail_address_input = (EditText) findViewById(R.id.detail_address_input);
+        address_text = findViewById(R.id.address_text);
+        detail_address_input = findViewById(R.id.detail_address_input);
 
         mContext = this;
 
-        gps_button = (Button) findViewById(R.id.GPS_button);
+        gps_button = findViewById(R.id.GPS_button);
 
         tmapdata = new TMapData();
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.map_view);
+        LinearLayout linearLayout = findViewById(R.id.map_view);
         tMapView = new TMapView(this);
 
         linearLayout.addView(tMapView);
@@ -230,7 +230,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
             item1.setTMapPoint(point);
             item1.setName(m_mapPoint.get(i).getName());
-            item1.setVisible(item1.VISIBLE);
+            item1.setVisible(TMapMarkerItem.VISIBLE);
 
             item1.setIcon(bitmap);
 
@@ -288,7 +288,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                     @Override
                     public void onFindAllPOI(ArrayList<TMapPOIItem> arrayList) {
                         for(int i=0;i<arrayList.size();i++) {
-                            TMapPOIItem item = (TMapPOIItem)arrayList.get(i);
+                            TMapPOIItem item = arrayList.get(i);
                             TMapPoint tmp_TMapPoint = new TMapPoint(item.getPOIPoint().getLatitude(),item.getPOIPoint().getLongitude());
                             TMapMarkerItem markerItem = new TMapMarkerItem();
                             markerItem.setIcon(bitmap);
@@ -298,7 +298,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                             tMapView.addMarkerItem("markerItem"+i,markerItem);
 
                             Log.d("주소로 찾기", "POI Name: " +
-                                    item.getPOIName().toString() + ", " +
+                                    item.getPOIName() + ", " +
                                     "Address: " + item.getPOIAddress().replace("null", "") +
                                     ", " + "Point: " + item.getPOIPoint().toString());
                         }

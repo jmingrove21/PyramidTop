@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +50,11 @@ public class OrderFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         get_current_made_order();
         View view = inflater.inflate(R.layout.fragment_orderlist, container, false);
-
-        final SwipeRefreshLayout mSwipeRefreshLayout =(SwipeRefreshLayout) view.findViewById(R.id.swipe_order_list);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        UtilSet.height = displaymetrics.heightPixels;
+        UtilSet.width = displaymetrics.widthPixels;
+        final SwipeRefreshLayout mSwipeRefreshLayout = view.findViewById(R.id.swipe_order_list);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -59,12 +63,11 @@ public class OrderFragment extends DialogFragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-        LinearLayout frame = (LinearLayout) view.findViewById(R.id.orderlist_linear);
-        listView = (ListView) view.findViewById(R.id.order_list);
+        LinearLayout frame = view.findViewById(R.id.orderlist_linear);
+        listView = view.findViewById(R.id.order_list);
         final String[] store_name = new String[UtilSet.al_order.size()];
         if(UtilSet.al_order.size()==0){
             frame.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.no_participate));
-            
         }else {
             for (int i = 0; i < UtilSet.al_order.size(); i++) {
                 store_name[i] = UtilSet.al_order.get(i).getStore().getStore_name();

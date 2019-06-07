@@ -41,8 +41,8 @@ public class SubMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view =  inflater.inflate(R.layout.store_detail_fragment,container,false);
 
-        store_inform_button = (ImageButton) view.findViewById(R.id.store_inform_button);
-        menu_list_button = (ImageButton) view.findViewById(R.id.menu_list_button);
+        store_inform_button = view.findViewById(R.id.store_inform_button);
+        menu_list_button = view.findViewById(R.id.menu_list_button);
 
         storedetailfragment = new StoreDetailFragment();
         storedetailfragment.setIndex(index);
@@ -52,8 +52,8 @@ public class SubMenuFragment extends Fragment {
 
         setFrag(0);
 
-        TextView text_store_phone = (TextView) view.findViewById(R.id.store_phone);
-        ImageView imageView = (ImageView) view.findViewById(R.id.store_image);
+        TextView text_store_phone = view.findViewById(R.id.store_phone);
+        ImageView imageView = view.findViewById(R.id.store_image);
 
         imageView.setImageBitmap(UtilSet.target_store.getStore_image());
         text_store_phone.setText(UtilSet.target_store.getStore_phone());

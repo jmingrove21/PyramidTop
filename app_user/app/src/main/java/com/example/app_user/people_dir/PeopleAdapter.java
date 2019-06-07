@@ -27,15 +27,15 @@ public class PeopleAdapter extends ArrayAdapter<String> {
         if(convertView == null){
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.fragment_people_layout,null);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,800));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,UtilSet.height/4));
         }
 
-        TextView text_date=(TextView)convertView.findViewById(R.id.date);
-        ImageView text_order_status=(ImageView) convertView.findViewById(R.id.order_status);
-        TextView text_store_name = (TextView) convertView.findViewById(R.id.store_name);
-        ImageView img = (ImageView) convertView.findViewById(R.id.imageView);
-        TextView text_party_number = (TextView) convertView.findViewById(R.id.party_number);
-        TextView text_price = (TextView) convertView.findViewById(R.id.price);
+        TextView text_date= convertView.findViewById(R.id.date);
+        ImageView text_order_status= convertView.findViewById(R.id.order_status);
+        TextView text_store_name = convertView.findViewById(R.id.store_name);
+        ImageView img = convertView.findViewById(R.id.imageView);
+        TextView text_party_number = convertView.findViewById(R.id.party_number);
+        TextView text_price = convertView.findViewById(R.id.price);
 
         text_date.setText(UtilSet.al_my_order.get(position).getOrder_create_date());
         text_order_status.setImageResource(UtilSet.al_my_order.get(position).getOrderStatus());
