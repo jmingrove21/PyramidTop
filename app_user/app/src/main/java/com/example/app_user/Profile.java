@@ -142,7 +142,7 @@ public class Profile extends Fragment {
                             jsonParam.put("user_name", name.getText().toString());
                             jsonParam.put("original_pw", cur_pw.getText().toString());
                             jsonParam.put("change_pw",change_pw.getText().toString());
-
+                            Log.d("1",trans_bitmap);
                             HttpURLConnection conn= UtilSet.user_modify_set_Connect_info(jsonParam);
 
                             if(conn.getResponseCode()==200){
