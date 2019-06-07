@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Store;
+import com.example.app_user.Item_dir.ToolbarInform;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
@@ -82,7 +83,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
         point = getScreenSize(SearchMainActivity.this);
 
         getSupportActionBar().setTitle("검색 목록");
-        UtilSet.toolbarInform.setToolbar_inform("검색 목록");
+        ToolbarInform.setToolbar_inform("검색 목록");
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -95,7 +96,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        listView = (ListView) findViewById(R.id.listView);
+        listView = findViewById(R.id.listView);
         customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
 
@@ -184,7 +185,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
             }
         });
 
-        search = (EditText) findViewById(R.id.search_input);
+        search = findViewById(R.id.search_input);
         search.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
@@ -358,7 +359,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+        if (LoginLogoutInform.getLogin_flag() == 1) {
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -403,7 +404,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            getSupportActionBar().setTitle(UtilSet.toolbarInform.getToolbar_inform().toString());
+                            getSupportActionBar().setTitle(ToolbarInform.getToolbar_inform());
                             UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
@@ -458,11 +459,11 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, point.y/5));
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
-            TextView textView_phone = (TextView) view.findViewById(R.id.textView_phone);
-            TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
-            TextView textView_address = (TextView) view.findViewById(R.id.address);
+            ImageView imageView = view.findViewById(R.id.imageView);
+            TextView textView_name = view.findViewById(R.id.textView_name);
+            TextView textView_phone = view.findViewById(R.id.textView_phone);
+            TextView textView_branch_name = view.findViewById(R.id.branch_name);
+            TextView textView_address = view.findViewById(R.id.address);
 
             imageView.setImageBitmap(UtilSet.al_searchstore.get(i).getStore_image());
             textView_name.setText(UtilSet.al_searchstore.get(i).getStore_name());
