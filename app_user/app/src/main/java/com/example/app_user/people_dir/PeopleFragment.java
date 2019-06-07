@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import android.support.v4.content.ContextCompat;
 import android.widget.LinearLayout;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
@@ -47,18 +49,22 @@ public class PeopleFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        get_store_info_by_my_order();
 
         View view = inflater.inflate(R.layout.fragment_people, container, false);
-        LinearLayout frame = (LinearLayout) view.findViewById(R.id.recent_orderlist_linear);
-        listView = (ListView) view.findViewById(R.id.people_listview);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        UtilSet.height = displaymetrics.heightPixels;
+        UtilSet.width = displaymetrics.widthPixels;
+        LinearLayout frame = view.findViewById(R.id.recent_orderlist_linear);
+        listView = view.findViewById(R.id.people_listview);
 
-        if(UtilSet.loginLogoutInform.getLogin_flag()==0){
+        if(LoginLogoutInform.getLogin_flag()==0){
             Toast.makeText( getActivity(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
             return view;
         }
+        get_store_info_by_my_order();
 
-        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_my_party_order_list);
+        final SwipeRefreshLayout mSwipeRefreshLayout = view.findViewById(R.id.swipe_my_party_order_list);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

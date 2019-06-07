@@ -72,20 +72,20 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView) findViewById(R.id.old_olderlist_detail_layout_listview);
+        ListView listView = findViewById(R.id.old_olderlist_detail_layout_listview);
         OldOrderlistDetailActivity.CustomAdapter customAdapter = new OldOrderlistDetailActivity.CustomAdapter();
         listView.setAdapter(customAdapter);
 
-        TextView text_user_store_name_input = (TextView) findViewById(R.id.user_store_name_input);
-        TextView text_user_store_number_input = (TextView) findViewById(R.id.user_store_number_input);
-        TextView text_user_store_address_input = (TextView) findViewById(R.id.user_store_address_input);
+        TextView text_user_store_name_input = findViewById(R.id.user_store_name_input);
+        TextView text_user_store_number_input = findViewById(R.id.user_store_number_input);
+        TextView text_user_store_address_input = findViewById(R.id.user_store_address_input);
 
-        TextView text_user_order_price_sum_input = (TextView) findViewById(R.id.user_order_price_sum_input);
-        TextView text_user_order_time_input = (TextView) findViewById(R.id.user_order_time_input);
-        TextView text_user_pay_method_input = (TextView) findViewById(R.id.user_pay_method_input);
-        TextView text_user_order_complete_time_input = (TextView) findViewById(R.id.user_order_complete_time_input);
-        TextView text_user_deliver_start_time_input = (TextView) findViewById(R.id.user_deliver_start_time_input);
-        TextView text_user_deliver_complete_time_input = (TextView) findViewById(R.id.user_deliver_complete_time_input);
+        TextView text_user_order_price_sum_input = findViewById(R.id.user_order_price_sum_input);
+        TextView text_user_order_time_input = findViewById(R.id.user_order_time_input);
+        TextView text_user_pay_method_input = findViewById(R.id.user_pay_method_input);
+        TextView text_user_order_complete_time_input = findViewById(R.id.user_order_complete_time_input);
+        TextView text_user_deliver_start_time_input = findViewById(R.id.user_deliver_start_time_input);
+        TextView text_user_deliver_complete_time_input = findViewById(R.id.user_deliver_complete_time_input);
 
         Order o = UtilSet.al_my_old_order.get(index);
         Store s = o.getStore();
@@ -93,11 +93,12 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         text_user_store_name_input.setText(s.getStore_name());
         text_user_store_number_input.setText(s.getStore_phone());
         text_user_store_address_input.setText(s.getStore_address());
+        o.setMy_order_total_price(0);
         for (int i = 0; i < o.getStore().getMenu_desc_al().size(); i++) {
             o.setMy_order_total_price(o.getStore().getMenu_desc_al().get(i).getMenu_price() * o.getStore().getMenu_desc_al().get(i).getMenu_count());
         }
 
-        text_user_order_price_sum_input.setText(String.valueOf(o.getMy_order_total_price())+"원");
+        text_user_order_price_sum_input.setText(o.getMy_order_total_price() +"원");
         text_user_order_time_input.setText(o.getOrder_create_date());
         text_user_pay_method_input.setText("Card~");
         text_user_order_complete_time_input.setText(o.getOrder_receipt_date());
@@ -107,7 +108,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+        if(LoginLogoutInform.getLogin_flag()==1){
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -122,6 +123,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
 
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
                     UtilSet.delete_user_data();
                     Intent intent=new Intent(OldOrderlistDetailActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -183,9 +185,9 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 70));
 
 
-            TextView text_name = (TextView) view.findViewById(R.id.menu_name);
-            TextView text_menu_count_input = (TextView) view.findViewById(R.id.menu_count_input);
-            TextView text_menu_price_input = (TextView) view.findViewById(R.id.menu_price_input);
+            TextView text_name = view.findViewById(R.id.menu_name);
+            TextView text_menu_count_input = view.findViewById(R.id.menu_count_input);
+            TextView text_menu_price_input = view.findViewById(R.id.menu_price_input);
 
 
             text_name.setText(UtilSet.al_my_old_order.get(index).getStore().getMenu_desc_al().get(i).getMenu_name());

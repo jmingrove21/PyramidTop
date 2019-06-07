@@ -15,11 +15,11 @@
     </string-array>
 
     <string-array name="method">
-        <!--<item>카드결제</item>-->
+        <item>카드결제</item>
         <!--<item>휴대폰소액결제</item>-->
         <!--<item>가상계좌</item>-->
         <item>계좌이체</item>
-        <!--<item>카드정기결제</item>-->
+        <item>현장결제</item>
         <!--<item>간편결제</item>-->
         <!--<item>주문결제</item>-->
         <!--<item>부트페이 간편결제</item>-->

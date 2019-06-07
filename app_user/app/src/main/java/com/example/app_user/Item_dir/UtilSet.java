@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.LruCache;
 import android.view.View;
@@ -43,6 +44,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class UtilSet {
@@ -74,7 +76,8 @@ public class UtilSet {
     public static double longitude=0;
     public static LoginLogoutInform loginLogoutInform = new LoginLogoutInform();
     public static ToolbarInform toolbarInform = new ToolbarInform();
-
+    public static int height;
+    public static int width;
     public static String convertStreamToString(InputStream is) {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -109,7 +112,6 @@ public class UtilSet {
     public static Bitmap getBitmapFromMemCache( String key){
         return mMemoryCache.get( key);
     }
-
     public static HttpURLConnection user_modify_set_Connect_info(JSONObject jsonParam){
         try{
             URL url = new URL("http://54.180.102.7:80/get/JSON/user_app/user_modify_info.php");
@@ -120,7 +122,7 @@ public class UtilSet {
             conn.setDoOutput(true);
             conn.setDoInput(true);
             Log.i("JSON", jsonParam.toString());
-            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), StandardCharsets.UTF_8);
             os.write(jsonParam.toString());
 
             os.flush();
@@ -142,7 +144,7 @@ public class UtilSet {
             conn.setDoOutput(true);
             conn.setDoInput(true);
             Log.i("JSON", jsonParam.toString());
-            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), StandardCharsets.UTF_8);
             os.write(jsonParam.toString());
 
             os.flush();
@@ -164,7 +166,7 @@ public class UtilSet {
             conn.setDoOutput(true);
             conn.setDoInput(true);
             Log.i("JSON", jsonParam.toString());
-            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
+            OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream(), StandardCharsets.UTF_8);
             os.write(jsonParam.toString());
 
             os.flush();
@@ -192,32 +194,6 @@ public class UtilSet {
                     1,
                     gpsLocationListener);
         }
-    }
-
-    public static void showSettingsAlert(final Context con){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(con);
-
-        alertDialog.setTitle("GPS 사용유무셋팅");
-        alertDialog.setMessage("GPS 사용 승인이 필요합니다. \n 설정창으로 가시겠습니까?");
-
-        // OK 를 누르게 되면 설정창으로 이동합니다.
-        alertDialog.setPositiveButton("Settings",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int which) {
-                        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        intent.setData(Uri.fromParts("package", "com.example.app_user", null));
-                        con.startActivity(intent);
-                    }
-                });
-        // Cancel 하면 종료 합니다.
-        alertDialog.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-        alertDialog.show();
     }
 
     public final static LocationListener gpsLocationListener = new LocationListener() {
@@ -284,34 +260,35 @@ public class UtilSet {
         }
     }
     public static void set_Drawer(NavigationView navigationView,View view){
-        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+        if (LoginLogoutInform.getLogin_flag() == 1) {
             navigationView.inflateMenu(R.menu.drawer_menu);
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            TextView user_id= view.findViewById(R.id.user_id);
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
-            TextView user_mil=(TextView)view.findViewById(R.id.user_mileage);
+            TextView user_mil= view.findViewById(R.id.user_mileage);
             user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            TextView user_address= view.findViewById(R.id.user_address);
             if(UtilSet.my_user.getUser_address()==null)
                 user_address.setText("배달주소를 선택해주세요!");
             else
                 user_address.setText(UtilSet.my_user.getUser_address());
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            TextView hello_msg= view.findViewById(R.id.please_login_text);
             hello_msg.setText(" ");
             navigationView.addHeaderView(view);
         } else {
             navigationView.inflateMenu(R.menu.logout_drawer_menu);
 
-            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            ImageButton gps_btn = view.findViewById(R.id.GPS_imageBtn);
             gps_btn.setVisibility(View.INVISIBLE);
-            TextView user_mil=(TextView)view.findViewById(R.id.user_mileage);
+            TextView user_mil= view.findViewById(R.id.user_mileage);
             user_mil.setText(" ");
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            TextView user_id= view.findViewById(R.id.user_id);
             user_id.setText(" ");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            TextView user_address= view.findViewById(R.id.user_address);
             user_address.setText(" ");
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            TextView hello_msg= view.findViewById(R.id.please_login_text);
             hello_msg.setText("배달ONE과 함께하세요!");
             navigationView.addHeaderView(view);
         }
     }
+
 }

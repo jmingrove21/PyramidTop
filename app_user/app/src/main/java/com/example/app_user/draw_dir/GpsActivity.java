@@ -30,6 +30,7 @@ import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.home_dir.MenuActivity;
+import com.example.app_user.util_dir.BackPressCloseHandler;
 import com.example.app_user.util_dir.LoginActivity;
 import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapGpsManager;
@@ -52,7 +53,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     private TMapGpsManager tMapGpsManager = null;
     private TMapView tMapView = null;
     private static int mMarkerID;
-
+    BackPressCloseHandler backPressCloseHandler;
     private ArrayList<TMapMarkerItem> tMapMarkerItems = new ArrayList<TMapMarkerItem>();
     private ArrayList<TMapPoint> m_tmapPoint = new ArrayList<TMapPoint>();
     private ArrayList<String> mArrayMarkerID = new ArrayList<String>();
@@ -84,16 +85,16 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
-
-        address_text = (TextView) findViewById(R.id.address_text);
-        detail_address_input = (EditText) findViewById(R.id.detail_address_input);
+        backPressCloseHandler = new BackPressCloseHandler(this);
+        address_text = findViewById(R.id.address_text);
+        detail_address_input = findViewById(R.id.detail_address_input);
 
         mContext = this;
 
-        gps_button = (Button) findViewById(R.id.GPS_button);
+        gps_button = findViewById(R.id.GPS_button);
 
         tmapdata = new TMapData();
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.map_view);
+        LinearLayout linearLayout = findViewById(R.id.map_view);
         tMapView = new TMapView(this);
 
         linearLayout.addView(tMapView);
@@ -210,12 +211,9 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             }
             return null;
         }
-    } @Override
+    }  @Override
     public void onBackPressed() {
-        Intent intent=new Intent(GpsActivity.this, FirstMainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        backPressCloseHandler.onBackPressed();
     }
 
     public void showMarkerPoint(){
@@ -230,7 +228,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
             item1.setTMapPoint(point);
             item1.setName(m_mapPoint.get(i).getName());
-            item1.setVisible(item1.VISIBLE);
+            item1.setVisible(TMapMarkerItem.VISIBLE);
 
             item1.setIcon(bitmap);
 
@@ -288,7 +286,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                     @Override
                     public void onFindAllPOI(ArrayList<TMapPOIItem> arrayList) {
                         for(int i=0;i<arrayList.size();i++) {
-                            TMapPOIItem item = (TMapPOIItem)arrayList.get(i);
+                            TMapPOIItem item = arrayList.get(i);
                             TMapPoint tmp_TMapPoint = new TMapPoint(item.getPOIPoint().getLatitude(),item.getPOIPoint().getLongitude());
                             TMapMarkerItem markerItem = new TMapMarkerItem();
                             markerItem.setIcon(bitmap);
@@ -298,7 +296,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                             tMapView.addMarkerItem("markerItem"+i,markerItem);
 
                             Log.d("주소로 찾기", "POI Name: " +
-                                    item.getPOIName().toString() + ", " +
+                                    item.getPOIName() + ", " +
                                     "Address: " + item.getPOIAddress().replace("null", "") +
                                     ", " + "Point: " + item.getPOIPoint().toString());
                         }
@@ -327,6 +325,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             Toast.makeText(GpsActivity.this,address_text.getText().toString()+" "+detail_address_input.getText().toString()+"\n주소 설정 완료",Toast.LENGTH_SHORT).show();
             UtilSet.my_user.setUser_address(address_text.getText().toString()+" "+detail_address_input.getText().toString());
             Intent intent=new Intent(GpsActivity.this, FirstMainActivity.class);
+            UtilSet.write_user_data();
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
@@ -335,4 +334,5 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         }
         return;
     }
+
 }

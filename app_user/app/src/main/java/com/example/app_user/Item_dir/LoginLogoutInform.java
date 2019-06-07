@@ -9,6 +9,6 @@ public class LoginLogoutInform {
     }
 
     public void setLogin_flag(int login_flag) {
-        this.login_flag = login_flag;
+        LoginLogoutInform.login_flag = login_flag;
     }
 }

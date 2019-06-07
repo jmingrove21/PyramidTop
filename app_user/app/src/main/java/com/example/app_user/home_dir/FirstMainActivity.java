@@ -20,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -29,12 +30,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
+import com.example.app_user.Item_dir.ToolbarInform;
 import com.example.app_user.MyService;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.BackPressCloseHandler;
@@ -60,7 +62,7 @@ import java.util.ArrayList;
 public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
-    public static int store_type=-1;
+    public static int store_type = -1;
     Point point;
 
 
@@ -70,6 +72,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.activity_first_main);
 
         permissionCheck();
+        set_display_width_height();
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         UtilSet.set_GPS_permission(lm, this);//GPS
 
@@ -84,20 +87,20 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("음식 목록");
-        UtilSet.toolbarInform.setToolbar_inform("음식 목록");
+        ToolbarInform.setToolbar_inform("음식 목록");
 
         point = getScreenSize(FirstMainActivity.this);
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View view = getLayoutInflater().inflate(R.layout.nav_header, null);
-        UtilSet.set_Drawer(navigationView,view);
+        UtilSet.set_Drawer(navigationView, view);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView) findViewById(R.id.first_listView);
+        ListView listView = findViewById(R.id.first_listView);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
 
@@ -112,7 +115,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+        if (LoginLogoutInform.getLogin_flag() == 1) {
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -126,6 +129,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
                     UtilSet.delete_user_data();
                     Intent intent = new Intent(FirstMainActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -156,7 +160,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-                            getSupportActionBar().setTitle(UtilSet.toolbarInform.getToolbar_inform().toString());
+                            getSupportActionBar().setTitle(ToolbarInform.getToolbar_inform());
                             UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
@@ -196,7 +200,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        return  size;
+        return size;
     }
 
     class CustomAdapter extends BaseAdapter {
@@ -220,10 +224,10 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_first_layout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, point.y/8));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, point.y / 8));
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
-            TextView textView_name = (TextView) view.findViewById(R.id.first_name);
+            ImageView imageView = view.findViewById(R.id.first_imageView);
+            TextView textView_name = view.findViewById(R.id.first_name);
 
             imageView.setImageResource(UtilSet.MENU_TYPE_IMAGE[i]);
             textView_name.setText(UtilSet.MENU_TYPE_TEXT[i]);
@@ -310,7 +314,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                 arrayPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
             if (arrayPermission.size() > 0) {
-                String strArray[] = new String[arrayPermission.size()];
+                String[] strArray = new String[arrayPermission.size()];
                 strArray = arrayPermission.toArray(strArray);
                 ActivityCompat.requestPermissions(this, strArray, UtilSet.PERMISSION_REQUEST_CODE);
             }
@@ -342,5 +346,9 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     public void GPSonClick(View view) {
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
+    }
+
+    public void set_display_width_height() {
+
     }
 }

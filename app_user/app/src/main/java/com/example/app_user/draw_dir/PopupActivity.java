@@ -3,6 +3,7 @@ package com.example.app_user.draw_dir;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.example.app_user.Item_dir.UtilSet;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,9 +30,14 @@ public class PopupActivity extends Activity implements View.OnClickListener {
         Intent intent=getIntent();
         index=intent.getIntExtra("index",-1);
         findViewById(R.id.btnClose).setOnClickListener(this);
-        ListView listView_user = (ListView) findViewById(R.id.party_detail_layout_user_list_view);
+        ListView listView_user = findViewById(R.id.party_detail_layout_user_list_view);
         PopupActivity.UserAdapter userAdapter = new PopupActivity.UserAdapter();
         listView_user.setAdapter(userAdapter);
+
+        LinearLayout frame = findViewById(R.id.participate_list);
+        if(UtilSet.al_my_order.size()==0){
+            frame.setBackground(ContextCompat.getDrawable(this,R.drawable.no_person));
+        }
     }
 
 
@@ -65,9 +72,9 @@ public class PopupActivity extends Activity implements View.OnClickListener {
             view = getLayoutInflater().inflate(R.layout.party_detail_layout_user_listview, null);
             view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 400));
 
-            TextView text_name = (TextView) view.findViewById(R.id.party_detail_user_name);
-            TextView text_user_time = (TextView) view.findViewById(R.id.party_detail_user_time);
-            TextView text_user_price = (TextView) view.findViewById(R.id.party_detail_user_price);
+            TextView text_name = view.findViewById(R.id.party_detail_user_name);
+            TextView text_user_time = view.findViewById(R.id.party_detail_user_time);
+            TextView text_user_price = view.findViewById(R.id.party_detail_user_price);
 
 
             text_name.setText(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_id());
