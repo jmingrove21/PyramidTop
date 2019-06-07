@@ -168,6 +168,7 @@ public class CreditActivity extends AppCompatActivity {
                         @Override
                         public void onDone(@Nullable String message) {
                             Log.d("done", message);
+
                         }
                     })
                     .onReady(new ReadyListener() { // 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
@@ -195,6 +196,7 @@ public class CreditActivity extends AppCompatActivity {
                                 @Override
                                 public void onClose(String message) {
                                     Log.d("close", "close");
+
                                     finish_credit(1);
 
                                 }
