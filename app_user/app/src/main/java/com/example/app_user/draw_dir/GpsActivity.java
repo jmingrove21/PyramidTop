@@ -30,6 +30,7 @@ import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.home_dir.MenuActivity;
+import com.example.app_user.util_dir.BackPressCloseHandler;
 import com.example.app_user.util_dir.LoginActivity;
 import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapGpsManager;
@@ -52,7 +53,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     private TMapGpsManager tMapGpsManager = null;
     private TMapView tMapView = null;
     private static int mMarkerID;
-
+    BackPressCloseHandler backPressCloseHandler;
     private ArrayList<TMapMarkerItem> tMapMarkerItems = new ArrayList<TMapMarkerItem>();
     private ArrayList<TMapPoint> m_tmapPoint = new ArrayList<TMapPoint>();
     private ArrayList<String> mArrayMarkerID = new ArrayList<String>();
@@ -84,7 +85,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
-
+        backPressCloseHandler = new BackPressCloseHandler(this);
         address_text = findViewById(R.id.address_text);
         detail_address_input = findViewById(R.id.detail_address_input);
 
@@ -210,12 +211,9 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             }
             return null;
         }
-    } @Override
+    }  @Override
     public void onBackPressed() {
-        Intent intent=new Intent(GpsActivity.this, FirstMainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        backPressCloseHandler.onBackPressed();
     }
 
     public void showMarkerPoint(){
@@ -327,6 +325,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             Toast.makeText(GpsActivity.this,address_text.getText().toString()+" "+detail_address_input.getText().toString()+"\n주소 설정 완료",Toast.LENGTH_SHORT).show();
             UtilSet.my_user.setUser_address(address_text.getText().toString()+" "+detail_address_input.getText().toString());
             Intent intent=new Intent(GpsActivity.this, FirstMainActivity.class);
+            UtilSet.write_user_data();
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
@@ -335,4 +334,5 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         }
         return;
     }
+
 }

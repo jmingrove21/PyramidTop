@@ -68,7 +68,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
     EditText search;
     CustomAdapter customAdapter;
     Point point;
-
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,12 +87,17 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView, view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                resfresh_mileage(view);
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -220,7 +225,10 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
 
     }
 
-
+    public void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
     public void searchButton(View view) {
         if (search.getText().toString().length() < 2) {
             SearchMainActivity.this.runOnUiThread(new Runnable() {
@@ -373,6 +381,7 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
                     UtilSet.delete_user_data();
                     Intent intent = new Intent(SearchMainActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

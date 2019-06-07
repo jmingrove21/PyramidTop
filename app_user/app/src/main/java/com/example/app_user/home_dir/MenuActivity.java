@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
@@ -60,7 +61,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     FragmentTransaction tran;
     MenuFragment menuFragment;
     StoreDetailFragment storedetailfragment;
-
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -84,7 +85,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView, view);
 
 
@@ -101,8 +102,13 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
         setFrag(0);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                resfresh_mileage(view);
+            }
+        };        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         ImageView imageView = findViewById(R.id.store_image);
@@ -124,7 +130,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-
+    public void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
     public void setFrag(int n) {
         fm = getFragmentManager();
         tran = fm.beginTransaction();
@@ -156,6 +165,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
                     UtilSet.delete_user_data();
                     Intent intent = new Intent(MenuActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -233,6 +243,15 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void run() {
                 try {
+                    if(LoginLogoutInform.getLogin_flag()==0||UtilSet.my_user==null){
+                        MenuActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(MenuActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        });
+                        return;
+                    }
                     JSONObject jsonParam = new JSONObject();
                     JSONArray jArry = new JSONArray();
                     jsonParam.put("user_info", "make_order");
@@ -277,7 +296,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                         });
                         return;
                     }
-                    final String str = Integer.toString(total_price);
+
                     jsonParam.put("total_price", total_price);
                     jsonParam.put("menu", jArry);
                     if (UtilSet.my_user.getUser_address() == null) {

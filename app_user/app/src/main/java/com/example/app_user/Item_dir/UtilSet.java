@@ -112,7 +112,6 @@ public class UtilSet {
     public static Bitmap getBitmapFromMemCache( String key){
         return mMemoryCache.get( key);
     }
-
     public static HttpURLConnection user_modify_set_Connect_info(JSONObject jsonParam){
         try{
             URL url = new URL("http://54.180.102.7:80/get/JSON/user_app/user_manage.php");
@@ -195,32 +194,6 @@ public class UtilSet {
                     1,
                     gpsLocationListener);
         }
-    }
-
-    public static void showSettingsAlert(final Context con){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(con);
-
-        alertDialog.setTitle("GPS 사용유무셋팅");
-        alertDialog.setMessage("GPS 사용 승인이 필요합니다. \n 설정창으로 가시겠습니까?");
-
-        // OK 를 누르게 되면 설정창으로 이동합니다.
-        alertDialog.setPositiveButton("Settings",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int which) {
-                        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        intent.setData(Uri.fromParts("package", "com.example.app_user", null));
-                        con.startActivity(intent);
-                    }
-                });
-        // Cancel 하면 종료 합니다.
-        alertDialog.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-        alertDialog.show();
     }
 
     public final static LocationListener gpsLocationListener = new LocationListener() {

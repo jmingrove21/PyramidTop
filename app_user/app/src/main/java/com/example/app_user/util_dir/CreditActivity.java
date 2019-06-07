@@ -94,7 +94,7 @@ public class CreditActivity extends AppCompatActivity {
                 try{
                 if(Integer.valueOf(mileage_edit.getText().toString())<=mileage){
                     if(Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=1000)
-                        total_price_credit.setText(String.valueOf(total_price-Integer.parseInt(mileage_edit.getText().toString())));
+                        total_price_credit.setText(String.valueOf(total_price-Integer.parseInt(mileage_edit.getText().toString())+delivery_cost));
                     else if((Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())<1000)&&(Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=0)){
                         if(spinner_method.getSelectedItem().toString().equals("현장결제")){
                             Toast.makeText(CreditActivity.this,"1000원 이상 결제가 가능합니다!",Toast.LENGTH_SHORT).show();
@@ -123,7 +123,7 @@ public class CreditActivity extends AppCompatActivity {
 //        String text = mySpinner.getSelectedItem().toString();
 
         if(spinner_method.getSelectedItem().toString().equals("현장결제")) {
-            finish_credit();
+            finish_credit(0);
 
         }else{
             BootUser bootUser = new BootUser().setPhone("010-1234-5678"); // 구매자 정보
@@ -155,8 +155,6 @@ public class CreditActivity extends AppCompatActivity {
                     .setName("배달ONE") // 결제할 상품명
                     .setOrderId("1234") // 결제 고유번호expire_month
                     .setPrice(price) // 결제할 금액
-                    .addItem("배달배달", 1, "ITEM_CODE_MOUSE", 100) // 주문정보에 담길 상품정보, 통계를 위해 사용
-                    .addItem("키보드", 1, "ITEM_CODE_KEYBOARD", 200, "패션", "여성상의", "블라우스") // 주문정보에 담길 상품정보, 통계를 위해 사용
                     .onConfirm(new ConfirmListener() { // 결제가 진행되기 바로 직전 호출되는 함수로, 주로 재고처리 등의 로직이 수행
                         @Override
                         public void onConfirm(@Nullable String message) {
@@ -170,7 +168,7 @@ public class CreditActivity extends AppCompatActivity {
                         @Override
                         public void onDone(@Nullable String message) {
                             Log.d("done", message);
-                            Toast.makeText(CreditActivity.this, message, Toast.LENGTH_SHORT).show();
+
                         }
                     })
                     .onReady(new ReadyListener() { // 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
@@ -183,7 +181,6 @@ public class CreditActivity extends AppCompatActivity {
                         @Override
                         public void onCancel(@Nullable String message) {
                             Log.d("cancel", message);
-                            Toast.makeText(CreditActivity.this, message, Toast.LENGTH_SHORT).show();
 
                         }
                     })
@@ -191,7 +188,6 @@ public class CreditActivity extends AppCompatActivity {
                         @Override
                         public void onError(@Nullable String message) {
                             Log.d("error", message);
-                            Toast.makeText(CreditActivity.this, message, Toast.LENGTH_SHORT).show();
 
                         }
                     })
@@ -200,8 +196,8 @@ public class CreditActivity extends AppCompatActivity {
                                 @Override
                                 public void onClose(String message) {
                                     Log.d("close", "close");
-                                    Toast.makeText(CreditActivity.this, message, Toast.LENGTH_SHORT).show();
-                                    finish_credit();
+
+                                    finish_credit(1);
 
                                 }
                             })
@@ -210,11 +206,13 @@ public class CreditActivity extends AppCompatActivity {
         }
 
     }
-    public void finish_credit() {
+    public void finish_credit(final int type) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    jobj.put("pay_status",type);
+                    jobj.put("mileage",Integer.parseInt(mileage_edit.getText().toString()));
                     HttpURLConnection conn = UtilSet.set_Connect_info(jobj);
 
                     if (conn.getResponseCode() == 200) {
@@ -227,7 +225,7 @@ public class CreditActivity extends AppCompatActivity {
                             System.out.println("Success order make - not finished");
                             CreditActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    Toast.makeText( CreditActivity.this, Integer.parseInt(total_price_credit.getText().toString())+"원 주문생성", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText( CreditActivity.this, Integer.parseInt(price_text.getText().toString())+"원 주문생성", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             Intent intent=new Intent(CreditActivity.this, FirstMainActivity.class);
@@ -238,7 +236,7 @@ public class CreditActivity extends AppCompatActivity {
                             System.out.println("Success order make - finished");
                             CreditActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
-                                    Toast.makeText( CreditActivity.this, Integer.parseInt(total_price_credit.getText().toString())+"원 주문생성", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText( CreditActivity.this, Integer.parseInt(price_text.getText().toString())+"원 주문생성", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             Intent intent=new Intent(CreditActivity.this, FirstMainActivity.class);
