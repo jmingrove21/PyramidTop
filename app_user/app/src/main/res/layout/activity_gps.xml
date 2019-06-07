@@ -24,7 +24,8 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.5">
+                android:layout_weight="0.5"
+                android:padding="5sp">
 
                 <Button
                     android:id="@+id/GPS_button"
@@ -32,13 +33,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="주소 검색하기"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/login_button"
+                    />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.5">
+                android:layout_weight="0.5"
+                android:padding="5sp">
 
                 <Button
                     android:id="@+id/GPS_current_position"
@@ -46,7 +51,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="현재 위치"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/login_button" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -65,7 +72,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5">
+            android:layout_weight="0.5"
+            android:paddingHorizontal="15sp">
             <TextView
                 android:id="@+id/address_text"
                 android:layout_width="match_parent"
@@ -83,7 +91,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.1">
+        android:layout_weight="0.1"
+        android:paddingHorizontal="15sp">
 
         <EditText
             android:id="@+id/detail_address_input"
@@ -99,7 +108,8 @@
         android:layout_height="0dp"
         android:layout_weight="0.1"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="10sp">
 
         <Button
             android:id="@+id/GPS_id_complete_btn"
@@ -107,7 +117,9 @@
             android:layout_height="wrap_content"
             android:text="확인"
             android:onClick="GPS_ID_Complete"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:background="@drawable/login_button"/>
     </LinearLayout>
 
     <LinearLayout
