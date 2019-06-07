@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
@@ -51,7 +52,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     int serial;
     private String type; //order_make, order_participate
     boolean flag = false;
-
+    View view;
 
     String selectedMenu;
     ImageButton store_inform_button, menu_list_button;
@@ -82,7 +83,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView,view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -97,7 +98,13 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
 
         setFrag(0);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                resfresh_mileage(view);
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -118,7 +125,10 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
             }
         });
     }
-
+    public void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
     public void setFrag(int n) {
         fm = getFragmentManager();
         tran = fm.beginTransaction();

@@ -37,7 +37,7 @@ import com.example.app_user.util_dir.RegisterActivity;
 public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
     private DrawerLayout drawer;
     int index;
-
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -59,12 +59,17 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        View view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView,view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                resfresh_mileage(view);
+            }
+        };        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
 
@@ -102,7 +107,10 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         text_user_deliver_start_time_input.setText(o.getDelivery_departure_time());
         text_user_deliver_complete_time_input.setText(o.getDelivery_arrival_time());
     }
-
+    public void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if(LoginLogoutInform.getLogin_flag()==1){

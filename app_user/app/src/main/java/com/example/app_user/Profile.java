@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,21 +47,19 @@ import java.net.HttpURLConnection;
 
 public class Profile extends Fragment {
 
-    View pub_view;
     ImageView imageView;
     EditText name;
     EditText cur_pw;
     EditText change_pw;
     EditText change_repw;
+    Button profile_changh_btn;
 
     String trans_bitmap;
-    String user_pw;
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        pub_view = inflater.inflate(R.layout.fragment_profile,container,false);
+        final View pub_view = inflater.inflate(R.layout.fragment_profile,container,false);
 
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
@@ -75,6 +74,11 @@ public class Profile extends Fragment {
         imageView.setBackground(new ShapeDrawable(new OvalShape()));
         imageView.setClipToOutline(true);
 
+        name = (EditText) pub_view.findViewById(R.id.profile_name);
+        cur_pw = (EditText) pub_view.findViewById(R.id.profile_current_pw);
+        change_pw = (EditText) pub_view.findViewById(R.id.profile_change_pw);
+        change_repw = (EditText) pub_view.findViewById(R.id.profile_chang_re_pw);
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +86,100 @@ public class Profile extends Fragment {
                 startActivityForResult(img_intent,1);
             }
         });
+
+        profile_changh_btn = (Button) pub_view.findViewById(R.id.profile_change_btn);
+        profile_changh_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            if(name.getText().toString().equals("")){
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText( getActivity(), "닉네임을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return;
+                            }
+                            else if(cur_pw.getText().toString().equals("")){
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText( getActivity(), "비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return;
+                            }
+                            else if(change_pw.getText().toString().equals("")){
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText( getActivity(), "변경할 비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return;
+                            }
+                            else if(change_repw.getText().toString().equals("")){
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText( getActivity(), "재확인 비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return;
+                            }
+                            else if(!change_pw.getText().toString().equals(change_repw.getText().toString())){
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText( getActivity(), "변경할 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                return;
+                            }
+
+                            JSONObject jsonParam = new JSONObject();
+                            jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
+                            jsonParam.put("user_img",trans_bitmap);
+                            jsonParam.put("user_name", name.getText().toString());
+                            jsonParam.put("original_pw", cur_pw.getText().toString());
+                            jsonParam.put("change_pw",change_pw.getText().toString());
+
+                            HttpURLConnection conn= UtilSet.user_modify_set_Connect_info(jsonParam);
+
+                            if(conn.getResponseCode()==200){
+                                InputStream response = conn.getInputStream();
+                                String jsonReply = UtilSet.convertStreamToString(response);
+                                JSONObject jobj=new JSONObject(jsonReply);
+                                String json_result=jobj.getString("confirm");
+                                if(json_result.equals("1")){
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            Toast.makeText( getActivity(), "변경 완료", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    Intent intent=new Intent(getContext(), LoginActivity.class);
+                                    startActivityForResult(intent,101);
+                                }else{
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            Toast.makeText( getActivity(), "현재 패스워드가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    return;
+                                }
+                            }else{
+                                Log.d("error","Connect fail");
+                            }
+                            conn.disconnect();
+
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+            }
+        });
+
 
         LinearLayout linearLayout = pub_view.findViewById(R.id.linear_container);
         linearLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -154,116 +252,5 @@ public class Profile extends Fragment {
                 return;
             }
         }
-    }
-
-    public void profile_change_btn(View v){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-
-                    JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info","check_state");
-                    jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
-
-                    HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
-
-                    if(conn.getResponseCode()==200){
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-
-                        try{
-                            JSONObject jobj = new JSONObject(jsonReply);
-                            user_pw = jobj.get("user_pw").toString();
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-
-                    name = pub_view.findViewById(R.id.profile_name);
-                    cur_pw = pub_view.findViewById(R.id.profile_current_pw);
-                    change_pw = pub_view.findViewById(R.id.profile_change_pw);
-                    change_repw = pub_view.findViewById(R.id.profile_chang_re_pw);
-
-                    if(name.getText().toString().equals("")){
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( getActivity(), "닉네임을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return;
-                    }
-                    else if(cur_pw.getText().toString().equals("")){
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( getActivity(), "비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return;
-                    }
-                    else if(change_pw.getText().toString().equals("")){
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( getActivity(), "변경할 비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return;
-                    }
-                    else if(change_repw.getText().toString().equals("")){
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( getActivity(), "재확인 비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return;
-                    }
-                    else if(!change_pw.getText().toString().equals(change_repw.getText().toString())){
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( getActivity(), "변경할 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return;
-                    }else if(!cur_pw.getText().toString().equals(user_pw)){
-                        getActivity().runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText( getActivity(), "현재 비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return;
-                    }
-
-                    jsonParam = new JSONObject();
-                    jsonParam.put("user_img",trans_bitmap);
-                    jsonParam.put("user_name", name.getText().toString());
-                    jsonParam.put("user_password", change_pw.getText().toString());
-
-                    conn= UtilSet.user_modify_set_Connect_info(jsonParam);
-
-                    if(conn.getResponseCode()==200){
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-                        JSONObject jobj=new JSONObject(jsonReply);
-                        String json_result=jobj.getString("confirm");
-                        if(json_result.equals("1")){
-                            getActivity().runOnUiThread(new Runnable() {
-                                public void run() {
-                                    Toast.makeText( getActivity(), "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            Intent intent=new Intent(getContext(), LoginActivity.class);
-                            startActivityForResult(intent,101);
-                        }
-                    }else{
-                        Log.d("error","Connect fail");
-                    }
-                    conn.disconnect();
-
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
     }
 }
