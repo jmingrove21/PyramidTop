@@ -71,7 +71,7 @@ public class Profile extends Fragment {
             }
         }
 
-        imageView = (ImageView) pub_view.findViewById(R.id.register_profile_img);
+        imageView = pub_view.findViewById(R.id.register_profile_img);
         imageView.setBackground(new ShapeDrawable(new OvalShape()));
         imageView.setClipToOutline(true);
 
@@ -83,7 +83,7 @@ public class Profile extends Fragment {
             }
         });
 
-        LinearLayout linearLayout = (LinearLayout) pub_view.findViewById(R.id.linear_container);
+        LinearLayout linearLayout = pub_view.findViewById(R.id.linear_container);
         linearLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -98,8 +98,8 @@ public class Profile extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Uri image = data.getData();
         try {
+            Uri image = data.getData();
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image);
             Bitmap out_bitmap = convertRoundedBitmap(bitmap);
             trans_bitmap = getBase64String(out_bitmap);
@@ -142,7 +142,7 @@ public class Profile extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 // If request is cancelled, the result arrays are empty.

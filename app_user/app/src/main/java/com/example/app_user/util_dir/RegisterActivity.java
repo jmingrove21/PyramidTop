@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
-        imageView = (ImageView) findViewById(R.id.register_profile_img);
+        imageView = findViewById(R.id.register_profile_img);
         imageView.setBackground(new ShapeDrawable(new OvalShape()));
         imageView.setClipToOutline(true);
 
@@ -115,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 // If request is cancelled, the result arrays are empty.
@@ -145,11 +145,11 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    final EditText name = (EditText)findViewById(R.id.register_name);
-                    final EditText id=(EditText)findViewById(R.id.register_id);
-                    final EditText pw=(EditText)findViewById(R.id.register_pwd);
-                    final EditText repw=(EditText)findViewById(R.id.register_repwd);
-                    final EditText phone=(EditText)findViewById(R.id.register_phone);
+                    final EditText name = findViewById(R.id.register_name);
+                    final EditText id= findViewById(R.id.register_id);
+                    final EditText pw= findViewById(R.id.register_pwd);
+                    final EditText repw= findViewById(R.id.register_repwd);
+                    final EditText phone= findViewById(R.id.register_phone);
 
                     if(name.getText().toString().equals("")){
                         RegisterActivity.this.runOnUiThread(new Runnable() {
