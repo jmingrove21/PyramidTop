@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -20,6 +22,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -95,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.inflateMenu(R.menu.drawer_menu);
             view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id= view.findViewById(R.id.user_id);
+
+
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_mil= view.findViewById(R.id.user_mileage);
             user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
