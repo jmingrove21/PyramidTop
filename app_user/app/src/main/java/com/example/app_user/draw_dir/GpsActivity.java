@@ -1,20 +1,24 @@
 package com.example.app_user.draw_dir;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.location.Address;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +49,8 @@ import java.util.ArrayList;
 
 import javax.crypto.spec.GCMParameterSpec;
 
+import static com.example.app_user.Item_dir.UtilSet.gpsLocationListener;
+
 public class GpsActivity extends Activity implements TMapGpsManager.onLocationChangedCallback, TMapView.OnLongClickListenerCallback {
     private EditText GPS_editText;
     private Context mContext = null;
@@ -65,7 +71,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
     private boolean cur_search_gps = false;
     private Double cur_lat;
-
+    static LocationManager lm;
 
 
     private Button gps_button;
@@ -78,8 +84,11 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     TextView address_text;
     EditText detail_address_input;
 
-    double latitude;
-    double longitude;
+    public static double latitude;
+    public static double longitude;
+
+    public static double gps_latitude;
+    public static double gps_longitude;
     @Override
     public void onLocationChange(Location location){
         if(m_bTrackingMode){
@@ -91,6 +100,9 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
+
+        UtilSet.set_GPS_permission(lm, GpsActivity.this);//GPS
+
         backPressCloseHandler = new BackPressCloseHandler(this);
         address_text = findViewById(R.id.address_text);
         detail_address_input = findViewById(R.id.detail_address_input);
@@ -198,12 +210,10 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         protected String doInBackground(Integer... integers) {
             try {
                 if(check==true){
-                    FirstMainActivity.lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                        latitude=UtilSet.latitude;
-                        longitude=UtilSet.longitude;
-                        FirstMainActivity.lm=null;
-
-
+                    lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        latitude=gps_latitude;
+                        longitude=gps_longitude;
+                        lm=null;
                 }
                 final String address = new TMapData().convertGpsToAddress(latitude,longitude);
 
@@ -346,5 +356,49 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         }
         return;
     }
+    public static void set_GPS_permission(LocationManager lm, Context con){
+        int permissionCheck= ContextCompat.checkSelfPermission(con, Manifest.permission.ACCESS_FINE_LOCATION);
+        if(permissionCheck!= PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(con,"권한 승인이 필요합니다",Toast.LENGTH_LONG).show();
+            //showSettingsAlert(con);
+        }else{
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                        1000,
+                        1,
+                        gpsLocationListener);
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                        1000,
+                        1,
+                        gpsLocationListener);
+            }
+        }
 
+
+    public  static LocationListener gpsLocationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+
+            String provider = location.getProvider();
+            gps_longitude = location.getLongitude();
+            gps_latitude = location.getLatitude();
+
+            Log.d("location","GPS page 위치정보 : " + provider + "\n" +
+                    "위도 : " + gps_longitude + "\n" +
+                    "경도 : " + gps_latitude );
+            Log.d("location","내 현재 위치정보 : " + provider + "\n" +
+                    "위도 : " + UtilSet.longitude + "\n" +
+                    "경도 : " + UtilSet.latitude );
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
 }

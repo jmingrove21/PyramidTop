@@ -27,13 +27,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.internal.Util;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Delivery_to_Store_Activity extends AppCompatActivity {
     String store_name;
@@ -124,7 +134,8 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                         JSONObject jobj = new JSONObject(jsonReply);
                         ArrayList<Item_UserInfo> oData=new ArrayList<>();
                         get_user_information(oData,jobj);
-                        get_best_destination(oData);
+                        get_best_destination2(oData);
+                        //callcall(test(oData));
 //                        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
 //                        intent.putExtra("order_number", order_number);
 //                        intent.putExtra("list", oData);
@@ -159,7 +170,6 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             public void run() {
                 try {
                     JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("delivery_info", "11");
                     JSONArray jarray=case_destination(oData);
                     jsonParam.put("array",jarray);
 
@@ -193,6 +203,142 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public void callcall(JSONObject oData){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api2.sktelecom.com/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Service service=retrofit.create(Service.class);
+        Call call = service.doList(oData.toString());
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if(response.isSuccessful()) {
+                    Log.d("tag>>>", "성공");
+                    JSONObject jobj= (JSONObject) response.body();
+                    Log.d("jobj>>>", jobj.toString());
+
+                } else if(response.body() == null) {
+                    Log.d("Null>>>", "null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.d("tag>>>", "실패");
+                Log.d("tag>>>", t.getMessage());
+            }
+        });
+    }
+    public void get_best_destination2(ArrayList<Item_UserInfo> oData) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("https://api2.sktelecom.com/tmap/routes/routeOptimization10?version=1");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type","application/json");
+                    conn.setRequestProperty("accept", "application/json");
+                    conn.setRequestProperty("accept-Language", "ko");
+                    conn.setRequestProperty("appKey",UtilSet.tmap_key);
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    JSONObject jsonParam =test(oData);
+                    Log.i("JSON", jsonParam.toString());
+
+                    OutputStream os = conn.getOutputStream();
+                    os.write(jsonParam.toString().getBytes());
+
+                    os.flush();
+                    os.close();
+                    Log.d("json",jsonParam.toString());
+
+                    if (conn.getResponseCode() == 200) {
+                        InputStream response = conn.getInputStream();
+                        String jsonReply = UtilSet.convertStreamToString(response);
+                        JSONObject jobj = new JSONObject(jsonReply);
+                        ArrayList<Item_UserInfo> oData=new ArrayList<>();
+                        get_user_information(oData,jobj);
+//                        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+//                        intent.putExtra("order_number", order_number);
+//                        intent.putExtra("list", oData);
+//                        startActivityForResult(intent, 101);
+//                        finish();
+//                        best_destination=oData;
+                    } else {
+                        Log.d("error", "Connect fail");
+                    }
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public JSONObject test(ArrayList<Item_UserInfo> oData){
+        try {
+
+            long now = System.currentTimeMillis();
+            Date date = new Date(now);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm", Locale.KOREA);
+
+            JSONObject jobj_start = new JSONObject();
+            jobj_start.put("reqCoordType", "WGS84GEO");
+            jobj_start.put("resCoordType", "EPSG3857");
+            jobj_start.put("startName", "start");
+            jobj_start.put("startX", String.valueOf(UtilSet.longitude));
+            jobj_start.put("startY",  String.valueOf(UtilSet.latitude));
+            jobj_start.put("startTime", sdf.format(date));
+            jobj_start.put("endName", "destination");
+            jobj_start.put("endX",  String.valueOf(oData.get(0).destination_long));
+            jobj_start.put("endY",  String.valueOf(oData.get(0).destination_lat));
+
+            JSONArray jarray_via = new JSONArray();
+            JSONObject jobj_via = new JSONObject();
+            jobj_via.put("viaPointId", "1");
+            jobj_via.put("viaPointName", oData.get(1).destination);
+            jobj_via.put("viaX",  String.valueOf(oData.get(1).destination_long));
+            jobj_via.put("viaY",  String.valueOf(oData.get(1).destination_lat));
+            jarray_via.put(jobj_via);
+            jobj_start.put("viaPoints", jarray_via);
+//
+//            jobj_start = new JSONObject();
+//            jobj_start.put("reqCoordType", "WGS84GEO");
+//            jobj_start.put("resCoordType", "WGS84GEO");
+//            jobj_start.put("startName", "start");
+//            jobj_start.put("startX", UtilSet.longitude);
+//            jobj_start.put("startY", UtilSet.latitude);
+//            jobj_start.put("startTime", sdf.format(date));
+//            jobj_start.put("endName", "destination");
+//            jobj_start.put("endX", oData.get(1).destination_long);
+//            jobj_start.put("endY", oData.get(1).destination_lat);
+//
+//            jarray_via = new JSONArray();
+//            jobj_via = new JSONObject();
+//            jobj_via.put("viaPointId", "1");
+//            jobj_via.put("viaPointName", oData.get(0).destination);
+//            jobj_via.put("viaX", oData.get(0).destination_long);
+//            jobj_via.put("viaY", oData.get(0).destination_lat);
+//            jarray_via.put(jobj_via);
+//
+//            jobj_start.put("viaPoints", jarray_via);
+//            jarray.put(jobj_start);
+            return jobj_start;
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
     public JSONArray case_destination(ArrayList<Item_UserInfo> oData){
         if(oData.size()==2){
