@@ -211,8 +211,9 @@ public class CreditActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    jobj.put("pay_status",type);
+                    jobj.put("pay_status",type); //0 현장결제 1 계좌이체
                     jobj.put("mileage",Integer.parseInt(mileage_edit.getText().toString()));
+                    jobj.put("total_price_credit",Integer.parseInt(total_price_credit.getText().toString()));
                     HttpURLConnection conn = UtilSet.set_Connect_info(jobj);
 
                     if (conn.getResponseCode() == 200) {
