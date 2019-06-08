@@ -193,10 +193,10 @@ public class UtilSet {
                     1000,
                     1,
                     gpsLocationListener);
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                    1000,
-                    1,
-                    gpsLocationListener);
+//            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+//                    1000,
+//                    1,
+//                    gpsLocationListener);
             mapPoint.setGps_flag(true);
         }
     }
