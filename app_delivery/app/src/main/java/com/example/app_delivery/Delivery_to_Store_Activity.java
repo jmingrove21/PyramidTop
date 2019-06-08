@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +23,6 @@ import com.skt.Tmap.TMapTapi;
 import com.skt.Tmap.TMapView;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -37,7 +35,6 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
     String store_phone;
     double store_latitude;
     double store_longtite;
-    Delivery_list delivery_list;
     int order_number;
     static TMapView tMapView;
     static boolean refresh_status=true;
