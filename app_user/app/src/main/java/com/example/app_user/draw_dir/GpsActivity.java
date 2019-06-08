@@ -62,6 +62,11 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     private Double lat = null;
     private Double lon = null;
 
+    private boolean cur_search_gps = false;
+    private Double cur_lat;
+
+
+
     private Button gps_button;
 
     private Thread thread;
@@ -102,7 +107,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
         tMapView.setSightVisible(true);
 
-        showMarkerPoint();
+//        showMarkerPoint();
 
         //tMapView.setCompassMode(true);
         tMapView.setIconVisibility(true);
@@ -157,6 +162,8 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                     latitude = tMapPoint.getLatitude();
                     longitude = tMapPoint.getLongitude();
 
+                    cur_search_gps = false;
+
                     thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -182,9 +189,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
     private class Tmap_async extends AsyncTask<Integer, Integer, String>{
         boolean check=false;
-        Tmap_async(){
 
-        }
         Tmap_async(boolean check){
             this.check=check;
         }
@@ -213,7 +218,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         }
     }  @Override
     public void onBackPressed() {
-        backPressCloseHandler.onBackPressed();
+        super.onBackPressed();
     }
 
     public void showMarkerPoint(){
@@ -251,6 +256,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     }
 
     public void GPS_current_position_track(View view){
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -293,7 +299,6 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                             markerItem.setTMapPoint(tmp_TMapPoint);
 
                             tMapView.setCenterPoint(tmp_TMapPoint.getLongitude(),tmp_TMapPoint.getLatitude());
-                            tMapView.addMarkerItem("markerItem"+i,markerItem);
 
                             Log.d("주소로 찾기", "POI Name: " +
                                     item.getPOIName() + ", " +
@@ -324,8 +329,10 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         if(detail_address_input.getText().toString().length()>0){
             Toast.makeText(GpsActivity.this,address_text.getText().toString()+" "+detail_address_input.getText().toString()+"\n주소 설정 완료",Toast.LENGTH_SHORT).show();
             UtilSet.my_user.setUser_address(address_text.getText().toString()+" "+detail_address_input.getText().toString());
+            UtilSet.longitude = longitude;
+            UtilSet.latitude = latitude;
             Intent intent=new Intent(GpsActivity.this, FirstMainActivity.class);
-            UtilSet.write_user_data();
+                        UtilSet.write_user_data();
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

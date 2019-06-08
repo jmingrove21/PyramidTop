@@ -135,8 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public String getBase64String(Bitmap bitmap)
-    {
+    public String getBase64String(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
@@ -145,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         return Base64.encodeToString(imageBytes, Base64.NO_WRAP);
     }
+
 
     public void register(View v) {
         Thread thread = new Thread(new Runnable() {
@@ -214,14 +214,18 @@ public class RegisterActivity extends AppCompatActivity {
                     jsonParam.put("user_name",name.getText().toString());
                     jsonParam.put("user_phone",phone.getText().toString());
 
-                    HttpURLConnection conn=UtilSet.user_info_set_Connect_info(jsonParam);
+                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
 
                     if(conn.getResponseCode()==200){
+                        Log.d("회원가입",""+conn.getResponseCode());
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
+                        Log.d("jsonReply",""+jsonReply);
                         JSONObject jobj=new JSONObject(jsonReply);
+
                         String json_result=jobj.getString("confirm");
                         if(json_result.equals("1")){
+                            Log.d("json_result",""+json_result);
                             RegisterActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText( RegisterActivity.this, "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show();

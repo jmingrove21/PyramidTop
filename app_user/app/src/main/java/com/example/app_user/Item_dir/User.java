@@ -8,13 +8,15 @@ public class User implements Serializable {
     private String user_password;
     private String user_name;
 
+    private String user_img;
     private int user_serial;
     private transient String user_time;
     private int user_mileage;
 
     private String user_address;
     transient int user_price;
-    public User(String user_id, String user_password, int user_serial, String user_name, int user_mileage){
+    public User(String user_id, String user_password, int user_serial, String user_name, int user_mileage, String user_img){
+        this.user_img = user_img;
         this.user_id=user_id;
         this.user_password=user_password;
         this.user_serial = user_serial;
@@ -58,6 +60,12 @@ public class User implements Serializable {
         return user_price;
     }
 
+    public String getUser_img() {
+        return user_img;
+    }
+    public void setUser_img(String user_img) {
+        this.user_img = user_img;
+    }
 
     public int getUser_mileage() {
         return user_mileage;
