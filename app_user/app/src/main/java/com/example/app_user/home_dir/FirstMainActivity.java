@@ -119,7 +119,8 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     }
     public void resfresh_mileage(View view){
         TextView user_mil= view.findViewById(R.id.user_mileage);
-        user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+        if(UtilSet.my_user!=null)
+            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
