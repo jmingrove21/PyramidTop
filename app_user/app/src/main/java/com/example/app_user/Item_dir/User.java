@@ -29,7 +29,6 @@ public class User implements Serializable {
         this.user_price=Integer.parseInt(user_price);
     }
 
-
     public int getUser_serial() {
         return user_serial;
     }
