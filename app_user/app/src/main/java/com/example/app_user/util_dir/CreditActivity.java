@@ -220,8 +220,9 @@ public class CreditActivity extends AppCompatActivity {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(jsonReply);
+                        Log.d("json_Result", jobj.toString());
+
                         String json_result = jobj.getString("confirm");
-                        Log.d("json_Result", json_result);
                         if (json_result.equals("1")) {
                             System.out.println("Success order make - not finished");
                             CreditActivity.this.runOnUiThread(new Runnable() {
