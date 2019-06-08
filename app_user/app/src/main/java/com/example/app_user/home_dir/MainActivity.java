@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -20,6 +22,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -95,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.inflateMenu(R.menu.drawer_menu);
             view=getLayoutInflater().inflate(R.layout.nav_header,null);
             TextView user_id= view.findViewById(R.id.user_id);
+
+
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_mil= view.findViewById(R.id.user_mileage);
             user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
@@ -357,9 +365,7 @@ public void resfresh_mileage(View view){
                                 String distance = jobj.get("distance").toString();
                                 String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-                                String delivery_cost=jobj.get("delivery_cost").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
-                                s.setDelivery_cost(Integer.parseInt(delivery_cost));
                                 UtilSet.al_store.add(s);
                             }
                         } catch (Exception e) {

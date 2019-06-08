@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
@@ -47,9 +48,12 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UtilSet {
     public static String key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
     public static User my_user;
+    public static MapPoint mapPoint = new MapPoint(false);
     public static ArrayList<Store> al_searchstore = new ArrayList<>();
     public static ArrayList<Store> al_store = new ArrayList<>();
     public static ArrayList<Order> al_order=new ArrayList<>();
@@ -180,19 +184,20 @@ public class UtilSet {
 
     public static void set_GPS_permission(LocationManager lm, Context con){
         int permissionCheck=ContextCompat.checkSelfPermission(con,Manifest.permission.ACCESS_FINE_LOCATION);
-        if(permissionCheck!= PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(con,"권한 승인이 필요합니다",Toast.LENGTH_LONG).show();
+        if(permissionCheck!= PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(con, "권한 승인이 필요합니다", Toast.LENGTH_LONG).show();
             //showSettingsAlert(con);
-         }else{
-
+        }
+        else if(mapPoint.isGps_flag()){
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     1000,
                     1,
                     gpsLocationListener);
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                    1000,
-                    1,
-                    gpsLocationListener);
+//            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+//                    1000,
+//                    1,
+//                    gpsLocationListener);
+            mapPoint.setGps_flag(true);
         }
     }
 
@@ -259,9 +264,19 @@ public class UtilSet {
             e.printStackTrace();
         }
     }
+
+    public static Bitmap byteArrayToBitmap(byte[] byteArray,int num){
+        Bitmap bitmap = null;
+        bitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
+        byteArray = null;
+        return bitmap;
+    }
+
     public static void set_Drawer(NavigationView navigationView,View view){
         if (LoginLogoutInform.getLogin_flag() == 1) {
             navigationView.inflateMenu(R.menu.drawer_menu);
+            CircleImageView circleImageView = view.findViewById(R.id.nav_header_image);
+ //           circleImageView.setImageBitmap(byteArrayToBitmap(UtilSet.my_user.getUser_img().getBytes(),0));
             TextView user_id= view.findViewById(R.id.user_id);
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_mil= view.findViewById(R.id.user_mileage);

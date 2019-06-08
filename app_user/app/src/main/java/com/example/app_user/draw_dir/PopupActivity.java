@@ -34,10 +34,7 @@ public class PopupActivity extends Activity implements View.OnClickListener {
         PopupActivity.UserAdapter userAdapter = new PopupActivity.UserAdapter();
         listView_user.setAdapter(userAdapter);
 
-        LinearLayout frame = findViewById(R.id.participate_list);
-        if(UtilSet.al_my_order.size()==0){
-            frame.setBackground(ContextCompat.getDrawable(this,R.drawable.no_person));
-        }
+
     }
 
 
@@ -80,6 +77,10 @@ public class PopupActivity extends Activity implements View.OnClickListener {
             text_name.setText(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_id());
             text_user_time.setText(String.valueOf(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_time()));
             text_user_price.setText(String.valueOf(UtilSet.al_my_order.get(index).getUser_al().get(i).getUser_price()));
+            LinearLayout frame = findViewById(R.id.participate_list);
+            if(UtilSet.al_my_order.size()==0){
+                frame.setBackground(ContextCompat.getDrawable(PopupActivity.this,R.drawable.no_person));
+            }
 
             return view;
         }

@@ -68,11 +68,13 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_main);
-
+        if(UtilSet.longitude==0.0||UtilSet.latitude==0.0){
+            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            UtilSet.set_GPS_permission(lm, this);//GPS
+            lm=null;
+        }
         permissionCheck();
         set_display_width_height();
-        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        UtilSet.set_GPS_permission(lm, this);//GPS
 
         Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
         startService(intent_alert);//알림

@@ -95,7 +95,7 @@ public class CreditActivity extends AppCompatActivity {
                 if(Integer.valueOf(mileage_edit.getText().toString())<=mileage){
                     if(Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=1000)
                         total_price_credit.setText(String.valueOf(total_price-Integer.parseInt(mileage_edit.getText().toString())+delivery_cost));
-                    else if((Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())<1000)&&(Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=0)){
+                    else if((Integer.parseInt(price_text.getText().toString())+Integer.parseInt(delivery_text.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())<1000)&&(Integer.parseInt(price_text.getText().toString())+Integer.parseInt(delivery_text.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=0)){
                         if(spinner_method.getSelectedItem().toString().equals("현장결제")){
                             Toast.makeText(CreditActivity.this,"1000원 이상 결제가 가능합니다!",Toast.LENGTH_SHORT).show();
                         }else if(spinner_method.getSelectedItem().toString().equals("계좌이체")){
@@ -105,7 +105,7 @@ public class CreditActivity extends AppCompatActivity {
                         Toast.makeText(CreditActivity.this,"결제금액이 옳바르지 않습니다!", Toast.LENGTH_SHORT ).show();
                     }
                 }else{
-                    Toast.makeText(CreditActivity.this,"마일리지가 부족합니다!",Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(CreditActivity.this,"마일리지가 부족합니다!",Toast.LENGTH_SHORT).show();
                     total_price_credit.setText(String.valueOf(total_price+delivery_cost));
                 }}catch(Exception e){
                     e.printStackTrace();
@@ -211,16 +211,18 @@ public class CreditActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    jobj.put("pay_status",type);
+                    jobj.put("pay_status",type); //0 현장결제 1 계좌이체
                     jobj.put("mileage",Integer.parseInt(mileage_edit.getText().toString()));
+                    jobj.put("total_price_credit",Integer.parseInt(total_price_credit.getText().toString()));
                     HttpURLConnection conn = UtilSet.set_Connect_info(jobj);
 
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(jsonReply);
+                        Log.d("json_Result", jobj.toString());
+
                         String json_result = jobj.getString("confirm");
-                        Log.d("json_Result", json_result);
                         if (json_result.equals("1")) {
                             System.out.println("Success order make - not finished");
                             CreditActivity.this.runOnUiThread(new Runnable() {
