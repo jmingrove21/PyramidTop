@@ -114,7 +114,7 @@ public class UtilSet {
     }
     public static HttpURLConnection user_modify_set_Connect_info(JSONObject jsonParam){
         try{
-            URL url = new URL("http://54.180.102.7:80/get/JSON/user_app/user_modify_info.php");
+            URL url = new URL("http://54.180.102.7:80/get/JSON/user_app/user_manage.php");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
