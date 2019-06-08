@@ -64,7 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="center||right"
+                android:gravity="right|center"
                 android:paddingLeft="10dp"
                 android:text="credit_type"
                 android:textStyle="bold" />
