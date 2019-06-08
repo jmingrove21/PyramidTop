@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.location.Address;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -197,8 +198,12 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         protected String doInBackground(Integer... integers) {
             try {
                 if(check==true){
-                    latitude=UtilSet.latitude;
-                    longitude=UtilSet.longitude;
+                    FirstMainActivity.lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        latitude=UtilSet.latitude;
+                        longitude=UtilSet.longitude;
+                        FirstMainActivity.lm=null;
+
+
                 }
                 final String address = new TMapData().convertGpsToAddress(latitude,longitude);
 

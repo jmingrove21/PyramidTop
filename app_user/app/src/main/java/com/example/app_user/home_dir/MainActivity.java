@@ -365,9 +365,7 @@ public void resfresh_mileage(View view){
                                 String distance = jobj.get("distance").toString();
                                 String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-                                String delivery_cost=jobj.get("delivery_cost").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
-                                s.setDelivery_cost(Integer.parseInt(delivery_cost));
                                 UtilSet.al_store.add(s);
                             }
                         } catch (Exception e) {
