@@ -86,11 +86,14 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             tMapView.setLocationPoint(location.getLongitude(),location.getLatitude());
         }
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
+
+        Log.d("longitude",""+UtilSet.longitude);
+        Log.d("latitude",""+UtilSet.latitude);
+
         backPressCloseHandler = new BackPressCloseHandler(this);
         address_text = findViewById(R.id.address_text);
         detail_address_input = findViewById(R.id.detail_address_input);
@@ -226,39 +229,6 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         super.onBackPressed();
     }
 
-    public void showMarkerPoint(){
-        for(int i=0;i<m_mapPoint.size();i++){
-            TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(),
-                    m_mapPoint.get(i).getLongtitude());
-
-            TMapMarkerItem item1 = new TMapMarkerItem();
-            Bitmap bitmap = null;
-
-            bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.gps_pin);
-
-            item1.setTMapPoint(point);
-            item1.setName(m_mapPoint.get(i).getName());
-            item1.setVisible(TMapMarkerItem.VISIBLE);
-
-            item1.setIcon(bitmap);
-
-            bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.gps_pin);
-
-            item1.setCalloutTitle(m_mapPoint.get(i).getName());
-            item1.setCalloutSubTitle("수원");
-            item1.setCanShowCallout(true);
-            item1.setAutoCalloutVisible(true);
-
-            Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.gps_pin);
-
-            item1.setCalloutRightButtonImage(bitmap_i);
-
-            String strID = String.format("pmarker%d",mMarkerID++);
-
-            tMapView.addMarkerItem(strID,item1);
-            mArrayMarkerID.add(strID);
-        }
-    }
 
     public void GPS_current_position_track(View view){
 

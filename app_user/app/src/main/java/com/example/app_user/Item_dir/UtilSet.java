@@ -53,7 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UtilSet {
     public static String key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
     public static User my_user;
-    private static boolean gps_flag = true;
+    public static MapPoint mapPoint = new MapPoint(false);
     public static ArrayList<Store> al_searchstore = new ArrayList<>();
     public static ArrayList<Store> al_store = new ArrayList<>();
     public static ArrayList<Order> al_order=new ArrayList<>();
@@ -184,21 +184,20 @@ public class UtilSet {
 
     public static void set_GPS_permission(LocationManager lm, Context con){
         int permissionCheck=ContextCompat.checkSelfPermission(con,Manifest.permission.ACCESS_FINE_LOCATION);
-        if(permissionCheck!= PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(con,"권한 승인이 필요합니다",Toast.LENGTH_LONG).show();
+        if(permissionCheck!= PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(con, "권한 승인이 필요합니다", Toast.LENGTH_LONG).show();
             //showSettingsAlert(con);
-         }else{
-            if(gps_flag){
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                        1000,
-                        1,
-                        gpsLocationListener);
-                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                        1000,
-                        1,
-                        gpsLocationListener);
-                gps_flag = false;
-            }
+        }
+        else if(mapPoint.isGps_flag()){
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
+            mapPoint.setGps_flag(true);
         }
     }
 
