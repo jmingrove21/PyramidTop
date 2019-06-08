@@ -101,7 +101,11 @@ public class MapActivity extends AppCompatActivity {
                 String destination_lat = jobj_user.get("destination_lat").toString();
                 String destination_long = jobj_user.get("destination_long").toString();
                 String total_price = jobj_user.get("user_total_price").toString();
+                String total_price_credit = jobj_user.get("user_pay_price").toString();
+                String pay_status = jobj_user.get("user_pay_status").toString();
+
                 iu.set_ItemUserInfo(order_number, user_serial, user_name, user_phone, destination, total_price);
+                iu.set_pay_init(total_price_credit,pay_status);
                 iu.set_destination(destination_lat, destination_long);
                 JSONArray menu_jarry = (JSONArray) jobj_user.get("menu");
                 for (int j = 0; j < menu_jarry.length(); j++) {
@@ -228,19 +232,20 @@ public class MapActivity extends AppCompatActivity {
             TextView oUserName = (TextView) convertView.findViewById(R.id.user_name);
             TextView oUserPhone = (TextView) convertView.findViewById(R.id.user_phonenum);
             TextView oUserDestination = (TextView) convertView.findViewById(R.id.user_destination);
-            TextView oUserMenu = (TextView) convertView.findViewById(R.id.user_menu);
+
             TextView oUserTotal = (TextView) convertView.findViewById(R.id.user_total_price);
+            TextView oUserPayStatus = (TextView) convertView.findViewById(R.id.pay_status);
             final Button oButton = (Button) convertView.findViewById(R.id.delivery_finish_btn);
             Button tMap_btn = (Button) convertView.findViewById(R.id.delivery_navigation);
             oUserName.setText(m_oData.get(position).user_name);
             oUserPhone.setText(m_oData.get(position).user_phone);
             oUserDestination.setText(m_oData.get(position).destination);
-            oUserTotal.setText(m_oData.get(position).total_price + "원");
-            String menu = "";
-            for (int i = 0; i < m_oData.get(position).al_menu.size(); i++) {
-                menu += m_oData.get(position).al_menu.get(i).menu_name + " " + m_oData.get(position).al_menu.get(i).menu_count + "개 ";
-            }
-            oUserMenu.setText(menu);
+            oUserTotal.setText(m_oData.get(position).total_price_credit + "원");
+           // String menu = "";
+//            for (int i = 0; i < m_oData.get(position).al_menu.size(); i++) {
+//                menu += m_oData.get(position).al_menu.get(i).menu_name + " " + m_oData.get(position).al_menu.get(i).menu_count + "개 ";
+//            }
+            oUserPayStatus.setText(m_oData.get(position).pay_status);
 
             oButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -248,6 +253,7 @@ public class MapActivity extends AppCompatActivity {
                     Log.d("log", "position:" + position);
                     oButton.setText("배달완료");
                     oButton.setEnabled(false);
+                    tMap_btn.setEnabled(false);
                     oData.get(position).delivery_status = 0;
                     complete_delievry(position, oData.size());
                 }
@@ -268,7 +274,6 @@ public class MapActivity extends AppCompatActivity {
             });
             return convertView;
         }
-
     }
 
     private class Tmap_async extends AsyncTask<Integer, Integer, String> {
@@ -301,8 +306,8 @@ public class MapActivity extends AppCompatActivity {
 
                     //지도에 마커 추가
                     tMapView.addMarkerItem("markerItem" + (i + 1), markerItem1);
-
                 }
+                Log.d("tmap_destination",alTmapPoint.toString());
                 tMapView.setCenterPoint(UtilSet.longitude, UtilSet.latitude);
 
                 if (alTmapPoint.size() == 1) {
@@ -313,11 +318,10 @@ public class MapActivity extends AppCompatActivity {
                             polyLine.setLineWidth(8.0f);
                             tMapView.addTMapPath(polyLine);
                             UtilSet.set_GPS_value(UtilSet.lm, MapActivity.this);
-
                         }
                     });
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                         if (MapActivity.refresh_status == false)
                             break;
                     } catch (Exception e) {
@@ -334,18 +338,16 @@ public class MapActivity extends AppCompatActivity {
                                     polyLine.setLineColor(Color.BLUE);
                                     polyLine.setLineWidth(8.0f);
                                     tMapView.addTMapPath(polyLine);
-
                                 }
                             });
                 }try {
-                    Thread.sleep(5000);
+                    Thread.sleep(10000);
                     if (MapActivity.refresh_status == false)
                         break;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-
 
             return null;
         }
@@ -374,6 +376,5 @@ public class MapActivity extends AppCompatActivity {
         protected void onCancelled() {
             super.onCancelled();
         }
-
     }
 }
