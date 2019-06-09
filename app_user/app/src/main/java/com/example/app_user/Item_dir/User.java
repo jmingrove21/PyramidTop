@@ -13,6 +13,9 @@ public class User implements Serializable {
     private transient String user_time;
     private int user_mileage;
 
+    private double user_latitude=0;
+    private double user_longitude=0;
+
     private String user_address;
     transient int user_price;
     public User(String user_id, String user_password, int user_serial, String user_name, int user_mileage, String user_img){
@@ -75,4 +78,14 @@ public class User implements Serializable {
         this.user_mileage = user_mileage;
     }
 
+    public void set_user_gps(double user_latitude, double user_longitude){
+        this.user_latitude=user_latitude;
+        this.user_longitude=user_longitude;
+    }
+    public double get_user_latitude(){
+        return user_latitude;
+    }
+    public double get_user_longitude(){
+        return user_longitude;
+    }
 }

@@ -266,8 +266,8 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     jsonParam.put("store_serial", UtilSet.target_store.getStore_serial());
                     jsonParam.put("order_number",UtilSet.target_store.getOrder_number());
                     jsonParam.put("destination", UtilSet.my_user.getUser_address());
-                    jsonParam.put("destination_lat", UtilSet.latitude);
-                    jsonParam.put("destination_long", UtilSet.longitude);
+                    jsonParam.put("destination_lat", UtilSet.my_user.get_user_latitude());
+                    jsonParam.put("destination_long", UtilSet.my_user.get_user_longitude());
 
                     int total_price = 0;
                     if (menuFragment.menuProductItems == null) {
@@ -331,6 +331,11 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
     }
 
     public void GPSonClick(View view){
+        if(UtilSet.my_user.get_user_latitude()==0.0||UtilSet.my_user.get_user_longitude()==0.0)
+        {
+            UtilSet.my_user.set_user_gps(UtilSet.latitude_gps,UtilSet.longitude_gps);
+            Log.d("GPS Setting - my location update",String.valueOf(UtilSet.my_user.get_user_latitude())+" "+String.valueOf(UtilSet.my_user.get_user_longitude()));
+        }
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
     }

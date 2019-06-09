@@ -173,8 +173,8 @@ public class OrderFragment extends DialogFragment {
                 try {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "lookup_participate");
-                    jsonParam.put("user_lat", UtilSet.latitude);
-                    jsonParam.put("user_long", UtilSet.longitude);
+                    jsonParam.put("user_lat", UtilSet.my_user.get_user_latitude());
+                    jsonParam.put("user_long", UtilSet.my_user.get_user_longitude());
                     jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
 
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
