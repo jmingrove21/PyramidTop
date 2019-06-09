@@ -344,8 +344,8 @@ public void resfresh_mileage(View view){
                 try {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_info");
-                    jsonParam.put("user_lat", UtilSet.latitude);
-                    jsonParam.put("user_long", UtilSet.longitude);
+                    jsonParam.put("user_lat", UtilSet.my_user.get_user_latitude());
+                    jsonParam.put("user_long", UtilSet.my_user.get_user_longitude());
                     jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
                     jsonParam.put("count", UtilSet.al_store.size());
                     Log.d("jsonobject", jsonParam.toString());
@@ -365,9 +365,7 @@ public void resfresh_mileage(View view){
                                 String distance = jobj.get("distance").toString();
                                 String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-                                String delivery_cost=jobj.get("delivery_cost").toString();
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
-                                s.setDelivery_cost(Integer.parseInt(delivery_cost));
                                 UtilSet.al_store.add(s);
                             }
                         } catch (Exception e) {
@@ -519,6 +517,11 @@ public void resfresh_mileage(View view){
     }
 
     public void GPSonClick(View view){
+        if(UtilSet.my_user.get_user_latitude()==0.0||UtilSet.my_user.get_user_longitude()==0.0)
+        {
+            UtilSet.my_user.set_user_gps(UtilSet.latitude_gps,UtilSet.longitude_gps);
+            Log.d("GPS Setting - my location update",String.valueOf(UtilSet.my_user.get_user_latitude())+" "+String.valueOf(UtilSet.my_user.get_user_longitude()));
+        }
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
     }

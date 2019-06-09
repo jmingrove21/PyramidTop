@@ -1,19 +1,24 @@
 package com.example.app_user.draw_dir;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.location.Address;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.util.Log;
 import android.view.View;
@@ -44,6 +49,9 @@ import java.util.ArrayList;
 
 import javax.crypto.spec.GCMParameterSpec;
 
+import static com.example.app_user.Item_dir.UtilSet.gpsLocationListener;
+import static com.example.app_user.Item_dir.UtilSet.latitude_gps;
+
 public class GpsActivity extends Activity implements TMapGpsManager.onLocationChangedCallback, TMapView.OnLongClickListenerCallback {
     private EditText GPS_editText;
     private Context mContext = null;
@@ -62,6 +70,11 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     private Double lat = null;
     private Double lon = null;
 
+    private boolean cur_search_gps = false;
+    private Double cur_lat;
+    static LocationManager lm;
+
+
     private Button gps_button;
 
     private Thread thread;
@@ -72,19 +85,24 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     TextView address_text;
     EditText detail_address_input;
 
-    double latitude;
-    double longitude;
+    public static double latitude;
+    public static double longitude;
+
     @Override
     public void onLocationChange(Location location){
         if(m_bTrackingMode){
             tMapView.setLocationPoint(location.getLongitude(),location.getLatitude());
         }
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
+
+
+        Log.d("longitude",""+UtilSet.my_user.get_user_longitude());
+        Log.d("latitude",""+UtilSet.my_user.get_user_latitude());
+
         backPressCloseHandler = new BackPressCloseHandler(this);
         address_text = findViewById(R.id.address_text);
         detail_address_input = findViewById(R.id.detail_address_input);
@@ -102,24 +120,12 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
         tMapView.setSightVisible(true);
 
-        showMarkerPoint();
-
-        //tMapView.setCompassMode(true);
         tMapView.setIconVisibility(true);
-        tMapView.setZoomLevel(20);
+        tMapView.setZoomLevel(18);
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
-        tMapView.setLocationPoint(UtilSet.longitude,UtilSet.latitude);
-        tMapView.setCenterPoint(UtilSet.longitude,UtilSet.latitude);
-
-        //        tMapGpsManager = new TMapGpsManager(GpsActivity.this);
-//        tMapGpsManager.setMinTime(1000);
-//        tMapGpsManager.setMinDistance(5);
-//        tMapGpsManager.setProvider(tMapGpsManager.NETWORK_PROVIDER);
-//
-//        tMapGpsManager.OpenGps();
-
-//        tMapView.setTrackingMode(true);
+        tMapView.setLocationPoint(UtilSet.my_user.get_user_longitude(),UtilSet.my_user.get_user_latitude());
+        tMapView.setCenterPoint(UtilSet.my_user.get_user_longitude(),UtilSet.my_user.get_user_latitude(),true);
 
         tMapView.setOnCalloutRightButtonClickListener(new TMapView.OnCalloutRightButtonClickCallback() {
             @Override
@@ -142,25 +148,26 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             @Override
             public boolean onPressEvent(ArrayList<TMapMarkerItem> arrayList, ArrayList<TMapPOIItem> arrayList1, TMapPoint tMapPoint, PointF pointF) {
                 first_TMapPoint = new TMapPoint(tMapPoint.getLatitude(),tMapPoint.getLongitude());
+
                 return false;
             }
 
             @Override
             public boolean onPressUpEvent(ArrayList<TMapMarkerItem> arrayList, ArrayList<TMapPOIItem> arrayList1, TMapPoint tMapPoint, PointF pointF) {
                 if((first_TMapPoint.getLatitude()==tMapPoint.getLatitude()) && (first_TMapPoint.getLongitude()==tMapPoint.getLongitude())){
-                    TMapMarkerItem markerItem = new TMapMarkerItem();
-                    markerItem.setIcon(mark_bitmap);
-                    markerItem.setTMapPoint(tMapPoint);
 
-                    tMapView.setCenterPoint(tMapPoint.getLongitude(),tMapPoint.getLatitude());
-                    tMapView.addMarkerItem("markerItem",markerItem);
+
+                    tMapView.setLocationPoint(tMapPoint.getLongitude(),tMapPoint.getLatitude());
+                    tMapView.setCenterPoint(tMapPoint.getLongitude(),tMapPoint.getLatitude(),true);
                     latitude = tMapPoint.getLatitude();
                     longitude = tMapPoint.getLongitude();
+
+                    cur_search_gps = false;
 
                     thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Tmap_async t_async = new Tmap_async(false);
+                            Tmap_async t_async = new Tmap_async("move");
                             t_async.execute();
                         }
                     });
@@ -173,7 +180,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Tmap_async t_async = new Tmap_async(true);
+                Tmap_async t_async = new Tmap_async();
                 t_async.execute();
             }
         });
@@ -181,30 +188,47 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     }
 
     private class Tmap_async extends AsyncTask<Integer, Integer, String>{
-        boolean check=false;
+        String check="default";
         Tmap_async(){
 
         }
-        Tmap_async(boolean check){
+        Tmap_async(String check){
             this.check=check;
         }
         @Override
         protected String doInBackground(Integer... integers) {
             try {
-                if(check==true){
-                    latitude=UtilSet.latitude;
-                    longitude=UtilSet.longitude;
-                }
-                final String address = new TMapData().convertGpsToAddress(latitude,longitude);
+                    if(check.equals("move")){
+                        final String address = new TMapData().convertGpsToAddress(latitude,longitude);
 
-                GpsActivity.this.runOnUiThread(new Runnable() {
-                    public void run() {
-                        tMapView.setCenterPoint(longitude,latitude);
-                        Toast.makeText(GpsActivity.this, address, Toast.LENGTH_SHORT).show();
-                        UtilSet.my_user.setUser_address(address);
-                        address_text.setText(address);
+                        GpsActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                UtilSet.my_user.setUser_address(address);
+                                address_text.setText(address);
+                            }
+                        });
+                    }else  if(check.equals("gps")){
+                        final String address = new TMapData().convertGpsToAddress(UtilSet.latitude_gps,UtilSet.longitude_gps);
+
+                        GpsActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(GpsActivity.this, "toast 5"+address, Toast.LENGTH_SHORT).show();
+                                UtilSet.my_user.setUser_address(address);
+                                address_text.setText(address);
+                            }
+                        });
+                    }else if(check.equals("default")){
+                        final String address = new TMapData().convertGpsToAddress(UtilSet.my_user.get_user_latitude(),UtilSet.my_user.get_user_longitude());
+
+                        GpsActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                //tMapView.setCenterPoint(UtilSet.latitude_gps,UtilSet.longitude_gps,true);
+                                Toast.makeText(GpsActivity.this, "toast 7"+address, Toast.LENGTH_SHORT).show();
+                                UtilSet.my_user.setUser_address(address);
+                                address_text.setText(address);
+                            }
+                        });
                     }
-                });
 
             }catch(Exception e) {
                 e.printStackTrace();
@@ -213,49 +237,20 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         }
     }  @Override
     public void onBackPressed() {
-        backPressCloseHandler.onBackPressed();
+        super.onBackPressed();
     }
 
-    public void showMarkerPoint(){
-        for(int i=0;i<m_mapPoint.size();i++){
-            TMapPoint point = new TMapPoint(m_mapPoint.get(i).getLatitude(),
-                    m_mapPoint.get(i).getLongtitude());
-
-            TMapMarkerItem item1 = new TMapMarkerItem();
-            Bitmap bitmap = null;
-
-            bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.gps_pin);
-
-            item1.setTMapPoint(point);
-            item1.setName(m_mapPoint.get(i).getName());
-            item1.setVisible(TMapMarkerItem.VISIBLE);
-
-            item1.setIcon(bitmap);
-
-            bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.gps_pin);
-
-            item1.setCalloutTitle(m_mapPoint.get(i).getName());
-            item1.setCalloutSubTitle("수원");
-            item1.setCanShowCallout(true);
-            item1.setAutoCalloutVisible(true);
-
-            Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.gps_pin);
-
-            item1.setCalloutRightButtonImage(bitmap_i);
-
-            String strID = String.format("pmarker%d",mMarkerID++);
-
-            tMapView.addMarkerItem(strID,item1);
-            mArrayMarkerID.add(strID);
-        }
-    }
 
     public void GPS_current_position_track(View view){
+        tMapView.setLocationPoint(UtilSet.longitude_gps,UtilSet.latitude_gps);
+        tMapView.setCenterPoint(UtilSet.longitude_gps, latitude_gps,true);
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Tmap_async t_async = new Tmap_async(true);
+                Tmap_async t_async = new Tmap_async("gps");
                 t_async.execute();
+
             }
         });
         thread.start();
@@ -283,23 +278,25 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                 TMapData tMapData = new TMapData();
 
                 tMapData.findAllPOI(strData, new TMapData.FindAllPOIListenerCallback() {
+
                     @Override
                     public void onFindAllPOI(ArrayList<TMapPOIItem> arrayList) {
+                        tMapView.removeAllMarkerItem();
                         for(int i=0;i<arrayList.size();i++) {
                             TMapPOIItem item = arrayList.get(i);
                             TMapPoint tmp_TMapPoint = new TMapPoint(item.getPOIPoint().getLatitude(),item.getPOIPoint().getLongitude());
                             TMapMarkerItem markerItem = new TMapMarkerItem();
                             markerItem.setIcon(bitmap);
                             markerItem.setTMapPoint(tmp_TMapPoint);
+                            tMapView.addMarkerItem(String.valueOf(i),markerItem);
 
-                            tMapView.setCenterPoint(tmp_TMapPoint.getLongitude(),tmp_TMapPoint.getLatitude());
-                            tMapView.addMarkerItem("markerItem"+i,markerItem);
 
                             Log.d("주소로 찾기", "POI Name: " +
                                     item.getPOIName() + ", " +
                                     "Address: " + item.getPOIAddress().replace("null", "") +
                                     ", " + "Point: " + item.getPOIPoint().toString());
                         }
+                        tMapView.setCenterPoint(arrayList.get(0).getPOIPoint().getLongitude(),arrayList.get(0).getPOIPoint().getLatitude());
                     }
                 });
             }
@@ -317,15 +314,16 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     @Override
     public void onLongPressEvent(ArrayList markerlist,
                                  ArrayList poilist, TMapPoint point) {
-        Toast.makeText(GpsActivity.this,""+point.getLatitude(),Toast.LENGTH_SHORT);
+        Toast.makeText(GpsActivity.this,"toast 2"+point.getLatitude(),Toast.LENGTH_SHORT);
     }
 
     public void GPS_ID_Complete(View view){
         if(detail_address_input.getText().toString().length()>0){
             Toast.makeText(GpsActivity.this,address_text.getText().toString()+" "+detail_address_input.getText().toString()+"\n주소 설정 완료",Toast.LENGTH_SHORT).show();
             UtilSet.my_user.setUser_address(address_text.getText().toString()+" "+detail_address_input.getText().toString());
+            UtilSet.my_user.set_user_gps(latitude,longitude);
             Intent intent=new Intent(GpsActivity.this, FirstMainActivity.class);
-            UtilSet.write_user_data();
+                        UtilSet.write_user_data();
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

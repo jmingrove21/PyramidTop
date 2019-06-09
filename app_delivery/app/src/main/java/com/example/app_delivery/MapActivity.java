@@ -60,14 +60,9 @@ public class MapActivity extends AppCompatActivity {
         this.alTmapPoint = new ArrayList();
         Log.d("좌표", String.valueOf(UtilSet.latitude));
         Log.d("좌표", String.valueOf(UtilSet.longitude));
-        if (getIntent().hasExtra("json")) {
-            try {
-                JSONObject mJsonObject = new JSONObject(getIntent().getStringExtra("json"));
-                get_user_information(mJsonObject);
+        if (getIntent().hasExtra("list")) {
+                oData=(ArrayList<Item_UserInfo> )getIntent().getSerializableExtra("list");
                 get_destination();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         }
         int direct_check = getIntent().getIntExtra("direct", 0);
 
@@ -88,40 +83,7 @@ public class MapActivity extends AppCompatActivity {
         linearLayoutTmap.addView(tMapView);
     }
 
-    public void get_user_information(JSONObject jobj) {
-        try {
-            JSONArray json_result_al = (JSONArray) jobj.get("user_order");
-            for (int i = 0; i < json_result_al.length(); i++) {
-                Item_UserInfo iu = new Item_UserInfo();
-                JSONObject jobj_user = (JSONObject) json_result_al.get(i);
-                String user_name = jobj_user.get("user_name").toString();
-                String user_serial = jobj_user.get("user_serial").toString();
-                String destination = jobj_user.get("destination").toString();
-                String user_phone = jobj_user.get("user_phone").toString();
-                String destination_lat = jobj_user.get("destination_lat").toString();
-                String destination_long = jobj_user.get("destination_long").toString();
-                String total_price = jobj_user.get("user_total_price").toString();
-                String total_price_credit = jobj_user.get("user_pay_price").toString();
-                String pay_status = jobj_user.get("user_pay_status").toString();
 
-                iu.set_ItemUserInfo(order_number, user_serial, user_name, user_phone, destination, total_price);
-                iu.set_pay_init(total_price_credit,pay_status);
-                iu.set_destination(destination_lat, destination_long);
-                JSONArray menu_jarry = (JSONArray) jobj_user.get("menu");
-                for (int j = 0; j < menu_jarry.length(); j++) {
-                    String menu_name = ((JSONObject) menu_jarry.get(j)).get("menu_name").toString();
-                    String menu_count = ((JSONObject) menu_jarry.get(j)).get("menu_count").toString();
-                    String menu_price = ((JSONObject) menu_jarry.get(j)).get("menu_price").toString();
-                    Menu m = new Menu(menu_name, menu_count, menu_price);
-                    iu.al_menu.add(m);
-                }
-                oData.add(iu);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void get_destination() {
         try {
