@@ -9,17 +9,27 @@
     <LinearLayout
         android:id="@+id/linearLayoutTmap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.35"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
         android:padding="10dp"
         android:orientation="vertical">
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.65"
+        android:layout_height="0dp"
+        android:layout_weight="0.05">
+        <TextView
+            android:id="@+id/detail_txt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:layout_margin="2sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.35"
 
         android:orientation="vertical">
 

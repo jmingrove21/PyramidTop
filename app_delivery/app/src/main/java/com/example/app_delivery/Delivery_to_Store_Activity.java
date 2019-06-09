@@ -1,6 +1,5 @@
 package com.example.app_delivery;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,7 +27,6 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -37,13 +35,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.internal.Util;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Delivery_to_Store_Activity extends AppCompatActivity {
     String store_name;
@@ -54,7 +45,10 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
     int order_number;
     static TMapView tMapView;
     static boolean refresh_status=true;
+    ArrayList<Item_UserInfo> oData=new ArrayList<>();
     ArrayList<Item_UserInfo> best_destination=new ArrayList<>();
+    ArrayList<Delivery_Status> destination_list=new ArrayList<>();
+    public static Delivery_Status target_delivery;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +104,42 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 delivery_start_event();
+                if(oData.size()==1){
+
+                }else{
+                    try{
+                        for(int i=0;i<oData.size();i++){
+                            get_best_destination_by_tmap((JSONObject)case_destination(oData).get(i),oData.size());
+                            Thread.sleep(1000);
+                        }
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+                int result=0;
+                for(int j=0;j<destination_list.size()-1;j++){
+                    if(Integer.valueOf(destination_list.get(j).totalTime)<=Integer.valueOf(destination_list.get(result).totalTime)){
+                        result=j;
+                    }
+                }
+                target_delivery=destination_list.get(result);
+                for(int p=0;p<target_delivery.destination_point.size();p++){
+                    best_destination.add(oData.get(Integer.parseInt(target_delivery.destination_point.get(p))));
+                }
+
                 Delivery_to_Store_Activity.refresh_status=false;
+                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+                intent.putExtra("order_number", order_number);
+                intent.putExtra("list", best_destination);
+                intent.putExtra("list_time",target_delivery.destination_time);
+                intent.putExtra("list_distance",target_delivery.destination_distance);
+                intent.putExtra("total_time",target_delivery.totalTime);
+                intent.putExtra("total_distance",target_delivery.totalDistance);
+
+                startActivityForResult(intent, 101);
+                finish();
             }
         });
 
@@ -121,6 +150,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    oData.clear();
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("delivery_info", "departure");
                     jsonParam.put("order_number", order_number);
@@ -132,15 +162,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(jsonReply);
-                        ArrayList<Item_UserInfo> oData=new ArrayList<>();
                         get_user_information(oData,jobj);
-                        get_best_destination2(oData);
-                        //callcall(test(oData));
-//                        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-//                        intent.putExtra("order_number", order_number);
-//                        intent.putExtra("list", oData);
-//                        startActivityForResult(intent, 101);
-//                        finish();
                     } else {
                         Log.d("error", "Connect fail");
                     }
@@ -164,80 +186,17 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         tMapView.setZoomLevel(13);
 
     }
-    public void get_best_destination(ArrayList<Item_UserInfo> oData) {
+
+
+    public void get_best_destination_by_tmap(JSONObject jobj_request,int count) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    JSONObject jsonParam = new JSONObject();
-                    JSONArray jarray=case_destination(oData);
-                    jsonParam.put("array",jarray);
+                    Thread.sleep(1000);
+      //              URL url = new URL("https://api2.sktelecom.com/tmap/routes/routeOptimization30?version=1");
+                    URL url = new URL("https://api2.sktelecom.com/tmap/routes/routeSequential30?version=1");
 
-                    Log.d("json",jsonParam.toString());
-                    HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
-
-                    if (conn.getResponseCode() == 200) {
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-                        JSONObject jobj = new JSONObject(jsonReply);
-                        ArrayList<Item_UserInfo> oData=new ArrayList<>();
-                        get_user_information(oData,jobj);
-//                        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-//                        intent.putExtra("order_number", order_number);
-//                        intent.putExtra("list", oData);
-//                        startActivityForResult(intent, 101);
-//                        finish();
-//                        best_destination=oData;
-                    } else {
-                        Log.d("error", "Connect fail");
-                    }
-                    conn.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    public void callcall(JSONObject oData){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api2.sktelecom.com/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        Service service=retrofit.create(Service.class);
-        Call call = service.doList(oData.toString());
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                if(response.isSuccessful()) {
-                    Log.d("tag>>>", "성공");
-                    JSONObject jobj= (JSONObject) response.body();
-                    Log.d("jobj>>>", jobj.toString());
-
-                } else if(response.body() == null) {
-                    Log.d("Null>>>", "null");
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                Log.d("tag>>>", "실패");
-                Log.d("tag>>>", t.getMessage());
-            }
-        });
-    }
-    public void get_best_destination2(ArrayList<Item_UserInfo> oData) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("https://api2.sktelecom.com/tmap/routes/routeOptimization10?version=1");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type","application/json");
@@ -247,7 +206,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     conn.setDoOutput(true);
                     conn.setDoInput(true);
 
-                    JSONObject jsonParam =test(oData);
+                    JSONObject jsonParam =jobj_request;
                     Log.i("JSON", jsonParam.toString());
 
                     OutputStream os = conn.getOutputStream();
@@ -261,17 +220,25 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(jsonReply);
-                        ArrayList<Item_UserInfo> oData=new ArrayList<>();
-                        get_user_information(oData,jobj);
-//                        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-//                        intent.putExtra("order_number", order_number);
-//                        intent.putExtra("list", oData);
-//                        startActivityForResult(intent, 101);
-//                        finish();
-//                        best_destination=oData;
+                        Delivery_Status d=new Delivery_Status();
+                        d.totalTime=((JSONObject)jobj.get("properties")).getString("totalTime");
+                        d.totalDistance=((JSONObject)jobj.get("properties")).getString("totalDistance");
+                        for(int i=1;i<=count;i++){
+
+                                String id=((JSONObject)((JSONObject)((JSONArray)jobj.get("features")).get(i*2)).get("properties")).getString("viaPointName");
+                                id=String.valueOf(Integer.parseInt(id.substring(4))-1);
+                                d.destination_point.add(id);
+
+                            String time=((JSONObject)((JSONObject)((JSONArray)jobj.get("features")).get(i*2)).get("properties")).getString("time");
+                            String distance=((JSONObject)((JSONObject)((JSONArray)jobj.get("features")).get(i*2)).get("properties")).getString("distance");
+                            d.destination_time.add(time);
+                            d.destination_distance.add(distance);
+                        }
+                        destination_list.add(d);
                     } else {
                         Log.d("error", "Connect fail");
                     }
+
                     conn.disconnect();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -285,311 +252,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    public JSONObject test(ArrayList<Item_UserInfo> oData){
-        try {
 
-            long now = System.currentTimeMillis();
-            Date date = new Date(now);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm", Locale.KOREA);
-
-            JSONObject jobj_start = new JSONObject();
-            jobj_start.put("reqCoordType", "WGS84GEO");
-            jobj_start.put("resCoordType", "EPSG3857");
-            jobj_start.put("startName", "start");
-            jobj_start.put("startX", String.valueOf(UtilSet.longitude));
-            jobj_start.put("startY",  String.valueOf(UtilSet.latitude));
-            jobj_start.put("startTime", sdf.format(date));
-            jobj_start.put("endName", "destination");
-            jobj_start.put("endX",  String.valueOf(oData.get(0).destination_long));
-            jobj_start.put("endY",  String.valueOf(oData.get(0).destination_lat));
-
-            JSONArray jarray_via = new JSONArray();
-            JSONObject jobj_via = new JSONObject();
-            jobj_via.put("viaPointId", "1");
-            jobj_via.put("viaPointName", oData.get(1).destination);
-            jobj_via.put("viaX",  String.valueOf(oData.get(1).destination_long));
-            jobj_via.put("viaY",  String.valueOf(oData.get(1).destination_lat));
-            jarray_via.put(jobj_via);
-            jobj_start.put("viaPoints", jarray_via);
-//
-//            jobj_start = new JSONObject();
-//            jobj_start.put("reqCoordType", "WGS84GEO");
-//            jobj_start.put("resCoordType", "WGS84GEO");
-//            jobj_start.put("startName", "start");
-//            jobj_start.put("startX", UtilSet.longitude);
-//            jobj_start.put("startY", UtilSet.latitude);
-//            jobj_start.put("startTime", sdf.format(date));
-//            jobj_start.put("endName", "destination");
-//            jobj_start.put("endX", oData.get(1).destination_long);
-//            jobj_start.put("endY", oData.get(1).destination_lat);
-//
-//            jarray_via = new JSONArray();
-//            jobj_via = new JSONObject();
-//            jobj_via.put("viaPointId", "1");
-//            jobj_via.put("viaPointName", oData.get(0).destination);
-//            jobj_via.put("viaX", oData.get(0).destination_long);
-//            jobj_via.put("viaY", oData.get(0).destination_lat);
-//            jarray_via.put(jobj_via);
-//
-//            jobj_start.put("viaPoints", jarray_via);
-//            jarray.put(jobj_start);
-            return jobj_start;
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-    public JSONArray case_destination(ArrayList<Item_UserInfo> oData){
-        if(oData.size()==2){
-            try{
-                long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm", Locale.KOREA);
-
-                JSONArray jarray=new JSONArray();
-
-                JSONObject jobj_start=new JSONObject();
-                jobj_start.put("reqCoordType","WGS84GEO");
-                jobj_start.put("resCoordType","WGS84GEO");
-                jobj_start.put("startName","start");
-                jobj_start.put("startX",UtilSet.longitude);
-                jobj_start.put("startY",UtilSet.latitude);
-                jobj_start.put("startTime",sdf.format(date));
-                jobj_start.put("endName","destination");
-                jobj_start.put("endX",oData.get(0).destination_long);
-                jobj_start.put("endY",oData.get(0).destination_lat);
-
-                JSONArray jarray_via=new JSONArray();
-                JSONObject jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","1");
-                jobj_via.put("viaPointName",oData.get(1).destination);
-                jobj_via.put("viaX",oData.get(1).destination_long);
-                jobj_via.put("viaY",oData.get(1).destination_lat);
-                jarray_via.put(jobj_via);
-                jobj_start.put("viaPoints",jarray_via);
-                jarray.put(jobj_start);
-
-                jobj_start=new JSONObject();
-                jobj_start.put("reqCoordType","WGS84GEO");
-                jobj_start.put("resCoordType","WGS84GEO");
-                jobj_start.put("startName","start");
-                jobj_start.put("startX",UtilSet.longitude);
-                jobj_start.put("startY",UtilSet.latitude);
-                jobj_start.put("startTime",sdf.format(date));
-                jobj_start.put("endName","destination");
-                jobj_start.put("endX",oData.get(1).destination_long);
-                jobj_start.put("endY",oData.get(1).destination_lat);
-
-                jarray_via=new JSONArray();
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","1");
-                jobj_via.put("viaPointName",oData.get(0).destination);
-                jobj_via.put("viaX",oData.get(0).destination_long);
-                jobj_via.put("viaY",oData.get(0).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_start.put("viaPoints",jarray_via);
-                jarray.put(jobj_start);
-
-                return jarray;
-            }catch(JSONException e){
-                e.printStackTrace();
-                return null;
-
-            }
-
-
-        }else if(oData.size()==3){
-            try{
-                long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
-
-                JSONArray jarray=new JSONArray();
-
-                // delivery - 1 - 2 - 0
-                JSONObject jobj_start=new JSONObject();
-                jobj_start.put("reqCoordType","WGS84GEO");
-                jobj_start.put("resCoordType","WGS84GEO");
-                jobj_start.put("startName","start");
-                jobj_start.put("startX",UtilSet.longitude);
-                jobj_start.put("startY",UtilSet.latitude);
-                jobj_start.put("startTime",sdf.format(date));
-                jobj_start.put("endName","destination");
-                jobj_start.put("endX",oData.get(0).destination_long);
-                jobj_start.put("endY",oData.get(0).destination_lat);
-                JSONArray jarray_via=new JSONArray();
-
-                JSONObject jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","1");
-                jobj_via.put("viaPointName",oData.get(1).destination);
-                jobj_via.put("viaX",oData.get(1).destination_long);
-                jobj_via.put("viaY",oData.get(1).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","2");
-                jobj_via.put("viaPointName",oData.get(2).destination);
-                jobj_via.put("viaX",oData.get(2).destination_long);
-                jobj_via.put("viaY",oData.get(2).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_start.put("viaPoints",jarray_via);
-                jarray.put(jobj_start);
-
-                // delivery - 2 - 1 - 0
-                jobj_start=new JSONObject();
-                jobj_start.put("reqCoordType","WGS84GEO");
-                jobj_start.put("resCoordType","WGS84GEO");
-                jobj_start.put("startName","start");
-                jobj_start.put("startX",UtilSet.longitude);
-                jobj_start.put("startY",UtilSet.latitude);
-                jobj_start.put("startTime",sdf.format(date));
-                jobj_start.put("endName","destination");
-                jobj_start.put("endX",oData.get(0).destination_long);
-                jobj_start.put("endY",oData.get(0).destination_lat);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","1");
-                jobj_via.put("viaPointName",oData.get(2).destination);
-                jobj_via.put("viaX",oData.get(2).destination_long);
-                jobj_via.put("viaY",oData.get(2).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","2");
-                jobj_via.put("viaPointName",oData.get(1).destination);
-                jobj_via.put("viaX",oData.get(1).destination_long);
-                jobj_via.put("viaY",oData.get(1).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_start.put("viaPoints",jarray_via);
-                jarray.put(jobj_start);
-
-                // delivery - 0 - 2 - 1
-                jobj_start=new JSONObject();
-                jobj_start.put("reqCoordType","WGS84GEO");
-                jobj_start.put("resCoordType","WGS84GEO");
-                jobj_start.put("startName","start");
-                jobj_start.put("startX",UtilSet.longitude);
-                jobj_start.put("startY",UtilSet.latitude);
-                jobj_start.put("startTime",sdf.format(date));
-                jobj_start.put("endName","destination");
-                jobj_start.put("endX",oData.get(1).destination_long);
-                jobj_start.put("endY",oData.get(1).destination_lat);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","1");
-                jobj_via.put("viaPointName",oData.get(0).destination);
-                jobj_via.put("viaX",oData.get(0).destination_long);
-                jobj_via.put("viaY",oData.get(0).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","2");
-                jobj_via.put("viaPointName",oData.get(2).destination);
-                jobj_via.put("viaX",oData.get(2).destination_long);
-                jobj_via.put("viaY",oData.get(2).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_start.put("viaPoints",jarray_via);
-                jarray.put(jobj_start);
-
-                // delivery - 2 - 0 - 1
-                jobj_start=new JSONObject();
-                jobj_start.put("reqCoordType","WGS84GEO");
-                jobj_start.put("resCoordType","WGS84GEO");
-                jobj_start.put("startName","start");
-                jobj_start.put("startX",UtilSet.longitude);
-                jobj_start.put("startY",UtilSet.latitude);
-                jobj_start.put("startTime",sdf.format(date));
-                jobj_start.put("endName","destination");
-                jobj_start.put("endX",oData.get(1).destination_long);
-                jobj_start.put("endY",oData.get(1).destination_lat);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","1");
-                jobj_via.put("viaPointName",oData.get(2).destination);
-                jobj_via.put("viaX",oData.get(2).destination_long);
-                jobj_via.put("viaY",oData.get(2).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","2");
-                jobj_via.put("viaPointName",oData.get(0).destination);
-                jobj_via.put("viaX",oData.get(0).destination_long);
-                jobj_via.put("viaY",oData.get(0).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_start.put("viaPoints",jarray_via);
-                jarray.put(jobj_start);
-
-                // delivery - 0 - 1 - 2
-                jobj_start=new JSONObject();
-                jobj_start.put("reqCoordType","WGS84GEO");
-                jobj_start.put("resCoordType","WGS84GEO");
-                jobj_start.put("startName","start");
-                jobj_start.put("startX",UtilSet.longitude);
-                jobj_start.put("startY",UtilSet.latitude);
-                jobj_start.put("startTime",sdf.format(date));
-                jobj_start.put("endName","destination");
-                jobj_start.put("endX",oData.get(2).destination_long);
-                jobj_start.put("endY",oData.get(2).destination_lat);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","1");
-                jobj_via.put("viaPointName",oData.get(0).destination);
-                jobj_via.put("viaX",oData.get(0).destination_long);
-                jobj_via.put("viaY",oData.get(0).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","2");
-                jobj_via.put("viaPointName",oData.get(1).destination);
-                jobj_via.put("viaX",oData.get(1).destination_long);
-                jobj_via.put("viaY",oData.get(1).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_start.put("viaPoints",jarray_via);
-                jarray.put(jobj_start);
-
-                // delivery - 1 - 0 - 2
-                jobj_start=new JSONObject();
-                jobj_start.put("reqCoordType","WGS84GEO");
-                jobj_start.put("resCoordType","WGS84GEO");
-                jobj_start.put("startName","start");
-                jobj_start.put("startX",UtilSet.longitude);
-                jobj_start.put("startY",UtilSet.latitude);
-                jobj_start.put("startTime",sdf.format(date));
-                jobj_start.put("endName","destination");
-                jobj_start.put("endX",oData.get(2).destination_long);
-                jobj_start.put("endY",oData.get(2).destination_lat);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","1");
-                jobj_via.put("viaPointName",oData.get(1).destination);
-                jobj_via.put("viaX",oData.get(1).destination_long);
-                jobj_via.put("viaY",oData.get(1).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_via=new JSONObject();
-                jobj_via.put("viaPointId","2");
-                jobj_via.put("viaPointName",oData.get(0).destination);
-                jobj_via.put("viaX",oData.get(0).destination_long);
-                jobj_via.put("viaY",oData.get(0).destination_lat);
-                jarray_via.put(jobj_via);
-
-                jobj_start.put("viaPoints",jarray_via);
-                jarray.put(jobj_start);
-                return jarray;
-            }catch(JSONException e){
-                e.printStackTrace();
-                return null;
-            }
-        }
-        return null;
-    }
     public void get_user_information(ArrayList<Item_UserInfo> oData, JSONObject jobj) {
         try {
             JSONArray json_result_al = (JSONArray) jobj.get("user_order");
@@ -701,4 +364,240 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
 
     }
 
+
+//    public void callcall(JSONObject oData){
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("https://api2.sktelecom.com/")
+//                .addConverterFactory(ScalarsConverterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        Service service=retrofit.create(Service.class);
+//        Call call = service.doList(oData.toString());
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onResponse(Call call, Response response) {
+//                if(response.isSuccessful()) {
+//                    Log.d("tag>>>", "성공");
+//                    JSONObject jobj= (JSONObject) response.body();
+//                    Log.d("jobj>>>", jobj.toString());
+//
+//                } else if(response.body() == null) {
+//                    Log.d("Null>>>", "null");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call call, Throwable t) {
+//                Log.d("tag>>>", "실패");
+//                Log.d("tag>>>", t.getMessage());
+//            }
+//        });
+//    }
+
+//    public void get_best_destination(ArrayList<Item_UserInfo> oData) {
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    JSONObject jsonParam = new JSONObject();
+//                    JSONArray jarray=case_destination(oData);
+//                    jsonParam.put("array",jarray);
+//
+//                    Log.d("json",jsonParam.toString());
+//                    HttpURLConnection conn = UtilSet.set_Connect_info(jsonParam);
+//
+//                    if (conn.getResponseCode() == 200) {
+//                        InputStream response = conn.getInputStream();
+//                        String jsonReply = UtilSet.convertStreamToString(response);
+//                        JSONObject jobj = new JSONObject(jsonReply);
+//                        ArrayList<Item_UserInfo> oData=new ArrayList<>();
+//                        get_user_information(oData,jobj);
+////                        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+////                        intent.putExtra("order_number", order_number);
+////                        intent.putExtra("list", oData);
+////                        startActivityForResult(intent, 101);
+////                        finish();
+////                        best_destination=oData;
+//                    } else {
+//                        Log.d("error", "Connect fail");
+//                    }
+//                    conn.disconnect();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        thread.start();
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
+public JSONArray case_destination(ArrayList<Item_UserInfo> oData){
+    if(oData.size()==2){
+        try{
+            long now = System.currentTimeMillis();
+            Date date = new Date(now);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm", Locale.KOREA);
+
+            JSONArray jarray=new JSONArray();
+            JSONObject jobj_start_dest=new JSONObject();
+            jobj_start_dest.put("reqCoordType","WGS84GEO");
+            jobj_start_dest.put("resCoordType","EPSG3857");
+            jobj_start_dest.put("startName","start");
+            jobj_start_dest.put("startX",String.valueOf(UtilSet.longitude));
+            jobj_start_dest.put("startY",String.valueOf(UtilSet.latitude));
+            jobj_start_dest.put("startTime",sdf.format(date));
+            jobj_start_dest.put("endName","1");
+            jobj_start_dest.put("endX",String.valueOf(oData.get(0).destination_long));
+            jobj_start_dest.put("endY",String.valueOf(oData.get(0).destination_lat));
+
+            JSONArray jarray_via=new JSONArray();
+            JSONObject jobj_via=new JSONObject();
+            jobj_via.put("viaPointId","2");
+            jobj_via.put("viaPointName",oData.get(1).destination);
+            jobj_via.put("viaX",String.valueOf(oData.get(1).destination_long));
+            jobj_via.put("viaY",String.valueOf(oData.get(1).destination_lat));
+            jarray_via.put(jobj_via);
+            jobj_start_dest.put("viaPoints",jarray_via);
+            jarray.put(jobj_start_dest);
+
+            jobj_start_dest=new JSONObject();
+            jobj_start_dest.put("reqCoordType","WGS84GEO");
+            jobj_start_dest.put("resCoordType","EPSG3857");
+            jobj_start_dest.put("startName","start");
+            jobj_start_dest.put("startX",String.valueOf(UtilSet.longitude));
+            jobj_start_dest.put("startY",String.valueOf(UtilSet.latitude));
+            jobj_start_dest.put("startTime",sdf.format(date));
+            jobj_start_dest.put("endName","2");
+            jobj_start_dest.put("endX",String.valueOf(oData.get(1).destination_long));
+            jobj_start_dest.put("endY",String.valueOf(oData.get(1).destination_lat));
+
+            jarray_via=new JSONArray();
+            jobj_via=new JSONObject();
+            jobj_via.put("viaPointId","1");
+            jobj_via.put("viaPointName",oData.get(0).destination);
+            jobj_via.put("viaX",String.valueOf(oData.get(0).destination_long));
+            jobj_via.put("viaY",String.valueOf(oData.get(0).destination_lat));
+            jarray_via.put(jobj_via);
+
+            jobj_start_dest.put("viaPoints",jarray_via);
+            jarray.put(jobj_start_dest);
+
+            Log.d("jarray",jarray.toString());
+            return jarray;
+        }catch(JSONException e){
+            e.printStackTrace();
+            return null;
+        }
+    }else if(oData.size()==3){
+        try{
+            long now = System.currentTimeMillis();
+            Date date = new Date(now);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm", Locale.KOREA);
+
+
+            JSONArray jarray=new JSONArray();
+
+            // delivery - 1 - 2 - 0
+            JSONObject jobj_start_dest=new JSONObject();
+            jobj_start_dest.put("reqCoordType","WGS84GEO");
+            jobj_start_dest.put("resCoordType","EPSG3857");
+            jobj_start_dest.put("startName","start");
+            jobj_start_dest.put("startX",String.valueOf(UtilSet.longitude));
+            jobj_start_dest.put("startY",String.valueOf(UtilSet.latitude));
+            jobj_start_dest.put("startTime",sdf.format(date));
+            jobj_start_dest.put("endName","1");
+            jobj_start_dest.put("endX",String.valueOf(oData.get(0).destination_long));
+            jobj_start_dest.put("endY",String.valueOf(oData.get(0).destination_lat));
+            JSONArray jarray_via=new JSONArray();
+
+            JSONObject jobj_via=new JSONObject();
+            jobj_via.put("viaPointId","1");
+            jobj_via.put("viaPointName","2");
+            jobj_via.put("viaX",String.valueOf(oData.get(1).destination_long));
+            jobj_via.put("viaY",String.valueOf(oData.get(1).destination_lat));
+            jarray_via.put(jobj_via);
+
+            jobj_via=new JSONObject();
+            jobj_via.put("viaPointId","2");
+            jobj_via.put("viaPointName","3");
+            jobj_via.put("viaX",String.valueOf(oData.get(2).destination_long));
+            jobj_via.put("viaY",String.valueOf(oData.get(2).destination_lat));
+            jarray_via.put(jobj_via);
+
+            jobj_start_dest.put("viaPoints",jarray_via);
+            jarray.put(jobj_start_dest);
+
+            // delivery - 0 - 2 - 1
+            jobj_start_dest=new JSONObject();
+            jobj_start_dest.put("reqCoordType","WGS84GEO");
+            jobj_start_dest.put("resCoordType","EPSG3857");
+            jobj_start_dest.put("startName","start");
+            jobj_start_dest.put("startX",String.valueOf(UtilSet.longitude));
+            jobj_start_dest.put("startY",String.valueOf(UtilSet.latitude));
+            jobj_start_dest.put("startTime",sdf.format(date));
+            jobj_start_dest.put("endName","2");
+            jobj_start_dest.put("endX",String.valueOf(oData.get(1).destination_long));
+            jobj_start_dest.put("endY",String.valueOf(oData.get(1).destination_lat));
+
+            jarray_via=new JSONArray();
+            jobj_via=new JSONObject();
+            jobj_via.put("viaPointId","1");
+            jobj_via.put("viaPointName","1");
+            jobj_via.put("viaX",String.valueOf(oData.get(0).destination_long));
+            jobj_via.put("viaY",String.valueOf(oData.get(0).destination_lat));
+            jarray_via.put(jobj_via);
+
+            jobj_via=new JSONObject();
+            jobj_via.put("viaPointId","2");
+            jobj_via.put("viaPointName","3");
+            jobj_via.put("viaX",String.valueOf(oData.get(2).destination_long));
+            jobj_via.put("viaY",String.valueOf(oData.get(2).destination_lat));
+            jarray_via.put(jobj_via);
+
+            jobj_start_dest.put("viaPoints",jarray_via);
+            jarray.put(jobj_start_dest);
+
+
+            // delivery - 0 - 1 - 2
+            jobj_start_dest=new JSONObject();
+            jobj_start_dest.put("reqCoordType","WGS84GEO");
+            jobj_start_dest.put("resCoordType","EPSG3857");
+            jobj_start_dest.put("startName","start");
+            jobj_start_dest.put("startX",String.valueOf(UtilSet.longitude));
+            jobj_start_dest.put("startY",String.valueOf(UtilSet.latitude));
+            jobj_start_dest.put("startTime",sdf.format(date));
+            jobj_start_dest.put("endName","3");
+            jobj_start_dest.put("endX",String.valueOf(oData.get(2).destination_long));
+            jobj_start_dest.put("endY",String.valueOf(oData.get(2).destination_lat));
+
+            jarray_via=new JSONArray();
+            jobj_via=new JSONObject();
+            jobj_via.put("viaPointId","1");
+            jobj_via.put("viaPointName","1");
+            jobj_via.put("viaX",String.valueOf(oData.get(0).destination_long));
+            jobj_via.put("viaY",String.valueOf(oData.get(0).destination_lat));
+            jarray_via.put(jobj_via);
+
+            jobj_via=new JSONObject();
+            jobj_via.put("viaPointId","2");
+            jobj_via.put("viaPointName","2");
+            jobj_via.put("viaX",String.valueOf(oData.get(1).destination_long));
+            jobj_via.put("viaY",String.valueOf(oData.get(1).destination_lat));
+            jarray_via.put(jobj_via);
+
+            jobj_start_dest.put("viaPoints",jarray_via);
+            jarray.put(jobj_start_dest);
+
+            Log.d("jarray",jarray.toString());
+            return jarray;
+        }catch(JSONException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    return null;
+}
 }

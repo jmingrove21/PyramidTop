@@ -1,8 +1,9 @@
 package com.example.app_delivery;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Item_UserInfo {
+public class Item_UserInfo implements Serializable {
     public int order_number;
     public int user_serial;
     public String user_name;

@@ -212,7 +212,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
                         GpsActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(GpsActivity.this, "toast 5"+address, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(GpsActivity.this, address, Toast.LENGTH_SHORT).show();
                                 UtilSet.my_user.setUser_address(address);
                                 address_text.setText(address);
                             }
@@ -223,7 +223,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                         GpsActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 //tMapView.setCenterPoint(UtilSet.latitude_gps,UtilSet.longitude_gps,true);
-                                Toast.makeText(GpsActivity.this, "toast 7"+address, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(GpsActivity.this, address, Toast.LENGTH_SHORT).show();
                                 UtilSet.my_user.setUser_address(address);
                                 address_text.setText(address);
                             }
@@ -250,12 +250,10 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             public void run() {
                 Tmap_async t_async = new Tmap_async("gps");
                 t_async.execute();
-
             }
         });
         thread.start();
     }
-
 
     public void GPS_search_address(View view){
         convertToAddress();
@@ -314,7 +312,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     @Override
     public void onLongPressEvent(ArrayList markerlist,
                                  ArrayList poilist, TMapPoint point) {
-        Toast.makeText(GpsActivity.this,"toast 2"+point.getLatitude(),Toast.LENGTH_SHORT);
+        Toast.makeText(GpsActivity.this," "+point.getLatitude(),Toast.LENGTH_SHORT);
     }
 
     public void GPS_ID_Complete(View view){
