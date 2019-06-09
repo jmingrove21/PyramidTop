@@ -211,7 +211,6 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         protected String doInBackground(Integer... integers) {
             try {
                 if(check==true){
-
                     lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                         latitude=gps_latitude;
                         longitude=gps_longitude;
