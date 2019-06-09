@@ -44,13 +44,19 @@ public class MapActivity extends AppCompatActivity {
     ArrayList alTmapPoint;
     TMapData tmapdata = new TMapData();
     private ListView m_oListView = null;
-
+    TextView detail_txt;
+    public ArrayList<String> destination_time;
+    public ArrayList<String> destination_distance;
+    String total_time;
+    String total_distance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
         order_number = getIntent().getIntExtra("order_number", 0);
+        total_time = getIntent().getStringExtra("total_time");
+        total_distance = getIntent().getStringExtra("total_distance");
 
         this.tMapView = new TMapView(this);
 
@@ -62,10 +68,21 @@ public class MapActivity extends AppCompatActivity {
         Log.d("좌표", String.valueOf(UtilSet.longitude));
         if (getIntent().hasExtra("list")) {
                 oData=(ArrayList<Item_UserInfo> )getIntent().getSerializableExtra("list");
+                Log.d("oData",oData.toString());
                 get_destination();
         }
+        if (getIntent().hasExtra("list_time")) {
+            destination_time=(ArrayList<String>)getIntent().getSerializableExtra("list_time");
+        }
+        if (getIntent().hasExtra("list_distance")) {
+            destination_distance=(ArrayList<String>)getIntent().getSerializableExtra("list_distance");
+        }
+
         int direct_check = getIntent().getIntExtra("direct", 0);
 
+        detail_txt=(TextView)findViewById(R.id.detail_txt);
+        String text="전체 거리 약 "+ Double.parseDouble(total_distance)/1000+" km, 예상소요시간 약 "+Integer.parseInt(total_time)/60+"분 입니다.";
+        detail_txt.setText(text);
         m_oListView = (ListView) findViewById(R.id.user_delivery_list);
         ListAdapter_user oAdapter = new ListAdapter_user(oData);
         m_oListView.setAdapter(oAdapter);
@@ -132,6 +149,7 @@ public class MapActivity extends AppCompatActivity {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         Log.i("confirm", jsonReply);
+                        alTmapPoint.remove(0);
                         if (jsonReply.equals("2\n")) {
                             Intent intentHome = new Intent(getBaseContext(), MainActivity.class);
                             intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -273,13 +291,12 @@ public class MapActivity extends AppCompatActivity {
                 tMapView.setCenterPoint(UtilSet.longitude, UtilSet.latitude);
 
                 if (alTmapPoint.size() == 1) {
-                    tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), (TMapPoint) alTmapPoint.get(alTmapPoint.size() - 1), new TMapData.FindPathDataListenerCallback() {
+                    tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), (TMapPoint) alTmapPoint.get(0), new TMapData.FindPathDataListenerCallback() {
                         @Override
                         public void onFindPathData(TMapPolyLine polyLine) {
                             polyLine.setLineColor(Color.BLUE);
                             polyLine.setLineWidth(8.0f);
                             tMapView.addTMapPath(polyLine);
-                            UtilSet.set_GPS_value(UtilSet.lm, MapActivity.this);
                         }
                     });
                     try {
@@ -291,9 +308,12 @@ public class MapActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    TMapPoint t_end = (TMapPoint) alTmapPoint.get(0);
-                    alTmapPoint.remove(0);
-                    tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), t_end, alTmapPoint, 0,
+                    TMapPoint t_end = (TMapPoint) alTmapPoint.get(alTmapPoint.size()-1);
+                    ArrayList tMap_via=new ArrayList();
+                    for(int i=0;i<alTmapPoint.size()-1;i++){
+                        tMap_via.add(alTmapPoint.get(i));
+                    }
+                    tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), t_end, tMap_via, 0,
                             new TMapData.FindPathDataListenerCallback() {
                                 @Override
                                 public void onFindPathData(TMapPolyLine polyLine) {
