@@ -204,9 +204,6 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
                     FirstMainActivity.lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                         latitude=UtilSet.latitude;
                         longitude=UtilSet.longitude;
-                        FirstMainActivity.lm=null;
-
-
                 }
                 final String address = new TMapData().convertGpsToAddress(latitude,longitude);
 
