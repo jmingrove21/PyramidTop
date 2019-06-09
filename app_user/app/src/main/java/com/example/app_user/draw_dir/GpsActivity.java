@@ -101,6 +101,8 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         setContentView(R.layout.activity_gps);
 
         UtilSet.set_GPS_permission(lm, GpsActivity.this);//GPS
+        UtilSet.longitude=127.015;
+        UtilSet.latitude=37.277;
         Log.d("longitude",""+UtilSet.longitude);
         Log.d("latitude",""+UtilSet.latitude);
 
