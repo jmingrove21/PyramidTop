@@ -481,7 +481,7 @@
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center_vertical"
+                                        android:layout_gravity="center_vertical"
                                         android:src="@drawable/check" />
                                 </LinearLayout>
 
@@ -619,7 +619,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="0.2"
+                                android:layout_weight="0.1"
                                 android:orientation="horizontal"
                                 android:weightSum="1">
 
@@ -643,6 +643,47 @@
                                     android:layout_weight="0.4"
                                     android:gravity="center"
                                     android:text="결제 방법:"
+                                    android:layout_gravity="center_vertical"
+                                    android:textColor="#000000"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:id="@+id/user_pay_method_input"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.5"
+                                    android:text='TextView'
+                                    android:layout_gravity="center_vertical"
+                                    android:textColor="#000000"
+                                    android:textSize="18sp" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.1"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.1"
+                                    android:padding="5dp">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:src="@drawable/check" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/user_pay_method"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.4"
+                                    android:gravity="center"
+                                    android:text="결제 금액:"
                                     android:layout_gravity="center_vertical"
                                     android:textColor="#000000"
                                     android:textSize="18sp" />

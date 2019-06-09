@@ -219,8 +219,9 @@ public class CreditActivity extends AppCompatActivity {
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
+                        Log.d("json_Result", jsonReply);
+
                         JSONObject jobj = new JSONObject(jsonReply);
-                        Log.d("json_Result", jobj.toString());
 
                         String json_result = jobj.getString("confirm");
                         if (json_result.equals("1")) {
