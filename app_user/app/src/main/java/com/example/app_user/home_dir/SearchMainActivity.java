@@ -255,8 +255,8 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "search_store");
                     jsonParam.put("search", search.getText().toString());
-                    jsonParam.put("user_lat", UtilSet.latitude);
-                    jsonParam.put("user_long", UtilSet.longitude);
+                    jsonParam.put("user_lat", UtilSet.my_user.get_user_latitude());
+                    jsonParam.put("user_long", UtilSet.my_user.get_user_longitude());
 
                     jsonParam.put("count", 5);
 
@@ -495,6 +495,11 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
     }
 
     public void GPSonClick(View view) {
+        if(UtilSet.my_user.get_user_latitude()==0.0||UtilSet.my_user.get_user_longitude()==0.0)
+        {
+            UtilSet.my_user.set_user_gps(UtilSet.latitude_gps,UtilSet.longitude_gps);
+            Log.d("GPS Setting - my location update",String.valueOf(UtilSet.my_user.get_user_latitude())+" "+String.valueOf(UtilSet.my_user.get_user_longitude()));
+        }
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
     }

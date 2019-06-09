@@ -1,26 +1,17 @@
 package com.example.app_user.Item_dir;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.LruCache;
 import android.view.View;
@@ -29,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_user.R;
-import com.skt.Tmap.TMapView;
 
 import org.json.JSONObject;
 
@@ -76,10 +66,11 @@ public class UtilSet {
     public static final String[] MENU_TYPE_TEXT = {"도시락","돈가스,일식","디저트","분식","야식","양식","족발,보쌈","중국음식","치킨","탕,찜","패스트푸드","피자","한식"};
     public static Store target_store;
     public final static int PERMISSION_REQUEST_CODE=1000;
-    public static double latitude=0;
-    public static double longitude=0;
+//    public static double latitude=0;
+//    public static double longitude=0;
+    public static double latitude_gps=0;
+    public static double longitude_gps=0;
     public static LoginLogoutInform loginLogoutInform = new LoginLogoutInform();
-    public static ToolbarInform toolbarInform = new ToolbarInform();
     public static int height;
     public static int width;
     public static String convertStreamToString(InputStream is) {
@@ -188,7 +179,7 @@ public class UtilSet {
             Toast.makeText(con, "권한 승인이 필요합니다", Toast.LENGTH_LONG).show();
             //showSettingsAlert(con);
         }
-        else if(mapPoint.isGps_flag()){
+        else{
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     1000,
                     1,
@@ -197,7 +188,6 @@ public class UtilSet {
                     1000,
                     1,
                     gpsLocationListener);
-            mapPoint.setGps_flag(true);
         }
     }
 
@@ -205,13 +195,12 @@ public class UtilSet {
         public void onLocationChanged(Location location) {
 
             String provider = location.getProvider();
-            longitude = location.getLongitude();
-            latitude = location.getLatitude();
+            longitude_gps = location.getLongitude();
+            latitude_gps = location.getLatitude();
 
-            Log.d("location","위치정보 : " + provider + "\n" +
-                    "위도 : " + longitude + "\n" +
-                    "경도 : " + latitude );
-
+            Log.d("GPS - location","위치정보 : " + provider + " " +
+                    "위도 : " + longitude_gps + " " +
+                    "경도 : " + latitude_gps );
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
