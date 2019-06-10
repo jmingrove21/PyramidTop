@@ -116,11 +116,13 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     Delivery_to_Store_Activity.refresh_status = false;
+
                     hideProgress();
                     Intent intent = new Intent(getApplicationContext(), MapActivity.class);
                     intent.putExtra("order_number", order_number);
-                    intent.putExtra("total_time", target_delivery.totalTime);
-                    intent.putExtra("total_distance", target_delivery.totalDistance);
+                    intent.putExtra("list", oData);
+                    intent.putExtra("total_time",destination_list.get(0).totalTime);
+                    intent.putExtra("total_distance", destination_list.get(0).totalDistance);
                     MapActivity.refresh_status = true;
                     startActivityForResult(intent, 101);
                     finish();
@@ -258,8 +260,8 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                         JSONObject jobj = new JSONObject(jsonReply);
                         Log.d("tmap-result",jobj.toString());
                         Delivery_Status d = new Delivery_Status();
-                        d.totalTime = ((JSONObject) jobj.get("properties")).getString("totalTime");
-                        d.totalDistance = ((JSONObject) jobj.get("properties")).getString("totalDistance");
+                        d.totalTime = ((JSONObject)((JSONObject)((JSONArray)jobj.get("features")).get(0)).get("properties")).getString("totalTime");
+                        d.totalDistance = ((JSONObject)((JSONObject)((JSONArray)jobj.get("features")).get(0)).get("properties")).getString("totalDistance");
                         destination_list.add(d);
                     } else {
                         Log.d("error", "Connect fail");

@@ -70,7 +70,8 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
                 super.onDrawerOpened(drawerView);
                 resfresh_mileage(view);
             }
-        };        drawer.addDrawerListener(toggle);
+        };
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
 
