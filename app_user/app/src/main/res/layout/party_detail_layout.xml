@@ -678,7 +678,7 @@
                                 </LinearLayout>
 
                                 <TextView
-                                    android:id="@+id/user_pay_method"
+                                    android:id="@+id/user_pay_price"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.4"
@@ -689,7 +689,7 @@
                                     android:textSize="18sp" />
 
                                 <TextView
-                                    android:id="@+id/user_pay_method_input"
+                                    android:id="@+id/user_pay_price_input"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="0.5"

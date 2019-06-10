@@ -122,7 +122,7 @@ public class CreditActivity extends AppCompatActivity {
 //        Spinner mySpinner = (Spinner) findViewById(R.id.your_spinner);
 //        String text = mySpinner.getSelectedItem().toString();
 
-        if(spinner_method.getSelectedItem().toString().equals("현장결제")) {
+        if(spinner_method.getSelectedItem().toString().equals("현장결제")) {;
             finish_credit(0);
 
         }else{
