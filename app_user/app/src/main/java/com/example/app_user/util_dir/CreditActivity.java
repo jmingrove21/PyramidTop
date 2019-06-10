@@ -122,7 +122,7 @@ public class CreditActivity extends AppCompatActivity {
 //        Spinner mySpinner = (Spinner) findViewById(R.id.your_spinner);
 //        String text = mySpinner.getSelectedItem().toString();
 
-        if(spinner_method.getSelectedItem().toString().equals("현장결제")) {
+        if(spinner_method.getSelectedItem().toString().equals("현장결제")) {;
             finish_credit(0);
 
         }else{
@@ -219,8 +219,9 @@ public class CreditActivity extends AppCompatActivity {
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
+                        Log.d("json_Result", jsonReply);
+
                         JSONObject jobj = new JSONObject(jsonReply);
-                        Log.d("json_Result", jobj.toString());
 
                         String json_result = jobj.getString("confirm");
                         if (json_result.equals("1")) {
