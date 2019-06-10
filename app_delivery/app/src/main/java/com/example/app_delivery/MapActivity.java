@@ -166,6 +166,7 @@ public class MapActivity extends AppCompatActivity {
                         jsonParam.put("delivery_status", 0);//한 user complete
                     else if (delivery_status == 0)
                         jsonParam.put("delivery_status", 1);//한 user complete
+                    
                     jsonParam.put("order_number", oData.get(position).order_number);
                     jsonParam.put("user_serial", oData.get(position).user_serial);
                     jsonParam.put("delivery_id", UtilSet.delivery_id);
