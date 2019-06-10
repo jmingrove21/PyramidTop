@@ -123,7 +123,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     }
                 }
                 int result = 0;
-                for (int j = 0; j < destination_list.size() - 1; j++) {
+                for (int j = 0; j < destination_list.size(); j++) {
                     if (Integer.valueOf(destination_list.get(j).totalTime) <= Integer.valueOf(destination_list.get(result).totalTime)) {
                         result = j;
                     }
@@ -225,6 +225,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(jsonReply);
+                        Log.d("tmap-result",jobj.toString());
                         Delivery_Status d = new Delivery_Status();
                         d.totalTime = ((JSONObject) jobj.get("properties")).getString("totalTime");
                         d.totalDistance = ((JSONObject) jobj.get("properties")).getString("totalDistance");
