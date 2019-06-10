@@ -198,8 +198,8 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             public void run() {
                 try {
                     Thread.sleep(1000);
-                    //              URL url = new URL("https://api2.sktelecom.com/tmap/routes/routeOptimization30?version=1");
-                    URL url = new URL("https://api2.sktelecom.com/tmap/routes/routeSequential30?version=1");
+                    URL url = new URL("https://api2.sktelecom.com/tmap/routes/routeOptimization10?version=1");
+                    //URL url = new URL("https://api2.sktelecom.com/tmap/routes/routeSequential30?version=1");
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
