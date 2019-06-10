@@ -1,6 +1,8 @@
 package com.example.app_delivery;
 
-public class Menu {
+import java.io.Serializable;
+
+public class Menu implements Serializable {
     public String menu_name;
     public int menu_count;
     public int menu_price;
