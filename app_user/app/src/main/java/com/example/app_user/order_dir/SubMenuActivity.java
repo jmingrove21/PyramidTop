@@ -25,12 +25,11 @@ import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.UtilSet;
-import com.example.app_user.Profile;
+import com.example.app_user.util_dir.Profile;
 import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.home_dir.FirstMainActivity;
-import com.example.app_user.home_dir.MenuActivity;
 import com.example.app_user.people_dir.PeopleFragment;
 import com.example.app_user.util_dir.CreditActivity;
 import com.example.app_user.util_dir.MenuCustomAdapter;
@@ -41,9 +40,6 @@ import com.example.app_user.util_dir.StoreDetailFragment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 
 public class SubMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
     private DrawerLayout drawer;
@@ -153,11 +149,11 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                             new Old_Orderlist()).commit();
                     break;
-                case R.id.menu_idoption:
-                    getSupportActionBar().setTitle("계정 설정");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-                            new Profile()).commit();
-                    break;
+//                case R.id.menu_idoption:
+//                    getSupportActionBar().setTitle("계정 설정");
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+//                            new Profile()).commit();
+//                    break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
                     UtilSet.my_user=null;
