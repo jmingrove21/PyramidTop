@@ -86,15 +86,15 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
         Log.d("longitude",""+UtilSet.my_user.get_user_longitude());
         Log.d("latitude",""+UtilSet.my_user.get_user_latitude());
-
+        if(UtilSet.my_user.get_user_longitude()==0.0||UtilSet.my_user.get_user_latitude()==0.0){
+            UtilSet.my_user.set_user_gps(UtilSet.latitude_gps,UtilSet.longitude_gps);
+        }
         backPressCloseHandler = new BackPressCloseHandler(this);
         address_text = findViewById(R.id.address_text);
         detail_address_input = findViewById(R.id.detail_address_input);
 
         mContext = this;
-
         gps_button = findViewById(R.id.GPS_button);
-
         tmapdata = new TMapData();
         LinearLayout linearLayout = findViewById(R.id.map_view);
         tMapView = new TMapView(this);

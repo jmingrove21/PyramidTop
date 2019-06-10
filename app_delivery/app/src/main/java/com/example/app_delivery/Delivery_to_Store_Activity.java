@@ -105,6 +105,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         start_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                start_button.setEnabled(false);
                 delivery_start_event();
                 showProgress("최적 경로를 구성중입니다...");
                 if (oData.size() == 1) {
@@ -392,7 +393,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                 JSONArray jarray_via = new JSONArray();
                 JSONObject jobj_via = new JSONObject();
                 jobj_via.put("viaPointId", "2");
-                jobj_via.put("viaPointName", oData.get(1).destination);
+                jobj_via.put("viaPointName", "2");
                 jobj_via.put("viaX", String.valueOf(oData.get(1).destination_long));
                 jobj_via.put("viaY", String.valueOf(oData.get(1).destination_lat));
                 jarray_via.put(jobj_via);
@@ -413,7 +414,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                 jarray_via = new JSONArray();
                 jobj_via = new JSONObject();
                 jobj_via.put("viaPointId", "1");
-                jobj_via.put("viaPointName", oData.get(0).destination);
+                jobj_via.put("viaPointName", "1");
                 jobj_via.put("viaX", String.valueOf(oData.get(0).destination_long));
                 jobj_via.put("viaY", String.valueOf(oData.get(0).destination_lat));
                 jarray_via.put(jobj_via);
