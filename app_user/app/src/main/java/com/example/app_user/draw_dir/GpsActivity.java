@@ -1,56 +1,41 @@
 package com.example.app_user.draw_dir;
 
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
-import android.location.Address;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.MapPoint;
-import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
 import com.example.app_user.home_dir.FirstMainActivity;
-import com.example.app_user.home_dir.MenuActivity;
 import com.example.app_user.util_dir.BackPressCloseHandler;
-import com.example.app_user.util_dir.LoginActivity;
 import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPOIItem;
 import com.skt.Tmap.TMapPoint;
-import com.skt.Tmap.TMapTapi;
 import com.skt.Tmap.TMapView;
 
 import java.util.ArrayList;
 
-import javax.crypto.spec.GCMParameterSpec;
 
-import static com.example.app_user.Item_dir.UtilSet.gpsLocationListener;
-import static com.example.app_user.Item_dir.UtilSet.latitude_gps;
 
 public class GpsActivity extends Activity implements TMapGpsManager.onLocationChangedCallback, TMapView.OnLongClickListenerCallback {
     private EditText GPS_editText;
@@ -242,7 +227,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
 
     public void GPS_current_position_track(View view){
         tMapView.setLocationPoint(UtilSet.longitude_gps,UtilSet.latitude_gps);
-        tMapView.setCenterPoint(UtilSet.longitude_gps, latitude_gps,true);
+        tMapView.setCenterPoint(UtilSet.longitude_gps, UtilSet.latitude_gps,true);
 
         Thread thread = new Thread(new Runnable() {
             @Override
