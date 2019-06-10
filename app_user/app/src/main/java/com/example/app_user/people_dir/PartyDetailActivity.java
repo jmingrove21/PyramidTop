@@ -20,6 +20,7 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.Order;
@@ -38,6 +39,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
     private DrawerLayout drawer;
     int index;
     View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -46,6 +48,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.party_detail_layout);
         /////
         findViewById(R.id.btnAlert).setOnClickListener(this);
+        findViewById(R.id.btnCancel).setOnClickListener(this);
         ////
         Intent intent = getIntent();
         index = intent.getIntExtra("index", 0);
@@ -110,10 +113,12 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         text_user_deliver_start_time_input.setText(o.getDelivery_departure_time());
         text_user_deliver_complete_time_input.setText(o.getDelivery_arrival_time());
     }
+
     public void resfresh_mileage(View view){
         TextView user_mil= view.findViewById(R.id.user_mileage);
         user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if(LoginLogoutInform.getLogin_flag()==1){
@@ -208,6 +213,23 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
                 intent.putExtra("index",index);
                 startActivity(intent);
                 break;
+
+            case R.id.btnCancel:
+
+                /* *******************************************************************************
+                서버와의 통신연결과정에서 서버가 orderStatus==1 (접수대기중) 일경우 confirm 1을 반환
+                *********************************************************************************** */
+
+                //주문 삭제시 서버에게 현재 PartyDetailActivity의 54번째 줄 index를 넘김
+                    //서버로부터 실시간 order_status를 받아 값이 일치할 경우 서버에서 해당 주문 삭제 후 사용자는 FirstMainActivity로 전환
+                    if(UtilSet.al_my_order.get(index).getOrderStatus()==R.drawable.wait){  //==> 괄호안 confirm값이 1일때로 수정 필요
+                    Toast.makeText(PartyDetailActivity.this,"주문이 취소되었습니다.",Toast.LENGTH_SHORT).show();
+                    Intent delete_order_intent = new Intent(this,FirstMainActivity.class);
+                    startActivity(delete_order_intent);
+                }else{ //confirm 1이 아닐 경우
+                    Toast.makeText(PartyDetailActivity.this,"접수 대기중에만 취소가 가능합니다.",Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
@@ -245,7 +267,6 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
             return view;
         }
     }
-
 
     public void GPSonClick(View view){
         if(UtilSet.my_user.get_user_latitude()==0.0||UtilSet.my_user.get_user_longitude()==0.0)

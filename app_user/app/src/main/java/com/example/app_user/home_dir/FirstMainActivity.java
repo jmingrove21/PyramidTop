@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.ToolbarInform;
+import com.example.app_user.Item_dir.User;
 import com.example.app_user.MyService;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.BackPressCloseHandler;
@@ -62,6 +64,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
     public static int store_type = -1;
+    int delete_order_index;
     Point point;
     View view;
     @Override
@@ -69,10 +72,24 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_main);
 
+        //기존 사용자가 주문한 내역 삭제에 사용됐던 코드
+        //삭제 변경 완료시 현재 주석 코드 삭제하여도 무방
+//        if(UtilSet.order_delete_check_flag){
+//            Intent delete_order_intent = new Intent();
+//            delete_order_intent.getIntExtra("delete_order_index",-1);
+//
+//            if(delete_order_index != -1){
+//                //서버에게 delete_order_index를 삭제하기 위해 요청하는 곳
+//            }
+//            UtilSet.order_delete_check_flag = false;
+//        }
+
         permissionCheck();
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         UtilSet.set_GPS_permission(lm, this);//GPS
         set_display_width_height();
+
+
 
         Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
         startService(intent_alert);//알림

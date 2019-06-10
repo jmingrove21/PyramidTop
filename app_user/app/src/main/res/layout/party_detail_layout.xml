@@ -703,16 +703,30 @@
                 </LinearLayout>
 
                 <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.03">
+                <Button
+                    android:id="@+id/btnAlert"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#4AC66D"
+                    android:text="참가 주문자 확인"
+                    android:textColor="#ffffff"
+                    android:textSize="25sp"
+                    android:layout_marginBottom="3sp"/>
+            </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="0.05">
-
+                    android:layout_weight="0.02">
                     <Button
-                        android:id="@+id/btnAlert"
+                        android:id="@+id/btnCancel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#4AC66D"
-                        android:text="참가 주문자 확인"
+                        android:text="주문 취소"
                         android:textColor="#ffffff"
                         android:textSize="25sp"
                         android:layout_marginBottom="3sp"/>
@@ -727,10 +741,10 @@
             app:menu="@menu/party_sub_bottom_navigation"
             android:background="?android:attr/windowBackground"/>
     </RelativeLayout>
-    <!--<android.support.design.widget.NavigationView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:id="@+id/nav_view"-->
-        <!--/>-->
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:id="@+id/nav_view"
+        />
 </android.support.v4.widget.DrawerLayout>
