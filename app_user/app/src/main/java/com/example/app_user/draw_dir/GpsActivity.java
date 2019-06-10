@@ -99,7 +99,6 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
 
-
         Log.d("longitude",""+UtilSet.my_user.get_user_longitude());
         Log.d("latitude",""+UtilSet.my_user.get_user_latitude());
 

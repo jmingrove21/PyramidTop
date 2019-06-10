@@ -27,13 +27,15 @@ import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapTapi;
 import com.skt.Tmap.TMapView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.internal.Util;
 
 
 public class MapActivity extends AppCompatActivity {
@@ -78,11 +80,38 @@ public class MapActivity extends AppCompatActivity {
             destination_distance=(ArrayList<String>)getIntent().getSerializableExtra("list_distance");
         }
 
-        int direct_check = getIntent().getIntExtra("direct", 0);
-
         detail_txt=(TextView)findViewById(R.id.detail_txt);
         String text="전체 거리 약 "+ Double.parseDouble(total_distance)/1000+" km, 예상소요시간 약 "+Integer.parseInt(total_time)/60+"분 입니다.";
         detail_txt.setText(text);
+        CircleImageView go_to_user=(CircleImageView)findViewById(R.id.go_to_tmap_user);
+
+        go_to_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TMapTapi tMapTapi = new TMapTapi(MapActivity.this);
+
+                HashMap pathInfo = new HashMap();
+
+                pathInfo.put("rGoName", "도착");
+                pathInfo.put("rGoX", String.valueOf(((TMapPoint)alTmapPoint.get(alTmapPoint.size()-1)).getLongitude()));
+                pathInfo.put("rGoY", String.valueOf(((TMapPoint)alTmapPoint.get(alTmapPoint.size()-1)).getLatitude()));
+
+                pathInfo.put("rStName", "출발지");
+                pathInfo.put("rStX", String.valueOf(UtilSet.longitude));
+                pathInfo.put("rStY", String.valueOf(UtilSet.latitude));
+
+                for(int i=0;i<alTmapPoint.size()-1;i++){
+                    String str_x="rV"+String.valueOf(i+1)+"X";
+                    String str_y="rV"+String.valueOf(i+1)+"Y";
+                    String str_d="rV"+String.valueOf(i+1)+"Name";
+                    pathInfo.put(str_d, "경유지"+String.valueOf(i+1));
+                    pathInfo.put(str_x, String.valueOf(((TMapPoint)alTmapPoint.get(alTmapPoint.size()-1)).getLongitude()));
+                    pathInfo.put(str_y, String.valueOf(((TMapPoint)alTmapPoint.get(alTmapPoint.size()-1)).getLatitude()));
+                }
+
+                tMapTapi.invokeRoute(pathInfo);
+            }
+        });
         m_oListView = (ListView) findViewById(R.id.user_delivery_list);
         ListAdapter_user oAdapter = new ListAdapter_user(oData);
         m_oListView.setAdapter(oAdapter);
@@ -92,15 +121,12 @@ public class MapActivity extends AppCompatActivity {
                 System.out.println("byebye");
             }
         });
-
     }
 
     private void set_MapView() {
         LinearLayout linearLayoutTmap = (LinearLayout) findViewById(R.id.linearLayoutTmap);
         linearLayoutTmap.addView(tMapView);
     }
-
-
 
     private void get_destination() {
         try {
@@ -155,6 +181,7 @@ public class MapActivity extends AppCompatActivity {
                             intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intentHome.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intentHome);
+                            MapActivity.refresh_status = false;
                             finish();
                         }
                     } else {
@@ -216,7 +243,7 @@ public class MapActivity extends AppCompatActivity {
             TextView oUserTotal = (TextView) convertView.findViewById(R.id.user_total_price);
             TextView oUserPayStatus = (TextView) convertView.findViewById(R.id.pay_status);
             final Button oButton = (Button) convertView.findViewById(R.id.delivery_finish_btn);
-            Button tMap_btn = (Button) convertView.findViewById(R.id.delivery_navigation);
+            Button tMap_btn = (Button) convertView.findViewById(R.id.user_menu_detail);
             oUserName.setText(m_oData.get(position).user_name);
             oUserPhone.setText(m_oData.get(position).user_phone);
             oUserDestination.setText(m_oData.get(position).destination);
@@ -264,7 +291,6 @@ public class MapActivity extends AppCompatActivity {
             Bitmap bitmap_delivery = BitmapFactory.decodeResource(getResources(), R.drawable.marker3);
             Bitmap bitmap_store = BitmapFactory.decodeResource(getResources(), R.drawable.marker1);
 
-
             while (true) {
 
                 TMapMarkerItem markerItem1 = new TMapMarkerItem();
@@ -287,7 +313,7 @@ public class MapActivity extends AppCompatActivity {
                     //지도에 마커 추가
                     tMapView.addMarkerItem("markerItem" + (i + 1), markerItem1);
                 }
-                Log.d("tmap_destination",alTmapPoint.toString());
+                Log.d("tmap_destination", alTmapPoint.toString());
                 tMapView.setCenterPoint(UtilSet.longitude, UtilSet.latitude);
 
                 if (alTmapPoint.size() == 1) {
@@ -306,31 +332,68 @@ public class MapActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-                else {
-                    TMapPoint t_end = (TMapPoint) alTmapPoint.get(alTmapPoint.size()-1);
-                    ArrayList tMap_via=new ArrayList();
-                    for(int i=0;i<alTmapPoint.size()-1;i++){
+                } else {
+                    Log.d("tmapPoint size", String.valueOf(alTmapPoint.size()));
+                    TMapPoint t_end = (TMapPoint) alTmapPoint.get(alTmapPoint.size() - 1);
+                    ArrayList tMap_via = new ArrayList();
+                    for (int i = 0; i < alTmapPoint.size() - 1; i++) {
                         tMap_via.add(alTmapPoint.get(i));
                     }
-                    tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), t_end, tMap_via, 0,
-                            new TMapData.FindPathDataListenerCallback() {
-                                @Override
-                                public void onFindPathData(TMapPolyLine polyLine) {
-                                    polyLine.setLineColor(Color.BLUE);
-                                    polyLine.setLineWidth(8.0f);
-                                    tMapView.addTMapPath(polyLine);
-                                }
-                            });
-                }try {
-                    Thread.sleep(10000);
-                    if (MapActivity.refresh_status == false)
-                        break;
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.d("Distance",String.valueOf( getDistance(UtilSet.longitude, UtilSet.latitude, ((TMapPoint) alTmapPoint.get(0)).getLongitude(), ((TMapPoint) alTmapPoint.get(0)).getLatitude()) ));
+                    if (alTmapPoint.size() == 2 && getDistance(UtilSet.longitude, UtilSet.latitude, ((TMapPoint) alTmapPoint.get(0)).getLongitude(), ((TMapPoint) alTmapPoint.get(0)).getLatitude()) <= 0.03) {
+                        tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), (TMapPoint) alTmapPoint.get(1), new TMapData.FindPathDataListenerCallback() {
+                            @Override
+                            public void onFindPathData(TMapPolyLine polyLine) {
+                                polyLine.setLineColor(Color.BLUE);
+                                polyLine.setLineWidth(8.0f);
+                                tMapView.addTMapPath(polyLine);
+                            }
+                        });
+                        try {
+                            Thread.sleep(10000);
+                            if (MapActivity.refresh_status == false)
+                                break;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }else if (alTmapPoint.size() == 3 && getDistance(UtilSet.longitude, UtilSet.latitude, ((TMapPoint) alTmapPoint.get(0)).getLongitude(), ((TMapPoint) alTmapPoint.get(0)).getLatitude()) <= 0.03) {
+                        tMap_via.remove(0);
+                        tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), t_end, tMap_via, 0,
+                                new TMapData.FindPathDataListenerCallback() {
+                            @Override
+                            public void onFindPathData(TMapPolyLine polyLine) {
+                                polyLine.setLineColor(Color.BLUE);
+                                polyLine.setLineWidth(8.0f);
+                                tMapView.addTMapPath(polyLine);
+                            }
+                        });
+                        try {
+                            Thread.sleep(10000);
+                            if (MapActivity.refresh_status == false)
+                                break;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), t_end, tMap_via, 0,
+                                new TMapData.FindPathDataListenerCallback() {
+                                    @Override
+                                    public void onFindPathData(TMapPolyLine polyLine) {
+                                        polyLine.setLineColor(Color.BLUE);
+                                        polyLine.setLineWidth(8.0f);
+                                        tMapView.addTMapPath(polyLine);
+                                    }
+                                });
+                    }
+                    try {
+                        Thread.sleep(10000);
+                        if (MapActivity.refresh_status == false)
+                            break;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
             return null;
         }
 
@@ -358,5 +421,27 @@ public class MapActivity extends AppCompatActivity {
         protected void onCancelled() {
             super.onCancelled();
         }
+    }
+    public static double getDistance(double startPointLon, double startPointLat, double endPointLon, double endPointLat) {
+        double d2r = Math.PI / 180;
+        double dStartPointLon =startPointLon;
+        double dStartPointLat =startPointLat;
+        double dEndPointLon = endPointLon;
+        double dEndPointLat = endPointLat;
+
+        double dLon = (dEndPointLon - dStartPointLon) * d2r;
+        double dLat = (dEndPointLat - dStartPointLat) * d2r;
+
+        double a = Math.pow(Math.sin(dLat / 2.0), 2)
+                + Math.cos(dStartPointLat * d2r)
+                * Math.cos(dEndPointLat * d2r)
+                * Math.pow(Math.sin(dLon / 2.0), 2);
+
+        double c = Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 2;
+
+        double distance = c * 6378;
+
+        return distance;
+
     }
 }
