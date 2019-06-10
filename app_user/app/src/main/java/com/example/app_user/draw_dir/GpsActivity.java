@@ -228,7 +228,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     public void GPS_current_position_track(View view){
         tMapView.setLocationPoint(UtilSet.longitude_gps,UtilSet.latitude_gps);
         tMapView.setCenterPoint(UtilSet.longitude_gps, UtilSet.latitude_gps,true);
-
+        UtilSet.my_user.set_user_gps(UtilSet.latitude_gps,UtilSet.longitude_gps);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
