@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.Order;
+import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.Profile;
 import com.example.app_user.R;
@@ -106,7 +107,7 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
 
         text_user_order_price_sum_input.setText(o.getMy_order_total_price() + "원");
         text_user_order_time_input.setText(o.getOrder_create_date());
-        text_user_pay_method_input.setText("pay method input");
+        text_user_pay_method_input.setText(o.getMy_pay_status());
         text_user_pay_price_input.setText(o.getMy_pay_price()+"원");
         text_user_order_complete_time_input.setText(o.getOrder_receipt_date());
         text_user_deliver_start_time_input.setText(o.getDelivery_departure_time());

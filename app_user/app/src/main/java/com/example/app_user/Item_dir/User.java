@@ -17,6 +17,7 @@ public class User implements Serializable {
     private double user_longitude=0;
 
     private String user_address;
+
     transient int user_price;
     public User(String user_id, String user_password, int user_serial, String user_name, int user_mileage, String user_img){
         this.user_img = user_img;
