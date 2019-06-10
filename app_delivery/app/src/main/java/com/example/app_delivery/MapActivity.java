@@ -35,12 +35,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.internal.Util;
 
 
 public class MapActivity extends AppCompatActivity {
     static boolean refresh_status = true;
-    public ArrayList<Item_UserInfo> oData = new ArrayList<>();
+    public static ArrayList<Item_UserInfo> oData = new ArrayList<>();
     public int order_number;
     TMapView tMapView;
     ArrayList alTmapPoint;
@@ -166,7 +165,7 @@ public class MapActivity extends AppCompatActivity {
                         jsonParam.put("delivery_status", 0);//한 user complete
                     else if (delivery_status == 0)
                         jsonParam.put("delivery_status", 1);//한 user complete
-                    
+
                     jsonParam.put("order_number", oData.get(position).order_number);
                     jsonParam.put("user_serial", oData.get(position).user_serial);
                     jsonParam.put("delivery_id", UtilSet.delivery_id);
@@ -244,7 +243,7 @@ public class MapActivity extends AppCompatActivity {
             TextView oUserTotal = (TextView) convertView.findViewById(R.id.user_total_price);
             TextView oUserPayStatus = (TextView) convertView.findViewById(R.id.pay_status);
             final Button oButton = (Button) convertView.findViewById(R.id.delivery_finish_btn);
-            Button tMap_btn = (Button) convertView.findViewById(R.id.user_menu_detail);
+            Button user_detail = (Button) convertView.findViewById(R.id.user_menu_detail);
             oUserName.setText(m_oData.get(position).user_name);
             oUserPhone.setText(m_oData.get(position).user_phone);
             oUserDestination.setText(m_oData.get(position).destination);
@@ -261,23 +260,18 @@ public class MapActivity extends AppCompatActivity {
                     Log.d("log", "position:" + position);
                     oButton.setText("배달완료");
                     oButton.setEnabled(false);
-                    tMap_btn.setEnabled(false);
+                    user_detail.setEnabled(false);
                     oData.get(position).delivery_status = 0;
                     complete_delievry(position, oData.size());
                 }
             });
-            final TMapTapi tMapTapi = new TMapTapi(MapActivity.this);
 
-            tMap_btn.setOnClickListener(new Button.OnClickListener() {
+            user_detail.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    boolean isTmapApp = tMapTapi.isTmapApplicationInstalled();
-                    if (isTmapApp == true) {
-                        MapActivity.refresh_status = false;
-                        tMapTapi.invokeNavigate("destination", new Float(oData.get(position).destination_long), new Float(oData.get(position).destination_lat), 0, true);
-                    } else {
-                        Toast.makeText(MapActivity.this, "TMap이 설치되어 있지 않습니다.", Toast.LENGTH_LONG);
-                    }
+                    Intent intent=new Intent(MapActivity.this, PopupActivity.class);
+                    intent.putExtra("index",position);
+                    startActivity(intent);
                 }
             });
             return convertView;
