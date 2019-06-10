@@ -109,7 +109,21 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                 delivery_start_event();
                 showProgress("최적 경로를 구성중입니다...");
                 if (oData.size() == 1) {
-
+                    try {
+                        get_direct_destination_by_tmap(case_destination_solo(oData));
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Delivery_to_Store_Activity.refresh_status = false;
+                    hideProgress();
+                    Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+                    intent.putExtra("order_number", order_number);
+                    intent.putExtra("total_time", target_delivery.totalTime);
+                    intent.putExtra("total_distance", target_delivery.totalDistance);
+                    MapActivity.refresh_status = true;
+                    startActivityForResult(intent, 101);
+                    finish();
                 } else {
                     try {
                         for (int i = 0; i < oData.size(); i++) {
@@ -121,35 +135,55 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-                int result = 0;
-                for (int j = 0; j < destination_list.size(); j++) {
-                    if (Integer.valueOf(destination_list.get(j).totalTime) <= Integer.valueOf(destination_list.get(result).totalTime)) {
-                        result = j;
+                    int result = 0;
+                    for (int j = 0; j < destination_list.size(); j++) {
+                        if (Integer.valueOf(destination_list.get(j).totalTime) <= Integer.valueOf(destination_list.get(result).totalTime)) {
+                            result = j;
+                        }
                     }
-                }
-                target_delivery = destination_list.get(result);
-                for (int p = 0; p < target_delivery.destination_point.size(); p++) {
-                    best_destination.add(oData.get(Integer.parseInt(target_delivery.destination_point.get(p))));
+                    target_delivery = destination_list.get(result);
+                    for (int p = 0; p < target_delivery.destination_point.size(); p++) {
+                        best_destination.add(oData.get(Integer.parseInt(target_delivery.destination_point.get(p))));
+                    }
+
+                    Delivery_to_Store_Activity.refresh_status = false;
+                    hideProgress();
+                    Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+                    intent.putExtra("order_number", order_number);
+                    intent.putExtra("list", best_destination);
+                    intent.putExtra("list_time", target_delivery.destination_time);
+                    intent.putExtra("list_distance", target_delivery.destination_distance);
+                    intent.putExtra("total_time", target_delivery.totalTime);
+                    intent.putExtra("total_distance", target_delivery.totalDistance);
+                    MapActivity.refresh_status = true;
+                    startActivityForResult(intent, 101);
+                    finish();
                 }
 
-                Delivery_to_Store_Activity.refresh_status = false;
-                hideProgress();
-                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-                intent.putExtra("order_number", order_number);
-                intent.putExtra("list", best_destination);
-                intent.putExtra("list_time", target_delivery.destination_time);
-                intent.putExtra("list_distance", target_delivery.destination_distance);
-                intent.putExtra("total_time", target_delivery.totalTime);
-                intent.putExtra("total_distance", target_delivery.totalDistance);
-                MapActivity.refresh_status = true;
-                startActivityForResult(intent, 101);
-                finish();
             }
         });
 
     }
+    public JSONObject case_destination_solo(ArrayList<Item_UserInfo> oData){
+        try {
 
+            JSONObject jobj_start_dest = new JSONObject();
+            jobj_start_dest.put("reqCoordType", "WGS84GEO");
+            jobj_start_dest.put("resCoordType", "EPSG3857");
+            jobj_start_dest.put("startX", String.valueOf(UtilSet.longitude));
+            jobj_start_dest.put("startY", String.valueOf(UtilSet.latitude));
+            jobj_start_dest.put("searchOption", "2");
+            jobj_start_dest.put("endX", String.valueOf(oData.get(0).destination_long));
+            jobj_start_dest.put("endY", String.valueOf(oData.get(0).destination_lat));
+            jobj_start_dest.put("trafficInfo", "N");
+
+            Log.d("jobject", jobj_start_dest.toString());
+            return jobj_start_dest;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public void delivery_start_event() {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -191,7 +225,59 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         tMapView.setZoomLevel(13);
 
     }
+    public void get_direct_destination_by_tmap(JSONObject jobj_request) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                    URL url = new URL("https://api2.sktelecom.com/tmap/routes?version=1");
 
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestProperty("accept", "application/json");
+                    conn.setRequestProperty("accept-Language", "ko");
+                    conn.setRequestProperty("appKey", UtilSet.tmap_key);
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+
+                    JSONObject jsonParam = jobj_request;
+                    Log.i("JSON", jsonParam.toString());
+
+                    OutputStream os = conn.getOutputStream();
+                    os.write(jsonParam.toString().getBytes());
+
+                    os.flush();
+                    os.close();
+                    Log.d("json", jsonParam.toString());
+
+                    if (conn.getResponseCode() == 200) {
+                        InputStream response = conn.getInputStream();
+                        String jsonReply = UtilSet.convertStreamToString(response);
+                        JSONObject jobj = new JSONObject(jsonReply);
+                        Log.d("tmap-result",jobj.toString());
+                        Delivery_Status d = new Delivery_Status();
+                        d.totalTime = ((JSONObject) jobj.get("properties")).getString("totalTime");
+                        d.totalDistance = ((JSONObject) jobj.get("properties")).getString("totalDistance");
+                        destination_list.add(d);
+                    } else {
+                        Log.d("error", "Connect fail");
+                    }
+
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void get_best_destination_by_tmap(JSONObject jobj_request, int count) {
         Thread thread = new Thread(new Runnable() {
