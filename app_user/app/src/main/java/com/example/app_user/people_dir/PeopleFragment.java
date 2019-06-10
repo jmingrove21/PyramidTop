@@ -138,7 +138,7 @@ public class PeopleFragment extends DialogFragment {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.detach(this).attach(this).commit();
     }
-    String user_pay_price;
+
     public void get_my_order_list(final int store_serial, final int position) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -161,7 +161,10 @@ public class PeopleFragment extends DialogFragment {
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
                             JSONObject jarray_user = (JSONObject) jobj.get("user_info");
-                            String user_pay_price = (String) jarray_user.get("pay_price");
+                            int user_pay_price = Integer.parseInt(jarray_user.getString("pay_price"));
+                            int user_pay_status = Integer.parseInt(jarray_user.getString("pay_status"));
+                            UtilSet.al_my_order.get(position).setMy_pay_price(user_pay_price);
+                            UtilSet.al_my_order.get(position).setMy_pay_status(user_pay_status);
                             JSONArray jarray_user_menu = (JSONArray) jarray_user.get("user_menu");
                             for (int j = 0; j < jarray_user_menu.length(); j++) {
                                 JSONObject jobj_user_menu_info = (JSONObject) jarray_user_menu.get(j);
@@ -169,7 +172,6 @@ public class PeopleFragment extends DialogFragment {
                                 String menu_count = jobj_user_menu_info.get("menu_count").toString();
                                 String menu_price = jobj_user_menu_info.get("menu_price").toString();
                                 MenuDesc md = new MenuDesc(menu_name, Integer.parseInt(menu_count), Integer.parseInt(menu_price));
-
                                 UtilSet.al_my_order.get(position).getStore().getMenu_desc_al().add(md);
                             }
 
@@ -182,6 +184,7 @@ public class PeopleFragment extends DialogFragment {
                                     String user_time = jarray_another_info.get("make_order_time").toString();
                                     User u = new User(user_id);
                                     u.setUser_info(user_time, user_price);
+
                                     UtilSet.al_my_order.get(position).getUser_al().add(u);
                                 }
                             }
@@ -290,7 +293,6 @@ public class PeopleFragment extends DialogFragment {
                                 o.setDateSpecification(order_create_date, order_receipt_date, delivery_departure_time);
                                 Store s = new Store(store_serial, store_name, store_branch_name, minimum_order_price, store_profile_img);
                                 o.setStore(s);
-                                o.setMy_pay_price(user_pay_price);
                                 UtilSet.al_my_order.add(o);
                             }
                         } catch (Exception e) {
