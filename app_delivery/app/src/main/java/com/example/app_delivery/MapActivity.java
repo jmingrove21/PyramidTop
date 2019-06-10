@@ -105,8 +105,8 @@ public class MapActivity extends AppCompatActivity {
                     String str_y="rV"+String.valueOf(i+1)+"Y";
                     String str_d="rV"+String.valueOf(i+1)+"Name";
                     pathInfo.put(str_d, "경유지"+String.valueOf(i+1));
-                    pathInfo.put(str_x, String.valueOf(((TMapPoint)alTmapPoint.get(alTmapPoint.size()-1)).getLongitude()));
-                    pathInfo.put(str_y, String.valueOf(((TMapPoint)alTmapPoint.get(alTmapPoint.size()-1)).getLatitude()));
+                    pathInfo.put(str_x, String.valueOf(((TMapPoint)alTmapPoint.get(i)).getLongitude()));
+                    pathInfo.put(str_y, String.valueOf(((TMapPoint)alTmapPoint.get(i)).getLatitude()));
                 }
 
                 tMapTapi.invokeRoute(pathInfo);
