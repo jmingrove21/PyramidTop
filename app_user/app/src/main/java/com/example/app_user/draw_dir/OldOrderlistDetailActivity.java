@@ -89,6 +89,7 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
         TextView text_user_order_price_sum_input = findViewById(R.id.user_order_price_sum_input);
         TextView text_user_order_time_input = findViewById(R.id.user_order_time_input);
         TextView text_user_pay_method_input = findViewById(R.id.user_pay_method_input);
+        TextView text_user_pay_price_input = findViewById(R.id.user_pay_price_input);
         TextView text_user_order_complete_time_input = findViewById(R.id.user_order_complete_time_input);
         TextView text_user_deliver_start_time_input = findViewById(R.id.user_deliver_start_time_input);
         TextView text_user_deliver_complete_time_input = findViewById(R.id.user_deliver_complete_time_input);
@@ -106,7 +107,8 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
 
         text_user_order_price_sum_input.setText(o.getMy_order_total_price() +"원");
         text_user_order_time_input.setText(o.getOrder_create_date());
-        text_user_pay_method_input.setText("Card~");
+        text_user_pay_method_input.setText(o.getMy_pay_status());
+        text_user_pay_price_input.setText(o.getMy_pay_price()+"원");
         text_user_order_complete_time_input.setText(o.getOrder_receipt_date());
         text_user_deliver_start_time_input.setText(o.getDelivery_departure_time());
         text_user_deliver_complete_time_input.setText(o.getDelivery_arrival_time());
@@ -227,6 +229,10 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
                             JSONObject jarray_user = (JSONObject) jobj.get("user_info");
+                            int user_pay_price = Integer.parseInt(jarray_user.getString("pay_price"));
+                            int user_pay_status = Integer.parseInt(jarray_user.getString("pay_status"));
+                            UtilSet.al_my_old_order.get(position).setMy_pay_price(user_pay_price);
+                            UtilSet.al_my_old_order.get(position).setMy_pay_status(user_pay_status);
                             String arrival_time = jarray_user.get("arrival_time").toString();
                             JSONArray jarray_user_menu = (JSONArray) jarray_user.get("user_menu");
                             for (int j = 0; j < jarray_user_menu.length(); j++) {
