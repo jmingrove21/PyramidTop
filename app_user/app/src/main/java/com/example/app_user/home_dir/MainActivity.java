@@ -1,16 +1,11 @@
 package com.example.app_user.home_dir;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -22,14 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +42,7 @@ import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.people_dir.PeopleFragment;
-import com.example.app_user.Profile;
+import com.example.app_user.util_dir.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.util_dir.RegisterActivity;
@@ -396,11 +386,11 @@ public void resfresh_mileage(View view){
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new Old_Orderlist()).commit();
                     break;
-                case R.id.menu_idoption:
-                    getSupportActionBar().setTitle("계정 설정");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new Profile()).commit();
-                    break;
+//                case R.id.menu_idoption:
+//                    getSupportActionBar().setTitle("계정 설정");
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                            new Profile()).commit();
+//                    break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
                     UtilSet.my_user=null;

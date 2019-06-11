@@ -61,17 +61,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
-        imageView = findViewById(R.id.register_profile_img);
-        imageView.setBackground(new ShapeDrawable(new OvalShape()));
-        imageView.setClipToOutline(true);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent img_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(img_intent,1);
-            }
-        });
+//        imageView = findViewById(R.id.register_profile_img);
+//        imageView.setBackground(new ShapeDrawable(new OvalShape()));
+//        imageView.setClipToOutline(true);
+//
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent img_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(img_intent,1);
+//            }
+//        });
 
     }
 
@@ -80,24 +80,24 @@ public class RegisterActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Uri image = data.getData();
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image);
-            Bitmap out_bitmap = convertRoundedBitmap(bitmap);
-            imageView.setImageBitmap(out_bitmap);
-            trans_bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            trans_bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-            byteArray = byteArrayOutputStream.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        Uri image = data.getData();
+//        try {
+//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image);
+//            Bitmap out_bitmap = convertRoundedBitmap(bitmap);
+//            imageView.setImageBitmap(out_bitmap);
+//            trans_bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+//
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            trans_bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+//            byteArray = byteArrayOutputStream.toByteArray();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public Bitmap convertRoundedBitmap(Bitmap bitmap){
         final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -208,7 +208,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info","join");
-                    jsonParam.put("user_img",byteArray);
+//                    jsonParam.put("user_img",byteArray);
                     jsonParam.put("user_id", id.getText().toString());
                     jsonParam.put("user_password", pw.getText().toString());
                     jsonParam.put("user_name",name.getText().toString());
