@@ -161,6 +161,10 @@ public class PeopleFragment extends DialogFragment {
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
                             JSONObject jarray_user = (JSONObject) jobj.get("user_info");
+                            int user_pay_price = Integer.parseInt(jarray_user.getString("pay_price"));
+                            int user_pay_status = Integer.parseInt(jarray_user.getString("pay_status"));
+                            UtilSet.al_my_order.get(position).setMy_pay_price(user_pay_price);
+                            UtilSet.al_my_order.get(position).setMy_pay_status(user_pay_status);
                             JSONArray jarray_user_menu = (JSONArray) jarray_user.get("user_menu");
                             for (int j = 0; j < jarray_user_menu.length(); j++) {
                                 JSONObject jobj_user_menu_info = (JSONObject) jarray_user_menu.get(j);
@@ -180,6 +184,7 @@ public class PeopleFragment extends DialogFragment {
                                     String user_time = jarray_another_info.get("make_order_time").toString();
                                     User u = new User(user_id);
                                     u.setUser_info(user_time, user_price);
+
                                     UtilSet.al_my_order.get(position).getUser_al().add(u);
                                 }
                             }
