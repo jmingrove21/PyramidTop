@@ -1,4 +1,4 @@
-package com.example.app_user;
+package com.example.app_user.util_dir;
 
 import android.Manifest;
 import android.content.Intent;
@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.UtilSet;
+import com.example.app_user.R;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.RegisterActivity;
 
@@ -72,22 +73,22 @@ public class Profile extends Fragment {
             }
         }
 
-        imageView = pub_view.findViewById(R.id.register_profile_img);
-        imageView.setBackground(new ShapeDrawable(new OvalShape()));
-        imageView.setClipToOutline(true);
+//        imageView = pub_view.findViewById(R.id.register_profile_img);
+//        imageView.setBackground(new ShapeDrawable(new OvalShape()));
+//        imageView.setClipToOutline(true);
 
         name = (EditText) pub_view.findViewById(R.id.profile_name);
         cur_pw = (EditText) pub_view.findViewById(R.id.profile_current_pw);
         change_pw = (EditText) pub_view.findViewById(R.id.profile_change_pw);
         change_repw = (EditText) pub_view.findViewById(R.id.profile_chang_re_pw);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent img_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(img_intent,1);
-            }
-        });
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent img_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(img_intent,1);
+//            }
+//        });
 
         profile_changh_btn = (Button) pub_view.findViewById(R.id.profile_change_btn);
         profile_changh_btn.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +142,7 @@ public class Profile extends Fragment {
 
                             JSONObject jsonParam = new JSONObject();
                             jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
-                            jsonParam.put("user_img",byteArray);
+//                            jsonParam.put("user_img",byteArray);
                             jsonParam.put("user_name", name.getText().toString());
                             jsonParam.put("original_pw", cur_pw.getText().toString());
                             jsonParam.put("change_pw",change_pw.getText().toString());
@@ -195,24 +196,24 @@ public class Profile extends Fragment {
         return pub_view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        try {
-            Uri image = data.getData();
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image);
-            Bitmap out_bitmap = convertRoundedBitmap(bitmap);
-            imageView.setImageBitmap(out_bitmap);
-            trans_bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            trans_bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-            byteArray = byteArrayOutputStream.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        try {
+//            Uri image = data.getData();
+//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), image);
+//            Bitmap out_bitmap = convertRoundedBitmap(bitmap);
+//            imageView.setImageBitmap(out_bitmap);
+//            trans_bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+//
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            trans_bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+//            byteArray = byteArrayOutputStream.toByteArray();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public Bitmap convertRoundedBitmap(Bitmap bitmap){
         final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
