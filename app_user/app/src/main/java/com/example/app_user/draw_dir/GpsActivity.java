@@ -38,29 +38,15 @@ import java.util.ArrayList;
 
 
 public class GpsActivity extends Activity implements TMapGpsManager.onLocationChangedCallback, TMapView.OnLongClickListenerCallback {
-    private EditText GPS_editText;
     private Context mContext = null;
     private boolean m_bTrackingMode = true;
 
     private TMapData tmapdata = null;
-    private TMapGpsManager tMapGpsManager = null;
     private TMapView tMapView = null;
-    private static int mMarkerID;
     BackPressCloseHandler backPressCloseHandler;
-    private ArrayList<TMapMarkerItem> tMapMarkerItems = new ArrayList<TMapMarkerItem>();
-    private ArrayList<TMapPoint> m_tmapPoint = new ArrayList<TMapPoint>();
-    private ArrayList<String> mArrayMarkerID = new ArrayList<String>();
-    private ArrayList<MapPoint> m_mapPoint = new ArrayList<MapPoint>();
     private String address;
     private Double lat = null;
     private Double lon = null;
-
-    private boolean cur_search_gps = false;
-    private Double cur_lat;
-    static LocationManager lm;
-
-
-    private Button gps_button;
 
     private Thread thread;
 
@@ -94,7 +80,6 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
         detail_address_input = findViewById(R.id.detail_address_input);
 
         mContext = this;
-        gps_button = findViewById(R.id.GPS_button);
         tmapdata = new TMapData();
         LinearLayout linearLayout = findViewById(R.id.map_view);
         tMapView = new TMapView(this);
@@ -140,13 +125,10 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
             public boolean onPressUpEvent(ArrayList<TMapMarkerItem> arrayList, ArrayList<TMapPOIItem> arrayList1, TMapPoint tMapPoint, PointF pointF) {
                 if((first_TMapPoint.getLatitude()==tMapPoint.getLatitude()) && (first_TMapPoint.getLongitude()==tMapPoint.getLongitude())){
 
-
                     tMapView.setLocationPoint(tMapPoint.getLongitude(),tMapPoint.getLatitude());
                     tMapView.setCenterPoint(tMapPoint.getLongitude(),tMapPoint.getLatitude(),true);
                     latitude = tMapPoint.getLatitude();
                     longitude = tMapPoint.getLongitude();
-
-                    cur_search_gps = false;
 
                     thread = new Thread(new Runnable() {
                         @Override
@@ -228,7 +210,7 @@ public class GpsActivity extends Activity implements TMapGpsManager.onLocationCh
     public void GPS_current_position_track(View view){
         tMapView.setLocationPoint(UtilSet.longitude_gps,UtilSet.latitude_gps);
         tMapView.setCenterPoint(UtilSet.longitude_gps, UtilSet.latitude_gps,true);
-
+        UtilSet.my_user.set_user_gps(UtilSet.latitude_gps,UtilSet.longitude_gps);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

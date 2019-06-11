@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/menu_list"
+    android:weightSum="1">
+
+            <TextView
+                android:id="@+id/menu_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="참가 시간"
+                android:layout_weight="0.5"
+                android:textSize="17sp"
+                android:textColor="#000000"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/menu_count"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="TextView"
+                android:layout_weight="0.5"
+                android:textSize="14sp"
+                android:textColor="#767171"
+                android:gravity="center"/>
+
+</LinearLayout>

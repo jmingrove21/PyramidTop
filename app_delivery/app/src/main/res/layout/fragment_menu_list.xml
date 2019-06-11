@@ -15,7 +15,7 @@
             android:textSize="20sp"
             android:textColor="#fff"
             android:gravity="center"
-            android:background="#4AC66D"
+            android:background="#489ED8"
             android:layout_width="match_parent"
             android:layout_height="53dp" />
     </LinearLayout>
@@ -34,11 +34,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="1">
+
             <ListView
-                android:id="@+id/party_detail_layout_user_list_view"
+                android:id="@+id/menu_list_frag"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                ></ListView>
+                android:layout_height="match_parent"></ListView>
 
         </LinearLayout>
     </LinearLayout>
@@ -62,7 +62,7 @@
             android:textColor="#ffffff"
             android:padding="16dp"
             android:gravity="center"
-            android:background="#4AC66D"
+            android:background="#489ED8"
             android:layout_width="match_parent"
             android:layout_height="53dp"/>
     </LinearLayout>

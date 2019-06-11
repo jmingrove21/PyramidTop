@@ -35,7 +35,8 @@
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".Delivery_list_Activity"></activity>
         <activity android:name=".Delivery_to_Store_Activity"></activity>
-
+        <activity android:name=".PopupActivity"
+            android:theme="@android:style/Theme.Dialog"/>
 
     </application>
 
