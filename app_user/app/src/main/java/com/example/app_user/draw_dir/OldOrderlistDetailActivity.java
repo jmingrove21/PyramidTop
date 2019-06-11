@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,9 +24,7 @@ import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
-import com.example.app_user.order_dir.OrderFragment;
-import com.example.app_user.people_dir.PeopleFragment;
-import com.example.app_user.Profile;
+import com.example.app_user.util_dir.Profile;
 import com.example.app_user.R;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.util_dir.LoginActivity;
@@ -126,11 +122,11 @@ public class OldOrderlistDetailActivity extends AppCompatActivity implements Nav
                     getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
                             new Old_Orderlist()).commit();
                     break;
-                case R.id.menu_idoption:
-                    getSupportActionBar().setTitle("계정 설정");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                            new Profile()).commit();
-                    break;
+//                case R.id.menu_idoption:
+//                    getSupportActionBar().setTitle("계정 설정");
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+//                            new Profile()).commit();
+//                    break;
 
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
