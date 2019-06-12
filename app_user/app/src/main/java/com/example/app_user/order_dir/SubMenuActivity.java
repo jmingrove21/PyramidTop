@@ -25,17 +25,11 @@ import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.UtilSet;
-<<<<<<< HEAD
-import com.example.app_user.SuperActivity;
 import com.example.app_user.util_dir.Profile;
-=======
-import com.example.app_user.Profile;
->>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.home_dir.FirstMainActivity;
-import com.example.app_user.home_dir.MenuActivity;
 import com.example.app_user.people_dir.PeopleFragment;
 import com.example.app_user.util_dir.CreditActivity;
 import com.example.app_user.util_dir.MenuCustomAdapter;
@@ -47,14 +41,7 @@ import com.example.app_user.util_dir.StoreDetailFragment;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-<<<<<<< HEAD
-public class SubMenuActivity extends SuperActivity implements MenuCustomAdapter.OnArrayList {
-=======
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-
 public class SubMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
->>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
     private DrawerLayout drawer;
     private Bitmap bitmap;
     int index;
@@ -90,8 +77,7 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(UtilSet.target_store.getStore_name()+" "+UtilSet.target_store.getStore_branch_name());
 
-        //drawer = findViewById(R.id.drawer_layout);
-        setDrawer();
+        drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView,view);
@@ -154,48 +140,6 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         }
     }
 
-<<<<<<< HEAD
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//        if(LoginLogoutInform.getLogin_flag()==1){
-//            switch (menuItem.getItemId()) {
-//                case R.id.old_olderlist:
-//                    getSupportActionBar().setTitle("지난 주문 내역");
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-//                            new Old_Orderlist()).commit();
-//                    break;
-////                case R.id.menu_idoption:
-////                    getSupportActionBar().setTitle("계정 설정");
-////                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-////                            new Profile()).commit();
-////                    break;
-//                case R.id.menu_logout:
-//                    UtilSet.loginLogoutInform.setLogin_flag(0);
-//                    UtilSet.my_user=null;
-//                    UtilSet.delete_user_data();
-//                    Intent intent=new Intent(SubMenuActivity.this, FirstMainActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
-//                    finish();
-//                    break;
-//            }
-//        }else{
-//            switch (menuItem.getItemId()) {
-//                case R.id.menu_register:
-//                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
-//                    startActivityForResult(register_intent, 101);
-//                    break;
-//
-//                case R.id.menu_login:
-//                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                    startActivityForResult(login_intent, 101);
-//                    break;
-//            }
-//        }
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-=======
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if(LoginLogoutInform.getLogin_flag()==1){
@@ -205,11 +149,11 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
                     getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                             new Old_Orderlist()).commit();
                     break;
-                case R.id.menu_idoption:
-                    getSupportActionBar().setTitle("계정 설정");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-                            new Profile()).commit();
-                    break;
+//                case R.id.menu_idoption:
+//                    getSupportActionBar().setTitle("계정 설정");
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+//                            new Profile()).commit();
+//                    break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
                     UtilSet.my_user=null;
@@ -236,7 +180,6 @@ public class SubMenuActivity extends AppCompatActivity implements NavigationView
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
->>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {

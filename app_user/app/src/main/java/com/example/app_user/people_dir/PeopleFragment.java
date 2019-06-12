@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v4.content.ContextCompat;
@@ -42,7 +41,6 @@ import java.net.URL;
 public class PeopleFragment extends DialogFragment {
     Bitmap bitmap;
     ListView listView;
-    Button order_cancel_btn;
 
     public PeopleFragment() {
         UtilSet.al_my_order.clear();
@@ -60,16 +58,11 @@ public class PeopleFragment extends DialogFragment {
         LinearLayout frame = view.findViewById(R.id.recent_orderlist_linear);
         listView = view.findViewById(R.id.people_listview);
 
-       // order_cancel_btn = view.findViewById(R.id.order_cancel_btn);
-
-
         if(LoginLogoutInform.getLogin_flag()==0){
             Toast.makeText( getActivity(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
             return view;
         }
         get_store_info_by_my_order();
-
-
 
         final SwipeRefreshLayout mSwipeRefreshLayout = view.findViewById(R.id.swipe_my_party_order_list);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

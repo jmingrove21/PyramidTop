@@ -1,16 +1,11 @@
 package com.example.app_user.home_dir;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -22,14 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +35,6 @@ import android.widget.Toast;
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.ToolbarInform;
-import com.example.app_user.SuperActivity;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
@@ -53,7 +42,7 @@ import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.people_dir.PeopleFragment;
-import com.example.app_user.Profile;
+import com.example.app_user.util_dir.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.util_dir.RegisterActivity;
@@ -65,9 +54,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
-public class MainActivity extends SuperActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private DrawerLayout drawer;
     Bitmap bitmap;
     int store_ser;
     int position_storetype;
@@ -89,8 +78,8 @@ public class MainActivity extends SuperActivity {
         setSupportActionBar(toolbar);
 
         point = getScreenSize(MainActivity.this);
-//drawer = findViewById(R.id.drawer_layout);
-        setDrawer();
+
+        drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -292,19 +281,23 @@ public void resfresh_mileage(View view){
                         String jsonReply = UtilSet.convertStreamToString(response);
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
-                            Store s= UtilSet.al_store.get(position);
-                            String result[]=new String[8];
-                            String tag[]={"store_building_name","start_time","end_time","store_restday","store_notice","store_main_type_name","store_sub_type_name","delivery_cost"};
-                            for(int j=0;j<result.length;j++)
-                                result[j]=jobj.getString(tag[j]);
-                            s.set_store_spec(result);
+                            String store_building_name = jobj.get("store_building_name").toString();
+                            String start_time = jobj.get("start_time").toString();
+                            String end_time = jobj.get("end_time").toString();
+                            String store_restday = jobj.get("store_restday").toString();
+                            String store_notice = jobj.get("store_notice").toString();
+                            String store_main_type_name = jobj.get("store_main_type_name").toString();
+                            String store_sub_type_name = jobj.get("store_sub_type_name").toString();
+                            String delivery_cost=jobj.get("delivery_cost").toString();
+
+                            UtilSet.al_store.get(position).set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
+                            UtilSet.al_store.get(position).setDelivery_cost(Integer.parseInt(delivery_cost));
                             JSONArray jobj_menu = (JSONArray) jobj.get("menu");
                             for (int j = 0; j < jobj_menu.length(); j++) {
                                 JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);
-                                String menu_type_code = jobj_menu_spec.getString("menu_type_code");
-                                String menu_type_name = jobj_menu_spec.getString("menu_type_name");
-                                ArrayList<com.example.app_user.Item_dir.Menu> menu_al= s.getMenu_al();
-                                menu_al.add(new com.example.app_user.Item_dir.Menu(menu_type_code, menu_type_name));
+                                String menu_type_code = jobj_menu_spec.get("menu_type_code").toString();
+                                String menu_type_name = jobj_menu_spec.get("menu_type_name").toString();
+                                UtilSet.al_store.get(position).getMenu_al().add(new com.example.app_user.Item_dir.Menu(menu_type_code, menu_type_name));
                                 JSONArray menu_menu_desc = (JSONArray) jobj_menu_spec.get("menu description");
                                 for (int k = 0; k < menu_menu_desc.length(); k++) {
                                     JSONObject jobj_menu_desc_spec = (JSONObject) menu_menu_desc.get(k);
@@ -312,7 +305,7 @@ public void resfresh_mileage(View view){
                                     String menu_name = jobj_menu_desc_spec.get("menu_name").toString();
                                     int menu_price = Integer.parseInt(jobj_menu_desc_spec.get("menu_price").toString());
                                     String menu_img = jobj_menu_desc_spec.get("menu_img").toString();
-                                    menu_al.get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name, menu_price, menu_img));
+                                    UtilSet.al_store.get(position).getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name, menu_price, menu_img));
                                 }
                             }
                         } catch (Exception e) {
@@ -354,11 +347,15 @@ public void resfresh_mileage(View view){
                             JSONArray jArray = new JSONArray(jsonReply);
                             for (int i = 0; i < jArray.length(); i++) {
                                 JSONObject jobj = (JSONObject) jArray.get(i);
-                                String result[]=new String[8];
-                                String tag[]={"store_serial","store_name","store_branch_name","store_address","store_phone","minimum_order_price","distance","store_profile_img"};
-                                for(int j=0;j<result.length;j++)
-                                    result[j]=jobj.getString(tag[j]);
-                                Store s = new Store(result);
+                                String store_serial = jobj.get("store_serial").toString();
+                                String store_name = jobj.get("store_name").toString();
+                                String store_branch_name = jobj.get("store_branch_name").toString();
+                                String store_address = jobj.get("store_address").toString();
+                                String store_phone = jobj.get("store_phone").toString();
+                                String distance = jobj.get("distance").toString();
+                                String minimum_order_price = jobj.get("minimum_order_price").toString();
+                                String store_profile_img = jobj.get("store_profile_img").toString();
+                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
                                 UtilSet.al_store.add(s);
                             }
                         } catch (Exception e) {
@@ -380,48 +377,6 @@ public void resfresh_mileage(View view){
             e.printStackTrace();
         }
     }
-<<<<<<< HEAD
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//        if(LoginLogoutInform.getLogin_flag()==1){
-//            switch (menuItem.getItemId()) {
-//                case R.id.old_olderlist:
-//                    getSupportActionBar().setTitle("지난 주문 내역");
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                            new Old_Orderlist()).commit();
-//                    break;
-////                case R.id.menu_idoption:
-////                    getSupportActionBar().setTitle("계정 설정");
-////                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-////                            new Profile()).commit();
-////                    break;
-//                case R.id.menu_logout:
-//                    UtilSet.loginLogoutInform.setLogin_flag(0);
-//                    UtilSet.my_user=null;
-//                    UtilSet.delete_user_data();
-//                    Intent intent=new Intent(MainActivity.this, FirstMainActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
-//                    finish();
-//                    break;
-//            }
-//        }else{
-//            switch (menuItem.getItemId()) {
-//                case R.id.menu_register:
-//                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
-//                    startActivityForResult(register_intent, 101);
-//                    break;
-//
-//                case R.id.menu_login:
-//                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                    startActivityForResult(login_intent, 101);
-//                    break;
-//            }
-//        }
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-=======
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if(LoginLogoutInform.getLogin_flag()==1){
@@ -431,11 +386,11 @@ public void resfresh_mileage(View view){
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new Old_Orderlist()).commit();
                     break;
-                case R.id.menu_idoption:
-                    getSupportActionBar().setTitle("계정 설정");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new Profile()).commit();
-                    break;
+//                case R.id.menu_idoption:
+//                    getSupportActionBar().setTitle("계정 설정");
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                            new Profile()).commit();
+//                    break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
                     UtilSet.my_user=null;
@@ -462,7 +417,6 @@ public void resfresh_mileage(View view){
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
->>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
     public Point getScreenSize(Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();

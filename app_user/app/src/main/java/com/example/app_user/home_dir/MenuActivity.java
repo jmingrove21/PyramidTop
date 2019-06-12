@@ -6,8 +6,6 @@ import android.content.Intent;
 
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -29,7 +27,6 @@ import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.ToolbarInform;
-import com.example.app_user.SuperActivity;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.CreditActivity;
 import com.example.app_user.util_dir.HomeFragment;
@@ -38,7 +35,7 @@ import com.example.app_user.util_dir.MenuCustomAdapter;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.people_dir.PeopleFragment;
-import com.example.app_user.Profile;
+import com.example.app_user.util_dir.Profile;
 import com.example.app_user.R;
 import com.example.app_user.util_dir.RegisterActivity;
 import com.example.app_user.util_dir.StoreDetailFragment;
@@ -48,8 +45,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-public class MenuActivity extends SuperActivity implements MenuCustomAdapter.OnArrayList {
-   // private DrawerLayout drawer;
+public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
+    private DrawerLayout drawer;
     int index;
     int serial;
     boolean flag = false;
@@ -84,8 +81,7 @@ public class MenuActivity extends SuperActivity implements MenuCustomAdapter.OnA
         getSupportActionBar().setTitle(UtilSet.target_store.getStore_name() + " " + UtilSet.target_store.getStore_branch_name());
         ToolbarInform.setToolbar_inform(UtilSet.target_store.getStore_name() + " " + UtilSet.target_store.getStore_branch_name());
 
-        //drawer = findViewById(R.id.drawer_layout);
-        setDrawer();
+        drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView, view);
@@ -110,9 +106,7 @@ public class MenuActivity extends SuperActivity implements MenuCustomAdapter.OnA
                 super.onDrawerOpened(drawerView);
                 resfresh_mileage(view);
             }
-        };
-//drawer = findViewById(R.id.drawer_layout);
-        setDrawer();
+        };        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         ImageView imageView = findViewById(R.id.store_image);
@@ -153,47 +147,6 @@ public class MenuActivity extends SuperActivity implements MenuCustomAdapter.OnA
         }
     }
 
-<<<<<<< HEAD
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//        if (LoginLogoutInform.getLogin_flag() == 1) {
-//            switch (menuItem.getItemId()) {
-//                case R.id.old_olderlist:
-//                    getSupportActionBar().setTitle("지난 주문 내역");
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-//                            new Old_Orderlist()).commit();
-//                    break;
-////                case R.id.menu_idoption:
-////                    getSupportActionBar().setTitle("계정 설정");
-////                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-////                            new Profile()).commit();
-////                    break;
-//                case R.id.menu_logout:
-//                    UtilSet.loginLogoutInform.setLogin_flag(0);
-//                    UtilSet.my_user=null;
-//                    UtilSet.delete_user_data();
-//                    Intent intent = new Intent(MenuActivity.this, FirstMainActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
-//                    finish();
-//                    break;
-//            }
-//        } else {
-//            switch (menuItem.getItemId()) {
-//                case R.id.menu_register:
-//                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
-//                    startActivityForResult(register_intent, 101);
-//                    break;
-//                case R.id.menu_login:
-//                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                    startActivityForResult(login_intent, 101);
-//                    break;
-//            }
-//        }
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-=======
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (LoginLogoutInform.getLogin_flag() == 1) {
@@ -203,11 +156,11 @@ public class MenuActivity extends SuperActivity implements MenuCustomAdapter.OnA
                     getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                             new Old_Orderlist()).commit();
                     break;
-                case R.id.menu_idoption:
-                    getSupportActionBar().setTitle("계정 설정");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-                            new Profile()).commit();
-                    break;
+//                case R.id.menu_idoption:
+//                    getSupportActionBar().setTitle("계정 설정");
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+//                            new Profile()).commit();
+//                    break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
                     UtilSet.my_user=null;
@@ -233,7 +186,6 @@ public class MenuActivity extends SuperActivity implements MenuCustomAdapter.OnA
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
->>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
