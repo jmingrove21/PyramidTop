@@ -8,7 +8,7 @@ function store_order_history($json_data){
             SELECT DISTINCT tb2.*, user_name
         	FROM
         		(
-        		SELECT tb1.*,menu_name,menu_price,USER_user_serial, destination, arrival_time
+        		SELECT tb1.*,menu_name,menu_price,USER_user_serial, destination, arrival_time,user_total_price
         		FROM
         			(
         			SELECT so.order_number, so.store_serial, order_receipt_date
@@ -31,7 +31,7 @@ function store_order_history($json_data){
          $order_num=0;
           $user_serial=0;
           $total=[];
-          $total_price=0;
+          $total_prices=0;
           $menu=[];
           $user_order=[];
 
@@ -39,7 +39,10 @@ function store_order_history($json_data){
 
              if($order_num===0||$order_num==$row['order_number']){
                  $order_num=$row['order_number'];
+                 $order_receipt_date=$row['order_receipt_date'];
+
              }else{
+
                  array_push($user_order,$user_menu);
                  $data['user_order']=$user_order;
                  array_push($total,$data);
@@ -47,17 +50,17 @@ function store_order_history($json_data){
                  $user_order=[];
                  $user_serial=$row['USER_user_serial'];
                  $menu=[];
-                 $total_price=0;
+                 $total_prices=0;
              }
-             if($user_serial===0||$user_serial==$row['USER_user_serial']){
+             if($user_serial==0||$user_serial==$row['USER_user_serial']){
                  $user_serial=$row['USER_user_serial'];
-
+$total_prices+=$row['user_total_price'];
              }else{
+                $total_prices+=$row['user_total_price'];
                  array_push($user_order,$user_menu);
                  $user_serial=$row['USER_user_serial'];
                  $menu=[];
              }
-             $total_price+=$row['menu_price'];
              $menu_info=array(
                 'menu_name'=>$row['menu_name'],
                 'menu_price'=>$row['menu_price']
@@ -73,9 +76,9 @@ function store_order_history($json_data){
 
              $data=array(
                 "order_number"=>$order_num,
-                'order_receipt_date'=>$row['order_receipt_date'],
+                'order_receipt_date'=>$order_receipt_date,
                 "user_order"=>$user_order,
-                "total_price"=>$total_price
+                "total_price"=>$total_prices
              );
          }
          array_push($user_order,$user_menu);
