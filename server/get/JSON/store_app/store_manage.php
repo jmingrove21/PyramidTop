@@ -43,6 +43,9 @@ switch($store_info){
         include 'store_menu_delete.php';
         menu_delete($json_data);
         break;
-
+    case 'delete_order':
+        include 'store_delete_order.php';
+        delete_order($json_data);
+        break;
 }
 ?>

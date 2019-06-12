@@ -295,5 +295,9 @@ public class UtilSet {
             navigationView.addHeaderView(view);
         }
     }
-
+    public static void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        if(UtilSet.my_user!=null)
+            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
 }

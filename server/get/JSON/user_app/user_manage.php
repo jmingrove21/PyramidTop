@@ -55,5 +55,17 @@ switch($user_info){
         include 'user_alarm_check.php';
         alarm_check($json_data);
         break;
+    case 'delete_order':
+        include 'user_delete_order.php';
+        delete_order($json_data);
+        break;
+    case 'info':
+        include 'user_info.php';
+        info($json_data);
+        break;
+    case 'modify_info':
+        include 'user_modify_info.php';
+        modify_info($json_data);
+        break;
 }
 ?>

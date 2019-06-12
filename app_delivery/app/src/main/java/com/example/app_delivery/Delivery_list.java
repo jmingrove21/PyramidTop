@@ -40,10 +40,6 @@ public class Delivery_list {
         return store_name;
     }
 
-    public float getDistance() {
-        return distance;
-    }
-
     public int getOrder_number() {
         return order_number;
     }

@@ -5,15 +5,16 @@
         $user_lat=$json_data['user_lat'];
         $user_long=$json_data['user_long'];
         $count=$json_data['user_count'];
+        $user_serial=$json_data['user_serial'];
 
          $query="
-         SELECT so.store_serial,store_name, store_phone,store_branch_name,store_address_jibun,store_profile_img,minimum_order_price,order_create_date,order_number,( 6371 * acos( cos( radians(".$user_lat.") ) * cos( radians( store_latitude) )
+         SELECT so.store_serial,store_name, store_phone,store_branch_name,store_address_jibun,store_profile_img,minimum_order_price,order_create_date,order_number,delivery_cost,( 6371 * acos( cos( radians(".$user_lat.") ) * cos( radians( store_latitude) )
                                                                                                                                                                                                                                                                                    * cos( radians( store_longitude ) - radians(".$user_long.") )
                                                                                                                                                                                                                                                                                    + sin( radians(".$user_lat.") ) * sin( radians( store_latitude ) ) ) ) AS distance
          FROM Capstone.store AS s
          INNER JOIN Capstone.store_order AS so
          ON s.store_serial=so.store_serial
-         WHERE order_status=1
+         WHERE order_status=1 AND so.order_number NOT IN (SELECT order_number FROM Capstone.user_order WHERE USER_user_serial=".$user_serial.")
          ORDER BY distance ASC
          ";
 
@@ -24,7 +25,7 @@
             $count_query="
                     SELECT count(*) AS c
                     FROM Capstone.user_order
-                    WHERE order_number=".$row2['order_number'];
+                    WHERE order_number=".$row2['order_number']." AND user_status!=8";
             $count_stmt = mysqli_query($connect,$count_query);
             $result=mysqli_fetch_assoc($count_stmt);
             $persons=$result['c'];
@@ -59,7 +60,8 @@
                 'store_profile_img'=>$row2['store_profile_img'],
                 'order_create_date'=>$row2['order_create_date'],
                 'participate_persons'=>$persons,
-                'total_order_price'=>$total_price
+                'total_order_price'=>$total_price,
+                'delivery_cost'=>$row2['delivery_cost']
             );
             array_push($total_store,$store);
          }
