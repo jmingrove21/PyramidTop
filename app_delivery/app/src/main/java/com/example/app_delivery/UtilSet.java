@@ -156,26 +156,4 @@ public class UtilSet {
             e.printStackTrace();
         }
     }
-    public static double getDistance(double startPointLon, double startPointLat, double endPointLon, double endPointLat) {
-        double d2r = Math.PI / 180;
-        double dStartPointLon =startPointLon;
-        double dStartPointLat =startPointLat;
-        double dEndPointLon = endPointLon;
-        double dEndPointLat = endPointLat;
-
-        double dLon = (dEndPointLon - dStartPointLon) * d2r;
-        double dLat = (dEndPointLat - dStartPointLat) * d2r;
-
-        double a = Math.pow(Math.sin(dLat / 2.0), 2)
-                + Math.cos(dStartPointLat * d2r)
-                * Math.cos(dEndPointLat * d2r)
-                * Math.pow(Math.sin(dLon / 2.0), 2);
-
-        double c = Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 2;
-
-        double distance = c * 6378;
-
-        return distance;
-
-    }
 }

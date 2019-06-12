@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.skt.Tmap.TMapData;
 import com.skt.Tmap.TMapMarkerItem;
@@ -333,8 +334,8 @@ public class MapActivity extends AppCompatActivity {
                     for (int i = 0; i < alTmapPoint.size() - 1; i++) {
                         tMap_via.add(alTmapPoint.get(i));
                     }
-                    Log.d("Distance",String.valueOf( UtilSet.getDistance(UtilSet.longitude, UtilSet.latitude, ((TMapPoint) alTmapPoint.get(0)).getLongitude(), ((TMapPoint) alTmapPoint.get(0)).getLatitude()) ));
-                    if (alTmapPoint.size() == 2 && UtilSet.getDistance(UtilSet.longitude, UtilSet.latitude, ((TMapPoint) alTmapPoint.get(0)).getLongitude(), ((TMapPoint) alTmapPoint.get(0)).getLatitude()) <= 0.03) {
+                    Log.d("Distance",String.valueOf( getDistance(UtilSet.longitude, UtilSet.latitude, ((TMapPoint) alTmapPoint.get(0)).getLongitude(), ((TMapPoint) alTmapPoint.get(0)).getLatitude()) ));
+                    if (alTmapPoint.size() == 2 && getDistance(UtilSet.longitude, UtilSet.latitude, ((TMapPoint) alTmapPoint.get(0)).getLongitude(), ((TMapPoint) alTmapPoint.get(0)).getLatitude()) <= 0.03) {
                         tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), (TMapPoint) alTmapPoint.get(1), new TMapData.FindPathDataListenerCallback() {
                             @Override
                             public void onFindPathData(TMapPolyLine polyLine) {
@@ -344,13 +345,13 @@ public class MapActivity extends AppCompatActivity {
                             }
                         });
                         try {
-                            Thread.sleep(5000);
+                            Thread.sleep(10000);
                             if (MapActivity.refresh_status == false)
                                 break;
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }else if (alTmapPoint.size() == 3 && UtilSet.getDistance(UtilSet.longitude, UtilSet.latitude, ((TMapPoint) alTmapPoint.get(0)).getLongitude(), ((TMapPoint) alTmapPoint.get(0)).getLatitude()) <= 0.03) {
+                    }else if (alTmapPoint.size() == 3 && getDistance(UtilSet.longitude, UtilSet.latitude, ((TMapPoint) alTmapPoint.get(0)).getLongitude(), ((TMapPoint) alTmapPoint.get(0)).getLatitude()) <= 0.03) {
                         tMap_via.remove(0);
                         tmapdata.findPathDataWithType(TMapData.TMapPathType.CAR_PATH, new TMapPoint(UtilSet.latitude, UtilSet.longitude), t_end, tMap_via, 0,
                                 new TMapData.FindPathDataListenerCallback() {
@@ -362,7 +363,7 @@ public class MapActivity extends AppCompatActivity {
                             }
                         });
                         try {
-                            Thread.sleep(5000);
+                            Thread.sleep(10000);
                             if (MapActivity.refresh_status == false)
                                 break;
                         } catch (Exception e) {
@@ -380,7 +381,7 @@ public class MapActivity extends AppCompatActivity {
                                 });
                     }
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                         if (MapActivity.refresh_status == false)
                             break;
                     } catch (Exception e) {
@@ -415,5 +416,27 @@ public class MapActivity extends AppCompatActivity {
         protected void onCancelled() {
             super.onCancelled();
         }
+    }
+    public static double getDistance(double startPointLon, double startPointLat, double endPointLon, double endPointLat) {
+        double d2r = Math.PI / 180;
+        double dStartPointLon =startPointLon;
+        double dStartPointLat =startPointLat;
+        double dEndPointLon = endPointLon;
+        double dEndPointLat = endPointLat;
+
+        double dLon = (dEndPointLon - dStartPointLon) * d2r;
+        double dLat = (dEndPointLat - dStartPointLat) * d2r;
+
+        double a = Math.pow(Math.sin(dLat / 2.0), 2)
+                + Math.cos(dStartPointLat * d2r)
+                * Math.cos(dEndPointLat * d2r)
+                * Math.pow(Math.sin(dLon / 2.0), 2);
+
+        double c = Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 2;
+
+        double distance = c * 6378;
+
+        return distance;
+
     }
 }
