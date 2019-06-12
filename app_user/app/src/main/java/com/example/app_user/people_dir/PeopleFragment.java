@@ -163,8 +163,10 @@ public class PeopleFragment extends DialogFragment {
                             JSONObject jarray_user = (JSONObject) jobj.get("user_info");
                             int user_pay_price = Integer.parseInt(jarray_user.getString("pay_price"));
                             int user_pay_status = Integer.parseInt(jarray_user.getString("pay_status"));
+                            int user_total_price= Integer.parseInt(jarray_user.getString("total_price"));
                             UtilSet.al_my_order.get(position).setMy_pay_price(user_pay_price);
                             UtilSet.al_my_order.get(position).setMy_pay_status(user_pay_status);
+                            UtilSet.al_my_order.get(position).setMy_total_price(user_total_price);
                             JSONArray jarray_user_menu = (JSONArray) jarray_user.get("user_menu");
                             for (int j = 0; j < jarray_user_menu.length(); j++) {
                                 JSONObject jobj_user_menu_info = (JSONObject) jarray_user_menu.get(j);
