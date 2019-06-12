@@ -36,11 +36,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.github.bootpay:client_android_java:2.143'
-<<<<<<< HEAD
-    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
-=======
     implementation 'com.squareup.okhttp3:okhttp:4.0.0-RC1'
->>>>>>> 5170631134b132c4fd3b58cbb418add8a1215509
 
     testImplementation 'junit:junit:4.13-beta-2'
     testImplementation "org.mockito:mockito-core:2.+"
