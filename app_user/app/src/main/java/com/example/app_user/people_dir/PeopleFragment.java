@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v4.content.ContextCompat;
@@ -64,8 +63,6 @@ public class PeopleFragment extends DialogFragment {
             return view;
         }
         get_store_info_by_my_order();
-
-
 
         final SwipeRefreshLayout mSwipeRefreshLayout = view.findViewById(R.id.swipe_my_party_order_list);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
