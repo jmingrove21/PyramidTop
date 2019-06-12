@@ -30,5 +30,9 @@ switch($delivery_info){
         include 'delivery_status.php';
         delivery_status($json_data);
         break;
+    case 'route':
+        include 'delivery_route.php';
+        delivery_route($json_data);
+        break;
 }
 ?>

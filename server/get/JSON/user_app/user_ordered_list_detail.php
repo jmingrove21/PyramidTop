@@ -5,7 +5,7 @@
          $order_number=$json_data['order_number'];
          $user_serial=$json_data['user_serial'];
 
-         $query="SELECT menu_name,menu_price,menu_count, make_order_time,arrival_time
+         $query="SELECT menu_name,menu_price,menu_count, make_order_time,arrival_time,user_pay_status,user_pay_price
               FROM
               (
  				 SELECT s.order_number
@@ -34,11 +34,13 @@
             $user_info=array(
                 'make_order_time'=>$row['make_order_time'],
                 'arrival_time'=>$row['arrival_time'],
-                'user_menu'=>$menu_info
+                'user_menu'=>$menu_info,
+                'pay_status'=>$row['user_pay_status'],
+                'pay_price'=>$row['user_pay_price']
             );
         }
         $query="
-            SELECT tb1.*,menu_price,menu_count, USER_user_serial,user_id,make_order_time 
+            SELECT tb1.*,menu_price,menu_count, USER_user_serial,user_id,make_order_time,user_pay_price,user_pay_status
               FROM
               (
  				 SELECT s.order_number
@@ -76,13 +78,16 @@
             $data=array(
                     'user_id'=>$row['user_id'],
                     'make_order_time'=>$row['make_order_time'],
-                    'total_price'=>$total_price
+                    'total_price'=>$total_price,
+                    'pay_price'=>$row['user_pay_price'],
+                    'pay_status'=>$row['user_pay_status']
             );
         }
         array_push($total,$data);
+        $total_price=0;
 
         $query="
-         SELECT store_serial,store_phone, store_address_jibun, store_building_name, start_time, end_time, store_restday, store_notice, store_phone, minimum_order_price
+         SELECT store_serial,store_phone, store_address_jibun, store_building_name, start_time, end_time, store_restday, store_notice, store_phone, minimum_order_price, delivery_cost
          FROM Capstone.store
          WHERE store_serial=".$store_serial;
          $stmt = mysqli_query($connect,$query);
@@ -96,7 +101,8 @@
                 'store_address'=>$row2['store_address_jibun'],
                 'minimum_order_price'=>$row2['minimum_order_price'],
                 'store_restday'=>$row2['store_restday'],
-                'store_notice'=>$row2['store_notice']
+                'store_notice'=>$row2['store_notice'],
+                'delivery_cost'=>$row2['delivery_cost']
             );
          }
 
