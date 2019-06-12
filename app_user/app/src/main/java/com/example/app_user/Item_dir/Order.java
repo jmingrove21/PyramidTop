@@ -81,7 +81,7 @@ public class Order {
     }
 
     public void setMy_order_total_price(int my_order_total_price) {
-    if(this.my_order_total_price!=0)
+    if(my_order_total_price==0)
         this.my_order_total_price = my_order_total_price;
     else
         this.my_order_total_price += my_order_total_price;
