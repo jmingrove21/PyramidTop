@@ -87,7 +87,6 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         permissionCheck();
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         UtilSet.set_GPS_permission(lm, this);//GPS
-        set_display_width_height();
 
 
 
@@ -115,7 +114,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                resfresh_mileage(view);
+                UtilSet.resfresh_mileage(view);
             }
         };
 
@@ -134,11 +133,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         });
 
     }
-    public void resfresh_mileage(View view){
-        TextView user_mil= view.findViewById(R.id.user_mileage);
-        if(UtilSet.my_user!=null)
-            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
-    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (LoginLogoutInform.getLogin_flag() == 1) {
@@ -379,7 +374,4 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         startActivityForResult(intent, 101);
     }
 
-    public void set_display_width_height() {
-
-    }
 }

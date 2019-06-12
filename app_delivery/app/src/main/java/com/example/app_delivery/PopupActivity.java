@@ -26,10 +26,7 @@ public class PopupActivity extends Activity implements View.OnClickListener {
         ListView listView_user = findViewById(R.id.menu_list_frag);
         MenuAdapter menuAdapter = new MenuAdapter();
         listView_user.setAdapter(menuAdapter);
-
-
     }
-
 
     public void onClick(View v) {
         switch (v.getId()) {
@@ -60,11 +57,10 @@ public class PopupActivity extends Activity implements View.OnClickListener {
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.menu_detail_list, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 400));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 230));
 
             TextView text_name = view.findViewById(R.id.menu_name);
             TextView text_count = view.findViewById(R.id.menu_count);
-
 
             text_name.setText(MapActivity.oData.get(index).al_menu.get(i).menu_name);
             text_count.setText(MapActivity.oData.get(index).al_menu.get(i).menu_count+"개");

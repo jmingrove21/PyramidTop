@@ -9,9 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -244,5 +241,4 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 }
