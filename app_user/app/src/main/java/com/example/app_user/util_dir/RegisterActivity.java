@@ -217,15 +217,13 @@ public class RegisterActivity extends AppCompatActivity {
                 .addFormDataPart("user_id",id.getText().toString())
                 .addFormDataPart("user_password",pw.getText().toString())
                 .addFormDataPart("user_phone",phone.getText().toString())
-                .addFormDataPart("user_img","profile_img.jpg",RequestBody.create(MediaType.parse("image/*jpg"),byteArray.toString()))
-                .addFormDataPart("img_check",""+image_check)
+                .addFormDataPart("user_img","profile_img.jpg",RequestBody.create(MediaType.parse("image/*jpg"),byteArray))
                 .build();
 
         Request request = new Request.Builder()
                 .url("http://ec2-54-180-102-7.ap-northeast-2.compute.amazonaws.com/get/JSON/user_app/user_join.php")
                 .post(requestBody)
                 .build();
-
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
