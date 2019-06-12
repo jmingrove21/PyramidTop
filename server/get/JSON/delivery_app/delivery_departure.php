@@ -14,7 +14,7 @@
                SELECT DISTINCT tb2.*, user_name,user_phone
         	FROM
         		(
-        		SELECT tb1.*,menu_name,menu_price,menu_count,USER_user_serial, destination, destination_lat, destination_long
+        		SELECT tb1.*,menu_name,menu_price,menu_count,USER_user_serial, destination, destination_lat, destination_long, user_pay_status,user_pay_price
         		FROM
         			(
         			SELECT so.order_number, so.store_serial, order_receipt_date, s.store_name, s.store_latitude, s.store_longitude, s.store_address_jibun
@@ -83,7 +83,9 @@
                                  "destination_long"=>$row['destination_long'],
                                  "destination_lat"=>$row['destination_lat'],
                                  'menu'=>$menu,
-                                 'user_total_price'=>$user_price
+                                 'user_total_price'=>$user_price,
+                                 'user_pay_price'=>$row['user_pay_price'],
+                                 'user_pay_status'=>$row['user_pay_status']
                  );
             $data=array(
                             "order_number"=>$order_num,
