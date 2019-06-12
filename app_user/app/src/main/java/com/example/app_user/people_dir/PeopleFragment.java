@@ -60,7 +60,7 @@ public class PeopleFragment extends DialogFragment {
         LinearLayout frame = view.findViewById(R.id.recent_orderlist_linear);
         listView = view.findViewById(R.id.people_listview);
 
-        order_cancel_btn = view.findViewById(R.id.order_cancel_btn);
+       // order_cancel_btn = view.findViewById(R.id.order_cancel_btn);
 
 
         if(LoginLogoutInform.getLogin_flag()==0){

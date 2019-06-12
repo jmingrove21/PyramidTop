@@ -185,22 +185,18 @@ public class OrderFragment extends DialogFragment {
                             JSONArray jArray = new JSONArray(jsonReply);
                             for (int i = 0; i < jArray.length(); i++) {
                                 JSONObject jobj = (JSONObject) jArray.get(i);
+                                String result[]=new String[8];
+                                String tag[]={"store_serial","store_name","store_branch_name","store_address","store_phone","minimum_order_price","distance","store_profile_img"};
+                                for(int j=0;j<result.length;j++)
+                                    result[j]=jobj.getString(tag[j]);
 
-                                String store_serial = jobj.getString("store_serial");
-                                String store_name = jobj.getString("store_name");
-                                String store_branch_name = jobj.getString("store_branch_name");
-                                String store_address = jobj.getString("store_address");
-                                String store_phone = jobj.getString("store_phone");
-                                String minimum_order_price = jobj.getString("minimum_order_price");
                                 String delivery_cost=jobj.getString("delivery_cost");
-                                String distance = jobj.getString("distance");
-                                String store_profile_img = jobj.getString("store_profile_img");
                                 String order_create_date = jobj.getString("order_create_date");
                                 String participate_person = jobj.getString("participate_persons");
                                 String total_order_price = jobj.getString("total_order_price");
                                 String order_number=jobj.getString("order_number");
                                 Order o = new Order(order_create_date, participate_person, total_order_price,order_number);
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
+                                Store s = new Store(result);
                                 s.setDelivery_cost(Integer.parseInt(delivery_cost));
                                 o.setStore(s);
                                 UtilSet.al_order.add(o);
@@ -245,23 +241,19 @@ public class OrderFragment extends DialogFragment {
                         String jsonReply = UtilSet.convertStreamToString(response);
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
+                            Store s= UtilSet.al_order.get(position).getStore();
+                            String result[]=new String[8];
+                            String tag[]={"store_building_name","start_time","end_time","store_restday","store_notice","store_main_type_name","store_sub_type_name","delivery_cost"};
+                            for(int j=0;j<result.length;j++)
+                                result[j]=jobj.getString(tag[j]);
+                            s.set_store_spec(result);
 
-                            String store_building_name = jobj.get("store_building_name").toString();
-                            String start_time = jobj.get("start_time").toString();
-                            String end_time = jobj.get("end_time").toString();
-                            String store_restday = jobj.get("store_restday").toString();
-                            String store_notice = jobj.get("store_notice").toString();
-                            String store_main_type_name = jobj.get("store_main_type_name").toString();
-                            String store_sub_type_name = jobj.get("store_sub_type_name").toString();
-                            String delivery_cost=jobj.get("delivery_cost").toString();
-                            UtilSet.al_order.get(position).getStore().set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
-                            UtilSet.al_order.get(position).getStore().setDelivery_cost(Integer.parseInt(delivery_cost));
                             JSONArray jobj_menu = (JSONArray) jobj.get("menu");
                             for (int j = 0; j < jobj_menu.length(); j++) {
                                 JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);
                                 String menu_type_code = jobj_menu_spec.get("menu_type_code").toString();
                                 String menu_type_name = jobj_menu_spec.get("menu_type_name").toString();
-                                UtilSet.al_order.get(position).getStore().getMenu_al().add(new Menu(menu_type_code, menu_type_name));
+                                s.getMenu_al().add(new Menu(menu_type_code, menu_type_name));
                                 JSONArray menu_menu_desc = (JSONArray) jobj_menu_spec.get("menu description");
                                 for (int k = 0; k < menu_menu_desc.length(); k++) {
                                     JSONObject jobj_menu_desc_spec = (JSONObject) menu_menu_desc.get(k);
@@ -269,7 +261,7 @@ public class OrderFragment extends DialogFragment {
                                     String menu_name = jobj_menu_desc_spec.get("menu_name").toString();
                                     int menu_price = Integer.parseInt(jobj_menu_desc_spec.get("menu_price").toString());
                                     String menu_img = jobj_menu_desc_spec.get("menu_img").toString();
-                                    UtilSet.al_order.get(position).getStore().getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name, menu_price, menu_img));
+                                    s.getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name, menu_price, menu_img));
                                 }
                             }
                         } catch (Exception e) {

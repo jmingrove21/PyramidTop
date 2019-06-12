@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.ToolbarInform;
+import com.example.app_user.SuperActivity;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.CreditActivity;
 import com.example.app_user.util_dir.HomeFragment;
@@ -45,8 +46,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MenuCustomAdapter.OnArrayList {
-    private DrawerLayout drawer;
+public class MenuActivity extends SuperActivity implements MenuCustomAdapter.OnArrayList {
+   // private DrawerLayout drawer;
     int index;
     int serial;
     boolean flag = false;
@@ -81,7 +82,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setTitle(UtilSet.target_store.getStore_name() + " " + UtilSet.target_store.getStore_branch_name());
         ToolbarInform.setToolbar_inform(UtilSet.target_store.getStore_name() + " " + UtilSet.target_store.getStore_branch_name());
 
-        drawer = findViewById(R.id.drawer_layout);
+        //drawer = findViewById(R.id.drawer_layout);
+        setDrawer();
         NavigationView navigationView = findViewById(R.id.nav_view);
         view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView, view);
@@ -106,7 +108,9 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 super.onDrawerOpened(drawerView);
                 resfresh_mileage(view);
             }
-        };        drawer.addDrawerListener(toggle);
+        };
+//drawer = findViewById(R.id.drawer_layout);
+        setDrawer();
         toggle.syncState();
 
         ImageView imageView = findViewById(R.id.store_image);
@@ -147,45 +151,45 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (LoginLogoutInform.getLogin_flag() == 1) {
-            switch (menuItem.getItemId()) {
-                case R.id.old_olderlist:
-                    getSupportActionBar().setTitle("지난 주문 내역");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-                            new Old_Orderlist()).commit();
-                    break;
-//                case R.id.menu_idoption:
-//                    getSupportActionBar().setTitle("계정 설정");
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        if (LoginLogoutInform.getLogin_flag() == 1) {
+//            switch (menuItem.getItemId()) {
+//                case R.id.old_olderlist:
+//                    getSupportActionBar().setTitle("지난 주문 내역");
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-//                            new Profile()).commit();
+//                            new Old_Orderlist()).commit();
 //                    break;
-                case R.id.menu_logout:
-                    UtilSet.loginLogoutInform.setLogin_flag(0);
-                    UtilSet.my_user=null;
-                    UtilSet.delete_user_data();
-                    Intent intent = new Intent(MenuActivity.this, FirstMainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                    break;
-            }
-        } else {
-            switch (menuItem.getItemId()) {
-                case R.id.menu_register:
-                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                    startActivityForResult(register_intent, 101);
-                    break;
-                case R.id.menu_login:
-                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(login_intent, 101);
-                    break;
-            }
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
+////                case R.id.menu_idoption:
+////                    getSupportActionBar().setTitle("계정 설정");
+////                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+////                            new Profile()).commit();
+////                    break;
+//                case R.id.menu_logout:
+//                    UtilSet.loginLogoutInform.setLogin_flag(0);
+//                    UtilSet.my_user=null;
+//                    UtilSet.delete_user_data();
+//                    Intent intent = new Intent(MenuActivity.this, FirstMainActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+//                    finish();
+//                    break;
+//            }
+//        } else {
+//            switch (menuItem.getItemId()) {
+//                case R.id.menu_register:
+//                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+//                    startActivityForResult(register_intent, 101);
+//                    break;
+//                case R.id.menu_login:
+//                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                    startActivityForResult(login_intent, 101);
+//                    break;
+//            }
+//        }
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {

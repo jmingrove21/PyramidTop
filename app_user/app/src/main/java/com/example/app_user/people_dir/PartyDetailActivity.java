@@ -26,6 +26,7 @@ import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
+import com.example.app_user.SuperActivity;
 import com.example.app_user.util_dir.Profile;
 import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
@@ -36,7 +37,7 @@ import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.RegisterActivity;
 
-public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
+public class PartyDetailActivity extends SuperActivity implements View.OnClickListener {
     private DrawerLayout drawer;
     int index;
     View view;
@@ -61,7 +62,8 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("참여 현황");
 
-        drawer = findViewById(R.id.drawer_layout);
+        //drawer = findViewById(R.id.drawer_layout);
+        setDrawer();
         NavigationView navigationView = findViewById(R.id.nav_view);
         view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView,view);
@@ -121,46 +123,46 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
         user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(LoginLogoutInform.getLogin_flag()==1){
-            switch (menuItem.getItemId()) {
-                case R.id.old_olderlist:
-                    getSupportActionBar().setTitle("지난 주문 내역");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-                            new Old_Orderlist()).commit();
-                    break;
-//                case R.id.menu_idoption:
-//                    getSupportActionBar().setTitle("계정 설정");
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        if(LoginLogoutInform.getLogin_flag()==1){
+//            switch (menuItem.getItemId()) {
+//                case R.id.old_olderlist:
+//                    getSupportActionBar().setTitle("지난 주문 내역");
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
-//                            new Profile()).commit();
+//                            new Old_Orderlist()).commit();
 //                    break;
-                case R.id.menu_logout:
-                    UtilSet.loginLogoutInform.setLogin_flag(0);
-                    UtilSet.my_user=null;
-                    UtilSet.delete_user_data();
-                    Intent intent=new Intent(PartyDetailActivity.this, FirstMainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                    break;
-            }
-        }else{
-            switch (menuItem.getItemId()) {
-                case R.id.menu_register:
-                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                    startActivityForResult(register_intent, 101);
-                    break;
-
-                case R.id.menu_login:
-                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(login_intent, 101);
-                    break;
-            }
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
+////                case R.id.menu_idoption:
+////                    getSupportActionBar().setTitle("계정 설정");
+////                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+////                            new Profile()).commit();
+////                    break;
+//                case R.id.menu_logout:
+//                    UtilSet.loginLogoutInform.setLogin_flag(0);
+//                    UtilSet.my_user=null;
+//                    UtilSet.delete_user_data();
+//                    Intent intent=new Intent(PartyDetailActivity.this, FirstMainActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+//                    finish();
+//                    break;
+//            }
+//        }else{
+//            switch (menuItem.getItemId()) {
+//                case R.id.menu_register:
+//                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+//                    startActivityForResult(register_intent, 101);
+//                    break;
+//
+//                case R.id.menu_login:
+//                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                    startActivityForResult(login_intent, 101);
+//                    break;
+//            }
+//        }
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {

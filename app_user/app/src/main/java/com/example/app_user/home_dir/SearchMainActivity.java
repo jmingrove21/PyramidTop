@@ -36,6 +36,8 @@ import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.ToolbarInform;
 import com.example.app_user.Item_dir.UtilSet;
+import com.example.app_user.StaticActivity;
+import com.example.app_user.SuperActivity;
 import com.example.app_user.util_dir.Profile;
 import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
@@ -54,8 +56,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class SearchMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class SearchMainActivity extends SuperActivity {
     private DrawerLayout drawer;
     Bitmap bitmap;
     int store_ser;
@@ -80,7 +83,8 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
         getSupportActionBar().setTitle("검색 목록");
         ToolbarInform.setToolbar_inform("검색 목록");
 
-        drawer = findViewById(R.id.drawer_layout);
+        //drawer = findViewById(R.id.drawer_layout);
+        setDrawer();
         NavigationView navigationView = findViewById(R.id.nav_view);
         view = getLayoutInflater().inflate(R.layout.nav_header, null);
         UtilSet.set_Drawer(navigationView, view);
@@ -142,22 +146,25 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                 Thread mThread = new Thread() {
                     @Override
                     public void run() {
-                        for (int i = 0; i < UtilSet.al_searchstore.get(position).getMenu_al().size(); i++) {
-                            for (int j = 0; j < UtilSet.al_searchstore.get(position).getMenu_al().get(i).getMenu_desc_al().size(); j++) {
+                        ArrayList<com.example.app_user.Item_dir.Menu> menu_al=UtilSet.al_searchstore.get(position).getMenu_al();
+                        for (int i = 0; i < menu_al.size(); i++) {
+                            ArrayList<MenuDesc> menudesc_al=menu_al.get(i).getMenu_desc_al();
+                            for (int j = 0; j <menudesc_al.size(); j++) {
+                                MenuDesc menuDesc=menudesc_al.get(j);
                                 try {
-                                    if (UtilSet.getBitmapFromMemCache(UtilSet.al_searchstore.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img()) != null) {
-                                        bitmap = UtilSet.getBitmapFromMemCache(UtilSet.al_searchstore.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
-                                        UtilSet.al_searchstore.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).setMenu_image(bitmap);
+                                    if (UtilSet.getBitmapFromMemCache(menuDesc.getMenu_img()) != null) {
+                                        bitmap = UtilSet.getBitmapFromMemCache(menuDesc.getMenu_img());
+                                        menuDesc.setMenu_image(bitmap);
                                     } else {
-                                        URL url = new URL(UtilSet.al_searchstore.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img());
+                                        URL url = new URL(menuDesc.getMenu_img());
                                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                                         conn.setDoInput(true);
                                         conn.connect();
 
                                         InputStream is = conn.getInputStream();
                                         bitmap = BitmapFactory.decodeStream(is);
-                                        UtilSet.al_searchstore.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).setMenu_image(bitmap);
-                                        UtilSet.addBitmapToMemoryCache(UtilSet.al_searchstore.get(position).getMenu_al().get(i).getMenu_desc_al().get(j).getMenu_img(), bitmap);
+                                        menuDesc.setMenu_image(bitmap);
+                                        UtilSet.addBitmapToMemoryCache(menuDesc.getMenu_img(), bitmap);
                                     }
 
                                 } catch (MalformedURLException e) {
@@ -263,15 +270,11 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                             JSONArray jArray = new JSONArray(jsonReply);
                             for (int i = 0; i < jArray.length(); i++) {
                                 JSONObject jobj = (JSONObject) jArray.get(i);
-                                String store_serial = jobj.get("store_serial").toString();
-                                String store_name = jobj.get("store_name").toString();
-                                String store_branch_name = jobj.get("store_branch_name").toString();
-                                String store_address = jobj.get("store_address").toString();
-                                String store_phone = jobj.get("store_phone").toString();
-                                String distance = jobj.get("distance").toString();
-                                String store_profile_img = jobj.get("store_profile_img").toString();
-                                String minimum_price= jobj.get("minimum_order_price").toString();
-                                Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_price, distance, store_profile_img);
+                                String result[]=new String[8];
+                                String tag[]={"store_serial","store_name","store_branch_name","store_address","store_phone","minimum_order_price","distance","store_profile_img"};
+                                for(int j=0;j<result.length;j++)
+                                    result[j]=jobj.getString(tag[j]);
+                                Store s = new Store(result);
                                 UtilSet.al_searchstore.add(s);
                             }
                         } catch (Exception e) {
@@ -312,32 +315,28 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
                         String jsonReply = UtilSet.convertStreamToString(response);
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
-                            String store_building_name = jobj.get("store_building_name").toString();
-                            String start_time = jobj.get("start_time").toString();
-                            String end_time = jobj.get("end_time").toString();
-                            String store_restday = jobj.get("store_restday").toString();
-                            String store_notice = jobj.get("store_notice").toString();
-                            String store_main_type_name = jobj.get("store_main_type_name").toString();
-                            String store_sub_type_name = jobj.get("store_sub_type_name").toString();
-                            String delivery_cost=jobj.get("delivery_cost").toString();
-
-                            UtilSet.al_searchstore.get(position).set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
-                            UtilSet.al_searchstore.get(position).setDelivery_cost(Integer.parseInt(delivery_cost));
+                            Store s= UtilSet.al_searchstore.get(position);
+                            String result[]=new String[8];
+                            String tag[]={"store_building_name","start_time","end_time","store_restday","store_notice","store_main_type_name","store_sub_type_name","delivery_cost"};
+                            for(int j=0;j<result.length;j++)
+                                result[j]=jobj.getString(tag[j]);
+                            s.set_store_spec(result);
 
                             JSONArray jobj_menu = (JSONArray) jobj.get("menu");
                             for (int j = 0; j < jobj_menu.length(); j++) {
                                 JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);
-                                String menu_type_code = jobj_menu_spec.get("menu_type_code").toString();
-                                String menu_type_name = jobj_menu_spec.get("menu_type_name").toString();
-                                UtilSet.al_searchstore.get(position).getMenu_al().add(new com.example.app_user.Item_dir.Menu(menu_type_code, menu_type_name));
+                                String menu_type_code = jobj_menu_spec.getString("menu_type_code");
+                                String menu_type_name = jobj_menu_spec.getString("menu_type_name");
+                                ArrayList<com.example.app_user.Item_dir.Menu> menu_al=s.getMenu_al();
+                                menu_al.add(new com.example.app_user.Item_dir.Menu(menu_type_code, menu_type_name));
                                 JSONArray menu_menu_desc = (JSONArray) jobj_menu_spec.get("menu description");
                                 for (int k = 0; k < menu_menu_desc.length(); k++) {
                                     JSONObject jobj_menu_desc_spec = (JSONObject) menu_menu_desc.get(k);
-                                    String menu_code = jobj_menu_desc_spec.get("menu_code").toString();
-                                    String menu_name = jobj_menu_desc_spec.get("menu_name").toString();
-                                    int menu_price = Integer.parseInt(jobj_menu_desc_spec.get("menu_price").toString());
-                                    String menu_img = jobj_menu_desc_spec.get("menu_img").toString();
-                                    UtilSet.al_searchstore.get(position).getMenu_al().get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name, menu_price, menu_img));
+                                    String menu_code = jobj_menu_desc_spec.getString("menu_code");
+                                    String menu_name = jobj_menu_desc_spec.getString("menu_name");
+                                    int menu_price = jobj_menu_desc_spec.getInt("menu_price");
+                                    String menu_img = jobj_menu_desc_spec.getString("menu_img");
+                                    menu_al.get(j).getMenu_desc_al().add(new MenuDesc(menu_code, menu_name, menu_price, menu_img));
                                 }
                             }
                         } catch (Exception e) {
@@ -360,46 +359,47 @@ public class SearchMainActivity extends AppCompatActivity implements NavigationV
         }
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (LoginLogoutInform.getLogin_flag() == 1) {
-            switch (menuItem.getItemId()) {
-                case R.id.old_olderlist:
-                    getSupportActionBar().setTitle("지난 주문 내역");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new Old_Orderlist()).commit();
-                    break;
-//                case R.id.menu_idoption:
-//                    getSupportActionBar().setTitle("계정 설정");
+    //@Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//
+//        if (LoginLogoutInform.getLogin_flag() == 1) {
+//            switch (menuItem.getItemId()) {
+//                case R.id.old_olderlist:
+//                    getSupportActionBar().setTitle("지난 주문 내역");
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                            new Profile()).commit();
+//                            new Old_Orderlist()).commit();
 //                    break;
-                case R.id.menu_logout:
-                    UtilSet.loginLogoutInform.setLogin_flag(0);
-                    UtilSet.my_user=null;
-                    UtilSet.delete_user_data();
-                    Intent intent = new Intent(SearchMainActivity.this, FirstMainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                    break;
-            }
-        } else {
-            switch (menuItem.getItemId()) {
-                case R.id.menu_register:
-                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                    startActivityForResult(register_intent, 101);
-                    break;
-
-                case R.id.menu_login:
-                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(login_intent, 101);
-                    break;
-            }
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
+////                case R.id.menu_idoption:
+////                    getSupportActionBar().setTitle("계정 설정");
+////                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+////                            new Profile()).commit();
+////                    break;
+//                case R.id.menu_logout:
+//                    UtilSet.loginLogoutInform.setLogin_flag(0);
+//                    UtilSet.my_user=null;
+//                    UtilSet.delete_user_data();
+//                    Intent intent = new Intent(SearchMainActivity.this, FirstMainActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+//                    finish();
+//                    break;
+//            }
+//        } else {
+//            switch (menuItem.getItemId()) {
+//                case R.id.menu_register:
+//                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+//                    startActivityForResult(register_intent, 101);
+//                    break;
+//
+//                case R.id.menu_login:
+//                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                    startActivityForResult(login_intent, 101);
+//                    break;
+//            }
+//        }
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
