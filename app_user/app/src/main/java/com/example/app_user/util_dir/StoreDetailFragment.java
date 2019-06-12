@@ -31,14 +31,18 @@ public class StoreDetailFragment extends Fragment {
         TextView text_store_minimum_price= view.findViewById(R.id.store_mininum_price);
         TextView text_store_delivery_cost= view.findViewById(R.id.delivery_cost);
 
-        text_store_rest.setText(UtilSet.target_store.getStore_restday());
-        text_store_minimum_price.setText(UtilSet.target_store.getMinimum_order_price()+"원");
-        text_store_phone.setText(UtilSet.target_store.getStore_phone());
-        text_store_address.setText(UtilSet.target_store.getStore_address());
-        text_store_operation_start_time.setText(UtilSet.target_store.getStart_time());
-        text_store_operation_end_time.setText(UtilSet.target_store.getEnd_time());
-        text_store_notice.setText(UtilSet.target_store.getStore_notice());
-        text_store_delivery_cost.setText(UtilSet.target_store.getDelivery_cost() +"원");
+        if(UtilSet.target_store==null) {
+            UtilSet.target_store = UtilSet.al_store.get(UtilSet.cur_position);
+            UtilSet.target_store.setMenu_str();
+        }
+            text_store_rest.setText(UtilSet.target_store.getStore_restday());
+            text_store_minimum_price.setText(UtilSet.target_store.getMinimum_order_price()+"원");
+            text_store_phone.setText(UtilSet.target_store.getStore_phone());
+            text_store_address.setText(UtilSet.target_store.getStore_address());
+            text_store_operation_start_time.setText(UtilSet.target_store.getStart_time());
+            text_store_operation_end_time.setText(UtilSet.target_store.getEnd_time());
+            text_store_notice.setText(UtilSet.target_store.getStore_notice());
+            text_store_delivery_cost.setText(UtilSet.target_store.getDelivery_cost() +"원");
         return view;
     }
 }
