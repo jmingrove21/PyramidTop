@@ -18,11 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
+import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
@@ -35,6 +37,13 @@ import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.RegisterActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 
 public class PartyDetailActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
     private DrawerLayout drawer;
@@ -222,15 +231,57 @@ public class PartyDetailActivity extends AppCompatActivity implements Navigation
                 서버와의 통신연결과정에서 서버가 orderStatus==1 (접수대기중) 일경우 confirm 1을 반환
                 *********************************************************************************** */
 
-                //주문 삭제시 서버에게 현재 PartyDetailActivity의 54번째 줄 index를 넘김
-                    //서버로부터 실시간 order_status를 받아 값이 일치할 경우 서버에서 해당 주문 삭제 후 사용자는 FirstMainActivity로 전환
-                    if(UtilSet.al_my_order.get(index).getOrderStatus()==R.drawable.wait){  //==> 괄호안 confirm값이 1일때로 수정 필요
-                    Toast.makeText(PartyDetailActivity.this,"주문이 취소되었습니다.",Toast.LENGTH_SHORT).show();
-                    Intent delete_order_intent = new Intent(this,FirstMainActivity.class);
-                    startActivity(delete_order_intent);
-                }else{ //confirm 1이 아닐 경우
-                    Toast.makeText(PartyDetailActivity.this,"접수 대기중에만 취소가 가능합니다.",Toast.LENGTH_SHORT).show();
-                }
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            final EditText id= findViewById(R.id.id_input);
+                            final EditText pw= findViewById(R.id.pw_input);
+
+                            JSONObject jsonParam = new JSONObject();
+                            jsonParam.put("user_info","delete_order");
+                            jsonParam.put("order_number", UtilSet.al_my_order.get(index).getOrder_number());
+                            jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
+
+
+                            Log.i("JSON", jsonParam.toString());
+
+                            HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
+
+                            if(conn.getResponseCode()==200){
+                                InputStream response = conn.getInputStream();
+                                String jsonReply = UtilSet.convertStreamToString(response);
+                                JSONObject jobj=new JSONObject(jsonReply);
+                                String json_result=jobj.getString("confirm");
+                                Log.i("check_state", json_result);
+
+                                if(json_result.equals("1")){
+                                    PartyDetailActivity.this.runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            Toast.makeText(PartyDetailActivity.this,"주문이 취소되었습니다.",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    Intent delete_order_intent = new Intent(PartyDetailActivity.this,FirstMainActivity.class);
+                                    delete_order_intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(delete_order_intent);
+                                    finish();
+                                }else{
+                                    PartyDetailActivity.this.runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            Toast.makeText(PartyDetailActivity.this,"접수 대기중에만 취소가 가능합니다.",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }else{
+                                Log.d("error","Connect fail");
+                            }
+                            conn.disconnect();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
                 break;
         }
     }
