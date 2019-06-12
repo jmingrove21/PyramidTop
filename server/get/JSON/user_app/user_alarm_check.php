@@ -30,11 +30,12 @@
         while($row=mysqli_fetch_assoc($stmt)){
             if($row['order_status']==1||$row['order_status']==2||$row['order_status']==7||$row['order_status']==8){
                 if($row['order_status']==1){
+                    ##시간초과처리
                     $time_query="SELECT order_create_date FROM store_order WHERE order_number=".$row['order_number'];
                     $time_stmt = mysqli_query($connect,$time_query);
                     $time=mysqli_fetch_assoc($time_stmt);
                     $sub=strtotime($current)-strtotime($time['order_create_date']);
-                    if($sub>60*2){
+                    if($sub>60*5){
                         $cancel_query="UPDATE user_order SET user_status=8 WHERE order_number=".$row['order_number']." AND USER_user_serial=".$user_serial;
                         $cancel_stmt = mysqli_query($connect,$cancel_query);
                         $query1="UPDATE store_order SET order_status=8 WHERE order_number=".$row['order_number'];
@@ -52,6 +53,14 @@
                             array_push($user_alarm,$total);
                             $confirm=1;
 
+                    }
+                    ##참가자 없을 때
+                    $check_query="SELECT COUNT(*) AS c FROM user_order WHERE order_number=".$row['order_number']." AND user_status!=8";
+                    $check_stmt=mysqli_query($connect,$check_query);
+                    $check_result=mysqli_fetch_assoc($check_stmt);
+                    if($check_result['c']==0){
+                        $update_query="UPDATE store_order SET order_status=8 WHERE order_number=".$row['order_number'];
+                        $update_stmt=mysqli_query($connect,$update_query);
                     }
                 }else if($row['order_status']==8){
                     if($row['user_status']==8){
