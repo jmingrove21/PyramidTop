@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.ToolbarInform;
+import com.example.app_user.Item_dir.User;
 import com.example.app_user.MyService;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.BackPressCloseHandler;
@@ -44,7 +46,7 @@ import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.people_dir.PeopleFragment;
-import com.example.app_user.Profile;
+import com.example.app_user.util_dir.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
@@ -62,6 +64,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
     private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
     public static int store_type = -1;
+    int delete_order_index;
     Point point;
     View view;
     @Override
@@ -69,10 +72,23 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_main);
 
+        //기존 사용자가 주문한 내역 삭제에 사용됐던 코드
+        //삭제 변경 완료시 현재 주석 코드 삭제하여도 무방
+//        if(UtilSet.order_delete_check_flag){
+//            Intent delete_order_intent = new Intent();
+//            delete_order_intent.getIntExtra("delete_order_index",-1);
+//
+//            if(delete_order_index != -1){
+//                //서버에게 delete_order_index를 삭제하기 위해 요청하는 곳
+//            }
+//            UtilSet.order_delete_check_flag = false;
+//        }
+
         permissionCheck();
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         UtilSet.set_GPS_permission(lm, this);//GPS
-        set_display_width_height();
+
+
 
         Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
         startService(intent_alert);//알림
@@ -98,7 +114,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                resfresh_mileage(view);
+                UtilSet.resfresh_mileage(view);
             }
         };
 
@@ -117,11 +133,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         });
 
     }
-    public void resfresh_mileage(View view){
-        TextView user_mil= view.findViewById(R.id.user_mileage);
-        if(UtilSet.my_user!=null)
-            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
-    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         if (LoginLogoutInform.getLogin_flag() == 1) {
@@ -131,11 +143,11 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     getSupportFragmentManager().beginTransaction().replace(R.id.relative_container,
                             new Old_Orderlist()).commit();
                     break;
-                case R.id.menu_idoption:
-                    getSupportActionBar().setTitle("계정 설정");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.relative_container,
-                            new Profile()).commit();
-                    break;
+//                case R.id.menu_idoption:
+//                    getSupportActionBar().setTitle("계정 설정");
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.relative_container,
+//                            new Profile()).commit();
+//                    break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
                     UtilSet.my_user=null;
@@ -362,7 +374,4 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         startActivityForResult(intent, 101);
     }
 
-    public void set_display_width_height() {
-
-    }
 }

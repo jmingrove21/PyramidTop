@@ -43,6 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UtilSet {
     public static String key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
     public static User my_user;
+    public static boolean order_delete_check_flag = false;
     public static MapPoint mapPoint = new MapPoint(false);
     public static ArrayList<Store> al_searchstore = new ArrayList<>();
     public static ArrayList<Store> al_store = new ArrayList<>();
@@ -294,5 +295,9 @@ public class UtilSet {
             navigationView.addHeaderView(view);
         }
     }
-
+    public static void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        if(UtilSet.my_user!=null)
+            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
 }
