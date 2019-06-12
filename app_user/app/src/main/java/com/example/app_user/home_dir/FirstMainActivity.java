@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,7 +36,6 @@ import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.ToolbarInform;
-import com.example.app_user.Item_dir.User;
 import com.example.app_user.MyService;
 import com.example.app_user.StaticActivity;
 import com.example.app_user.SuperActivity;
@@ -48,7 +46,7 @@ import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
 import com.example.app_user.order_dir.OrderFragment;
 import com.example.app_user.people_dir.PeopleFragment;
-import com.example.app_user.util_dir.Profile;
+import com.example.app_user.Profile;
 import com.example.app_user.R;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
@@ -66,7 +64,6 @@ public class FirstMainActivity extends SuperActivity {
     //private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
     public static int store_type = -1;
-    int delete_order_index;
     Point point;
     public static Toolbar toolbar;
     View view;
@@ -74,6 +71,7 @@ public class FirstMainActivity extends SuperActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_main);
+<<<<<<< HEAD
         toolbar=findViewById(R.id.toolbar);
         //기존 사용자가 주문한 내역 삭제에 사용됐던 코드
         //삭제 변경 완료시 현재 주석 코드 삭제하여도 무방
@@ -86,10 +84,16 @@ public class FirstMainActivity extends SuperActivity {
 //            }
 //            UtilSet.order_delete_check_flag = false;
 //        }
+=======
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
         permissionCheck();
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         UtilSet.set_GPS_permission(lm, this);//GPS
+<<<<<<< HEAD
+=======
+        set_display_width_height();
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
         Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
         startService(intent_alert);//알림
@@ -115,7 +119,7 @@ public class FirstMainActivity extends SuperActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                UtilSet.resfresh_mileage(view);
+                resfresh_mileage(view);
             }
         };
 
@@ -134,6 +138,7 @@ public class FirstMainActivity extends SuperActivity {
         });
 
     }
+<<<<<<< HEAD
 
 //    @Override
 //    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -176,6 +181,52 @@ public class FirstMainActivity extends SuperActivity {
 //        drawer.closeDrawer(GravityCompat.START);
 //        return true;
 //    }
+=======
+    public void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        if(UtilSet.my_user!=null)
+            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        if (LoginLogoutInform.getLogin_flag() == 1) {
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.relative_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.relative_container,
+                            new Profile()).commit();
+                    break;
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
+                    UtilSet.delete_user_data();
+                    Intent intent = new Intent(FirstMainActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        } else {
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -373,4 +424,7 @@ public class FirstMainActivity extends SuperActivity {
         startActivityForResult(intent, 101);
     }
 
+    public void set_display_width_height() {
+
+    }
 }

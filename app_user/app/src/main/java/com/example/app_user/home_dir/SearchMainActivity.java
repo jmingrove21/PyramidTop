@@ -15,6 +15,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Display;
@@ -26,6 +28,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,9 +39,13 @@ import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.ToolbarInform;
 import com.example.app_user.Item_dir.UtilSet;
+<<<<<<< HEAD
 import com.example.app_user.StaticActivity;
 import com.example.app_user.SuperActivity;
 import com.example.app_user.util_dir.Profile;
+=======
+import com.example.app_user.Profile;
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
@@ -57,6 +64,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
 public class SearchMainActivity extends SuperActivity {
     private DrawerLayout drawer;
@@ -359,6 +370,7 @@ public class SearchMainActivity extends SuperActivity {
         }
     }
 
+<<<<<<< HEAD
     //@Override
 //    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 //
@@ -400,6 +412,48 @@ public class SearchMainActivity extends SuperActivity {
 //        drawer.closeDrawer(GravityCompat.START);
 //        return true;
 //    }
+=======
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        if (LoginLogoutInform.getLogin_flag() == 1) {
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new Profile()).commit();
+                    break;
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
+                    UtilSet.delete_user_data();
+                    Intent intent = new Intent(SearchMainActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        } else {
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {

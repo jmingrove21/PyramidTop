@@ -17,11 +17,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BackPressCloseHandler backPressCloseHandler;
     private ListView m_oListView=null;
+    public Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("배달 요청 목록");
         get_delivery_order_list();
+
+
 
         // ListView, Adapter 생성 및 연결 ------------------------
         m_oListView=(ListView)findViewById(R.id.listView);
@@ -89,18 +94,20 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray json_result_al=new JSONArray(jsonReply);
                         Log.d("count",String.valueOf(json_result_al.length()));
                         for (int i = 0; i < json_result_al.length(); i++) {
-                            int order_number=((JSONObject) json_result_al.get(i)).getInt("order_number");
-                            int store_serial=((JSONObject) json_result_al.get(i)).getInt("store_serial");
-                            String delivery_request_time=((JSONObject) json_result_al.get(i)).getString("delivery_request_time");
-                            String store_name=((JSONObject) json_result_al.get(i)).getString("store_name");
-                            String store_branch_name=((JSONObject) json_result_al.get(i)).getString("store_branch_name");
-                            float distance=Float.parseFloat(((JSONObject) json_result_al.get(i)).getString("distance"));
+                            int order_number=Integer.parseInt(((JSONObject) json_result_al.get(i)).get("order_number").toString());
+                            int store_serial=Integer.parseInt(((JSONObject) json_result_al.get(i)).get("store_serial").toString());
+                            String delivery_request_time=((JSONObject) json_result_al.get(i)).get("delivery_request_time").toString();
+                            String store_name=((JSONObject) json_result_al.get(i)).get("store_name").toString();
+                            String store_branch_name=((JSONObject) json_result_al.get(i)).get("store_branch_name").toString();
+                            float distance=Float.parseFloat(((JSONObject) json_result_al.get(i)).get("distance").toString());
 
                             order_list.add(new Delivery_list(order_number,store_serial,delivery_request_time,store_name,store_branch_name,distance));
                             ItemData oItem=new ItemData();
                             oItem.strTitle=order_list.get(i).getStore_name();
                             oItem.strDate=order_list.get(i).getDelivery_request_time();
+
                             oData.add(oItem);
+
                         }
                     }else{
                         Log.d("error","Connect fail");
@@ -253,16 +260,20 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case UtilSet.PERMISSION_REQUEST_CODE: {
                 if (grantResults.length < 1) {
+                  //  Toast.makeText(this, "Failed get permission", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 for (int i = 0; i < grantResults.length; i++) {
                     if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                       // Toast.makeText(this, "Permission is denied : " + permissions[i], Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
+                //Toast.makeText(this, "Permission is granted", Toast.LENGTH_SHORT).show();
             }
             break;
         }
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

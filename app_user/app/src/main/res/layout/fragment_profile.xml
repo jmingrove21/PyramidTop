@@ -48,12 +48,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.2">
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/register_profile_img"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:background="#eeeeee"-->
-                    <!--/>-->
+                <ImageView
+                    android:id="@+id/register_profile_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#eeeeee"
+                    />
             </LinearLayout>
 
             <LinearLayout

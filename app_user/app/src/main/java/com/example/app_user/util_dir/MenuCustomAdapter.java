@@ -67,7 +67,7 @@ public class MenuCustomAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.menu_layout,null,true);
-            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,280));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,250));
 
             holder.button_choice = convertView.findViewById(R.id.choice);
             holder.button_minus = convertView.findViewById(R.id.minus);

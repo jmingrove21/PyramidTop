@@ -18,16 +18,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.User;
 import com.example.app_user.Item_dir.UtilSet;
+<<<<<<< HEAD
 import com.example.app_user.SuperActivity;
 import com.example.app_user.util_dir.Profile;
+=======
+import com.example.app_user.Profile;
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.draw_dir.Old_Orderlist;
@@ -41,7 +45,6 @@ public class PartyDetailActivity extends SuperActivity implements View.OnClickLi
     private DrawerLayout drawer;
     int index;
     View view;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,7 +53,6 @@ public class PartyDetailActivity extends SuperActivity implements View.OnClickLi
         setContentView(R.layout.party_detail_layout);
         /////
         findViewById(R.id.btnAlert).setOnClickListener(this);
-        findViewById(R.id.btnCancel).setOnClickListener(this);
         ////
         Intent intent = getIntent();
         index = intent.getIntExtra("index", 0);
@@ -117,11 +119,11 @@ public class PartyDetailActivity extends SuperActivity implements View.OnClickLi
         text_user_deliver_start_time_input.setText(o.getDelivery_departure_time());
         text_user_deliver_complete_time_input.setText(o.getDelivery_arrival_time());
     }
-
     public void resfresh_mileage(View view){
         TextView user_mil= view.findViewById(R.id.user_mileage);
         user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
     }
+<<<<<<< HEAD
 
 //    @Override
 //    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -163,6 +165,48 @@ public class PartyDetailActivity extends SuperActivity implements View.OnClickLi
 //        drawer.closeDrawer(GravityCompat.START);
 //        return true;
 //    }
+=======
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        if(LoginLogoutInform.getLogin_flag()==1){
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Profile()).commit();
+                    break;
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
+                    UtilSet.delete_user_data();
+                    Intent intent=new Intent(PartyDetailActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }else{
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -217,23 +261,6 @@ public class PartyDetailActivity extends SuperActivity implements View.OnClickLi
                 intent.putExtra("index",index);
                 startActivity(intent);
                 break;
-
-            case R.id.btnCancel:
-
-                /* *******************************************************************************
-                서버와의 통신연결과정에서 서버가 orderStatus==1 (접수대기중) 일경우 confirm 1을 반환
-                *********************************************************************************** */
-
-                //주문 삭제시 서버에게 현재 PartyDetailActivity의 54번째 줄 index를 넘김
-                    //서버로부터 실시간 order_status를 받아 값이 일치할 경우 서버에서 해당 주문 삭제 후 사용자는 FirstMainActivity로 전환
-                    if(UtilSet.al_my_order.get(index).getOrderStatus()==R.drawable.wait){  //==> 괄호안 confirm값이 1일때로 수정 필요
-                    Toast.makeText(PartyDetailActivity.this,"주문이 취소되었습니다.",Toast.LENGTH_SHORT).show();
-                    Intent delete_order_intent = new Intent(this,FirstMainActivity.class);
-                    startActivity(delete_order_intent);
-                }else{ //confirm 1이 아닐 경우
-                    Toast.makeText(PartyDetailActivity.this,"접수 대기중에만 취소가 가능합니다.",Toast.LENGTH_SHORT).show();
-                }
-                break;
         }
     }
 
@@ -271,6 +298,7 @@ public class PartyDetailActivity extends SuperActivity implements View.OnClickLi
             return view;
         }
     }
+
 
     public void GPSonClick(View view){
         if(UtilSet.my_user.get_user_latitude()==0.0||UtilSet.my_user.get_user_longitude()==0.0)

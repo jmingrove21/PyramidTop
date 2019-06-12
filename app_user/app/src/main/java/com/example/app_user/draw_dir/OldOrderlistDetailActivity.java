@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,9 +26,15 @@ import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
 import com.example.app_user.Item_dir.UtilSet;
+<<<<<<< HEAD
 import com.example.app_user.StaticActivity;
 import com.example.app_user.SuperActivity;
 import com.example.app_user.util_dir.Profile;
+=======
+import com.example.app_user.order_dir.OrderFragment;
+import com.example.app_user.people_dir.PeopleFragment;
+import com.example.app_user.Profile;
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 import com.example.app_user.R;
 import com.example.app_user.home_dir.FirstMainActivity;
 import com.example.app_user.util_dir.LoginActivity;
@@ -116,6 +124,7 @@ public class OldOrderlistDetailActivity extends SuperActivity {
         TextView user_mil= view.findViewById(R.id.user_mileage);
         user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
     }
+<<<<<<< HEAD
 //    @Override
 //    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 //        if(LoginLogoutInform.getLogin_flag()==1){
@@ -157,6 +166,49 @@ public class OldOrderlistDetailActivity extends SuperActivity {
 //        drawer.closeDrawer(GravityCompat.START);
 //        return true;
 //    }
+=======
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        if(LoginLogoutInform.getLogin_flag()==1){
+            switch (menuItem.getItemId()) {
+                case R.id.old_olderlist:
+                    getSupportActionBar().setTitle("지난 주문 내역");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Old_Orderlist()).commit();
+                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.LinearLayout_container,
+                            new Profile()).commit();
+                    break;
+
+                case R.id.menu_logout:
+                    UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
+                    UtilSet.delete_user_data();
+                    Intent intent=new Intent(OldOrderlistDetailActivity.this, FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }else{
+            switch (menuItem.getItemId()) {
+                case R.id.menu_register:
+                    Intent register_intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivityForResult(register_intent, 101);
+                    break;
+
+                case R.id.menu_login:
+                    Intent login_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(login_intent, 101);
+                    break;
+            }
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+>>>>>>> parent of 566ac346... Merge pull request #150 from jmingrove21/jmk
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);

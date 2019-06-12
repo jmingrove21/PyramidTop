@@ -92,14 +92,9 @@ public class CreditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try{
-                    if(Integer.valueOf(mileage_edit.getText().toString())==0){
-                        Toast.makeText(CreditActivity.this, "마일리지가 0원 입니다.", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(Integer.valueOf(mileage_edit.getText().toString())<=mileage){
-                        if(Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=1000) {
-                            Toast.makeText(CreditActivity.this, "적용 되었습니다!", Toast.LENGTH_SHORT).show();
-                            total_price_credit.setText(String.valueOf(total_price - Integer.parseInt(mileage_edit.getText().toString()) + delivery_cost));
-                    }
+                if(Integer.valueOf(mileage_edit.getText().toString())<=mileage){
+                    if(Integer.parseInt(total_price_credit.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=1000)
+                        total_price_credit.setText(String.valueOf(total_price-Integer.parseInt(mileage_edit.getText().toString())+delivery_cost));
                     else if((Integer.parseInt(price_text.getText().toString())+Integer.parseInt(delivery_text.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())<1000)&&(Integer.parseInt(price_text.getText().toString())+Integer.parseInt(delivery_text.getText().toString())-Integer.parseInt(mileage_edit.getText().toString())>=0)){
                         if(spinner_method.getSelectedItem().toString().equals("현장결제")){
                             Toast.makeText(CreditActivity.this,"1000원 이상 결제가 가능합니다!",Toast.LENGTH_SHORT).show();
