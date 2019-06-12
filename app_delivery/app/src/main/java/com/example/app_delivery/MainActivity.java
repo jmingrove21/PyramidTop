@@ -207,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("store_latitude",  Double.parseDouble(jobj.getString("store_latitude")));
                         intent.putExtra("store_longitude", Double.parseDouble( jobj.getString("store_longitude")));
                         intent.putExtra("order_number",  MainActivity.order_list.get(position).getOrder_number());
+                        Delivery_to_Store_Activity.refresh_status=true;
 
                         startActivityForResult(intent,101);
                         finish();
@@ -259,16 +260,16 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case UtilSet.PERMISSION_REQUEST_CODE: {
                 if (grantResults.length < 1) {
-                    Toast.makeText(this, "Failed get permission", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(this, "Failed get permission", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 for (int i = 0; i < grantResults.length; i++) {
                     if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(this, "Permission is denied : " + permissions[i], Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(this, "Permission is denied : " + permissions[i], Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-                Toast.makeText(this, "Permission is granted", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Permission is granted", Toast.LENGTH_SHORT).show();
             }
             break;
         }

@@ -8,20 +8,22 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.4">
+        android:layout_weight="0.3">
 
         <TextView
             android:id="@+id/party_detail_user_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="center"
-            android:textSize="10sp" />
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.6"
+        android:layout_weight="0.7"
         android:orientation="vertical"
         android:weightSum="1">
 
@@ -29,45 +31,53 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:text="참가 시간"
                 android:layout_weight="0.5"
-                android:textSize="10sp" />
+                android:textSize="17sp"
+                android:textColor="#000000"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/party_detail_user_time"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:text="TextView"
                 android:layout_weight="0.5"
-                android:textSize="10sp" />
+                android:textSize="14sp"
+                android:textColor="#767171"
+                android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/menu_price_input"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:text="주문 금액"
                 android:layout_weight="0.5"
-                android:textSize="10sp" />
+                android:textSize="17sp"
+                android:textColor="#000000"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/party_detail_user_price"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:text="TextView"
                 android:layout_weight="0.5"
-                android:textSize="10sp" />
+                android:textSize="14sp"
+                android:textColor="#767171"
+                android:gravity="center"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

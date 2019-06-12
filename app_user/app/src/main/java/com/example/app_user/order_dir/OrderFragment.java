@@ -3,17 +3,23 @@ package com.example.app_user.order_dir;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.FrameLayout;
 
 import com.example.app_user.Item_dir.Menu;
 import com.example.app_user.Item_dir.MenuDesc;
@@ -34,6 +40,7 @@ import java.net.URL;
 public class OrderFragment extends DialogFragment {
     Bitmap bitmap;
     ListView listView;
+    ImageView status_img;
     public OrderFragment(){
         UtilSet.al_order.clear();
 
@@ -43,8 +50,11 @@ public class OrderFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         get_current_made_order();
         View view = inflater.inflate(R.layout.fragment_orderlist, container, false);
-
-        final SwipeRefreshLayout mSwipeRefreshLayout =(SwipeRefreshLayout) view.findViewById(R.id.swipe_order_list);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        UtilSet.height = displaymetrics.heightPixels;
+        UtilSet.width = displaymetrics.widthPixels;
+        final SwipeRefreshLayout mSwipeRefreshLayout = view.findViewById(R.id.swipe_order_list);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -53,13 +63,16 @@ public class OrderFragment extends DialogFragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        listView = (ListView) view.findViewById(R.id.order_list);
+        LinearLayout frame = view.findViewById(R.id.orderlist_linear);
+        listView = view.findViewById(R.id.order_list);
         final String[] store_name = new String[UtilSet.al_order.size()];
-        for (int i = 0; i < UtilSet.al_order.size(); i++) {
-            store_name[i] = UtilSet.al_order.get(i).getStore().getStore_name();
+        if(UtilSet.al_order.size()==0){
+            frame.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.no_participate));
+        }else {
+            for (int i = 0; i < UtilSet.al_order.size(); i++) {
+                store_name[i] = UtilSet.al_order.get(i).getStore().getStore_name();
+            }
         }
-
         OrderAdapter orderAdapter = new OrderAdapter(getActivity(), store_name);
         listView.setAdapter(orderAdapter);
 
@@ -107,7 +120,7 @@ public class OrderFragment extends DialogFragment {
 
                 intent.putExtra("serial", store_ser);
                 intent.putExtra("index", position);
-
+                intent.putExtra("type","order_make");
                 startActivityForResult(intent, 101);
             }
         });
@@ -160,8 +173,9 @@ public class OrderFragment extends DialogFragment {
                 try {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "lookup_participate");
-                    jsonParam.put("user_lat", UtilSet.latitude);
-                    jsonParam.put("user_long", UtilSet.longitude);
+                    jsonParam.put("user_lat", UtilSet.my_user.get_user_latitude());
+                    jsonParam.put("user_long", UtilSet.my_user.get_user_longitude());
+                    jsonParam.put("user_serial",UtilSet.my_user.getUser_serial());
 
                     HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
                     if (conn.getResponseCode() == 200) {
@@ -178,6 +192,7 @@ public class OrderFragment extends DialogFragment {
                                 String store_address = jobj.getString("store_address");
                                 String store_phone = jobj.getString("store_phone");
                                 String minimum_order_price = jobj.getString("minimum_order_price");
+                                String delivery_cost=jobj.getString("delivery_cost");
                                 String distance = jobj.getString("distance");
                                 String store_profile_img = jobj.getString("store_profile_img");
                                 String order_create_date = jobj.getString("order_create_date");
@@ -185,8 +200,8 @@ public class OrderFragment extends DialogFragment {
                                 String total_order_price = jobj.getString("total_order_price");
                                 String order_number=jobj.getString("order_number");
                                 Order o = new Order(order_create_date, participate_person, total_order_price,order_number);
-
                                 Store s = new Store(store_serial, store_name, store_branch_name, store_address, store_phone, minimum_order_price, distance, store_profile_img);
+                                s.setDelivery_cost(Integer.parseInt(delivery_cost));
                                 o.setStore(s);
                                 UtilSet.al_order.add(o);
                             }
@@ -238,9 +253,9 @@ public class OrderFragment extends DialogFragment {
                             String store_notice = jobj.get("store_notice").toString();
                             String store_main_type_name = jobj.get("store_main_type_name").toString();
                             String store_sub_type_name = jobj.get("store_sub_type_name").toString();
-
+                            String delivery_cost=jobj.get("delivery_cost").toString();
                             UtilSet.al_order.get(position).getStore().set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
-
+                            UtilSet.al_order.get(position).getStore().setDelivery_cost(Integer.parseInt(delivery_cost));
                             JSONArray jobj_menu = (JSONArray) jobj.get("menu");
                             for (int j = 0; j < jobj_menu.length(); j++) {
                                 JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);

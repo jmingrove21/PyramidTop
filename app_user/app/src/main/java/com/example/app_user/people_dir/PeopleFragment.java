@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.support.v4.content.ContextCompat;
+import android.widget.LinearLayout;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.MenuDesc;
 import com.example.app_user.Item_dir.Order;
 import com.example.app_user.Item_dir.Store;
@@ -45,16 +49,22 @@ public class PeopleFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        get_store_info_by_my_order();
-        View view = inflater.inflate(R.layout.fragment_people, container, false);
-        listView = (ListView) view.findViewById(R.id.people_listview);
 
-        if(UtilSet.loginLogoutInform.getLogin_flag()==0){
+        View view = inflater.inflate(R.layout.fragment_people, container, false);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        UtilSet.height = displaymetrics.heightPixels;
+        UtilSet.width = displaymetrics.widthPixels;
+        LinearLayout frame = view.findViewById(R.id.recent_orderlist_linear);
+        listView = view.findViewById(R.id.people_listview);
+
+        if(LoginLogoutInform.getLogin_flag()==0){
             Toast.makeText( getActivity(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
             return view;
         }
+        get_store_info_by_my_order();
 
-        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_my_party_order_list);
+        final SwipeRefreshLayout mSwipeRefreshLayout = view.findViewById(R.id.swipe_my_party_order_list);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -64,8 +74,13 @@ public class PeopleFragment extends DialogFragment {
             }
         });
         final String[] store_name = new String[UtilSet.al_my_order.size()];
-        for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
-            store_name[i] = UtilSet.al_my_order.get(i).getStore().getStore_name();
+        if(UtilSet.al_my_order.size()==0){
+            frame.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.no_order));
+
+        }else {
+            for (int i = 0; i < UtilSet.al_my_order.size(); i++) {
+                store_name[i] = UtilSet.al_my_order.get(i).getStore().getStore_name();
+            }
         }
 
         PeopleAdapter peopleAdapter = new PeopleAdapter(getActivity(), store_name);
@@ -146,6 +161,10 @@ public class PeopleFragment extends DialogFragment {
                         try {
                             JSONObject jobj = new JSONObject(jsonReply);
                             JSONObject jarray_user = (JSONObject) jobj.get("user_info");
+                            int user_pay_price = Integer.parseInt(jarray_user.getString("pay_price"));
+                            int user_pay_status = Integer.parseInt(jarray_user.getString("pay_status"));
+                            UtilSet.al_my_order.get(position).setMy_pay_price(user_pay_price);
+                            UtilSet.al_my_order.get(position).setMy_pay_status(user_pay_status);
                             JSONArray jarray_user_menu = (JSONArray) jarray_user.get("user_menu");
                             for (int j = 0; j < jarray_user_menu.length(); j++) {
                                 JSONObject jobj_user_menu_info = (JSONObject) jarray_user_menu.get(j);
@@ -165,6 +184,7 @@ public class PeopleFragment extends DialogFragment {
                                     String user_time = jarray_another_info.get("make_order_time").toString();
                                     User u = new User(user_id);
                                     u.setUser_info(user_time, user_price);
+
                                     UtilSet.al_my_order.get(position).getUser_al().add(u);
                                 }
                             }
@@ -177,8 +197,9 @@ public class PeopleFragment extends DialogFragment {
                             String store_address = jobj_store.get("store_address").toString();
                             String store_restday = jobj_store.get("store_restday").toString();
                             String store_notice = jobj_store.get("store_notice").toString();
-
+                            String delivery_cost=jobj_store.get("delivery_cost").toString();
                             UtilSet.al_my_order.get(position).getStore().set_store_spec(store_serial, store_building_name, start_time, end_time, store_phone, store_address, store_restday, store_notice);
+                            UtilSet.al_my_order.get(position).getStore().setDelivery_cost(Integer.parseInt(delivery_cost));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -261,7 +282,6 @@ public class PeopleFragment extends DialogFragment {
                                 String store_branch_name = jobj.get("store_branch_name").toString();
                                 String minimum_order_price = jobj.get("minimum_order_price").toString();
                                 String store_profile_img = jobj.get("store_profile_img").toString();
-
                                 String order_create_date = jobj.get("order_create_date").toString();
                                 String order_receipt_date = jobj.get("order_receipt_date").toString();
                                 String delivery_departure_time = jobj.get("delivery_departure_time").toString();

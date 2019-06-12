@@ -19,7 +19,7 @@
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="20"
+                android:layout_weight="35"
                 android:paddingLeft="10dp"
                 android:text="User name"
                 android:textStyle="bold" />
@@ -28,19 +28,12 @@
                 android:id="@+id/user_phonenum"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="40"
+                android:layout_weight="65"
                 android:paddingLeft="10dp"
                 android:text="User Phone number"
+                android:textAlignment="textEnd"
                 android:textStyle="bold" />
-            <TextView
-                android:id="@+id/user_total_price"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="40"
-                android:paddingLeft="10dp"
-                android:text="total"
-                android:textAlignment="viewEnd"
-                android:textStyle="bold" />
+
         </LinearLayout>
 
         <TextView
@@ -52,39 +45,56 @@
             android:paddingLeft="10dp"
             android:text="User destination" />
 
-        <TextView
-            android:id="@+id/user_menu"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="40"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="User menu" />
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/user_total_price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="User menu" />
+            <TextView
+                android:id="@+id/pay_status"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="right|center"
+                android:paddingLeft="10dp"
+                android:text="credit_type"
+                android:textStyle="bold" />
+        </LinearLayout>
+
     </LinearLayout>
 
+    <Button
+        android:id="@+id/user_menu_detail"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="15"
+        android:text="메뉴확인"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:layout_marginLeft="5sp"
+        android:background="@drawable/menu_detail"
+        android:textSize="12sp" />
     <Button
         android:id="@+id/delivery_finish_btn"
         android:layout_width="0dp"
         android:layout_marginLeft="5dp"
         android:layout_height="match_parent"
         android:layout_weight="15"
-        android:layout_marginTop="5sp"
-        android:layout_marginBottom="5sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
         android:text="배달완료"
         android:background="@drawable/start"
         android:textSize="12sp" />
-    <Button
-        android:id="@+id/delivery_navigation"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="15"
-        android:text="경로안내"
-        android:layout_marginTop="5sp"
-        android:layout_marginBottom="5sp"
 
-        android:layout_marginLeft="5sp"
-        android:background="@drawable/navi"
-        android:textSize="12sp" />
 
     <View
         android:layout_width="0dp"

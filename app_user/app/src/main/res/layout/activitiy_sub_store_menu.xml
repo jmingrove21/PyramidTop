@@ -158,7 +158,7 @@
                         android:layout_weight="5"
                         android:background="#4AC66D"
                         android:onClick="showSelectedItems"
-                        android:text="주문하기"
+                        android:text="주문 참여하기"
                         android:textSize="25dp"
                         android:textColor="#ffffff"/>
 

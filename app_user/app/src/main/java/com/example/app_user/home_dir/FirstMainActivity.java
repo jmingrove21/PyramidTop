@@ -1,9 +1,11 @@
 package com.example.app_user.home_dir;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,12 +29,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
+import com.example.app_user.Item_dir.ToolbarInform;
 import com.example.app_user.MyService;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.BackPressCloseHandler;
@@ -57,15 +61,18 @@ import java.util.ArrayList;
 public class FirstMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private BackPressCloseHandler backPressCloseHandler;
-    public static int store_type=-1;
+    public static int store_type = -1;
+    Point point;
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_main);
 
         permissionCheck();
-        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         UtilSet.set_GPS_permission(lm, this);//GPS
+        set_display_width_height();
 
         Intent intent_alert = new Intent(FirstMainActivity.this, MyService.class);
         startService(intent_alert);//알림
@@ -78,43 +85,27 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("음식 목록");
+        ToolbarInform.setToolbar_inform("음식 목록");
+
+        point = getScreenSize(FirstMainActivity.this);
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
-            navigationView.inflateMenu(R.menu.drawer_menu);
-            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            if(UtilSet.my_user.getUser_address()==null)
-                user_address.setText("배달주소를 선택해주세요!");
-            else
-                user_address.setText(UtilSet.my_user.getUser_address());
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
-            hello_msg.setText(" ");
-            navigationView.addHeaderView(view);
-        } else {
-            navigationView.inflateMenu(R.menu.logout_drawer_menu);
-            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
-
-            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
-            gps_btn.setVisibility(View.INVISIBLE);
-
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
-            user_id.setText(" ");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
-            user_address.setText(" ");
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
-            hello_msg.setText("배달ONE과 함께하세요!");
-            navigationView.addHeaderView(view);
-        }
+        view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        UtilSet.set_Drawer(navigationView, view);
         navigationView.setNavigationItemSelectedListener(this);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                resfresh_mileage(view);
+            }
+        };
+
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        ListView listView = (ListView) findViewById(R.id.first_listView);
+        ListView listView = findViewById(R.id.first_listView);
         CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
 
@@ -126,10 +117,14 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         });
 
     }
-
+    public void resfresh_mileage(View view){
+        TextView user_mil= view.findViewById(R.id.user_mileage);
+        if(UtilSet.my_user!=null)
+            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+        if (LoginLogoutInform.getLogin_flag() == 1) {
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -143,7 +138,9 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
-                    Intent intent=new Intent(FirstMainActivity.this, FirstMainActivity.class);
+                    UtilSet.my_user=null;
+                    UtilSet.delete_user_data();
+                    Intent intent = new Intent(FirstMainActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
@@ -172,6 +169,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
+                            getSupportActionBar().setTitle(ToolbarInform.getToolbar_inform());
                             UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
@@ -207,6 +205,13 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         backPressCloseHandler.onBackPressed();
     }
 
+    public Point getScreenSize(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size;
+    }
+
     class CustomAdapter extends BaseAdapter {
 
         @Override
@@ -224,13 +229,14 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             return 0;
         }
 
+
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.activity_first_layout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 250));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, point.y / 8));
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.first_imageView);
-            TextView textView_name = (TextView) view.findViewById(R.id.first_name);
+            ImageView imageView = view.findViewById(R.id.first_imageView);
+            TextView textView_name = view.findViewById(R.id.first_name);
 
             imageView.setImageResource(UtilSet.MENU_TYPE_IMAGE[i]);
             textView_name.setText(UtilSet.MENU_TYPE_TEXT[i]);
@@ -248,10 +254,8 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
 
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_info");
-                    //    jsonParam.put("user_lat", 37.282690);
-                    //    jsonParam.put("user_long", 127.050206);
-                    jsonParam.put("user_lat", UtilSet.latitude);
-                    jsonParam.put("user_long", UtilSet.longitude);
+                    jsonParam.put("user_lat", UtilSet.my_user.get_user_latitude());
+                    jsonParam.put("user_long", UtilSet.my_user.get_user_longitude());
                     jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
                     jsonParam.put("count", 5);
 
@@ -275,7 +279,7 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
                                 UtilSet.al_store.add(s);
                             }
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            store_type=position;
+                            store_type = position;
                             startActivityForResult(intent, 101);
 
                         } catch (Exception e) {
@@ -310,16 +314,16 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 arrayPermission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
             }
-            permissionCheck=ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+            permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 arrayPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             }
-            permissionCheck=ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE);
-            if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+            permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                 arrayPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
             }
             if (arrayPermission.size() > 0) {
-                String strArray[] = new String[arrayPermission.size()];
+                String[] strArray = new String[arrayPermission.size()];
                 strArray = arrayPermission.toArray(strArray);
                 ActivityCompat.requestPermissions(this, strArray, UtilSet.PERMISSION_REQUEST_CODE);
             }
@@ -348,8 +352,17 @@ public class FirstMainActivity extends AppCompatActivity implements NavigationVi
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void GPSonClick(View view){
+    public void GPSonClick(View view) {
+        if(UtilSet.my_user.get_user_latitude()==0.0||UtilSet.my_user.get_user_longitude()==0.0)
+        {
+            UtilSet.my_user.set_user_gps(UtilSet.latitude_gps,UtilSet.longitude_gps);
+            Log.d("GPS Setting - my location update",String.valueOf(UtilSet.my_user.get_user_latitude())+" "+String.valueOf(UtilSet.my_user.get_user_longitude()));
+        }
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
+    }
+
+    public void set_display_width_height() {
+
     }
 }

@@ -73,7 +73,7 @@ public class MyService extends Service {
                     .setContentText(ServiceThread.alert_info_al.get(msg.what).get(1))
                     .setTicker("알림")
                     .setSmallIcon(R.drawable.logo)
-                    .setVibrate(new long[]{1000,2000,1000,2000})
+                    .setVibrate(new long[]{3000})
                     .setChannelId(CHANNEL_ID)
                     .build();
             Log.d("notification",noti.tickerText.toString());
@@ -83,6 +83,6 @@ public class MyService extends Service {
             noti.flags = Notification.FLAG_AUTO_CANCEL;
             noti_M.notify(notifyID, noti);
         }
-    };
+    }
 
 }

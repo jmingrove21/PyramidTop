@@ -58,11 +58,12 @@ function init_information_page()
 					$("#start_time").val(result1.start_time);
 					$("#end_time").val(result1.end_time);
 					$("#store_restday").val(result1.store_restday);
-					$("#start_time").val(result1.start_time);
-					$("#end_time").val(result1.end_time);
+					$("#start_work_time").val(result1.start_time);
+					$("#end_work_time").val(result1.end_time);
 					$("#store_name").val(result1.store_name);
 					$("#store_notice").val(result1.store_notice);
 					$("#store_phone").val(result1.store_phone);
+					$("#delivery_cost").val(result1.delivery_cost);
 					$("#store_profile").attr('src', result1.store_profile_img);
 
 					//document.getElementById("storemaster_num").value=result.storemaster_num;

@@ -1,5 +1,6 @@
 package com.example.app_user.home_dir;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
@@ -7,6 +8,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -18,7 +22,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,7 +42,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.Store;
+import com.example.app_user.Item_dir.ToolbarInform;
 import com.example.app_user.draw_dir.GpsActivity;
 import com.example.app_user.util_dir.HomeFragment;
 import com.example.app_user.util_dir.LoginActivity;
@@ -61,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int position_storetype;
     boolean lastitemVisibleFlag = false;        //화면에 리스트의 마지막 아이템이 보여지는지 체크
     CustomAdapter customAdapter;
+    Point point;
+    View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -74,42 +87,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        point = getScreenSize(MainActivity.this);
+
         drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        if (UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+
+        if (LoginLogoutInform.getLogin_flag() == 1) {
             getSupportActionBar().setTitle("가게 목록");
+            ToolbarInform.setToolbar_inform("가게 목록");
             navigationView.inflateMenu(R.menu.drawer_menu);
-            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            TextView user_id= view.findViewById(R.id.user_id);
+
+
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            TextView user_mil= view.findViewById(R.id.user_mileage);
+            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+            TextView user_address= view.findViewById(R.id.user_address);
             if(UtilSet.my_user.getUser_address()==null)
                 user_address.setText("배달주소를 선택해주세요!");
             else
                 user_address.setText(UtilSet.my_user.getUser_address());
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            TextView hello_msg= view.findViewById(R.id.please_login_text);
             hello_msg.setText(" ");
             navigationView.addHeaderView(view);
         } else {
             getSupportActionBar().setTitle("로그인 필요");
             navigationView.inflateMenu(R.menu.logout_drawer_menu);
-            View view=getLayoutInflater().inflate(R.layout.nav_header,null);
+            view=getLayoutInflater().inflate(R.layout.nav_header,null);
 
-            ImageButton gps_btn = (ImageButton)view.findViewById(R.id.GPS_imageBtn);
+            ImageButton gps_btn = view.findViewById(R.id.GPS_imageBtn);
             gps_btn.setVisibility(View.INVISIBLE);
-
-            TextView user_id=(TextView)view.findViewById(R.id.user_id);
+            TextView user_mil= view.findViewById(R.id.user_mileage);
+            user_mil.setText(" ");
+            TextView user_id= view.findViewById(R.id.user_id);
             user_id.setText(" ");
-            TextView user_address=(TextView)view.findViewById(R.id.user_address);
+            TextView user_address= view.findViewById(R.id.user_address);
             user_address.setText(" ");
-            TextView hello_msg=(TextView)view.findViewById(R.id.please_login_text);
+            TextView hello_msg= view.findViewById(R.id.please_login_text);
             hello_msg.setText("배달ONE과 함께하세요!");
             navigationView.addHeaderView(view);
 
@@ -120,9 +138,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
 
             return;
-        }
+        }ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                resfresh_mileage(view);
+            }
+        };
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
-        ListView listView = (ListView) findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
         set_store_image();
@@ -172,6 +198,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                 intent.putExtra("serial", store_ser);
                 intent.putExtra("index", position);
+                intent.putExtra("type", "order_make");
+
                 startActivityForResult(intent, 101);
             }
         });
@@ -206,6 +234,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //
 //        transaction.detach(selectedFragment).attach(selectedFragment).commit();
 //    }
+public void resfresh_mileage(View view){
+    TextView user_mil= view.findViewById(R.id.user_mileage);
+    user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+}
     public void set_store_image(){
         Thread mThread = new Thread() {
             @Override
@@ -266,9 +298,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             String store_notice = jobj.get("store_notice").toString();
                             String store_main_type_name = jobj.get("store_main_type_name").toString();
                             String store_sub_type_name = jobj.get("store_sub_type_name").toString();
+                            String delivery_cost=jobj.get("delivery_cost").toString();
 
                             UtilSet.al_store.get(position).set_store_spec(store_building_name, start_time, end_time, store_restday, store_notice, store_main_type_name, store_sub_type_name);
-
+                            UtilSet.al_store.get(position).setDelivery_cost(Integer.parseInt(delivery_cost));
                             JSONArray jobj_menu = (JSONArray) jobj.get("menu");
                             for (int j = 0; j < jobj_menu.length(); j++) {
                                 JSONObject jobj_menu_spec = (JSONObject) jobj_menu.get(j);
@@ -311,8 +344,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 try {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("user_info", "store_info");
-                    jsonParam.put("user_lat", UtilSet.latitude);
-                    jsonParam.put("user_long", UtilSet.longitude);
+                    jsonParam.put("user_lat", UtilSet.my_user.get_user_latitude());
+                    jsonParam.put("user_long", UtilSet.my_user.get_user_longitude());
                     jsonParam.put("store_type", UtilSet.MENU_TYPE_ID[position]);
                     jsonParam.put("count", UtilSet.al_store.size());
                     Log.d("jsonobject", jsonParam.toString());
@@ -356,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(UtilSet.loginLogoutInform.getLogin_flag()==1){
+        if(LoginLogoutInform.getLogin_flag()==1){
             switch (menuItem.getItemId()) {
                 case R.id.old_olderlist:
                     getSupportActionBar().setTitle("지난 주문 내역");
@@ -370,6 +403,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
+                    UtilSet.my_user=null;
+                    UtilSet.delete_user_data();
                     Intent intent=new Intent(MainActivity.this, FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -393,6 +428,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    public Point getScreenSize(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return  size;
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -400,6 +442,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_home:
+                            getSupportActionBar().setTitle(ToolbarInform.getToolbar_inform());
                             UtilSet.target_store = null;
                             selectedFragment = new HomeFragment();
                             break;
@@ -445,13 +488,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 350));
+            view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, point.y/5));
 
-            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-            TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
-            TextView textView_phone = (TextView) view.findViewById(R.id.textView_phone);
-            TextView textView_branch_name = (TextView) view.findViewById(R.id.branch_name);
-            TextView textView_address = (TextView) view.findViewById(R.id.address);
+            ImageView imageView = view.findViewById(R.id.imageView);
+            TextView textView_name = view.findViewById(R.id.textView_name);
+            TextView textView_phone = view.findViewById(R.id.textView_phone);
+            TextView textView_branch_name = view.findViewById(R.id.branch_name);
+            TextView textView_address = view.findViewById(R.id.address);
 
             imageView.setImageBitmap(UtilSet.al_store.get(i).getStore_image());
             textView_name.setText(UtilSet.al_store.get(i).getStore_name());
@@ -474,6 +517,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void GPSonClick(View view){
+        if(UtilSet.my_user.get_user_latitude()==0.0||UtilSet.my_user.get_user_longitude()==0.0)
+        {
+            UtilSet.my_user.set_user_gps(UtilSet.latitude_gps,UtilSet.longitude_gps);
+            Log.d("GPS Setting - my location update",String.valueOf(UtilSet.my_user.get_user_latitude())+" "+String.valueOf(UtilSet.my_user.get_user_longitude()));
+        }
         Intent intent = new Intent(getApplicationContext(), GpsActivity.class);
         startActivityForResult(intent, 101);
     }

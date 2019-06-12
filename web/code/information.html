@@ -5,8 +5,6 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     배달ONE
@@ -17,11 +15,16 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../assets/css/datepicker.min.css" rel="stylesheet" type="text/css">
   <link href="../assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../assets/demo/demo.css" rel="stylesheet" />
-    <link href="../assets/css/menu.css" rel="stylesheet"/>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link href="../assets/css/menu.css" rel="stylesheet"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/datepicker.min.js"></script>
+  <script src="../assets/js/i18n/datepicker.en.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
 	<script src="../assets/js/information.js"></script>
 	<script src="../assets/js/information_modify.js"></script>
 </head>
@@ -87,7 +90,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-			  <a id="information_title_id" class="navbar-brand"></a>
+			  <a id="information_title_id" class="navbar-brand" style="font-weight: bold"></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -97,7 +100,7 @@
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             
             <ul class="navbar-nav">
-              <li class="nav-item">
+              <li class="nav-item d-none">
                 <a class="nav-link btn-magnify" href="#pablo">
                   <i class="nc-icon nc-layout-11"></i>
                   <p>
@@ -105,7 +108,7 @@
                   </p>
                 </a>
               </li>
-              <li class="nav-item btn-rotate dropdown">
+              <li class="nav-item btn-rotate dropdown d-none">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-bell-55"></i>
                   <p>
@@ -119,8 +122,9 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn-rotate" href="#pablo">
-                  <i class="nc-icon nc-settings-gear-65"></i>
+                <a class="nav-link btn-rotate" href="login.html" style="font-weight: bold">
+                  로그아웃&nbsp;
+                  <i class="fa fa-sign-out"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
                   </p>
@@ -231,23 +235,144 @@
 					
                   </div>
                   <div class="row">
-                    <div class="col-md-4 pr-1">
+                    <div class="col-md-3 pr-1">
                       <div class="form-group">
                         <label>오픈시간</label>
-                        <input id="start_time" type="text" class="form-control">
+                        <input id="start_work_time" type="text" class="form-control">
+                        <script>
+                          // Create start date
+                          var start = new Date(),
+                                  prevDay,
+                                  startHours = 0;
+
+                          // 09:00 AM
+                          start.setHours(9);
+                          start.setMinutes(0);
+
+                          // If today is Saturday or Sunday set 10:00 AM
+                          if ([6, 0].indexOf(start.getDay()) != -1) {
+                            start.setHours(10);
+                            startHours = 10
+                          }
+
+                          $('#start_work_time').datepicker({
+                            timepicker: true,
+                            onlyTimepicker : true,
+                            language: 'en',
+                            startDate: start,
+                            minHours: startHours,
+                            maxHours: 24,
+                            todayButton : new Date(),
+                            clearButton : true,
+                            autoClose : true,
+                            onSelect: function (fd, d, picker) {
+                              // Do nothing if selection was cleared
+                              if (!d) return;
+
+                              var day = d.getDay();
+
+                              // Trigger only if date is changed
+                              if (prevDay != undefined && prevDay == day) return;
+                              prevDay = day;
+
+                              // If chosen day is Saturday or Sunday when set
+                              // hour value for weekends, else restore defaults
+                              if (day == 6 || day == 0) {
+                                picker.update({
+                                  minHours: 10,
+                                  maxHours: 16
+                                })
+                              } else {
+                                picker.update({
+                                  minHours: 0,
+                                  maxHours: 24
+                                })
+                              }
+                            }
+                          })
+
+                        </script>
                       </div>
                     </div>
-                    <div class="col-md-4 px-1">
+                    <div class="col-md-3 px-1">
                       <div class="form-group">
                         <label>마감시간</label>
-                        <input id="end_time" type="text" class="form-control">
+                        <input id="end_work_time" type="text" class="form-control">
+                        <script>
+                          // Create start date
+                          var start = new Date(),
+                                  prevDay,
+                                  startHours = 0;
+
+                          // 09:00 AM
+                          start.setHours(9);
+                          start.setMinutes(0);
+
+                          // If today is Saturday or Sunday set 10:00 AM
+                          if ([6, 0].indexOf(start.getDay()) != -1) {
+                            start.setHours(10);
+                            startHours = 10
+                          }
+
+                          $('#end_work_time').datepicker({
+                            timepicker: true,
+                            onlyTimepicker : true,
+                            language: 'en',
+                            startDate: start,
+                            minHours: startHours,
+                            maxHours: 24,
+                            todayButton : new Date(),
+                            clearButton : true,
+                            autoClose : true,
+                            onSelect: function (fd, d, picker) {
+                              // Do nothing if selection was cleared
+                              if (!d) return;
+
+                              var day = d.getDay();
+
+                              // Trigger only if date is changed
+                              if (prevDay != undefined && prevDay == day) return;
+                              prevDay = day;
+
+                              // If chosen day is Saturday or Sunday when set
+                              // hour value for weekends, else restore defaults
+                              if (day == 6 || day == 0) {
+                                picker.update({
+                                  minHours: 10,
+                                  maxHours: 16
+                                })
+                              } else {
+                                picker.update({
+                                  minHours: 0,
+                                  maxHours: 24
+                                })
+                              }
+                            }
+                          })
+
+                        </script>
                       </div>
                     </div>
 
-                    <div class="col-md-4 pl-1">
+                    <div class="col-md-3 px-1">
                       <div class="form-group">
                         <label>정기휴무</label>
-                        <input id="store_restday" type="text" class="form-control">
+                        <select id="store_restday" type="text" class="form-control">
+                          <option>월요일</option>
+                          <option>화요일</option>
+                          <option>수요일</option>
+                          <option>목요일</option>
+                          <option>금요일</option>
+                          <option>토요일</option>
+                          <option>일요일</option>
+
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 pl-1">
+                      <div class="form-group">
+                        <label>배달비</label>
+                        <input id="delivery_cost" type="text" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -289,13 +414,7 @@
             <nav class="footer-nav">
               <ul>
                 <li>
-                  <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
-                </li>
-                <li>
-                  <a href="http://blog.creative-tim.com/" target="_blank">Blog</a>
-                </li>
-                <li>
-                  <a href="https://www.creative-tim.com/license" target="_blank">Licenses</a>
+                  <a href="https://github.com/jmingrove21/PyramidTop/" target="_blank">PyramidTop's Github</a>
                 </li>
               </ul>
             </nav>
@@ -304,7 +423,7 @@
                 ©
                 <script>
                   document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+                </script>, made with <i class="fa fa-star"></i> by PyramidTop
               </span>
             </div>
           </div>
@@ -316,18 +435,10 @@
   <!--<script src="../assets/js/core/jquery.min.js"></script>-->
   <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>-->
   <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!-- Chart JS--> 
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <!--  Notifications Plugin    -->
+
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/paper-dashboard.min.js?v=2.0.0" type="text/javascript"></script>
-  <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-<!--
-  <script src="../assets/demo/demo.js"></script>
-  -->
 </body>
 
 </html>

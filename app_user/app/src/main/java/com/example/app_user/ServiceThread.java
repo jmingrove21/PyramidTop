@@ -3,6 +3,7 @@ package com.example.app_user;
 import android.os.Handler;
 import android.util.Log;
 
+import com.example.app_user.Item_dir.LoginLogoutInform;
 import com.example.app_user.Item_dir.UtilSet;
 
 import org.json.JSONArray;
@@ -32,7 +33,7 @@ public class ServiceThread extends Thread {
         //반복적으로 수행할 작업을 한다.
         while (isRun) {
             get_user_status_change();
-            if (result_output == 1 && UtilSet.loginLogoutInform.getLogin_flag() == 1) {
+            if (result_output == 1 && LoginLogoutInform.getLogin_flag() == 1) {
                 for (int i = 0; i < alert_info_al.size(); i++) {
                     handler.sendEmptyMessage(i);//쓰레드에 있는 핸들러에게 메세지를 보냄
                     try {
@@ -67,8 +68,12 @@ public class ServiceThread extends Thread {
                         InputStream response = conn.getInputStream();
                         String result = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(result);
+                        Log.d("check_status",jobj.toString());
+                        if(UtilSet.my_user!=null)
+                            UtilSet.my_user.setUser_mileage(Integer.parseInt(jobj.get("mileage").toString()));
                         if (jobj.get("confirm").toString().equals("1")) {
                             JSONArray jarray = (JSONArray) jobj.get("data");
+                            Log.d("check_status",jobj.toString());
                             for (int i = 0; i < jarray.length(); i++) {
                                 JSONObject jobj_store = (JSONObject) jarray.get(i);
                                 JSONArray jobj_store_alert = (JSONArray) jobj_store.get("alarm_check");
@@ -117,6 +122,8 @@ public class ServiceThread extends Thread {
 
         }else if(status==7){
             result+="에서 요청한 음식이 배달완료되었습니다.";
+        }else if(status==8){
+            result+="에서 주문이 취소되었습니다.";
         }else{
 
         }

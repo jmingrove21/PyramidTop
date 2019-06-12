@@ -20,10 +20,13 @@ public class MenuFragment extends Fragment {
 
     ListView listView;
     private MenuCustomAdapter menuCustomAdapter;
-    public static ArrayList<MenuProductItem> menuProductItems;
+    public ArrayList<MenuProductItem> menuProductItems;
 
     int index;
 
+    public MenuFragment(){
+        menuProductItems = getMenuProductItem();
+    }
     public void setIndex(int index) {
         this.index = index;
     }
@@ -34,9 +37,8 @@ public class MenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.menu_fragment,container,false);
 
-        listView = (ListView) view.findViewById(R.id.menu_choice_list);
-        menuProductItems = getMenuProductItem();
-        menuCustomAdapter = new MenuCustomAdapter(getActivity());
+        listView = view.findViewById(R.id.menu_choice_list);
+        menuCustomAdapter = new MenuCustomAdapter(getActivity(),menuProductItems);
 
         listView.setAdapter(menuCustomAdapter);
         return view;
