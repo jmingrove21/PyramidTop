@@ -49,6 +49,7 @@ import java.net.HttpURLConnection;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -60,6 +61,8 @@ public class RegisterActivity extends AppCompatActivity {
     Bitmap profile_img_bitmap;
     Bitmap trans_bitmap;
     byte[] byteArray;
+    int image_check = 0;
+
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
@@ -92,44 +95,42 @@ public class RegisterActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        Uri image = data.getData();
-//        try {
-//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image);
-//            Bitmap out_bitmap = convertRoundedBitmap(bitmap);
-//            imageView.setImageBitmap(out_bitmap);
-//            trans_bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-//
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//            trans_bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-//            byteArray = byteArrayOutputStream.toByteArray();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-//    public Bitmap convertRoundedBitmap(Bitmap bitmap){
-//        final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-//        final Canvas canvas = new Canvas(output);
-//
-//        final int color = Color.GRAY;
-//        final Paint paint = new Paint();
-//        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-//        final RectF rectF = new RectF(rect);
-//
-//        paint.setAntiAlias(true);
-//        canvas.drawARGB(0, 0, 0, 0);
-//        paint.setColor(color);
-//        canvas.drawOval(rectF,paint);
-//
-//        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-//        canvas.drawBitmap(bitmap, rect, rect, paint);
-//        bitmap.recycle();
-//        return output;
-//    }
+        if(requestCode==1 && resultCode == Activity.RESULT_OK && data!=null){
+            try {
+                image_check=1;
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                Bitmap out_bitmap = convertRoundedBitmap(bitmap);
+                imageView.setImageBitmap(out_bitmap);
+                trans_bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Bitmap convertRoundedBitmap(Bitmap bitmap){
+        final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(output);
+
+        final int color = Color.GRAY;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawOval(rectF,paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        bitmap.recycle();
+        return output;
+    }
 
 
     @Override
@@ -148,34 +149,104 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public String getBase64String(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    public void register(View v) {
+        final EditText name = findViewById(R.id.register_name);
+        final EditText id= findViewById(R.id.register_id);
+        final EditText pw= findViewById(R.id.register_pwd);
+        final EditText repw= findViewById(R.id.register_repwd);
+        final EditText phone= findViewById(R.id.register_phone);
 
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        if(name.getText().toString().equals("")){
+            RegisterActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText( RegisterActivity.this, "닉네임을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        else if(id.getText().toString().equals("")){
+            RegisterActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText( RegisterActivity.this, "ID를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        else if(phone.getText().toString().equals("")){
+            RegisterActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText( RegisterActivity.this, "폰번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        else if(pw.getText().toString().equals("")){
+            RegisterActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText( RegisterActivity.this, "비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        else if(repw.getText().toString().equals("")){
+            RegisterActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText( RegisterActivity.this, "비밀번호를 입력하지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        else if(!pw.getText().toString().equals(repw.getText().toString())){
+            RegisterActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText( RegisterActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
 
-        byte[] imageBytes = byteArrayOutputStream.toByteArray();
-
-        return Base64.encodeToString(imageBytes, Base64.NO_WRAP);
-    }
-
-    public void sendVideoContentToServer() {
         OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://ec2-54-180-102-7.ap-northeast-2.compute.amazonaws.com/get/JSON/user_app/user_join.php")
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        trans_bitmap.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+        byteArray = byteArrayOutputStream.toByteArray();
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("user_name",name.getText().toString())
+                .addFormDataPart("user_id",id.getText().toString())
+                .addFormDataPart("user_password",pw.getText().toString())
+                .addFormDataPart("user_phone",phone.getText().toString())
+                .addFormDataPart("user_img","profile_img.jpg",RequestBody.create(MediaType.parse("image/*jpg"),byteArray.toString()))
+                .addFormDataPart("img_check",""+image_check)
                 .build();
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
+        Request request = new Request.Builder()
+                .url("http://ec2-54-180-102-7.ap-northeast-2.compute.amazonaws.com/get/JSON/user_app/user_join.php")
+                .post(requestBody)
+                .build();
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
+                Log.e("실패","failed",e);
+                e.getStackTrace();
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
+                if(response.isSuccessful()){
+                    String result = response.body().string();
+                    Log.d("결과",""+result);
+                    RegisterActivity.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText( RegisterActivity.this, "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivityForResult(intent,101);
+                }
             }
         });
     }
