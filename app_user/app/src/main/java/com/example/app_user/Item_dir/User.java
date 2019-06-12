@@ -1,13 +1,22 @@
 package com.example.app_user.Item_dir;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class User implements Serializable {
     private String user_id;
     private String user_password;
     private String user_name;
 
+    private Bitmap bitmap_user_img;
     private String user_img;
     private int user_serial;
     private transient String user_time;
@@ -88,5 +97,13 @@ public class User implements Serializable {
     }
     public double get_user_longitude(){
         return user_longitude;
+    }
+
+    public Bitmap getBitmap_user_img() {
+        return bitmap_user_img;
+    }
+
+    public void setBitmap_user_img(Bitmap bitmap_user_img) {
+        this.bitmap_user_img = bitmap_user_img;
     }
 }

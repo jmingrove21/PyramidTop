@@ -34,6 +34,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -44,7 +45,6 @@ public class UtilSet {
     public static String key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";
     public static User my_user;
     public static int cur_position;
-    public static MapPoint mapPoint = new MapPoint(false);
     public static ArrayList<Store> al_searchstore = new ArrayList<>();
     public static ArrayList<Store> al_store = new ArrayList<>();
     public static ArrayList<Order> al_order=new ArrayList<>();
@@ -264,9 +264,10 @@ public class UtilSet {
 
     public static void set_Drawer(NavigationView navigationView,View view){
         if (LoginLogoutInform.getLogin_flag() == 1) {
+            UtilSet.set_store_image();
             navigationView.inflateMenu(R.menu.drawer_menu);
             CircleImageView circleImageView = view.findViewById(R.id.nav_header_image);
- //           circleImageView.setImageBitmap(byteArrayToBitmap(UtilSet.my_user.getUser_img().getBytes(),0));
+            circleImageView.setImageBitmap(UtilSet.my_user.getBitmap_user_img());
             TextView user_id= view.findViewById(R.id.user_id);
             user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
             TextView user_mil= view.findViewById(R.id.user_mileage);
@@ -299,5 +300,37 @@ public class UtilSet {
         TextView user_mil= view.findViewById(R.id.user_mileage);
         if(UtilSet.my_user!=null)
             user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
+    }
+
+    public static void set_store_image(){
+        Thread mThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    if (UtilSet.getBitmapFromMemCache(UtilSet.my_user.getUser_img()) != null) {
+                        UtilSet.my_user.setBitmap_user_img(getBitmapFromMemCache(UtilSet.my_user.getUser_img()));
+                    } else {
+                        URL url = new URL(UtilSet.my_user.getUser_img());
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setDoInput(true);
+                        conn.connect();
+
+                        InputStream is = conn.getInputStream();
+                        UtilSet.my_user.setBitmap_user_img(BitmapFactory.decodeStream(is));
+                        UtilSet.addBitmapToMemoryCache(UtilSet.my_user.getUser_img(), UtilSet.my_user.getBitmap_user_img());
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        mThread.start();
+        try{
+            mThread.join();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     int user_serial;
     String user_name;
     String user_img;
+
     private BackPressCloseHandler backPressCloseHandler;
     @Override
     protected void onCreate(Bundle saveInstanceState){
@@ -58,34 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void user_info(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("user_info","info");
-                    jsonParam.put("user_serial", UtilSet.my_user.getUser_serial());
-
-                    HttpURLConnection conn=UtilSet.set_Connect_info(jsonParam);
-
-                    if(conn.getResponseCode()==200) {
-                        InputStream response = conn.getInputStream();
-                        String jsonReply = UtilSet.convertStreamToString(response);
-                        JSONObject jobj = new JSONObject(jsonReply);
-                        user_img = jobj.get("user_img").toString();
-                    }else{
-                        Log.d("error","Connect fail");
-                    }
-                    conn.disconnect();
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-        });
-        thread.start();
-    }
 
     public void login(View v) {
         Thread thread = new Thread(new Runnable() {
@@ -114,8 +87,9 @@ public class LoginActivity extends AppCompatActivity {
                         if(json_result.equals("1")){
                             user_name = jobj.getString("user_name");
                             user_serial = jobj.getInt("user_serial");
+                            user_img = jobj.getString("user_img");
+
                             final int user_mileage=jobj.getInt("user_mileage");
-                            user_info();
 
                             LoginActivity.this.runOnUiThread(new Runnable() {
                                 public void run() {

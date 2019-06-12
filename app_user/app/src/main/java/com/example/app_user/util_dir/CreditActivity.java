@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import kr.co.bootpay.Bootpay;
 import kr.co.bootpay.BootpayAnalytics;
 import kr.co.bootpay.BootpayKeyValue;
@@ -55,6 +57,7 @@ public class CreditActivity extends AppCompatActivity {
     TextView total_price_credit;
     TextView delivery_text;
     TextView mileage_info;
+    CircleImageView user_image;
     JSONObject jobj;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +85,7 @@ public class CreditActivity extends AppCompatActivity {
         mileage_btn=findViewById(R.id.mileage_btn);
         delivery_text=findViewById(R.id.delivery_text);
         total_price_credit=findViewById(R.id.total_price_credit);
+        user_image = findViewById(R.id.nav_header_image);
         price_text.setText(String.valueOf(total_price));
         mileage_info.setText(mileage_info.getText()+" - "+ mileage +"원 사용가능");
         delivery_text.setText(delivery_cost+"원");
