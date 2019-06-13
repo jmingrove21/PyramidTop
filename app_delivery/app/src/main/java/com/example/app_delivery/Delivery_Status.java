@@ -9,5 +9,4 @@ public class Delivery_Status implements Serializable {
     public  ArrayList<String> destination_point=new ArrayList<>();
     public ArrayList<String> destination_time=new ArrayList<>();
     public ArrayList<String> destination_distance=new ArrayList<>();
-
 }

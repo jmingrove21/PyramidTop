@@ -110,10 +110,6 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                 start_button.setEnabled(false);
                 delivery_start_event();
 
-                DownloadTask async = new DownloadTask();
-                async.onPreExecute();
-                async.execute();
-
                 if (oData.size() == 1) {
                     try {
                         get_direct_destination_by_tmap(case_destination_solo(oData));
@@ -129,7 +125,6 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     intent.putExtra("total_time", destination_list.get(0).totalTime);
                     intent.putExtra("total_distance", destination_list.get(0).totalDistance);
                     MapActivity.refresh_status = true;
-                    async.onPostExecute("finish");
                     startActivityForResult(intent, 101);
                     finish();
                 } else {
@@ -163,7 +158,6 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     intent.putExtra("total_time", target_delivery.totalTime);
                     intent.putExtra("total_distance", target_delivery.totalDistance);
                     MapActivity.refresh_status = true;
-                    async.onPostExecute("finish");
                     startActivityForResult(intent, 101);
                     finish();
                 }
@@ -632,59 +626,6 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             }
         }
         return null;
-    }
-
-    private class DownloadTask extends AsyncTask {
-
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog(); // 작업 시작
-
-            //작업 준비 코드 작성
-            super.onPreExecute();
-        }
-
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-            //작업 중
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            //작업 끝 코드 작성
-
-            hideProgressDialog(); // 작업 끝
-            super.onPostExecute(o);
-        }
-    }
-
-    public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            if (Build.VERSION_CODES.KITKAT < Build.VERSION.SDK_INT) {
-
-//              R.style.ProgressDialogStyle은 커스텀으로 정의한 스타일임
-                mProgressDialog = new ProgressDialog(this, R.style.ProgressDialogStyle);
-
-            } else {
-                mProgressDialog = new ProgressDialog(this);
-            }
-            mProgressDialog.setMessage("최적경로를 구성중입니다.");
-            mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setCancelable(false);
-        }
-        mProgressDialog.show();
-    }
-
-    /**
-     * 프로그래스를 숨긴다.
-     */
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
     }
 }
 
