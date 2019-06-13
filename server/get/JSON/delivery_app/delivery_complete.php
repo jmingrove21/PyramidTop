@@ -10,7 +10,7 @@
 
         $confirm=0;
         if($delivery_status==0){
-            $query="UPDATE user_order SET arrival_time='".$current."' WHERE USER_user_serial=".$user_serial;
+            $query="UPDATE user_order SET arrival_time='".$current."',user_status=7 WHERE USER_user_serial=".$user_serial." AND order_number=".$order_number;
             $stmt = mysqli_query($connect,$query);
             if($stmt)
                 $confirm=1;
@@ -18,7 +18,7 @@
         else if($delivery_status==1){
             $query1="UPDATE store_order SET order_status=7 WHERE order_number=".$order_number;
             $stmt1 = mysqli_query($connect,$query1);
-            $query2="UPDATE user_order SET arrival_time='".$current."' WHERE USER_user_serial=".$user_serial;
+            $query2="UPDATE user_order SET arrival_time='".$current."',user_status=7 WHERE USER_user_serial=".$user_serial." AND order_number=".$order_number;
             $stmt2 = mysqli_query($connect,$query2);
             if($stmt1&&$stmt2){
                 $confirm=2;
@@ -37,7 +37,7 @@
 
             $percent=1;
             if($count==1){
-                $percent=1;
+                $percent=0;
             }else if($count==2){
                 $percent=0.1;
             }else if($count==3){
@@ -48,10 +48,17 @@
 
             $mileage=$cost*$percent;
 
+
             $user_query="SELECT USER_user_serial FROM user_order WHERE order_number=".$order_number;
             $user_count = mysqli_query($connect,$user_query);
+
             while($user_row=mysqli_fetch_assoc($user_count)){
-                $mileage_query="UPDATE user SET user_mileage=".$mileage." WHERE user_serial=".$user_row['USER_user_serial'];
+                $get_query="SELECT user_mileage FROM user WHERE user_serial=".$user_row['USER_user_serial'];
+                $get_stmt=mysqli_query($connect,$get_query);
+                $get_result=mysqli_fetch_assoc($get_stmt);
+                $mil=$get_result['user_mileage']+$mileage;
+
+                $mileage_query="UPDATE user SET user_mileage=".$mil." WHERE user_serial=".$user_row['USER_user_serial'];
                 $mileage_stmt = mysqli_query($connect,$mileage_query);
             }
 
