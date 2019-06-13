@@ -325,11 +325,16 @@ public class Profile extends Fragment {
 
                 Response response = okHttpClient.newCall(request).execute();
                 if (response.code() == 200){
-                    Log.d("success",response.body().string());
-                    Intent intent = new Intent(Profile.this.getContext(), FirstMainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
+                    String result=response.body().string();
+                   try {
+                       JSONObject jobj = new JSONObject(result);
+                        UtilSet.my_user.setUser_img(jobj.getString("path"));
+                       Intent intent = new Intent(Profile.this.getContext(), FirstMainActivity.class);
+                       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                       startActivity(intent);
+                   }catch(Exception e){
+                       e.printStackTrace();
+                   }
                     return true;
                 }
                 else
