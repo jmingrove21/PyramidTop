@@ -71,7 +71,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static kr.co.bootpay.pref.UserInfo.finish;
 
 public class Profile extends Fragment {
 
@@ -329,7 +328,6 @@ public class Profile extends Fragment {
                     Intent intent = new Intent(Profile.this.getContext(), FirstMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    finish();
                     return true;
                 }
                 else
