@@ -28,10 +28,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class UtilSet {
-  //  public static String tmap_key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";//민규
+    public static String tmap_key = "31a0c8ab-6880-42ba-b6f2-18080fbe6070";//민규
   //  public static String tmap_key = "9123dff2-aee8-4343-82a8-0609d61380d2";//하람
  // public static String tmap_key = "b36d808f-d0ac-48cb-bc2d-a7f13fd7e503";//민규2
-    public static String tmap_key="6d2556d7-1875-4e5e-abc7-d07a6d57a1c6";//민규3
+   // public static String tmap_key="6d2556d7-1875-4e5e-abc7-d07a6d57a1c6";//민규3
     public static String url="http://54.180.102.7:80/get/JSON/delivery_app/delivery_manage.php";
     public static LocationManager lm;
     public final static int PERMISSION_REQUEST_CODE=1000;

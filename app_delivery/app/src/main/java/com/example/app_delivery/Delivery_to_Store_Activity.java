@@ -666,7 +666,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             if (Build.VERSION_CODES.KITKAT < Build.VERSION.SDK_INT) {
 
 //              R.style.ProgressDialogStyle은 커스텀으로 정의한 스타일임
-                mProgressDialog = new ProgressDialog(this, R.style.ProgressDialogStyle);
+                mProgressDialog = new ProgressDialog(this, R.style.ProgressDialogStyles);
 
             } else {
                 mProgressDialog = new ProgressDialog(this);
