@@ -45,7 +45,7 @@
         }else{
 
             #주문에 사용자에 대한 정보 추가
-            $insert_query="INSERT INTO Capstone.user_order (order_number,store_serial,destination,USER_user_serial, destination_lat,destination_long,make_order_time,user_pay_status,user_pay_price,user_total_price) VALUES(".$order_number.",".$store_serial.",'".$destination."',".$user_serial.",".$destination_lat.",".$destination_long.",'".$current."',".$pay_status.",".$total_price_credit.",".$total_price.")";
+            $insert_query="INSERT INTO Capstone.user_order (order_number,store_serial,destination,USER_user_serial, destination_lat,destination_long,make_order_time,user_pay_status,user_pay_price,user_total_price,use_mileage) VALUES(".$order_number.",".$store_serial.",'".$destination."',".$user_serial.",".$destination_lat.",".$destination_long.",'".$current."',".$pay_status.",".$total_price_credit.",".$total_price.",".$mileage.")";
             $insert_stmt = mysqli_query($connect,$insert_query);
             $query="
             SELECT MAX(user_order_serial) AS u FROM user_order

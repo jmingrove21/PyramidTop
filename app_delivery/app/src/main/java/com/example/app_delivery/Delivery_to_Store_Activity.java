@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -45,7 +46,8 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
     double store_longtite;
     int order_number;
     static TMapView tMapView;
-    ProgressDialog pd;
+    protected ProgressDialog mProgressDialog = null;
+
     static boolean refresh_status = true;
     ArrayList<Item_UserInfo> oData = new ArrayList<>();
     ArrayList<Item_UserInfo> best_destination = new ArrayList<>();
@@ -107,7 +109,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 start_button.setEnabled(false);
                 delivery_start_event();
-                showProgress("최적 경로를 구성중입니다...");
+
                 if (oData.size() == 1) {
                     try {
                         get_direct_destination_by_tmap(case_destination_solo(oData));
@@ -117,11 +119,10 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     }
                     Delivery_to_Store_Activity.refresh_status = false;
 
-                    hideProgress();
                     Intent intent = new Intent(getApplicationContext(), MapActivity.class);
                     intent.putExtra("order_number", order_number);
                     intent.putExtra("list", oData);
-                    intent.putExtra("total_time",destination_list.get(0).totalTime);
+                    intent.putExtra("total_time", destination_list.get(0).totalTime);
                     intent.putExtra("total_distance", destination_list.get(0).totalDistance);
                     MapActivity.refresh_status = true;
                     startActivityForResult(intent, 101);
@@ -149,7 +150,6 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                     }
 
                     Delivery_to_Store_Activity.refresh_status = false;
-                    hideProgress();
                     Intent intent = new Intent(getApplicationContext(), MapActivity.class);
                     intent.putExtra("order_number", order_number);
                     intent.putExtra("list", best_destination);
@@ -166,7 +166,8 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         });
 
     }
-    public JSONObject case_destination_solo(ArrayList<Item_UserInfo> oData){
+
+    public JSONObject case_destination_solo(ArrayList<Item_UserInfo> oData) {
         try {
 
             JSONObject jobj_start_dest = new JSONObject();
@@ -186,6 +187,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
             return null;
         }
     }
+
     public void delivery_start_event() {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -227,6 +229,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         tMapView.setZoomLevel(13);
 
     }
+
     public void get_direct_destination_by_tmap(JSONObject jobj_request) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -258,10 +261,10 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(jsonReply);
-                        Log.d("tmap-result",jobj.toString());
+                        Log.d("tmap-result", jobj.toString());
                         Delivery_Status d = new Delivery_Status();
-                        d.totalTime = ((JSONObject)((JSONObject)((JSONArray)jobj.get("features")).get(0)).get("properties")).getString("totalTime");
-                        d.totalDistance = ((JSONObject)((JSONObject)((JSONArray)jobj.get("features")).get(0)).get("properties")).getString("totalDistance");
+                        d.totalTime = ((JSONObject) ((JSONObject) ((JSONArray) jobj.get("features")).get(0)).get("properties")).getString("totalTime");
+                        d.totalDistance = ((JSONObject) ((JSONObject) ((JSONArray) jobj.get("features")).get(0)).get("properties")).getString("totalDistance");
                         destination_list.add(d);
                     } else {
                         Log.d("error", "Connect fail");
@@ -313,7 +316,7 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
                         InputStream response = conn.getInputStream();
                         String jsonReply = UtilSet.convertStreamToString(response);
                         JSONObject jobj = new JSONObject(jsonReply);
-                        Log.d("tmap-result",jobj.toString());
+                        Log.d("tmap-result", jobj.toString());
                         Delivery_Status d = new Delivery_Status();
                         d.totalTime = ((JSONObject) jobj.get("properties")).getString("totalTime");
                         d.totalDistance = ((JSONObject) jobj.get("properties")).getString("totalDistance");
@@ -625,20 +628,5 @@ public class Delivery_to_Store_Activity extends AppCompatActivity {
         return null;
     }
 
-    public void showProgress(String msg) {
-        if (pd == null) { // 객체를 1회만 생성한다.
-            pd = new ProgressDialog(this); // 생성한다.
-            pd.setCancelable(false); // 백키로 닫는 기능을 제거한다.
-        }
-        pd.setTitle("배달ONE - Rider");
-        pd.setMessage(msg); // 원하는 메시지를 세팅한다.
-        pd.show(); // 화면에 띠워라
-    }
-
-    public void hideProgress() {
-        if (pd != null && pd.isShowing()) {
-            pd.dismiss();
-        }
-    }
 }
 

@@ -80,55 +80,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         point = getScreenSize(MainActivity.this);
 
         drawer = findViewById(R.id.drawer_layout);
-
         NavigationView navigationView = findViewById(R.id.nav_view);
+        view = getLayoutInflater().inflate(R.layout.nav_header, null);
+        UtilSet.set_Drawer(navigationView, view);
+
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        if (LoginLogoutInform.getLogin_flag() == 1) {
-            getSupportActionBar().setTitle("가게 목록");
-            ToolbarInform.setToolbar_inform("가게 목록");
-            navigationView.inflateMenu(R.menu.drawer_menu);
-            view=getLayoutInflater().inflate(R.layout.nav_header,null);
-            TextView user_id= view.findViewById(R.id.user_id);
-
-
-            user_id.setText(UtilSet.my_user.getUser_name()+"님 반갑습니다!");
-            TextView user_mil= view.findViewById(R.id.user_mileage);
-            user_mil.setText("마일리지 : "+UtilSet.my_user.getUser_mileage()+"원");
-            TextView user_address= view.findViewById(R.id.user_address);
-            if(UtilSet.my_user.getUser_address()==null)
-                user_address.setText("배달주소를 선택해주세요!");
-            else
-                user_address.setText(UtilSet.my_user.getUser_address());
-            TextView hello_msg= view.findViewById(R.id.please_login_text);
-            hello_msg.setText(" ");
-            navigationView.addHeaderView(view);
-        } else {
-            getSupportActionBar().setTitle("로그인 필요");
-            navigationView.inflateMenu(R.menu.logout_drawer_menu);
-            view=getLayoutInflater().inflate(R.layout.nav_header,null);
-
-            ImageButton gps_btn = view.findViewById(R.id.GPS_imageBtn);
-            gps_btn.setVisibility(View.INVISIBLE);
-            TextView user_mil= view.findViewById(R.id.user_mileage);
-            user_mil.setText(" ");
-            TextView user_id= view.findViewById(R.id.user_id);
-            user_id.setText(" ");
-            TextView user_address= view.findViewById(R.id.user_address);
-            user_address.setText(" ");
-            TextView hello_msg= view.findViewById(R.id.please_login_text);
-            hello_msg.setText("배달ONE과 함께하세요!");
-            navigationView.addHeaderView(view);
-
+        if (LoginLogoutInform.getLogin_flag() != 1) {
             MainActivity.this.runOnUiThread(new Runnable() {
                 public void run() {
                     Toast.makeText( MainActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
                 }
             });
-
             return;
-        }ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+        }
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -183,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
+                UtilSet.cur_position = position;
                 UtilSet.target_store = UtilSet.al_store.get(position);
                 Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                 intent.putExtra("serial", store_ser);

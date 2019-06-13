@@ -11,5 +11,10 @@
     <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:windowBackground">@drawable/logo</item>
     </style>
+    <style name="ProgressDialogStyles" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 
 </resources>

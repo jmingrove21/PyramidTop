@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +18,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BackPressCloseHandler backPressCloseHandler;
     private ListView m_oListView=null;
+    public ListAdapter oAdapter;
     public Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         // ListView, Adapter 생성 및 연결 ------------------------
         m_oListView=(ListView)findViewById(R.id.listView);
-        ListAdapter oAdapter=new ListAdapter(oData);
+        oAdapter=new ListAdapter(oData);
         m_oListView.setAdapter(oAdapter);
         m_oListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -68,9 +68,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 get_delivery_order_list();
+                oAdapter=new ListAdapter(oData);
                 m_oListView.setAdapter(oAdapter);
+                LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(MainActivity.this.getIntent());
                 mSwipeRefreshLayout.setRefreshing(false);
-                oAdapter.notifyDataSetChanged();
             }
         });
 

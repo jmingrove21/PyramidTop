@@ -248,10 +248,7 @@ public class MapActivity extends AppCompatActivity {
             oUserPhone.setText(m_oData.get(position).user_phone);
             oUserDestination.setText(m_oData.get(position).destination);
             oUserTotal.setText(m_oData.get(position).total_price_credit + "원");
-           // String menu = "";
-//            for (int i = 0; i < m_oData.get(position).al_menu.size(); i++) {
-//                menu += m_oData.get(position).al_menu.get(i).menu_name + " " + m_oData.get(position).al_menu.get(i).menu_count + "개 ";
-//            }
+
             oUserPayStatus.setText(m_oData.get(position).pay_status);
 
             oButton.setOnClickListener(new View.OnClickListener() {
@@ -321,7 +318,7 @@ public class MapActivity extends AppCompatActivity {
                         }
                     });
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(5000);
                         if (MapActivity.refresh_status == false)
                             break;
                     } catch (Exception e) {
@@ -345,7 +342,7 @@ public class MapActivity extends AppCompatActivity {
                             }
                         });
                         try {
-                            Thread.sleep(10000);
+                            Thread.sleep(5000);
                             if (MapActivity.refresh_status == false)
                                 break;
                         } catch (Exception e) {
@@ -363,7 +360,7 @@ public class MapActivity extends AppCompatActivity {
                             }
                         });
                         try {
-                            Thread.sleep(10000);
+                            Thread.sleep(5000);
                             if (MapActivity.refresh_status == false)
                                 break;
                         } catch (Exception e) {
@@ -381,7 +378,7 @@ public class MapActivity extends AppCompatActivity {
                                 });
                     }
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(5000);
                         if (MapActivity.refresh_status == false)
                             break;
                     } catch (Exception e) {
