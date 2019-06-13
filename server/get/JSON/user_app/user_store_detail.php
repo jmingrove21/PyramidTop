@@ -4,7 +4,7 @@
         $store_serial=$json_data['store_serial'];
 
          $query="
-         SELECT store_serial,store_phone, store_address_jibun, store_building_name, start_time, end_time, store_restday, store_notice, store_phone, store_main_type_name, store_sub_type_name
+         SELECT store_serial,store_phone, store_address_jibun, store_building_name, start_time, end_time, store_restday, store_notice, store_phone, store_main_type_name, store_sub_type_name, minimum_order_price,delivery_cost
          FROM Capstone.store
          WHERE store_serial=".$store_serial;
          $stmt = mysqli_query($connect,$query);
@@ -18,7 +18,9 @@
                 'store_restday'=>$row2['store_restday'],
                 'store_notice'=>$row2['store_notice'],
                 'store_main_type_name'=>$row2['store_main_type_name'],
-                'store_sub_type_name'=>$row2['store_sub_type_name']
+                'store_sub_type_name'=>$row2['store_sub_type_name'],
+                'minimum_order_price'=>$row2['minimum_order_price'],
+                'delivery_cost'=>$row2['delivery_cost']
             );
             $query2="
             SELECT menu_type_code, menu_type_name, menu_code, menu_name, menu_price, menu_img

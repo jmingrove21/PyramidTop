@@ -15,7 +15,7 @@
          INNER JOIN Capstone.user_order AS uo
          ON s.store_serial=so.store_serial AND so.order_number=uo.order_number
          WHERE order_status".$sub_query." AND uo.USER_user_serial=".$user_serial."
-         ORDER BY store_order_serial DESC
+         ORDER BY make_order_time DESC
          ";
          $stmt = mysqli_query($connect,$query);
          $total_store=[];
@@ -24,7 +24,7 @@
             $count_query="
                     SELECT count(*) AS c
                     FROM Capstone.user_order
-                    WHERE order_number=".$row2['order_number'];
+                    WHERE order_number=".$row2['order_number']." AND user_status!=8";
             $count_stmt = mysqli_query($connect,$count_query);
             $result=mysqli_fetch_assoc($count_stmt);
             $persons=$result['c'];
@@ -61,7 +61,8 @@
                 'delivery_approve_time'=>$row2['delivery_approve_time'],
                 'delivery_departure_time'=>$row2['delivery_departure_time'],
                 'participate_persons'=>$persons,
-                'total_order_price'=>$total_price
+                'total_order_price'=>$total_price,
+                'make_order_time'=>$row2['make_order_time']
             );
 
             array_push($total_store,$store);

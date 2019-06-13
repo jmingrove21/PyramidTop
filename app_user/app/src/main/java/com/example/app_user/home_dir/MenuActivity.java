@@ -156,11 +156,11 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
                             new Old_Orderlist()).commit();
                     break;
-//                case R.id.menu_idoption:
-//                    getSupportActionBar().setTitle("계정 설정");
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
-//                            new Profile()).commit();
-//                    break;
+                case R.id.menu_idoption:
+                    getSupportActionBar().setTitle("계정 설정");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.relativelayout_container,
+                            new Profile()).commit();
+                    break;
                 case R.id.menu_logout:
                     UtilSet.loginLogoutInform.setLogin_flag(0);
                     UtilSet.my_user=null;
