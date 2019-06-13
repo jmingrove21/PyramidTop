@@ -46,6 +46,8 @@ import android.widget.Toast;
 import com.example.app_user.Item_dir.UtilSet;
 import com.example.app_user.R;
 import com.example.app_user.draw_dir.GpsActivity;
+import com.example.app_user.home_dir.FirstMainActivity;
+import com.example.app_user.people_dir.PartyDetailActivity;
 import com.example.app_user.util_dir.LoginActivity;
 import com.example.app_user.util_dir.RegisterActivity;
 
@@ -68,6 +70,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import static kr.co.bootpay.pref.UserInfo.finish;
 
 public class Profile extends Fragment {
 
@@ -305,7 +309,6 @@ public class Profile extends Fragment {
                         .addFormDataPart("user_name", UtilSet.my_user.getUser_name())
                         .addFormDataPart("original_pw",strings[2])
                         .addFormDataPart("change_pw",strings[3])
-                        .addFormDataPart("user_phone","010-1234-7097")
                         .addFormDataPart("img_check","1")
                         .build();
 
@@ -323,6 +326,10 @@ public class Profile extends Fragment {
                 Response response = okHttpClient.newCall(request).execute();
                 if (response.code() == 200){
                     Log.d("success",response.body().string());
+                    Intent intent = new Intent(Profile.this.getContext(), FirstMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                     return true;
                 }
                 else
