@@ -401,13 +401,14 @@ function detail_deliver_list(number)
 						var price = value.menu_price*1;
 						var menu_count = value.menu_count*1;
 						if(menu_count>1)
-							temp_string2 = temp_string2 + value.menu_name + "*" + value.menu_count + " ,"
+							temp_string2 = temp_string2 + value.menu_name + "*" + value.menu_count + " , "
 						else
-							temp_string2 = temp_string2 + value.menu_name + " ,";
+							temp_string2 = temp_string2 + value.menu_name + " , ";
 
 						subtotal = subtotal + price*menu_count;
 
 					});
+					temp_string2 = temp_string2.substr(0,temp_string2.length-2);
 					temp_string = temp_string + temp_string2 + "<br>";
 					$("#myModal_text").append(temp_string);
 					//--------------------------주문 들어온 날짜 및 시간을 내용에 넣음----------------
