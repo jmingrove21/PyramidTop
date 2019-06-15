@@ -237,6 +237,12 @@ public class RegisterActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     String result = response.body().string();
                     Log.d("결과",""+result);
+                    try {
+                        JSONObject jobj = new JSONObject(result);
+                        UtilSet.my_user.setUser_img(jobj.getString("path"));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     RegisterActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText( RegisterActivity.this, "회원가입에 성공하셨습니다!", Toast.LENGTH_SHORT).show();

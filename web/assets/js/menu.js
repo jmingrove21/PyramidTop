@@ -402,19 +402,22 @@ var temp_img = "";
 function menu_modify_submit()
 {
 
+	var temp = menu_img.length;
+	var image_check = "";
+	image_check = image_check*1;
+	if(temp==0)
+		image_check=0;
+	else
+		image_check=1;
+	//alert(image_check);
 	var store_serial_modal = $("#modal_store_serial").val();
 	var menu_code = $("#modal_menu_code").val();
 	var menu_name = $("#modal_menu_name").val();
 	var menu_price = $("#modal_menu_price").val();
 
-	var temp_src = $("#modal_menu_picture").attr('src');
-
-
-	//alert(temp_src);
-	var len = menu_img.length;
-
 	var formdata = new FormData();
 	formdata.append('menu_img', menu_img);
+	formdata.append('img_check', image_check);
 	formdata.append('store_serial', store_serial_modal);
 	formdata.append('menu_code', menu_code);
 	formdata.append('menu_name', menu_name);
@@ -441,7 +444,7 @@ function menu_modify_submit()
 					location.reload();
 				}
 			} else {
-				alert("메뉴 수정 성공");
+				alert("메뉴 수정 실패");
 			}
 		},
 		error: function (error)
@@ -463,6 +466,8 @@ function menu_modify(code)
 	var temp = code[0].innerHTML;
 	var menu_code = temp.split("menu_modify(")[1].split(")")[0];
 	//alert(menu_code);
+
+
 
 	var data = {
 		"store_info": "one_menu_info",

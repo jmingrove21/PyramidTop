@@ -101,26 +101,18 @@ function modifyData()
 */
 
 function modifyData() {
-// reCreate new Object and set File Data into it
-    var newObject = {
-        'lastModified': Store_profile_img.lastModified,
-        'lastModifiedDate': Store_profile_img.lastModifiedDate,
-        'name': Store_profile_img.name,
-        'size': Store_profile_img.size,
-        'type': Store_profile_img.type,
-        'uploadFile': Store_profile_img
-    };
 
-    var tmp = location.href.split("?")[1].split("=")[1];
-    store_serial = tmp.split("&")[1];
-    //alert(store_serial);
-
-    JSON.stringify(newObject);
-
-    //alert(Store_profile_img);
+    var temp = Store_profile_img.length;
+    var image_check = "";
+    image_check = image_check*1;
+    if(temp==0)
+        image_check=0;
+    else
+        image_check=1;
 
     var formdata = new FormData();
     formdata.append('image_file', Store_profile_img);
+    formdata.append('img_check', image_check);
     formdata.append('store_serial', store_serial);
     formdata.append('store_info', "modify");
     formdata.append('store_name', Store_name);
@@ -136,22 +128,6 @@ function modifyData() {
     formdata.append('store_restday', Store_restday);
     formdata.append('delivery_cost',delivery_cost);
 
-    var data2 =
-        {
-            "store_info": "modify",
-            "store_name": Store_name, //가게 상호명
-            "store_phone": Store_phone,  //가게 번호
-            "store_address": Store_address,  //가게 주소
-            "start_time": Start_time,  // 오픈시간
-            "end_time": End_time,  //마감시간
-            "storemaster_name": Storemaster_name,  //가게주인
-            "storemaster_num": Storemaster_num, //사업자번호
-            "store_notice": Store_notice,
-            "store_restday": Store_restday,
-            "store_serial" : store_serial,
-            "store_profile_img": Store_profile_img
-        };
-
     $.ajax({
         url: "http://54.180.102.7:80/get/JSON/store_app/store_modify_info.php",
         data: formdata,
@@ -160,7 +136,6 @@ function modifyData() {
         processData: false,
         contentType: false,
         type: "POST",
-        //contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: function (data) {
             if (data) {
                 var result3 = JSON.parse(data);
@@ -168,6 +143,7 @@ function modifyData() {
 				{
 					$("#store_profile").attr("src",result3.path);
                 	alert("정보 수정 성공");
+                	location.reload();
 				}
             } else {
                 alert("수정하기 실패");
@@ -177,7 +153,6 @@ function modifyData() {
 		{
             alert(error);
         }
-
     });
     event.preventDefault();
 
